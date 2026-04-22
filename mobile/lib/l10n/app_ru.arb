@@ -8,6 +8,7 @@
   "tabMore": "Ещё",
   "settingsTitle": "Настройки",
   "languageLabel": "Язык",
+  "languageSwitchTooltip": "Выбор языка (английский / русский)",
   "localeEnglish": "Английский",
   "localeRussian": "Русский",
   "bootstrapNote": "Оболочка фазы 0 — карта и навигация в фазе 1.",

@@ -11,6 +11,7 @@
   "tabMore": "More",
   "settingsTitle": "Settings",
   "languageLabel": "Language",
+  "languageSwitchTooltip": "Choose language (English / Russian)",
   "localeEnglish": "English",
   "localeRussian": "Russian",
   "bootstrapNote": "Phase 0 shell — navigation and charts follow in Phase 1.",

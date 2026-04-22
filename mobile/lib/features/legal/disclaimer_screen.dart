@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/disclaimer_gate.dart';
 import '../../l10n/app_localizations.dart';
+import '../../widgets/language_button.dart';
 
 /// First-run legal disclaimer (Фаза 1.5). Acceptance is persisted + audited.
 class DisclaimerScreen extends ConsumerWidget {
@@ -10,18 +11,23 @@ class DisclaimerScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context);
+    if (l10n == null) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
     final theme = Theme.of(context);
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text(l10n.disclaimerTitle),
+        actions: const [LanguageButton()],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(l10n.disclaimerTitle, style: theme.textTheme.headlineMedium),
-              const SizedBox(height: 16),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(

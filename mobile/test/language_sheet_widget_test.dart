@@ -1,0 +1,45 @@
+import 'package:captain_wrongel/app.dart';
+import 'package:captain_wrongel/core/disclaimer_gate.dart';
+import 'package:captain_wrongel/core/locale_controller.dart';
+import 'package:captain_wrongel/core/providers.dart';
+import 'package:captain_wrongel/data/local/app_database.dart';
+import 'package:drift/native.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+void main() {
+  testWidgets('language sheet switches UI to Russian', (tester) async {
+    SharedPreferences.setMockInitialValues({
+      kDisclaimerV1AcceptedKey: true,
+      LocaleController.localePreferenceKey: 'en',
+    });
+    final prefs = await SharedPreferences.getInstance();
+    final db = AppDatabase(NativeDatabase.memory());
+    addTearDown(db.close);
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          sharedPreferencesProvider.overrideWith((ref) => prefs),
+          databaseProvider.overrideWith((ref) => db),
+          sessionIdProvider.overrideWith((ref) => 'test-session'),
+        ],
+        child: const CaptainWrongelApp(),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+    expect(find.text('Map'), findsWidgets);
+
+    await tester.tap(find.byIcon(Icons.language_outlined));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Russian'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Карта'), findsWidgets);
+    expect(prefs.getString(LocaleController.localePreferenceKey), 'ru');
+  });
+}

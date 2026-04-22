@@ -26,13 +26,20 @@ class _CaptainWrongelAppState extends ConsumerState<CaptainWrongelApp> {
     final audit = ref.read(auditRepositoryProvider);
     final session = ref.read(sessionIdProvider);
     final log = ref.read(rootLoggerProvider);
-    await audit.record(
-      sessionId: session,
-      module: 'core',
-      action: 'app_launch',
-      contextJson: '{"phase":0}',
-    );
-    log.info('Bootstrap audit written', {'sessionId': session});
+    try {
+      await audit.record(
+        sessionId: session,
+        module: 'core',
+        action: 'app_launch',
+        contextJson: '{"phase":0}',
+      );
+      log.info('Bootstrap audit written', {'sessionId': session});
+    } catch (e, st) {
+      log.warning('Bootstrap audit failed', {'error': '$e', 'sessionId': session});
+      FlutterError.reportError(
+        FlutterErrorDetails(exception: e, stack: st, silent: true),
+      );
+    }
   }
 
   @override

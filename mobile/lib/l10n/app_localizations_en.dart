@@ -33,6 +33,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get languageLabel => 'Language';
 
   @override
+  String get languageSwitchTooltip => 'Choose language (English / Russian)';
+
+  @override
   String get localeEnglish => 'English';
 
   @override

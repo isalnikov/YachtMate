@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'dart:ui' show Locale;
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -6,6 +7,7 @@ import '../data/local/app_database.dart';
 import '../data/repositories/audit_repository.dart';
 import '../data/repositories/chart_region_repository.dart';
 import '../data/repositories/route_repository.dart';
+import 'locale_controller.dart';
 import 'logging/app_logger.dart';
 
 /// Injected after `SharedPreferences.getInstance()` in [main].
@@ -36,29 +38,11 @@ final sessionIdProvider = Provider<String>(
 
 final rootLoggerProvider = Provider<AppLogger>((ref) => AppLogger('app'));
 
-class LocaleController extends StateNotifier<Locale> {
-  LocaleController(this._prefs) : super(_readLocale(_prefs));
-
-  final SharedPreferences _prefs;
-
-  static Locale _readLocale(SharedPreferences prefs) {
-    switch (prefs.getString(_localeKey)) {
-      case 'ru':
-        return const Locale('ru');
-      default:
-        return const Locale('en');
-    }
-  }
-
-  static const _localeKey = 'localeCode';
-
-  Future<void> setLocale(Locale locale) async {
-    await _prefs.setString(_localeKey, locale.languageCode);
-    state = locale;
-  }
-}
-
 final localeControllerProvider =
     StateNotifierProvider<LocaleController, Locale>((ref) {
-      return LocaleController(ref.watch(sharedPreferencesProvider));
-    });
+  return LocaleController(
+    ref.watch(sharedPreferencesProvider),
+    ref.watch(auditRepositoryProvider),
+    ref.watch(sessionIdProvider),
+  );
+});

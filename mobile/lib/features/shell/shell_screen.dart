@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../../widgets/language_button.dart';
 import '../map/map_screen.dart';
 
 /// Five-tab shell aligned with [`docs/ui/`](/docs/ui/).
@@ -31,12 +31,7 @@ class _ShellScreenState extends ConsumerState<ShellScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.appTitle),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            onPressed: () => _openLanguageSheet(context),
-          ),
-        ],
+        actions: const [LanguageButton()],
       ),
       body: IndexedStack(
         index: _index,
@@ -57,55 +52,6 @@ class _ShellScreenState extends ConsumerState<ShellScreen> {
             NavigationDestination(icon: Icon(d.$1), label: d.$2),
         ],
       ),
-    );
-  }
-
-  Future<void> _openLanguageSheet(BuildContext context) async {
-    final l10n = AppLocalizations.of(context)!;
-    final locale = ref.read(localeControllerProvider);
-    await showModalBottomSheet<void>(
-      context: context,
-      builder: (ctx) {
-        return SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  l10n.settingsTitle,
-                  style: Theme.of(ctx).textTheme.titleLarge,
-                ),
-              ),
-              ListTile(
-                title: Text(l10n.localeEnglish),
-                trailing: locale.languageCode == 'en'
-                    ? const Icon(Icons.check)
-                    : null,
-                onTap: () async {
-                  await ref
-                      .read(localeControllerProvider.notifier)
-                      .setLocale(const Locale('en'));
-                  if (ctx.mounted) Navigator.pop(ctx);
-                },
-              ),
-              ListTile(
-                title: Text(l10n.localeRussian),
-                trailing: locale.languageCode == 'ru'
-                    ? const Icon(Icons.check)
-                    : null,
-                onTap: () async {
-                  await ref
-                      .read(localeControllerProvider.notifier)
-                      .setLocale(const Locale('ru'));
-                  if (ctx.mounted) Navigator.pop(ctx);
-                },
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }

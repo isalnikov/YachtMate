@@ -146,6 +146,12 @@ abstract class AppLocalizations {
   /// **'Language'**
   String get languageLabel;
 
+  /// No description provided for @languageSwitchTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose language (English / Russian)'**
+  String get languageSwitchTooltip;
+
   /// No description provided for @localeEnglish.
   ///
   /// In en, this message translates to:
