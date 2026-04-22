@@ -5,6 +5,8 @@ import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
+import 'route_tables.dart';
+
 part 'app_database.g.dart';
 
 /// Logical DDL: [Подробный план реализации.md] §5.2 — `user_action_audit`.
@@ -24,12 +26,26 @@ class UserActionAudits extends Table {
   TextColumn get contextJson => text().nullable()();
 }
 
-@DriftDatabase(tables: [UserActionAudits])
+@DriftDatabase(tables: [UserActionAudits, Routes, RouteWaypoints, ChartRegions])
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onCreate: (Migrator m) async {
+          await m.createAll();
+        },
+        onUpgrade: (Migrator m, int from, int to) async {
+          if (from < 2) {
+            await m.createTable(routes);
+            await m.createTable(routeWaypoints);
+            await m.createTable(chartRegions);
+          }
+        },
+      );
 }
 
 /// Opens [AppDatabase] on a SQLite file under application documents.

@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/local/app_database.dart';
 import '../data/repositories/audit_repository.dart';
+import '../data/repositories/chart_region_repository.dart';
+import '../data/repositories/route_repository.dart';
 import 'logging/app_logger.dart';
 
 /// Injected after `SharedPreferences.getInstance()` in [main].
@@ -17,6 +19,14 @@ final databaseProvider = Provider<AppDatabase>(
 
 final auditRepositoryProvider = Provider<AuditRepository>(
   (ref) => AuditRepository(ref.watch(databaseProvider)),
+);
+
+final routeRepositoryProvider = Provider<RouteRepository>(
+  (ref) => RouteRepository(ref.watch(databaseProvider)),
+);
+
+final chartRegionRepositoryProvider = Provider<ChartRegionRepository>(
+  (ref) => ChartRegionRepository(ref.watch(databaseProvider)),
 );
 
 /// One UUID per process — correlates audit rows for this run.
