@@ -9,6 +9,10 @@
         "name": "Fethiye Marina (demo catalog)",
         "vhf": "72",
         "phone": "+90 252 xxx xxxx",
+        "email": "harbourmaster@example.com",
+        "websiteUrl": "https://www.openstreetmap.org",
+        "bookingUrl": "https://www.openstreetmap.org",
+        "sourceUpdatedAtMs": 1730000000000,
         "services": {"electricity": true, "water": true, "wifi": true, "fuel": true},
         "notes": "Demo POI near Fethiye town — verify against official publications."
       },

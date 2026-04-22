@@ -49,9 +49,9 @@ void main() {
     expect(b.hourly.first.temperatureC, 10);
     expect(calls, 2);
 
-    final row = await (db.select(db.weatherCacheRows)
-          ..where((t) => t.gridKey.equals(k)))
-        .getSingle();
+    final row = await (db.select(
+      db.weatherCacheRows,
+    )..where((t) => t.gridKey.equals(k))).getSingle();
     expect(row.forecastJson, contains('temperature_2m'));
   });
 
@@ -63,7 +63,9 @@ void main() {
     final db = AppDatabase(NativeDatabase.memory());
     addTearDown(db.close);
 
-    await db.into(db.weatherCacheRows).insert(
+    await db
+        .into(db.weatherCacheRows)
+        .insert(
           WeatherCacheRowsCompanion.insert(
             gridKey: weatherGridKey(1, 2),
             forecastJson: _fcJson,

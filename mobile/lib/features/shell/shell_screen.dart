@@ -5,6 +5,7 @@ import '../../l10n/app_localizations.dart';
 import '../../widgets/language_button.dart';
 import '../map/map_screen.dart';
 import '../mooring/mooring_screen.dart';
+import '../more/more_menu_screen.dart';
 import '../route/route_screen.dart';
 import '../weather/weather_screen.dart';
 
@@ -19,6 +20,8 @@ class ShellScreen extends ConsumerStatefulWidget {
 class _ShellScreenState extends ConsumerState<ShellScreen> {
   int _index = 0;
 
+  static const double _railBreakpointWidth = 720;
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -31,15 +34,44 @@ class _ShellScreenState extends ConsumerState<ShellScreen> {
       (Icons.more_horiz, l10n.tabMore),
     ];
 
+    final wide = MediaQuery.sizeOf(context).width >= _railBreakpointWidth;
+
+    final body = KeyedSubtree(key: ValueKey(_index), child: _tabBody(_index));
+
+    if (wide) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(l10n.appTitle),
+          actions: const [LanguageButton()],
+        ),
+        body: Row(
+          children: [
+            NavigationRail(
+              extended: MediaQuery.sizeOf(context).width >= 900,
+              selectedIndex: _index,
+              onDestinationSelected: (i) => setState(() => _index = i),
+              labelType: NavigationRailLabelType.all,
+              destinations: [
+                for (final d in destinations)
+                  NavigationRailDestination(
+                    icon: Icon(d.$1),
+                    label: Text(d.$2),
+                  ),
+              ],
+            ),
+            const VerticalDivider(width: 1, thickness: 1),
+            Expanded(child: body),
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.appTitle),
         actions: const [LanguageButton()],
       ),
-      body: KeyedSubtree(
-        key: ValueKey(_index),
-        child: _tabBody(_index, destinations),
-      ),
+      body: body,
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
         onDestinationSelected: (i) => setState(() => _index = i),
@@ -52,48 +84,13 @@ class _ShellScreenState extends ConsumerState<ShellScreen> {
   }
 }
 
-Widget _tabBody(int index, List<(IconData, String)> destinations) {
+Widget _tabBody(int index) {
   return switch (index) {
     0 => const MapScreen(),
     1 => const RouteScreen(),
     2 => const WeatherScreen(),
     3 => const MooringScreen(),
-    4 => _PlaceholderTab(icon: destinations[4].$1, title: destinations[4].$2),
+    4 => const MoreMenuScreen(),
     _ => const SizedBox.shrink(),
   };
-}
-
-class _PlaceholderTab extends StatelessWidget {
-  const _PlaceholderTab({required this.icon, required this.title});
-
-  final IconData icon;
-  final String title;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 56),
-            const SizedBox(height: 16),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.headlineSmall,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 12),
-            Text(
-              l10n.bootstrapNote,
-              style: Theme.of(context).textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

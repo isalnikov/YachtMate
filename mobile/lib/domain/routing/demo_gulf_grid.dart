@@ -48,9 +48,6 @@ class DemoGulfRoutingScenario {
       (30.30, 59.96),
     ];
 
-    return DemoGulfRoutingScenario._(
-      grid,
-      [ForbiddenZone(rect)],
-    );
+    return DemoGulfRoutingScenario._(grid, [ForbiddenZone(rect)]);
   }
 }

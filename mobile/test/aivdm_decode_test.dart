@@ -5,8 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('parses Class A position from fixture line', () {
-    const line =
-        '!AIVDM,1,1,,A,13HOI:0P0000VOHCMnHQKwvL05Ip,0*22';
+    const line = '!AIVDM,1,1,,A,13HOI:0P0000VOHCMnHQKwvL05Ip,0*22';
     expect(nmeaChecksumValid(line), isTrue);
 
     final s = AivdmSentence.tryParse(line);

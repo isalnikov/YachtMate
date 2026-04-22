@@ -38,9 +38,7 @@ void main() {
     await Future<void>.delayed(const Duration(milliseconds: 3));
     await repo.createDraftRoute(name: 'B');
 
-    await repo.replaceWaypoints(a, [
-      const WaypointDraft(lat: 59.9, lon: 30.4),
-    ]);
+    await repo.replaceWaypoints(a, [const WaypointDraft(lat: 59.9, lon: 30.4)]);
 
     expect(await repo.latestRouteId(), a);
   });

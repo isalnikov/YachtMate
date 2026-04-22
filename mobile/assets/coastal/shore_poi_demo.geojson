@@ -1,0 +1,25 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [29.12, 36.72] },
+      "properties": {
+        "id": "beach_club_demo",
+        "category": "beach",
+        "titles": { "en": "Beach café (demo)", "ru": "Пляжное кафе (демо)" },
+        "bodies": { "en": "Fresh water tap, showers. Demo POI only.", "ru": "Кран с пресной водой, души. Только демо-точка." }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": { "type": "Point", "coordinates": [29.05, 36.68] },
+      "properties": {
+        "id": "fuel_ashore_demo",
+        "category": "fuel",
+        "titles": { "en": "Road diesel canister pickup (demo)", "ru": "Забор канистры с соляркой (демо)" },
+        "bodies": { "en": "Coordinate with marina office. Synthetic example.", "ru": "Согласовать в офисе марины. Синтетический пример." }
+      }
+    }
+  ]
+}

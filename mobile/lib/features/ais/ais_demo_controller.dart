@@ -3,13 +3,20 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/energy_profile_controller.dart';
 import '../../core/providers.dart';
 import '../../domain/ais/ais_decode_pipeline.dart';
 import 'ais_targets_provider.dart';
 
 /// Воспроизведение демо-NMEA из asset (Фаза 3 — без реального TCP/BLE).
 class AisDemoController extends StateNotifier<bool> {
-  AisDemoController(this._ref) : super(false);
+  AisDemoController(this._ref) : super(false) {
+    _ref.listen<EnergyProfile>(energyProfileProvider, (prev, next) {
+      if (state) {
+        _restartDemoTimer();
+      }
+    });
+  }
 
   final Ref _ref;
 
@@ -36,7 +43,9 @@ class AisDemoController extends StateNotifier<bool> {
       _lineCursor = 0;
       _pipeline.resetAssembler();
       _ref.read(aisTargetsProvider.notifier).clear();
-      await _ref.read(auditRepositoryProvider).record(
+      await _ref
+          .read(auditRepositoryProvider)
+          .record(
             sessionId: _ref.read(sessionIdProvider),
             module: 'M7',
             action: 'nmea_disconnect',
@@ -46,16 +55,23 @@ class AisDemoController extends StateNotifier<bool> {
       return;
     }
 
-    await _ref.read(auditRepositoryProvider).record(
+    await _ref
+        .read(auditRepositoryProvider)
+        .record(
           sessionId: _ref.read(sessionIdProvider),
           module: 'M7',
           action: 'nmea_connect',
           contextJson: '{"mode":"demo_asset"}',
         );
     state = true;
-    _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 2), (_) => _tick());
+    _restartDemoTimer();
     _tick();
+  }
+
+  void _restartDemoTimer() {
+    _timer?.cancel();
+    final d = _ref.read(energyProfileProvider).aisDemoTickInterval;
+    _timer = Timer.periodic(d, (_) => _tick());
   }
 
   void _tick() {

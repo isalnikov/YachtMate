@@ -6,15 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/repositories/audit_repository.dart';
 
-/// Управляет локалью приложения: только **en** и **ru**, сохранение в SharedPreferences.
+/// Управляет локалью приложения (**en**, **ru**, **de**, **fr**, **es**, **it**).
 ///
-/// При первом запуске (ключа нет) выбирается язык системы, если он `ru`, иначе `en`.
+/// При первом запуске (ключа нет) для языка системы используется поддерживаемая локаль или `en`.
 class LocaleController extends StateNotifier<Locale> {
-  LocaleController(
-    this._prefs,
-    this._audit,
-    this._sessionId,
-  ) : super(_initialLocale(_prefs));
+  LocaleController(this._prefs, this._audit, this._sessionId)
+    : super(_initialLocale(_prefs));
 
   final SharedPreferences _prefs;
   final AuditRepository _audit;
@@ -22,17 +19,29 @@ class LocaleController extends StateNotifier<Locale> {
 
   static const localePreferenceKey = 'localeCode';
 
+  static const Set<String> supportedCodes = {
+    'en',
+    'ru',
+    'de',
+    'fr',
+    'es',
+    'it',
+  };
+
   static Locale _initialLocale(SharedPreferences prefs) {
     final saved = prefs.getString(localePreferenceKey);
-    if (saved == 'ru') return const Locale('ru');
-    if (saved == 'en') return const Locale('en');
+    if (saved != null && supportedCodes.contains(saved)) {
+      return Locale(saved);
+    }
     final code = PlatformDispatcher.instance.locale.languageCode;
-    return code == 'ru' ? const Locale('ru') : const Locale('en');
+    if (supportedCodes.contains(code)) return Locale(code);
+    return const Locale('en');
   }
 
   /// Фиксирует только поддерживаемые локали; остальное → `en`.
   Future<void> setLocale(Locale locale) async {
-    final code = locale.languageCode == 'ru' ? 'ru' : 'en';
+    final raw = locale.languageCode;
+    final code = supportedCodes.contains(raw) ? raw : 'en';
     final next = Locale(code);
     if (next == state) return;
 

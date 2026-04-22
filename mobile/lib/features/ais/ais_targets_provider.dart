@@ -5,5 +5,5 @@ import 'ais_targets_controller.dart';
 
 final aisTargetsProvider =
     StateNotifierProvider<AisTargetsController, Map<int, AisTarget>>(
-  (ref) => AisTargetsController(),
-);
+      (ref) => AisTargetsController(),
+    );

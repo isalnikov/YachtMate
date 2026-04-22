@@ -1,7 +1,13 @@
 import 'package:drift/drift.dart';
 
+import 'checklist_tables.dart';
+import 'expense_tables.dart';
+import 'logbook_tables.dart';
 import 'mooring_tables.dart';
 import 'route_tables.dart';
+import 'track_tables.dart';
+import 'vault_tables.dart';
+import 'vhf_tables.dart';
 import 'weather_tables.dart';
 
 part 'app_database.g.dart';
@@ -32,13 +38,20 @@ class UserActionAudits extends Table {
     WeatherCacheRows,
     MooringPlaces,
     MooringReviewDrafts,
+    LogbookEntries,
+    TrackTrips,
+    TrackPoints,
+    ChecklistInstances,
+    VaultFiles,
+    ExpenseEntries,
+    VhfRecordings,
   ],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 8;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -58,8 +71,27 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(mooringPlaces);
         await m.createTable(mooringReviewDrafts);
       }
+      if (from < 5) {
+        await m.addColumn(mooringPlaces, mooringPlaces.email);
+        await m.addColumn(mooringPlaces, mooringPlaces.websiteUrl);
+        await m.addColumn(mooringPlaces, mooringPlaces.bookingUrl);
+        await m.addColumn(mooringPlaces, mooringPlaces.sourceUpdatedAtMs);
+      }
+      if (from < 6) {
+        await m.createTable(logbookEntries);
+      }
+      if (from < 7) {
+        await m.createTable(trackTrips);
+        await m.createTable(trackPoints);
+        await m.createTable(checklistInstances);
+        await m.createTable(vaultFiles);
+      }
+      if (from < 8) {
+        await m.createTable(expenseEntries);
+        await m.createTable(vhfRecordings);
+      }
     },
-      );
+  );
 }
 
 /// Открытие БД см. [open_database.dart] (ffi на io, sql.js на web).

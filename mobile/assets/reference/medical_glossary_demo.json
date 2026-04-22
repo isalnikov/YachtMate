@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "shock",
+      "category": "critical",
+      "titles": {
+        "en": "Shock (hypoperfusion)",
+        "ru": "Шок (гипоперфузия)"
+      },
+      "bodies": {
+        "en": "Lay flat, keep warm, elevate legs ~20–30 cm if no spine injury; call help. This app is NOT a substitute for professional care.",
+        "ru": "Уложить горизонтально, укрыть, поднять ноги на 20–30 см при отсутствии травмы позвоночника; вызвать помощь. Приложение не заменяет врача."
+      }
+    },
+    {
+      "id": "hypothermia",
+      "category": "environment",
+      "titles": { "en": "Hypothermia", "ru": "Гипотермия" },
+      "bodies": {
+        "en": "Gradual rewarming; dry clothes; warm drinks if conscious; seek medical aid.",
+        "ru": "Медленное согревание, сухая одежда, тёплые напитки при сознании; медицинская помощь."
+      }
+    }
+  ]
+}

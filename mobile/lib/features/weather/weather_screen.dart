@@ -38,10 +38,7 @@ class WeatherScreen extends ConsumerWidget {
         ],
       ),
       body: fc.when(
-        data: (bundle) => _ForecastBody(
-          bundle: bundle,
-          tideAsync: tide,
-        ),
+        data: (bundle) => _ForecastBody(bundle: bundle, tideAsync: tide),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(
           child: Padding(
@@ -58,18 +55,21 @@ class WeatherScreen extends ConsumerWidget {
 
   Future<void> _refresh(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context)!;
-    await ref.read(auditRepositoryProvider).record(
+    await ref
+        .read(auditRepositoryProvider)
+        .record(
           sessionId: ref.read(sessionIdProvider),
           module: 'M4',
           action: 'weather_refresh',
-          contextJson: '{"lat":${ref.read(weatherPinProvider).lat},'
+          contextJson:
+              '{"lat":${ref.read(weatherPinProvider).lat},'
               '"lon":${ref.read(weatherPinProvider).lon}}',
         );
     ref.invalidate(weatherForecastProvider);
     if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(l10n.weatherRefreshing)),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.weatherRefreshing)));
     }
   }
 
@@ -80,11 +80,12 @@ class WeatherScreen extends ConsumerWidget {
       if (p == LocationPermission.denied) {
         p = await Geolocator.requestPermission();
       }
-      if (p != LocationPermission.always && p != LocationPermission.whileInUse) {
+      if (p != LocationPermission.always &&
+          p != LocationPermission.whileInUse) {
         if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(l10n.weatherGpsDenied)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(l10n.weatherGpsDenied)));
         }
         return;
       }
@@ -92,25 +93,22 @@ class WeatherScreen extends ConsumerWidget {
       ref.read(weatherPinProvider.notifier).setPin(pos.latitude, pos.longitude);
       ref.invalidate(weatherForecastProvider);
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.weatherGpsUpdated)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.weatherGpsUpdated)));
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(l10n.weatherGpsError('$e'))),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(l10n.weatherGpsError('$e'))));
       }
     }
   }
 }
 
 class _ForecastBody extends ConsumerWidget {
-  const _ForecastBody({
-    required this.bundle,
-    required this.tideAsync,
-  });
+  const _ForecastBody({required this.bundle, required this.tideAsync});
 
   final WeatherForecastBundle bundle;
   final AsyncValue<TideDemoStation> tideAsync;
@@ -121,19 +119,22 @@ class _ForecastBody extends ConsumerWidget {
     final pin = ref.watch(weatherPinProvider);
     final loc = Localizations.localeOf(context).toLanguageTag();
     final timeFmt = DateFormat.Hm(loc);
-    final updated =
-        DateFormat('yyyy-MM-dd HH:mm', loc).format(bundle.fetchedAtUtc.toLocal());
+    final updated = DateFormat(
+      'yyyy-MM-dd HH:mm',
+      loc,
+    ).format(bundle.fetchedAtUtc.toLocal());
 
     final hours = bundle.hourly.take(48).toList(growable: false);
 
     return RefreshIndicator(
       onRefresh: () async {
-        await ref.read(auditRepositoryProvider).record(
+        await ref
+            .read(auditRepositoryProvider)
+            .record(
               sessionId: ref.read(sessionIdProvider),
               module: 'M4',
               action: 'weather_refresh',
-              contextJson:
-                  '{"lat":${pin.lat},"lon":${pin.lon},"pull":true}',
+              contextJson: '{"lat":${pin.lat},"lon":${pin.lon},"pull":true}',
             );
         ref.invalidate(weatherForecastProvider);
         await ref.read(weatherForecastProvider.future);
@@ -172,8 +173,10 @@ class _ForecastBody extends ConsumerWidget {
               margin: const EdgeInsets.only(bottom: 8),
               child: ListTile(
                 title: Text(
-                  DateFormat('yyyy-MM-dd HH:mm', loc)
-                      .format(h.timeUtc.toLocal()),
+                  DateFormat(
+                    'yyyy-MM-dd HH:mm',
+                    loc,
+                  ).format(h.timeUtc.toLocal()),
                 ),
                 subtitle: Text(
                   l10n.weatherHourLine(
@@ -205,13 +208,12 @@ class _ForecastBody extends ConsumerWidget {
             data: (s) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(s.stationName,
-                    style: Theme.of(context).textTheme.titleMedium),
-                const SizedBox(height: 4),
                 Text(
-                  s.note,
-                  style: Theme.of(context).textTheme.bodySmall,
+                  s.stationName,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
+                const SizedBox(height: 4),
+                Text(s.note, style: Theme.of(context).textTheme.bodySmall),
                 const SizedBox(height: 12),
                 for (final e in s.events)
                   ListTile(

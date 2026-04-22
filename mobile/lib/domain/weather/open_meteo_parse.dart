@@ -25,8 +25,7 @@ WeatherForecastBundle parseOpenMeteoCombined({
     final mt = (mh['time'] as List<dynamic>? ?? []).cast<String>();
     final wh = _doubles(mh['wave_height']);
     wavesByTime = {
-      for (var i = 0; i < mt.length && i < wh.length; i++)
-        mt[i]: wh[i],
+      for (var i = 0; i < mt.length && i < wh.length; i++) mt[i]: wh[i],
     };
   }
 
@@ -57,17 +56,15 @@ WeatherForecastBundle parseForecastJsonOnly({
   required String forecastJson,
   required DateTime fetchedAtUtc,
   bool isStale = false,
-}) =>
-    parseOpenMeteoCombined(
-      forecastJson: forecastJson,
-      fetchedAtUtc: fetchedAtUtc,
-      isStale: isStale,
-    );
+}) => parseOpenMeteoCombined(
+  forecastJson: forecastJson,
+  fetchedAtUtc: fetchedAtUtc,
+  isStale: isStale,
+);
 
 List<double> _doubles(dynamic v) {
   if (v is! List<dynamic>) return [];
   return v.map((e) => (e as num).toDouble()).toList();
 }
 
-double _at(List<double> a, int i) =>
-    i < a.length ? a[i] : double.nan;
+double _at(List<double> a, int i) => i < a.length ? a[i] : double.nan;

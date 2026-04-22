@@ -39,7 +39,11 @@ class DemoNavigationLayersIndex {
         }
         for (var i = 0; i + 1 < ring.length; i++) {
           segments.add(
-            _ContourSegment(a: ring[i], b: ring[i + 1], depthM: depth.toDouble()),
+            _ContourSegment(
+              a: ring[i],
+              b: ring[i + 1],
+              depthM: depth.toDouble(),
+            ),
           );
         }
       } else if (type == 'Point') {
@@ -49,11 +53,7 @@ class DemoNavigationLayersIndex {
         final lat = (coords[1] as num).toDouble();
         final name = propMap['name'];
         aids.add(
-          _NavAid(
-            lat: lat,
-            lon: lon,
-            label: name is String ? name : '',
-          ),
+          _NavAid(lat: lat, lon: lon, label: name is String ? name : ''),
         );
       }
     }
@@ -122,11 +122,7 @@ class _ContourSegment {
 }
 
 class _NavAid {
-  const _NavAid({
-    required this.lat,
-    required this.lon,
-    required this.label,
-  });
+  const _NavAid({required this.lat, required this.lon, required this.label});
   final double lat;
   final double lon;
   final String label;
@@ -139,7 +135,8 @@ double _haversineMeters(double lat1, double lon1, double lat2, double lon2) {
   final p2 = lat2 * math.pi / 180;
   final dp = (lat2 - lat1) * math.pi / 180;
   final dl = (lon2 - lon1) * math.pi / 180;
-  final h = math.sin(dp / 2) * math.sin(dp / 2) +
+  final h =
+      math.sin(dp / 2) * math.sin(dp / 2) +
       math.cos(p1) * math.cos(p2) * math.sin(dl / 2) * math.sin(dl / 2);
   return 2 * r * math.asin(math.min(1.0, math.sqrt(h)));
 }

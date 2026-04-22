@@ -1981,6 +1981,37 @@ class $MooringPlacesTable extends MooringPlaces
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _emailMeta = const VerificationMeta('email');
+  @override
+  late final GeneratedColumn<String> email = GeneratedColumn<String>(
+    'email',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _websiteUrlMeta = const VerificationMeta(
+    'websiteUrl',
+  );
+  @override
+  late final GeneratedColumn<String> websiteUrl = GeneratedColumn<String>(
+    'website_url',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _bookingUrlMeta = const VerificationMeta(
+    'bookingUrl',
+  );
+  @override
+  late final GeneratedColumn<String> bookingUrl = GeneratedColumn<String>(
+    'booking_url',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _servicesJsonMeta = const VerificationMeta(
     'servicesJson',
   );
@@ -2001,6 +2032,17 @@ class $MooringPlacesTable extends MooringPlaces
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _sourceUpdatedAtMsMeta = const VerificationMeta(
+    'sourceUpdatedAtMs',
+  );
+  @override
+  late final GeneratedColumn<int> sourceUpdatedAtMs = GeneratedColumn<int>(
+    'source_updated_at_ms',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -2010,8 +2052,12 @@ class $MooringPlacesTable extends MooringPlaces
     lon,
     vhf,
     phone,
+    email,
+    websiteUrl,
+    bookingUrl,
     servicesJson,
     notes,
+    sourceUpdatedAtMs,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -2074,6 +2120,24 @@ class $MooringPlacesTable extends MooringPlaces
         phone.isAcceptableOrUnknown(data['phone']!, _phoneMeta),
       );
     }
+    if (data.containsKey('email')) {
+      context.handle(
+        _emailMeta,
+        email.isAcceptableOrUnknown(data['email']!, _emailMeta),
+      );
+    }
+    if (data.containsKey('website_url')) {
+      context.handle(
+        _websiteUrlMeta,
+        websiteUrl.isAcceptableOrUnknown(data['website_url']!, _websiteUrlMeta),
+      );
+    }
+    if (data.containsKey('booking_url')) {
+      context.handle(
+        _bookingUrlMeta,
+        bookingUrl.isAcceptableOrUnknown(data['booking_url']!, _bookingUrlMeta),
+      );
+    }
     if (data.containsKey('services_json')) {
       context.handle(
         _servicesJsonMeta,
@@ -2087,6 +2151,15 @@ class $MooringPlacesTable extends MooringPlaces
       context.handle(
         _notesMeta,
         notes.isAcceptableOrUnknown(data['notes']!, _notesMeta),
+      );
+    }
+    if (data.containsKey('source_updated_at_ms')) {
+      context.handle(
+        _sourceUpdatedAtMsMeta,
+        sourceUpdatedAtMs.isAcceptableOrUnknown(
+          data['source_updated_at_ms']!,
+          _sourceUpdatedAtMsMeta,
+        ),
       );
     }
     return context;
@@ -2126,6 +2199,18 @@ class $MooringPlacesTable extends MooringPlaces
         DriftSqlType.string,
         data['${effectivePrefix}phone'],
       ),
+      email: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}email'],
+      ),
+      websiteUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}website_url'],
+      ),
+      bookingUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}booking_url'],
+      ),
       servicesJson: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}services_json'],
@@ -2133,6 +2218,10 @@ class $MooringPlacesTable extends MooringPlaces
       notes: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}notes'],
+      ),
+      sourceUpdatedAtMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}source_updated_at_ms'],
       ),
     );
   }
@@ -2151,10 +2240,18 @@ class MooringPlaceRow extends DataClass implements Insertable<MooringPlaceRow> {
   final double lon;
   final String? vhf;
   final String? phone;
+  final String? email;
+  final String? websiteUrl;
+
+  /// Партнёрское бронирование или веб-форма (deeplink).
+  final String? bookingUrl;
 
   /// JSON: electricity, water, wifi, showers — флаги для карточки.
   final String? servicesJson;
   final String? notes;
+
+  /// Версия строки каталога для merge при импорте пакетов (новее побеждает).
+  final int? sourceUpdatedAtMs;
   const MooringPlaceRow({
     required this.id,
     required this.kind,
@@ -2163,8 +2260,12 @@ class MooringPlaceRow extends DataClass implements Insertable<MooringPlaceRow> {
     required this.lon,
     this.vhf,
     this.phone,
+    this.email,
+    this.websiteUrl,
+    this.bookingUrl,
     this.servicesJson,
     this.notes,
+    this.sourceUpdatedAtMs,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -2180,11 +2281,23 @@ class MooringPlaceRow extends DataClass implements Insertable<MooringPlaceRow> {
     if (!nullToAbsent || phone != null) {
       map['phone'] = Variable<String>(phone);
     }
+    if (!nullToAbsent || email != null) {
+      map['email'] = Variable<String>(email);
+    }
+    if (!nullToAbsent || websiteUrl != null) {
+      map['website_url'] = Variable<String>(websiteUrl);
+    }
+    if (!nullToAbsent || bookingUrl != null) {
+      map['booking_url'] = Variable<String>(bookingUrl);
+    }
     if (!nullToAbsent || servicesJson != null) {
       map['services_json'] = Variable<String>(servicesJson);
     }
     if (!nullToAbsent || notes != null) {
       map['notes'] = Variable<String>(notes);
+    }
+    if (!nullToAbsent || sourceUpdatedAtMs != null) {
+      map['source_updated_at_ms'] = Variable<int>(sourceUpdatedAtMs);
     }
     return map;
   }
@@ -2200,12 +2313,24 @@ class MooringPlaceRow extends DataClass implements Insertable<MooringPlaceRow> {
       phone: phone == null && nullToAbsent
           ? const Value.absent()
           : Value(phone),
+      email: email == null && nullToAbsent
+          ? const Value.absent()
+          : Value(email),
+      websiteUrl: websiteUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(websiteUrl),
+      bookingUrl: bookingUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(bookingUrl),
       servicesJson: servicesJson == null && nullToAbsent
           ? const Value.absent()
           : Value(servicesJson),
       notes: notes == null && nullToAbsent
           ? const Value.absent()
           : Value(notes),
+      sourceUpdatedAtMs: sourceUpdatedAtMs == null && nullToAbsent
+          ? const Value.absent()
+          : Value(sourceUpdatedAtMs),
     );
   }
 
@@ -2222,8 +2347,12 @@ class MooringPlaceRow extends DataClass implements Insertable<MooringPlaceRow> {
       lon: serializer.fromJson<double>(json['lon']),
       vhf: serializer.fromJson<String?>(json['vhf']),
       phone: serializer.fromJson<String?>(json['phone']),
+      email: serializer.fromJson<String?>(json['email']),
+      websiteUrl: serializer.fromJson<String?>(json['websiteUrl']),
+      bookingUrl: serializer.fromJson<String?>(json['bookingUrl']),
       servicesJson: serializer.fromJson<String?>(json['servicesJson']),
       notes: serializer.fromJson<String?>(json['notes']),
+      sourceUpdatedAtMs: serializer.fromJson<int?>(json['sourceUpdatedAtMs']),
     );
   }
   @override
@@ -2237,8 +2366,12 @@ class MooringPlaceRow extends DataClass implements Insertable<MooringPlaceRow> {
       'lon': serializer.toJson<double>(lon),
       'vhf': serializer.toJson<String?>(vhf),
       'phone': serializer.toJson<String?>(phone),
+      'email': serializer.toJson<String?>(email),
+      'websiteUrl': serializer.toJson<String?>(websiteUrl),
+      'bookingUrl': serializer.toJson<String?>(bookingUrl),
       'servicesJson': serializer.toJson<String?>(servicesJson),
       'notes': serializer.toJson<String?>(notes),
+      'sourceUpdatedAtMs': serializer.toJson<int?>(sourceUpdatedAtMs),
     };
   }
 
@@ -2250,8 +2383,12 @@ class MooringPlaceRow extends DataClass implements Insertable<MooringPlaceRow> {
     double? lon,
     Value<String?> vhf = const Value.absent(),
     Value<String?> phone = const Value.absent(),
+    Value<String?> email = const Value.absent(),
+    Value<String?> websiteUrl = const Value.absent(),
+    Value<String?> bookingUrl = const Value.absent(),
     Value<String?> servicesJson = const Value.absent(),
     Value<String?> notes = const Value.absent(),
+    Value<int?> sourceUpdatedAtMs = const Value.absent(),
   }) => MooringPlaceRow(
     id: id ?? this.id,
     kind: kind ?? this.kind,
@@ -2260,8 +2397,14 @@ class MooringPlaceRow extends DataClass implements Insertable<MooringPlaceRow> {
     lon: lon ?? this.lon,
     vhf: vhf.present ? vhf.value : this.vhf,
     phone: phone.present ? phone.value : this.phone,
+    email: email.present ? email.value : this.email,
+    websiteUrl: websiteUrl.present ? websiteUrl.value : this.websiteUrl,
+    bookingUrl: bookingUrl.present ? bookingUrl.value : this.bookingUrl,
     servicesJson: servicesJson.present ? servicesJson.value : this.servicesJson,
     notes: notes.present ? notes.value : this.notes,
+    sourceUpdatedAtMs: sourceUpdatedAtMs.present
+        ? sourceUpdatedAtMs.value
+        : this.sourceUpdatedAtMs,
   );
   MooringPlaceRow copyWithCompanion(MooringPlacesCompanion data) {
     return MooringPlaceRow(
@@ -2272,10 +2415,20 @@ class MooringPlaceRow extends DataClass implements Insertable<MooringPlaceRow> {
       lon: data.lon.present ? data.lon.value : this.lon,
       vhf: data.vhf.present ? data.vhf.value : this.vhf,
       phone: data.phone.present ? data.phone.value : this.phone,
+      email: data.email.present ? data.email.value : this.email,
+      websiteUrl: data.websiteUrl.present
+          ? data.websiteUrl.value
+          : this.websiteUrl,
+      bookingUrl: data.bookingUrl.present
+          ? data.bookingUrl.value
+          : this.bookingUrl,
       servicesJson: data.servicesJson.present
           ? data.servicesJson.value
           : this.servicesJson,
       notes: data.notes.present ? data.notes.value : this.notes,
+      sourceUpdatedAtMs: data.sourceUpdatedAtMs.present
+          ? data.sourceUpdatedAtMs.value
+          : this.sourceUpdatedAtMs,
     );
   }
 
@@ -2289,15 +2442,32 @@ class MooringPlaceRow extends DataClass implements Insertable<MooringPlaceRow> {
           ..write('lon: $lon, ')
           ..write('vhf: $vhf, ')
           ..write('phone: $phone, ')
+          ..write('email: $email, ')
+          ..write('websiteUrl: $websiteUrl, ')
+          ..write('bookingUrl: $bookingUrl, ')
           ..write('servicesJson: $servicesJson, ')
-          ..write('notes: $notes')
+          ..write('notes: $notes, ')
+          ..write('sourceUpdatedAtMs: $sourceUpdatedAtMs')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, kind, name, lat, lon, vhf, phone, servicesJson, notes);
+  int get hashCode => Object.hash(
+    id,
+    kind,
+    name,
+    lat,
+    lon,
+    vhf,
+    phone,
+    email,
+    websiteUrl,
+    bookingUrl,
+    servicesJson,
+    notes,
+    sourceUpdatedAtMs,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -2309,8 +2479,12 @@ class MooringPlaceRow extends DataClass implements Insertable<MooringPlaceRow> {
           other.lon == this.lon &&
           other.vhf == this.vhf &&
           other.phone == this.phone &&
+          other.email == this.email &&
+          other.websiteUrl == this.websiteUrl &&
+          other.bookingUrl == this.bookingUrl &&
           other.servicesJson == this.servicesJson &&
-          other.notes == this.notes);
+          other.notes == this.notes &&
+          other.sourceUpdatedAtMs == this.sourceUpdatedAtMs);
 }
 
 class MooringPlacesCompanion extends UpdateCompanion<MooringPlaceRow> {
@@ -2321,8 +2495,12 @@ class MooringPlacesCompanion extends UpdateCompanion<MooringPlaceRow> {
   final Value<double> lon;
   final Value<String?> vhf;
   final Value<String?> phone;
+  final Value<String?> email;
+  final Value<String?> websiteUrl;
+  final Value<String?> bookingUrl;
   final Value<String?> servicesJson;
   final Value<String?> notes;
+  final Value<int?> sourceUpdatedAtMs;
   final Value<int> rowid;
   const MooringPlacesCompanion({
     this.id = const Value.absent(),
@@ -2332,8 +2510,12 @@ class MooringPlacesCompanion extends UpdateCompanion<MooringPlaceRow> {
     this.lon = const Value.absent(),
     this.vhf = const Value.absent(),
     this.phone = const Value.absent(),
+    this.email = const Value.absent(),
+    this.websiteUrl = const Value.absent(),
+    this.bookingUrl = const Value.absent(),
     this.servicesJson = const Value.absent(),
     this.notes = const Value.absent(),
+    this.sourceUpdatedAtMs = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   MooringPlacesCompanion.insert({
@@ -2344,8 +2526,12 @@ class MooringPlacesCompanion extends UpdateCompanion<MooringPlaceRow> {
     required double lon,
     this.vhf = const Value.absent(),
     this.phone = const Value.absent(),
+    this.email = const Value.absent(),
+    this.websiteUrl = const Value.absent(),
+    this.bookingUrl = const Value.absent(),
     this.servicesJson = const Value.absent(),
     this.notes = const Value.absent(),
+    this.sourceUpdatedAtMs = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : id = Value(id),
        kind = Value(kind),
@@ -2360,8 +2546,12 @@ class MooringPlacesCompanion extends UpdateCompanion<MooringPlaceRow> {
     Expression<double>? lon,
     Expression<String>? vhf,
     Expression<String>? phone,
+    Expression<String>? email,
+    Expression<String>? websiteUrl,
+    Expression<String>? bookingUrl,
     Expression<String>? servicesJson,
     Expression<String>? notes,
+    Expression<int>? sourceUpdatedAtMs,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -2372,8 +2562,12 @@ class MooringPlacesCompanion extends UpdateCompanion<MooringPlaceRow> {
       if (lon != null) 'lon': lon,
       if (vhf != null) 'vhf': vhf,
       if (phone != null) 'phone': phone,
+      if (email != null) 'email': email,
+      if (websiteUrl != null) 'website_url': websiteUrl,
+      if (bookingUrl != null) 'booking_url': bookingUrl,
       if (servicesJson != null) 'services_json': servicesJson,
       if (notes != null) 'notes': notes,
+      if (sourceUpdatedAtMs != null) 'source_updated_at_ms': sourceUpdatedAtMs,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -2386,8 +2580,12 @@ class MooringPlacesCompanion extends UpdateCompanion<MooringPlaceRow> {
     Value<double>? lon,
     Value<String?>? vhf,
     Value<String?>? phone,
+    Value<String?>? email,
+    Value<String?>? websiteUrl,
+    Value<String?>? bookingUrl,
     Value<String?>? servicesJson,
     Value<String?>? notes,
+    Value<int?>? sourceUpdatedAtMs,
     Value<int>? rowid,
   }) {
     return MooringPlacesCompanion(
@@ -2398,8 +2596,12 @@ class MooringPlacesCompanion extends UpdateCompanion<MooringPlaceRow> {
       lon: lon ?? this.lon,
       vhf: vhf ?? this.vhf,
       phone: phone ?? this.phone,
+      email: email ?? this.email,
+      websiteUrl: websiteUrl ?? this.websiteUrl,
+      bookingUrl: bookingUrl ?? this.bookingUrl,
       servicesJson: servicesJson ?? this.servicesJson,
       notes: notes ?? this.notes,
+      sourceUpdatedAtMs: sourceUpdatedAtMs ?? this.sourceUpdatedAtMs,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -2428,11 +2630,23 @@ class MooringPlacesCompanion extends UpdateCompanion<MooringPlaceRow> {
     if (phone.present) {
       map['phone'] = Variable<String>(phone.value);
     }
+    if (email.present) {
+      map['email'] = Variable<String>(email.value);
+    }
+    if (websiteUrl.present) {
+      map['website_url'] = Variable<String>(websiteUrl.value);
+    }
+    if (bookingUrl.present) {
+      map['booking_url'] = Variable<String>(bookingUrl.value);
+    }
     if (servicesJson.present) {
       map['services_json'] = Variable<String>(servicesJson.value);
     }
     if (notes.present) {
       map['notes'] = Variable<String>(notes.value);
+    }
+    if (sourceUpdatedAtMs.present) {
+      map['source_updated_at_ms'] = Variable<int>(sourceUpdatedAtMs.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -2450,8 +2664,12 @@ class MooringPlacesCompanion extends UpdateCompanion<MooringPlaceRow> {
           ..write('lon: $lon, ')
           ..write('vhf: $vhf, ')
           ..write('phone: $phone, ')
+          ..write('email: $email, ')
+          ..write('websiteUrl: $websiteUrl, ')
+          ..write('bookingUrl: $bookingUrl, ')
           ..write('servicesJson: $servicesJson, ')
           ..write('notes: $notes, ')
+          ..write('sourceUpdatedAtMs: $sourceUpdatedAtMs, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -2873,6 +3091,2543 @@ class MooringReviewDraftsCompanion
   }
 }
 
+class $LogbookEntriesTable extends LogbookEntries
+    with TableInfo<$LogbookEntriesTable, LogbookEntryRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LogbookEntriesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tMeta = const VerificationMeta('t');
+  @override
+  late final GeneratedColumn<int> t = GeneratedColumn<int>(
+    't',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
+  );
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+    'category',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _payloadJsonMeta = const VerificationMeta(
+    'payloadJson',
+  );
+  @override
+  late final GeneratedColumn<String> payloadJson = GeneratedColumn<String>(
+    'payload_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, t, category, payloadJson];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'logbook_entries';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<LogbookEntryRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('t')) {
+      context.handle(_tMeta, t.isAcceptableOrUnknown(data['t']!, _tMeta));
+    } else if (isInserting) {
+      context.missing(_tMeta);
+    }
+    if (data.containsKey('category')) {
+      context.handle(
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('payload_json')) {
+      context.handle(
+        _payloadJsonMeta,
+        payloadJson.isAcceptableOrUnknown(
+          data['payload_json']!,
+          _payloadJsonMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_payloadJsonMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LogbookEntryRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LogbookEntryRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      t: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}t'],
+      )!,
+      category: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category'],
+      )!,
+      payloadJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}payload_json'],
+      )!,
+    );
+  }
+
+  @override
+  $LogbookEntriesTable createAlias(String alias) {
+    return $LogbookEntriesTable(attachedDatabase, alias);
+  }
+}
+
+class LogbookEntryRow extends DataClass implements Insertable<LogbookEntryRow> {
+  final String id;
+  final int t;
+  final String category;
+  final String payloadJson;
+  const LogbookEntryRow({
+    required this.id,
+    required this.t,
+    required this.category,
+    required this.payloadJson,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['t'] = Variable<int>(t);
+    map['category'] = Variable<String>(category);
+    map['payload_json'] = Variable<String>(payloadJson);
+    return map;
+  }
+
+  LogbookEntriesCompanion toCompanion(bool nullToAbsent) {
+    return LogbookEntriesCompanion(
+      id: Value(id),
+      t: Value(t),
+      category: Value(category),
+      payloadJson: Value(payloadJson),
+    );
+  }
+
+  factory LogbookEntryRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LogbookEntryRow(
+      id: serializer.fromJson<String>(json['id']),
+      t: serializer.fromJson<int>(json['t']),
+      category: serializer.fromJson<String>(json['category']),
+      payloadJson: serializer.fromJson<String>(json['payloadJson']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      't': serializer.toJson<int>(t),
+      'category': serializer.toJson<String>(category),
+      'payloadJson': serializer.toJson<String>(payloadJson),
+    };
+  }
+
+  LogbookEntryRow copyWith({
+    String? id,
+    int? t,
+    String? category,
+    String? payloadJson,
+  }) => LogbookEntryRow(
+    id: id ?? this.id,
+    t: t ?? this.t,
+    category: category ?? this.category,
+    payloadJson: payloadJson ?? this.payloadJson,
+  );
+  LogbookEntryRow copyWithCompanion(LogbookEntriesCompanion data) {
+    return LogbookEntryRow(
+      id: data.id.present ? data.id.value : this.id,
+      t: data.t.present ? data.t.value : this.t,
+      category: data.category.present ? data.category.value : this.category,
+      payloadJson: data.payloadJson.present
+          ? data.payloadJson.value
+          : this.payloadJson,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LogbookEntryRow(')
+          ..write('id: $id, ')
+          ..write('t: $t, ')
+          ..write('category: $category, ')
+          ..write('payloadJson: $payloadJson')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, t, category, payloadJson);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LogbookEntryRow &&
+          other.id == this.id &&
+          other.t == this.t &&
+          other.category == this.category &&
+          other.payloadJson == this.payloadJson);
+}
+
+class LogbookEntriesCompanion extends UpdateCompanion<LogbookEntryRow> {
+  final Value<String> id;
+  final Value<int> t;
+  final Value<String> category;
+  final Value<String> payloadJson;
+  final Value<int> rowid;
+  const LogbookEntriesCompanion({
+    this.id = const Value.absent(),
+    this.t = const Value.absent(),
+    this.category = const Value.absent(),
+    this.payloadJson = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  LogbookEntriesCompanion.insert({
+    required String id,
+    required int t,
+    required String category,
+    required String payloadJson,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       t = Value(t),
+       category = Value(category),
+       payloadJson = Value(payloadJson);
+  static Insertable<LogbookEntryRow> custom({
+    Expression<String>? id,
+    Expression<int>? t,
+    Expression<String>? category,
+    Expression<String>? payloadJson,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (t != null) 't': t,
+      if (category != null) 'category': category,
+      if (payloadJson != null) 'payload_json': payloadJson,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  LogbookEntriesCompanion copyWith({
+    Value<String>? id,
+    Value<int>? t,
+    Value<String>? category,
+    Value<String>? payloadJson,
+    Value<int>? rowid,
+  }) {
+    return LogbookEntriesCompanion(
+      id: id ?? this.id,
+      t: t ?? this.t,
+      category: category ?? this.category,
+      payloadJson: payloadJson ?? this.payloadJson,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (t.present) {
+      map['t'] = Variable<int>(t.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (payloadJson.present) {
+      map['payload_json'] = Variable<String>(payloadJson.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LogbookEntriesCompanion(')
+          ..write('id: $id, ')
+          ..write('t: $t, ')
+          ..write('category: $category, ')
+          ..write('payloadJson: $payloadJson, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TrackTripsTable extends TrackTrips
+    with TableInfo<$TrackTripsTable, TrackTripRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TrackTripsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _startedAtMsMeta = const VerificationMeta(
+    'startedAtMs',
+  );
+  @override
+  late final GeneratedColumn<int> startedAtMs = GeneratedColumn<int>(
+    'started_at_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _endedAtMsMeta = const VerificationMeta(
+    'endedAtMs',
+  );
+  @override
+  late final GeneratedColumn<int> endedAtMs = GeneratedColumn<int>(
+    'ended_at_ms',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, startedAtMs, endedAtMs];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'track_trips';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TrackTripRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('started_at_ms')) {
+      context.handle(
+        _startedAtMsMeta,
+        startedAtMs.isAcceptableOrUnknown(
+          data['started_at_ms']!,
+          _startedAtMsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_startedAtMsMeta);
+    }
+    if (data.containsKey('ended_at_ms')) {
+      context.handle(
+        _endedAtMsMeta,
+        endedAtMs.isAcceptableOrUnknown(data['ended_at_ms']!, _endedAtMsMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TrackTripRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TrackTripRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      startedAtMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}started_at_ms'],
+      )!,
+      endedAtMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}ended_at_ms'],
+      ),
+    );
+  }
+
+  @override
+  $TrackTripsTable createAlias(String alias) {
+    return $TrackTripsTable(attachedDatabase, alias);
+  }
+}
+
+class TrackTripRow extends DataClass implements Insertable<TrackTripRow> {
+  final String id;
+  final int startedAtMs;
+  final int? endedAtMs;
+  const TrackTripRow({
+    required this.id,
+    required this.startedAtMs,
+    this.endedAtMs,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['started_at_ms'] = Variable<int>(startedAtMs);
+    if (!nullToAbsent || endedAtMs != null) {
+      map['ended_at_ms'] = Variable<int>(endedAtMs);
+    }
+    return map;
+  }
+
+  TrackTripsCompanion toCompanion(bool nullToAbsent) {
+    return TrackTripsCompanion(
+      id: Value(id),
+      startedAtMs: Value(startedAtMs),
+      endedAtMs: endedAtMs == null && nullToAbsent
+          ? const Value.absent()
+          : Value(endedAtMs),
+    );
+  }
+
+  factory TrackTripRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TrackTripRow(
+      id: serializer.fromJson<String>(json['id']),
+      startedAtMs: serializer.fromJson<int>(json['startedAtMs']),
+      endedAtMs: serializer.fromJson<int?>(json['endedAtMs']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'startedAtMs': serializer.toJson<int>(startedAtMs),
+      'endedAtMs': serializer.toJson<int?>(endedAtMs),
+    };
+  }
+
+  TrackTripRow copyWith({
+    String? id,
+    int? startedAtMs,
+    Value<int?> endedAtMs = const Value.absent(),
+  }) => TrackTripRow(
+    id: id ?? this.id,
+    startedAtMs: startedAtMs ?? this.startedAtMs,
+    endedAtMs: endedAtMs.present ? endedAtMs.value : this.endedAtMs,
+  );
+  TrackTripRow copyWithCompanion(TrackTripsCompanion data) {
+    return TrackTripRow(
+      id: data.id.present ? data.id.value : this.id,
+      startedAtMs: data.startedAtMs.present
+          ? data.startedAtMs.value
+          : this.startedAtMs,
+      endedAtMs: data.endedAtMs.present ? data.endedAtMs.value : this.endedAtMs,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TrackTripRow(')
+          ..write('id: $id, ')
+          ..write('startedAtMs: $startedAtMs, ')
+          ..write('endedAtMs: $endedAtMs')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, startedAtMs, endedAtMs);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TrackTripRow &&
+          other.id == this.id &&
+          other.startedAtMs == this.startedAtMs &&
+          other.endedAtMs == this.endedAtMs);
+}
+
+class TrackTripsCompanion extends UpdateCompanion<TrackTripRow> {
+  final Value<String> id;
+  final Value<int> startedAtMs;
+  final Value<int?> endedAtMs;
+  final Value<int> rowid;
+  const TrackTripsCompanion({
+    this.id = const Value.absent(),
+    this.startedAtMs = const Value.absent(),
+    this.endedAtMs = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TrackTripsCompanion.insert({
+    required String id,
+    required int startedAtMs,
+    this.endedAtMs = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       startedAtMs = Value(startedAtMs);
+  static Insertable<TrackTripRow> custom({
+    Expression<String>? id,
+    Expression<int>? startedAtMs,
+    Expression<int>? endedAtMs,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (startedAtMs != null) 'started_at_ms': startedAtMs,
+      if (endedAtMs != null) 'ended_at_ms': endedAtMs,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TrackTripsCompanion copyWith({
+    Value<String>? id,
+    Value<int>? startedAtMs,
+    Value<int?>? endedAtMs,
+    Value<int>? rowid,
+  }) {
+    return TrackTripsCompanion(
+      id: id ?? this.id,
+      startedAtMs: startedAtMs ?? this.startedAtMs,
+      endedAtMs: endedAtMs ?? this.endedAtMs,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (startedAtMs.present) {
+      map['started_at_ms'] = Variable<int>(startedAtMs.value);
+    }
+    if (endedAtMs.present) {
+      map['ended_at_ms'] = Variable<int>(endedAtMs.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TrackTripsCompanion(')
+          ..write('id: $id, ')
+          ..write('startedAtMs: $startedAtMs, ')
+          ..write('endedAtMs: $endedAtMs, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TrackPointsTable extends TrackPoints
+    with TableInfo<$TrackPointsTable, TrackPointRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TrackPointsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _tripIdMeta = const VerificationMeta('tripId');
+  @override
+  late final GeneratedColumn<String> tripId = GeneratedColumn<String>(
+    'trip_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tMeta = const VerificationMeta('t');
+  @override
+  late final GeneratedColumn<int> t = GeneratedColumn<int>(
+    't',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _latMeta = const VerificationMeta('lat');
+  @override
+  late final GeneratedColumn<double> lat = GeneratedColumn<double>(
+    'lat',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lonMeta = const VerificationMeta('lon');
+  @override
+  late final GeneratedColumn<double> lon = GeneratedColumn<double>(
+    'lon',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sogMeta = const VerificationMeta('sog');
+  @override
+  late final GeneratedColumn<double> sog = GeneratedColumn<double>(
+    'sog',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _cogMeta = const VerificationMeta('cog');
+  @override
+  late final GeneratedColumn<double> cog = GeneratedColumn<double>(
+    'cog',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, tripId, t, lat, lon, sog, cog];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'track_points';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TrackPointRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('trip_id')) {
+      context.handle(
+        _tripIdMeta,
+        tripId.isAcceptableOrUnknown(data['trip_id']!, _tripIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tripIdMeta);
+    }
+    if (data.containsKey('t')) {
+      context.handle(_tMeta, t.isAcceptableOrUnknown(data['t']!, _tMeta));
+    } else if (isInserting) {
+      context.missing(_tMeta);
+    }
+    if (data.containsKey('lat')) {
+      context.handle(
+        _latMeta,
+        lat.isAcceptableOrUnknown(data['lat']!, _latMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_latMeta);
+    }
+    if (data.containsKey('lon')) {
+      context.handle(
+        _lonMeta,
+        lon.isAcceptableOrUnknown(data['lon']!, _lonMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_lonMeta);
+    }
+    if (data.containsKey('sog')) {
+      context.handle(
+        _sogMeta,
+        sog.isAcceptableOrUnknown(data['sog']!, _sogMeta),
+      );
+    }
+    if (data.containsKey('cog')) {
+      context.handle(
+        _cogMeta,
+        cog.isAcceptableOrUnknown(data['cog']!, _cogMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TrackPointRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TrackPointRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      tripId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}trip_id'],
+      )!,
+      t: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}t'],
+      )!,
+      lat: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}lat'],
+      )!,
+      lon: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}lon'],
+      )!,
+      sog: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}sog'],
+      ),
+      cog: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}cog'],
+      ),
+    );
+  }
+
+  @override
+  $TrackPointsTable createAlias(String alias) {
+    return $TrackPointsTable(attachedDatabase, alias);
+  }
+}
+
+class TrackPointRow extends DataClass implements Insertable<TrackPointRow> {
+  final int id;
+  final String tripId;
+  final int t;
+  final double lat;
+  final double lon;
+  final double? sog;
+  final double? cog;
+  const TrackPointRow({
+    required this.id,
+    required this.tripId,
+    required this.t,
+    required this.lat,
+    required this.lon,
+    this.sog,
+    this.cog,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['trip_id'] = Variable<String>(tripId);
+    map['t'] = Variable<int>(t);
+    map['lat'] = Variable<double>(lat);
+    map['lon'] = Variable<double>(lon);
+    if (!nullToAbsent || sog != null) {
+      map['sog'] = Variable<double>(sog);
+    }
+    if (!nullToAbsent || cog != null) {
+      map['cog'] = Variable<double>(cog);
+    }
+    return map;
+  }
+
+  TrackPointsCompanion toCompanion(bool nullToAbsent) {
+    return TrackPointsCompanion(
+      id: Value(id),
+      tripId: Value(tripId),
+      t: Value(t),
+      lat: Value(lat),
+      lon: Value(lon),
+      sog: sog == null && nullToAbsent ? const Value.absent() : Value(sog),
+      cog: cog == null && nullToAbsent ? const Value.absent() : Value(cog),
+    );
+  }
+
+  factory TrackPointRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TrackPointRow(
+      id: serializer.fromJson<int>(json['id']),
+      tripId: serializer.fromJson<String>(json['tripId']),
+      t: serializer.fromJson<int>(json['t']),
+      lat: serializer.fromJson<double>(json['lat']),
+      lon: serializer.fromJson<double>(json['lon']),
+      sog: serializer.fromJson<double?>(json['sog']),
+      cog: serializer.fromJson<double?>(json['cog']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'tripId': serializer.toJson<String>(tripId),
+      't': serializer.toJson<int>(t),
+      'lat': serializer.toJson<double>(lat),
+      'lon': serializer.toJson<double>(lon),
+      'sog': serializer.toJson<double?>(sog),
+      'cog': serializer.toJson<double?>(cog),
+    };
+  }
+
+  TrackPointRow copyWith({
+    int? id,
+    String? tripId,
+    int? t,
+    double? lat,
+    double? lon,
+    Value<double?> sog = const Value.absent(),
+    Value<double?> cog = const Value.absent(),
+  }) => TrackPointRow(
+    id: id ?? this.id,
+    tripId: tripId ?? this.tripId,
+    t: t ?? this.t,
+    lat: lat ?? this.lat,
+    lon: lon ?? this.lon,
+    sog: sog.present ? sog.value : this.sog,
+    cog: cog.present ? cog.value : this.cog,
+  );
+  TrackPointRow copyWithCompanion(TrackPointsCompanion data) {
+    return TrackPointRow(
+      id: data.id.present ? data.id.value : this.id,
+      tripId: data.tripId.present ? data.tripId.value : this.tripId,
+      t: data.t.present ? data.t.value : this.t,
+      lat: data.lat.present ? data.lat.value : this.lat,
+      lon: data.lon.present ? data.lon.value : this.lon,
+      sog: data.sog.present ? data.sog.value : this.sog,
+      cog: data.cog.present ? data.cog.value : this.cog,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TrackPointRow(')
+          ..write('id: $id, ')
+          ..write('tripId: $tripId, ')
+          ..write('t: $t, ')
+          ..write('lat: $lat, ')
+          ..write('lon: $lon, ')
+          ..write('sog: $sog, ')
+          ..write('cog: $cog')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, tripId, t, lat, lon, sog, cog);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TrackPointRow &&
+          other.id == this.id &&
+          other.tripId == this.tripId &&
+          other.t == this.t &&
+          other.lat == this.lat &&
+          other.lon == this.lon &&
+          other.sog == this.sog &&
+          other.cog == this.cog);
+}
+
+class TrackPointsCompanion extends UpdateCompanion<TrackPointRow> {
+  final Value<int> id;
+  final Value<String> tripId;
+  final Value<int> t;
+  final Value<double> lat;
+  final Value<double> lon;
+  final Value<double?> sog;
+  final Value<double?> cog;
+  const TrackPointsCompanion({
+    this.id = const Value.absent(),
+    this.tripId = const Value.absent(),
+    this.t = const Value.absent(),
+    this.lat = const Value.absent(),
+    this.lon = const Value.absent(),
+    this.sog = const Value.absent(),
+    this.cog = const Value.absent(),
+  });
+  TrackPointsCompanion.insert({
+    this.id = const Value.absent(),
+    required String tripId,
+    required int t,
+    required double lat,
+    required double lon,
+    this.sog = const Value.absent(),
+    this.cog = const Value.absent(),
+  }) : tripId = Value(tripId),
+       t = Value(t),
+       lat = Value(lat),
+       lon = Value(lon);
+  static Insertable<TrackPointRow> custom({
+    Expression<int>? id,
+    Expression<String>? tripId,
+    Expression<int>? t,
+    Expression<double>? lat,
+    Expression<double>? lon,
+    Expression<double>? sog,
+    Expression<double>? cog,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (tripId != null) 'trip_id': tripId,
+      if (t != null) 't': t,
+      if (lat != null) 'lat': lat,
+      if (lon != null) 'lon': lon,
+      if (sog != null) 'sog': sog,
+      if (cog != null) 'cog': cog,
+    });
+  }
+
+  TrackPointsCompanion copyWith({
+    Value<int>? id,
+    Value<String>? tripId,
+    Value<int>? t,
+    Value<double>? lat,
+    Value<double>? lon,
+    Value<double?>? sog,
+    Value<double?>? cog,
+  }) {
+    return TrackPointsCompanion(
+      id: id ?? this.id,
+      tripId: tripId ?? this.tripId,
+      t: t ?? this.t,
+      lat: lat ?? this.lat,
+      lon: lon ?? this.lon,
+      sog: sog ?? this.sog,
+      cog: cog ?? this.cog,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (tripId.present) {
+      map['trip_id'] = Variable<String>(tripId.value);
+    }
+    if (t.present) {
+      map['t'] = Variable<int>(t.value);
+    }
+    if (lat.present) {
+      map['lat'] = Variable<double>(lat.value);
+    }
+    if (lon.present) {
+      map['lon'] = Variable<double>(lon.value);
+    }
+    if (sog.present) {
+      map['sog'] = Variable<double>(sog.value);
+    }
+    if (cog.present) {
+      map['cog'] = Variable<double>(cog.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TrackPointsCompanion(')
+          ..write('id: $id, ')
+          ..write('tripId: $tripId, ')
+          ..write('t: $t, ')
+          ..write('lat: $lat, ')
+          ..write('lon: $lon, ')
+          ..write('sog: $sog, ')
+          ..write('cog: $cog')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ChecklistInstancesTable extends ChecklistInstances
+    with TableInfo<$ChecklistInstancesTable, ChecklistInstanceRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ChecklistInstancesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _templateKeyMeta = const VerificationMeta(
+    'templateKey',
+  );
+  @override
+  late final GeneratedColumn<String> templateKey = GeneratedColumn<String>(
+    'template_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _itemsJsonMeta = const VerificationMeta(
+    'itemsJson',
+  );
+  @override
+  late final GeneratedColumn<String> itemsJson = GeneratedColumn<String>(
+    'items_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMsMeta = const VerificationMeta(
+    'updatedAtMs',
+  );
+  @override
+  late final GeneratedColumn<int> updatedAtMs = GeneratedColumn<int>(
+    'updated_at_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _completedMeta = const VerificationMeta(
+    'completed',
+  );
+  @override
+  late final GeneratedColumn<bool> completed = GeneratedColumn<bool>(
+    'completed',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("completed" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    templateKey,
+    itemsJson,
+    updatedAtMs,
+    completed,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'checklist_instances';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ChecklistInstanceRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('template_key')) {
+      context.handle(
+        _templateKeyMeta,
+        templateKey.isAcceptableOrUnknown(
+          data['template_key']!,
+          _templateKeyMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_templateKeyMeta);
+    }
+    if (data.containsKey('items_json')) {
+      context.handle(
+        _itemsJsonMeta,
+        itemsJson.isAcceptableOrUnknown(data['items_json']!, _itemsJsonMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_itemsJsonMeta);
+    }
+    if (data.containsKey('updated_at_ms')) {
+      context.handle(
+        _updatedAtMsMeta,
+        updatedAtMs.isAcceptableOrUnknown(
+          data['updated_at_ms']!,
+          _updatedAtMsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMsMeta);
+    }
+    if (data.containsKey('completed')) {
+      context.handle(
+        _completedMeta,
+        completed.isAcceptableOrUnknown(data['completed']!, _completedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ChecklistInstanceRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ChecklistInstanceRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      templateKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}template_key'],
+      )!,
+      itemsJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}items_json'],
+      )!,
+      updatedAtMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}updated_at_ms'],
+      )!,
+      completed: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}completed'],
+      )!,
+    );
+  }
+
+  @override
+  $ChecklistInstancesTable createAlias(String alias) {
+    return $ChecklistInstancesTable(attachedDatabase, alias);
+  }
+}
+
+class ChecklistInstanceRow extends DataClass
+    implements Insertable<ChecklistInstanceRow> {
+  final String id;
+  final String templateKey;
+
+  /// [{\"id\":\"a\",\"label\":\"...\",\"done\":false}, ...]
+  final String itemsJson;
+  final int updatedAtMs;
+  final bool completed;
+  const ChecklistInstanceRow({
+    required this.id,
+    required this.templateKey,
+    required this.itemsJson,
+    required this.updatedAtMs,
+    required this.completed,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['template_key'] = Variable<String>(templateKey);
+    map['items_json'] = Variable<String>(itemsJson);
+    map['updated_at_ms'] = Variable<int>(updatedAtMs);
+    map['completed'] = Variable<bool>(completed);
+    return map;
+  }
+
+  ChecklistInstancesCompanion toCompanion(bool nullToAbsent) {
+    return ChecklistInstancesCompanion(
+      id: Value(id),
+      templateKey: Value(templateKey),
+      itemsJson: Value(itemsJson),
+      updatedAtMs: Value(updatedAtMs),
+      completed: Value(completed),
+    );
+  }
+
+  factory ChecklistInstanceRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ChecklistInstanceRow(
+      id: serializer.fromJson<String>(json['id']),
+      templateKey: serializer.fromJson<String>(json['templateKey']),
+      itemsJson: serializer.fromJson<String>(json['itemsJson']),
+      updatedAtMs: serializer.fromJson<int>(json['updatedAtMs']),
+      completed: serializer.fromJson<bool>(json['completed']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'templateKey': serializer.toJson<String>(templateKey),
+      'itemsJson': serializer.toJson<String>(itemsJson),
+      'updatedAtMs': serializer.toJson<int>(updatedAtMs),
+      'completed': serializer.toJson<bool>(completed),
+    };
+  }
+
+  ChecklistInstanceRow copyWith({
+    String? id,
+    String? templateKey,
+    String? itemsJson,
+    int? updatedAtMs,
+    bool? completed,
+  }) => ChecklistInstanceRow(
+    id: id ?? this.id,
+    templateKey: templateKey ?? this.templateKey,
+    itemsJson: itemsJson ?? this.itemsJson,
+    updatedAtMs: updatedAtMs ?? this.updatedAtMs,
+    completed: completed ?? this.completed,
+  );
+  ChecklistInstanceRow copyWithCompanion(ChecklistInstancesCompanion data) {
+    return ChecklistInstanceRow(
+      id: data.id.present ? data.id.value : this.id,
+      templateKey: data.templateKey.present
+          ? data.templateKey.value
+          : this.templateKey,
+      itemsJson: data.itemsJson.present ? data.itemsJson.value : this.itemsJson,
+      updatedAtMs: data.updatedAtMs.present
+          ? data.updatedAtMs.value
+          : this.updatedAtMs,
+      completed: data.completed.present ? data.completed.value : this.completed,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ChecklistInstanceRow(')
+          ..write('id: $id, ')
+          ..write('templateKey: $templateKey, ')
+          ..write('itemsJson: $itemsJson, ')
+          ..write('updatedAtMs: $updatedAtMs, ')
+          ..write('completed: $completed')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, templateKey, itemsJson, updatedAtMs, completed);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ChecklistInstanceRow &&
+          other.id == this.id &&
+          other.templateKey == this.templateKey &&
+          other.itemsJson == this.itemsJson &&
+          other.updatedAtMs == this.updatedAtMs &&
+          other.completed == this.completed);
+}
+
+class ChecklistInstancesCompanion
+    extends UpdateCompanion<ChecklistInstanceRow> {
+  final Value<String> id;
+  final Value<String> templateKey;
+  final Value<String> itemsJson;
+  final Value<int> updatedAtMs;
+  final Value<bool> completed;
+  final Value<int> rowid;
+  const ChecklistInstancesCompanion({
+    this.id = const Value.absent(),
+    this.templateKey = const Value.absent(),
+    this.itemsJson = const Value.absent(),
+    this.updatedAtMs = const Value.absent(),
+    this.completed = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ChecklistInstancesCompanion.insert({
+    required String id,
+    required String templateKey,
+    required String itemsJson,
+    required int updatedAtMs,
+    this.completed = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       templateKey = Value(templateKey),
+       itemsJson = Value(itemsJson),
+       updatedAtMs = Value(updatedAtMs);
+  static Insertable<ChecklistInstanceRow> custom({
+    Expression<String>? id,
+    Expression<String>? templateKey,
+    Expression<String>? itemsJson,
+    Expression<int>? updatedAtMs,
+    Expression<bool>? completed,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (templateKey != null) 'template_key': templateKey,
+      if (itemsJson != null) 'items_json': itemsJson,
+      if (updatedAtMs != null) 'updated_at_ms': updatedAtMs,
+      if (completed != null) 'completed': completed,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ChecklistInstancesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? templateKey,
+    Value<String>? itemsJson,
+    Value<int>? updatedAtMs,
+    Value<bool>? completed,
+    Value<int>? rowid,
+  }) {
+    return ChecklistInstancesCompanion(
+      id: id ?? this.id,
+      templateKey: templateKey ?? this.templateKey,
+      itemsJson: itemsJson ?? this.itemsJson,
+      updatedAtMs: updatedAtMs ?? this.updatedAtMs,
+      completed: completed ?? this.completed,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (templateKey.present) {
+      map['template_key'] = Variable<String>(templateKey.value);
+    }
+    if (itemsJson.present) {
+      map['items_json'] = Variable<String>(itemsJson.value);
+    }
+    if (updatedAtMs.present) {
+      map['updated_at_ms'] = Variable<int>(updatedAtMs.value);
+    }
+    if (completed.present) {
+      map['completed'] = Variable<bool>(completed.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ChecklistInstancesCompanion(')
+          ..write('id: $id, ')
+          ..write('templateKey: $templateKey, ')
+          ..write('itemsJson: $itemsJson, ')
+          ..write('updatedAtMs: $updatedAtMs, ')
+          ..write('completed: $completed, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $VaultFilesTable extends VaultFiles
+    with TableInfo<$VaultFilesTable, VaultFileRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VaultFilesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _displayNameMeta = const VerificationMeta(
+    'displayName',
+  );
+  @override
+  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
+    'display_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _cipherPayloadBase64Meta =
+      const VerificationMeta('cipherPayloadBase64');
+  @override
+  late final GeneratedColumn<String> cipherPayloadBase64 =
+      GeneratedColumn<String>(
+        'cipher_payload_base64',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _plainSizeBytesMeta = const VerificationMeta(
+    'plainSizeBytes',
+  );
+  @override
+  late final GeneratedColumn<int> plainSizeBytes = GeneratedColumn<int>(
+    'plain_size_bytes',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMsMeta = const VerificationMeta(
+    'createdAtMs',
+  );
+  @override
+  late final GeneratedColumn<int> createdAtMs = GeneratedColumn<int>(
+    'created_at_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    displayName,
+    cipherPayloadBase64,
+    plainSizeBytes,
+    createdAtMs,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'vault_files';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<VaultFileRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('display_name')) {
+      context.handle(
+        _displayNameMeta,
+        displayName.isAcceptableOrUnknown(
+          data['display_name']!,
+          _displayNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_displayNameMeta);
+    }
+    if (data.containsKey('cipher_payload_base64')) {
+      context.handle(
+        _cipherPayloadBase64Meta,
+        cipherPayloadBase64.isAcceptableOrUnknown(
+          data['cipher_payload_base64']!,
+          _cipherPayloadBase64Meta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_cipherPayloadBase64Meta);
+    }
+    if (data.containsKey('plain_size_bytes')) {
+      context.handle(
+        _plainSizeBytesMeta,
+        plainSizeBytes.isAcceptableOrUnknown(
+          data['plain_size_bytes']!,
+          _plainSizeBytesMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_plainSizeBytesMeta);
+    }
+    if (data.containsKey('created_at_ms')) {
+      context.handle(
+        _createdAtMsMeta,
+        createdAtMs.isAcceptableOrUnknown(
+          data['created_at_ms']!,
+          _createdAtMsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMsMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VaultFileRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VaultFileRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      displayName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}display_name'],
+      )!,
+      cipherPayloadBase64: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}cipher_payload_base64'],
+      )!,
+      plainSizeBytes: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}plain_size_bytes'],
+      )!,
+      createdAtMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at_ms'],
+      )!,
+    );
+  }
+
+  @override
+  $VaultFilesTable createAlias(String alias) {
+    return $VaultFilesTable(attachedDatabase, alias);
+  }
+}
+
+class VaultFileRow extends DataClass implements Insertable<VaultFileRow> {
+  final String id;
+  final String displayName;
+
+  /// AES-GCM: nonce + ciphertext, base64.
+  final String cipherPayloadBase64;
+  final int plainSizeBytes;
+  final int createdAtMs;
+  const VaultFileRow({
+    required this.id,
+    required this.displayName,
+    required this.cipherPayloadBase64,
+    required this.plainSizeBytes,
+    required this.createdAtMs,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['display_name'] = Variable<String>(displayName);
+    map['cipher_payload_base64'] = Variable<String>(cipherPayloadBase64);
+    map['plain_size_bytes'] = Variable<int>(plainSizeBytes);
+    map['created_at_ms'] = Variable<int>(createdAtMs);
+    return map;
+  }
+
+  VaultFilesCompanion toCompanion(bool nullToAbsent) {
+    return VaultFilesCompanion(
+      id: Value(id),
+      displayName: Value(displayName),
+      cipherPayloadBase64: Value(cipherPayloadBase64),
+      plainSizeBytes: Value(plainSizeBytes),
+      createdAtMs: Value(createdAtMs),
+    );
+  }
+
+  factory VaultFileRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VaultFileRow(
+      id: serializer.fromJson<String>(json['id']),
+      displayName: serializer.fromJson<String>(json['displayName']),
+      cipherPayloadBase64: serializer.fromJson<String>(
+        json['cipherPayloadBase64'],
+      ),
+      plainSizeBytes: serializer.fromJson<int>(json['plainSizeBytes']),
+      createdAtMs: serializer.fromJson<int>(json['createdAtMs']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'displayName': serializer.toJson<String>(displayName),
+      'cipherPayloadBase64': serializer.toJson<String>(cipherPayloadBase64),
+      'plainSizeBytes': serializer.toJson<int>(plainSizeBytes),
+      'createdAtMs': serializer.toJson<int>(createdAtMs),
+    };
+  }
+
+  VaultFileRow copyWith({
+    String? id,
+    String? displayName,
+    String? cipherPayloadBase64,
+    int? plainSizeBytes,
+    int? createdAtMs,
+  }) => VaultFileRow(
+    id: id ?? this.id,
+    displayName: displayName ?? this.displayName,
+    cipherPayloadBase64: cipherPayloadBase64 ?? this.cipherPayloadBase64,
+    plainSizeBytes: plainSizeBytes ?? this.plainSizeBytes,
+    createdAtMs: createdAtMs ?? this.createdAtMs,
+  );
+  VaultFileRow copyWithCompanion(VaultFilesCompanion data) {
+    return VaultFileRow(
+      id: data.id.present ? data.id.value : this.id,
+      displayName: data.displayName.present
+          ? data.displayName.value
+          : this.displayName,
+      cipherPayloadBase64: data.cipherPayloadBase64.present
+          ? data.cipherPayloadBase64.value
+          : this.cipherPayloadBase64,
+      plainSizeBytes: data.plainSizeBytes.present
+          ? data.plainSizeBytes.value
+          : this.plainSizeBytes,
+      createdAtMs: data.createdAtMs.present
+          ? data.createdAtMs.value
+          : this.createdAtMs,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VaultFileRow(')
+          ..write('id: $id, ')
+          ..write('displayName: $displayName, ')
+          ..write('cipherPayloadBase64: $cipherPayloadBase64, ')
+          ..write('plainSizeBytes: $plainSizeBytes, ')
+          ..write('createdAtMs: $createdAtMs')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    displayName,
+    cipherPayloadBase64,
+    plainSizeBytes,
+    createdAtMs,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VaultFileRow &&
+          other.id == this.id &&
+          other.displayName == this.displayName &&
+          other.cipherPayloadBase64 == this.cipherPayloadBase64 &&
+          other.plainSizeBytes == this.plainSizeBytes &&
+          other.createdAtMs == this.createdAtMs);
+}
+
+class VaultFilesCompanion extends UpdateCompanion<VaultFileRow> {
+  final Value<String> id;
+  final Value<String> displayName;
+  final Value<String> cipherPayloadBase64;
+  final Value<int> plainSizeBytes;
+  final Value<int> createdAtMs;
+  final Value<int> rowid;
+  const VaultFilesCompanion({
+    this.id = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.cipherPayloadBase64 = const Value.absent(),
+    this.plainSizeBytes = const Value.absent(),
+    this.createdAtMs = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  VaultFilesCompanion.insert({
+    required String id,
+    required String displayName,
+    required String cipherPayloadBase64,
+    required int plainSizeBytes,
+    required int createdAtMs,
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       displayName = Value(displayName),
+       cipherPayloadBase64 = Value(cipherPayloadBase64),
+       plainSizeBytes = Value(plainSizeBytes),
+       createdAtMs = Value(createdAtMs);
+  static Insertable<VaultFileRow> custom({
+    Expression<String>? id,
+    Expression<String>? displayName,
+    Expression<String>? cipherPayloadBase64,
+    Expression<int>? plainSizeBytes,
+    Expression<int>? createdAtMs,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (displayName != null) 'display_name': displayName,
+      if (cipherPayloadBase64 != null)
+        'cipher_payload_base64': cipherPayloadBase64,
+      if (plainSizeBytes != null) 'plain_size_bytes': plainSizeBytes,
+      if (createdAtMs != null) 'created_at_ms': createdAtMs,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  VaultFilesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? displayName,
+    Value<String>? cipherPayloadBase64,
+    Value<int>? plainSizeBytes,
+    Value<int>? createdAtMs,
+    Value<int>? rowid,
+  }) {
+    return VaultFilesCompanion(
+      id: id ?? this.id,
+      displayName: displayName ?? this.displayName,
+      cipherPayloadBase64: cipherPayloadBase64 ?? this.cipherPayloadBase64,
+      plainSizeBytes: plainSizeBytes ?? this.plainSizeBytes,
+      createdAtMs: createdAtMs ?? this.createdAtMs,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (displayName.present) {
+      map['display_name'] = Variable<String>(displayName.value);
+    }
+    if (cipherPayloadBase64.present) {
+      map['cipher_payload_base64'] = Variable<String>(
+        cipherPayloadBase64.value,
+      );
+    }
+    if (plainSizeBytes.present) {
+      map['plain_size_bytes'] = Variable<int>(plainSizeBytes.value);
+    }
+    if (createdAtMs.present) {
+      map['created_at_ms'] = Variable<int>(createdAtMs.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VaultFilesCompanion(')
+          ..write('id: $id, ')
+          ..write('displayName: $displayName, ')
+          ..write('cipherPayloadBase64: $cipherPayloadBase64, ')
+          ..write('plainSizeBytes: $plainSizeBytes, ')
+          ..write('createdAtMs: $createdAtMs, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ExpenseEntriesTable extends ExpenseEntries
+    with TableInfo<$ExpenseEntriesTable, ExpenseEntryRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExpenseEntriesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tMeta = const VerificationMeta('t');
+  @override
+  late final GeneratedColumn<int> t = GeneratedColumn<int>(
+    't',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
+  );
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+    'category',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _amountMinorMeta = const VerificationMeta(
+    'amountMinor',
+  );
+  @override
+  late final GeneratedColumn<int> amountMinor = GeneratedColumn<int>(
+    'amount_minor',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _currencyMeta = const VerificationMeta(
+    'currency',
+  );
+  @override
+  late final GeneratedColumn<String> currency = GeneratedColumn<String>(
+    'currency',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: const Constant('EUR'),
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    t,
+    category,
+    amountMinor,
+    currency,
+    note,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'expense_entries';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExpenseEntryRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('t')) {
+      context.handle(_tMeta, t.isAcceptableOrUnknown(data['t']!, _tMeta));
+    } else if (isInserting) {
+      context.missing(_tMeta);
+    }
+    if (data.containsKey('category')) {
+      context.handle(
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('amount_minor')) {
+      context.handle(
+        _amountMinorMeta,
+        amountMinor.isAcceptableOrUnknown(
+          data['amount_minor']!,
+          _amountMinorMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_amountMinorMeta);
+    }
+    if (data.containsKey('currency')) {
+      context.handle(
+        _currencyMeta,
+        currency.isAcceptableOrUnknown(data['currency']!, _currencyMeta),
+      );
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ExpenseEntryRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExpenseEntryRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      t: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}t'],
+      )!,
+      category: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category'],
+      )!,
+      amountMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}amount_minor'],
+      )!,
+      currency: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}currency'],
+      )!,
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+    );
+  }
+
+  @override
+  $ExpenseEntriesTable createAlias(String alias) {
+    return $ExpenseEntriesTable(attachedDatabase, alias);
+  }
+}
+
+class ExpenseEntryRow extends DataClass implements Insertable<ExpenseEntryRow> {
+  final String id;
+  final int t;
+
+  /// fuel, food, marina, mooring_fee, gear, provisions, other
+  final String category;
+
+  /// В минимальных единицах валюты (центы).
+  final int amountMinor;
+  final String currency;
+  final String? note;
+  const ExpenseEntryRow({
+    required this.id,
+    required this.t,
+    required this.category,
+    required this.amountMinor,
+    required this.currency,
+    this.note,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['t'] = Variable<int>(t);
+    map['category'] = Variable<String>(category);
+    map['amount_minor'] = Variable<int>(amountMinor);
+    map['currency'] = Variable<String>(currency);
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    return map;
+  }
+
+  ExpenseEntriesCompanion toCompanion(bool nullToAbsent) {
+    return ExpenseEntriesCompanion(
+      id: Value(id),
+      t: Value(t),
+      category: Value(category),
+      amountMinor: Value(amountMinor),
+      currency: Value(currency),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+    );
+  }
+
+  factory ExpenseEntryRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExpenseEntryRow(
+      id: serializer.fromJson<String>(json['id']),
+      t: serializer.fromJson<int>(json['t']),
+      category: serializer.fromJson<String>(json['category']),
+      amountMinor: serializer.fromJson<int>(json['amountMinor']),
+      currency: serializer.fromJson<String>(json['currency']),
+      note: serializer.fromJson<String?>(json['note']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      't': serializer.toJson<int>(t),
+      'category': serializer.toJson<String>(category),
+      'amountMinor': serializer.toJson<int>(amountMinor),
+      'currency': serializer.toJson<String>(currency),
+      'note': serializer.toJson<String?>(note),
+    };
+  }
+
+  ExpenseEntryRow copyWith({
+    String? id,
+    int? t,
+    String? category,
+    int? amountMinor,
+    String? currency,
+    Value<String?> note = const Value.absent(),
+  }) => ExpenseEntryRow(
+    id: id ?? this.id,
+    t: t ?? this.t,
+    category: category ?? this.category,
+    amountMinor: amountMinor ?? this.amountMinor,
+    currency: currency ?? this.currency,
+    note: note.present ? note.value : this.note,
+  );
+  ExpenseEntryRow copyWithCompanion(ExpenseEntriesCompanion data) {
+    return ExpenseEntryRow(
+      id: data.id.present ? data.id.value : this.id,
+      t: data.t.present ? data.t.value : this.t,
+      category: data.category.present ? data.category.value : this.category,
+      amountMinor: data.amountMinor.present
+          ? data.amountMinor.value
+          : this.amountMinor,
+      currency: data.currency.present ? data.currency.value : this.currency,
+      note: data.note.present ? data.note.value : this.note,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExpenseEntryRow(')
+          ..write('id: $id, ')
+          ..write('t: $t, ')
+          ..write('category: $category, ')
+          ..write('amountMinor: $amountMinor, ')
+          ..write('currency: $currency, ')
+          ..write('note: $note')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, t, category, amountMinor, currency, note);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExpenseEntryRow &&
+          other.id == this.id &&
+          other.t == this.t &&
+          other.category == this.category &&
+          other.amountMinor == this.amountMinor &&
+          other.currency == this.currency &&
+          other.note == this.note);
+}
+
+class ExpenseEntriesCompanion extends UpdateCompanion<ExpenseEntryRow> {
+  final Value<String> id;
+  final Value<int> t;
+  final Value<String> category;
+  final Value<int> amountMinor;
+  final Value<String> currency;
+  final Value<String?> note;
+  final Value<int> rowid;
+  const ExpenseEntriesCompanion({
+    this.id = const Value.absent(),
+    this.t = const Value.absent(),
+    this.category = const Value.absent(),
+    this.amountMinor = const Value.absent(),
+    this.currency = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ExpenseEntriesCompanion.insert({
+    required String id,
+    required int t,
+    required String category,
+    required int amountMinor,
+    this.currency = const Value.absent(),
+    this.note = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       t = Value(t),
+       category = Value(category),
+       amountMinor = Value(amountMinor);
+  static Insertable<ExpenseEntryRow> custom({
+    Expression<String>? id,
+    Expression<int>? t,
+    Expression<String>? category,
+    Expression<int>? amountMinor,
+    Expression<String>? currency,
+    Expression<String>? note,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (t != null) 't': t,
+      if (category != null) 'category': category,
+      if (amountMinor != null) 'amount_minor': amountMinor,
+      if (currency != null) 'currency': currency,
+      if (note != null) 'note': note,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ExpenseEntriesCompanion copyWith({
+    Value<String>? id,
+    Value<int>? t,
+    Value<String>? category,
+    Value<int>? amountMinor,
+    Value<String>? currency,
+    Value<String?>? note,
+    Value<int>? rowid,
+  }) {
+    return ExpenseEntriesCompanion(
+      id: id ?? this.id,
+      t: t ?? this.t,
+      category: category ?? this.category,
+      amountMinor: amountMinor ?? this.amountMinor,
+      currency: currency ?? this.currency,
+      note: note ?? this.note,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (t.present) {
+      map['t'] = Variable<int>(t.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (amountMinor.present) {
+      map['amount_minor'] = Variable<int>(amountMinor.value);
+    }
+    if (currency.present) {
+      map['currency'] = Variable<String>(currency.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExpenseEntriesCompanion(')
+          ..write('id: $id, ')
+          ..write('t: $t, ')
+          ..write('category: $category, ')
+          ..write('amountMinor: $amountMinor, ')
+          ..write('currency: $currency, ')
+          ..write('note: $note, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $VhfRecordingsTable extends VhfRecordings
+    with TableInfo<$VhfRecordingsTable, VhfRecordingRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $VhfRecordingsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tMeta = const VerificationMeta('t');
+  @override
+  late final GeneratedColumn<int> t = GeneratedColumn<int>(
+    't',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _pathMeta = const VerificationMeta('path');
+  @override
+  late final GeneratedColumn<String> path = GeneratedColumn<String>(
+    'path',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _transcriptMeta = const VerificationMeta(
+    'transcript',
+  );
+  @override
+  late final GeneratedColumn<String> transcript = GeneratedColumn<String>(
+    'transcript',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _durationMsMeta = const VerificationMeta(
+    'durationMs',
+  );
+  @override
+  late final GeneratedColumn<int> durationMs = GeneratedColumn<int>(
+    'duration_ms',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, t, path, transcript, durationMs];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'vhf_recordings';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<VhfRecordingRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('t')) {
+      context.handle(_tMeta, t.isAcceptableOrUnknown(data['t']!, _tMeta));
+    } else if (isInserting) {
+      context.missing(_tMeta);
+    }
+    if (data.containsKey('path')) {
+      context.handle(
+        _pathMeta,
+        path.isAcceptableOrUnknown(data['path']!, _pathMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_pathMeta);
+    }
+    if (data.containsKey('transcript')) {
+      context.handle(
+        _transcriptMeta,
+        transcript.isAcceptableOrUnknown(data['transcript']!, _transcriptMeta),
+      );
+    }
+    if (data.containsKey('duration_ms')) {
+      context.handle(
+        _durationMsMeta,
+        durationMs.isAcceptableOrUnknown(data['duration_ms']!, _durationMsMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  VhfRecordingRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return VhfRecordingRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      t: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}t'],
+      )!,
+      path: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}path'],
+      )!,
+      transcript: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}transcript'],
+      ),
+      durationMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}duration_ms'],
+      ),
+    );
+  }
+
+  @override
+  $VhfRecordingsTable createAlias(String alias) {
+    return $VhfRecordingsTable(attachedDatabase, alias);
+  }
+}
+
+class VhfRecordingRow extends DataClass implements Insertable<VhfRecordingRow> {
+  final String id;
+  final int t;
+  final String path;
+  final String? transcript;
+  final int? durationMs;
+  const VhfRecordingRow({
+    required this.id,
+    required this.t,
+    required this.path,
+    this.transcript,
+    this.durationMs,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['t'] = Variable<int>(t);
+    map['path'] = Variable<String>(path);
+    if (!nullToAbsent || transcript != null) {
+      map['transcript'] = Variable<String>(transcript);
+    }
+    if (!nullToAbsent || durationMs != null) {
+      map['duration_ms'] = Variable<int>(durationMs);
+    }
+    return map;
+  }
+
+  VhfRecordingsCompanion toCompanion(bool nullToAbsent) {
+    return VhfRecordingsCompanion(
+      id: Value(id),
+      t: Value(t),
+      path: Value(path),
+      transcript: transcript == null && nullToAbsent
+          ? const Value.absent()
+          : Value(transcript),
+      durationMs: durationMs == null && nullToAbsent
+          ? const Value.absent()
+          : Value(durationMs),
+    );
+  }
+
+  factory VhfRecordingRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return VhfRecordingRow(
+      id: serializer.fromJson<String>(json['id']),
+      t: serializer.fromJson<int>(json['t']),
+      path: serializer.fromJson<String>(json['path']),
+      transcript: serializer.fromJson<String?>(json['transcript']),
+      durationMs: serializer.fromJson<int?>(json['durationMs']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      't': serializer.toJson<int>(t),
+      'path': serializer.toJson<String>(path),
+      'transcript': serializer.toJson<String?>(transcript),
+      'durationMs': serializer.toJson<int?>(durationMs),
+    };
+  }
+
+  VhfRecordingRow copyWith({
+    String? id,
+    int? t,
+    String? path,
+    Value<String?> transcript = const Value.absent(),
+    Value<int?> durationMs = const Value.absent(),
+  }) => VhfRecordingRow(
+    id: id ?? this.id,
+    t: t ?? this.t,
+    path: path ?? this.path,
+    transcript: transcript.present ? transcript.value : this.transcript,
+    durationMs: durationMs.present ? durationMs.value : this.durationMs,
+  );
+  VhfRecordingRow copyWithCompanion(VhfRecordingsCompanion data) {
+    return VhfRecordingRow(
+      id: data.id.present ? data.id.value : this.id,
+      t: data.t.present ? data.t.value : this.t,
+      path: data.path.present ? data.path.value : this.path,
+      transcript: data.transcript.present
+          ? data.transcript.value
+          : this.transcript,
+      durationMs: data.durationMs.present
+          ? data.durationMs.value
+          : this.durationMs,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VhfRecordingRow(')
+          ..write('id: $id, ')
+          ..write('t: $t, ')
+          ..write('path: $path, ')
+          ..write('transcript: $transcript, ')
+          ..write('durationMs: $durationMs')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, t, path, transcript, durationMs);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is VhfRecordingRow &&
+          other.id == this.id &&
+          other.t == this.t &&
+          other.path == this.path &&
+          other.transcript == this.transcript &&
+          other.durationMs == this.durationMs);
+}
+
+class VhfRecordingsCompanion extends UpdateCompanion<VhfRecordingRow> {
+  final Value<String> id;
+  final Value<int> t;
+  final Value<String> path;
+  final Value<String?> transcript;
+  final Value<int?> durationMs;
+  final Value<int> rowid;
+  const VhfRecordingsCompanion({
+    this.id = const Value.absent(),
+    this.t = const Value.absent(),
+    this.path = const Value.absent(),
+    this.transcript = const Value.absent(),
+    this.durationMs = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  VhfRecordingsCompanion.insert({
+    required String id,
+    required int t,
+    required String path,
+    this.transcript = const Value.absent(),
+    this.durationMs = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       t = Value(t),
+       path = Value(path);
+  static Insertable<VhfRecordingRow> custom({
+    Expression<String>? id,
+    Expression<int>? t,
+    Expression<String>? path,
+    Expression<String>? transcript,
+    Expression<int>? durationMs,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (t != null) 't': t,
+      if (path != null) 'path': path,
+      if (transcript != null) 'transcript': transcript,
+      if (durationMs != null) 'duration_ms': durationMs,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  VhfRecordingsCompanion copyWith({
+    Value<String>? id,
+    Value<int>? t,
+    Value<String>? path,
+    Value<String?>? transcript,
+    Value<int?>? durationMs,
+    Value<int>? rowid,
+  }) {
+    return VhfRecordingsCompanion(
+      id: id ?? this.id,
+      t: t ?? this.t,
+      path: path ?? this.path,
+      transcript: transcript ?? this.transcript,
+      durationMs: durationMs ?? this.durationMs,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (t.present) {
+      map['t'] = Variable<int>(t.value);
+    }
+    if (path.present) {
+      map['path'] = Variable<String>(path.value);
+    }
+    if (transcript.present) {
+      map['transcript'] = Variable<String>(transcript.value);
+    }
+    if (durationMs.present) {
+      map['duration_ms'] = Variable<int>(durationMs.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('VhfRecordingsCompanion(')
+          ..write('id: $id, ')
+          ..write('t: $t, ')
+          ..write('path: $path, ')
+          ..write('transcript: $transcript, ')
+          ..write('durationMs: $durationMs, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2888,6 +5643,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $MooringPlacesTable mooringPlaces = $MooringPlacesTable(this);
   late final $MooringReviewDraftsTable mooringReviewDrafts =
       $MooringReviewDraftsTable(this);
+  late final $LogbookEntriesTable logbookEntries = $LogbookEntriesTable(this);
+  late final $TrackTripsTable trackTrips = $TrackTripsTable(this);
+  late final $TrackPointsTable trackPoints = $TrackPointsTable(this);
+  late final $ChecklistInstancesTable checklistInstances =
+      $ChecklistInstancesTable(this);
+  late final $VaultFilesTable vaultFiles = $VaultFilesTable(this);
+  late final $ExpenseEntriesTable expenseEntries = $ExpenseEntriesTable(this);
+  late final $VhfRecordingsTable vhfRecordings = $VhfRecordingsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2900,6 +5663,13 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     weatherCacheRows,
     mooringPlaces,
     mooringReviewDrafts,
+    logbookEntries,
+    trackTrips,
+    trackPoints,
+    checklistInstances,
+    vaultFiles,
+    expenseEntries,
+    vhfRecordings,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -4204,8 +6974,12 @@ typedef $$MooringPlacesTableCreateCompanionBuilder =
       required double lon,
       Value<String?> vhf,
       Value<String?> phone,
+      Value<String?> email,
+      Value<String?> websiteUrl,
+      Value<String?> bookingUrl,
       Value<String?> servicesJson,
       Value<String?> notes,
+      Value<int?> sourceUpdatedAtMs,
       Value<int> rowid,
     });
 typedef $$MooringPlacesTableUpdateCompanionBuilder =
@@ -4217,8 +6991,12 @@ typedef $$MooringPlacesTableUpdateCompanionBuilder =
       Value<double> lon,
       Value<String?> vhf,
       Value<String?> phone,
+      Value<String?> email,
+      Value<String?> websiteUrl,
+      Value<String?> bookingUrl,
       Value<String?> servicesJson,
       Value<String?> notes,
+      Value<int?> sourceUpdatedAtMs,
       Value<int> rowid,
     });
 
@@ -4266,6 +7044,21 @@ class $$MooringPlacesTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get email => $composableBuilder(
+    column: $table.email,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get websiteUrl => $composableBuilder(
+    column: $table.websiteUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get bookingUrl => $composableBuilder(
+    column: $table.bookingUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<String> get servicesJson => $composableBuilder(
     column: $table.servicesJson,
     builder: (column) => ColumnFilters(column),
@@ -4273,6 +7066,11 @@ class $$MooringPlacesTableFilterComposer
 
   ColumnFilters<String> get notes => $composableBuilder(
     column: $table.notes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sourceUpdatedAtMs => $composableBuilder(
+    column: $table.sourceUpdatedAtMs,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -4321,6 +7119,21 @@ class $$MooringPlacesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get email => $composableBuilder(
+    column: $table.email,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get websiteUrl => $composableBuilder(
+    column: $table.websiteUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get bookingUrl => $composableBuilder(
+    column: $table.bookingUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get servicesJson => $composableBuilder(
     column: $table.servicesJson,
     builder: (column) => ColumnOrderings(column),
@@ -4328,6 +7141,11 @@ class $$MooringPlacesTableOrderingComposer
 
   ColumnOrderings<String> get notes => $composableBuilder(
     column: $table.notes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sourceUpdatedAtMs => $composableBuilder(
+    column: $table.sourceUpdatedAtMs,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -4362,6 +7180,19 @@ class $$MooringPlacesTableAnnotationComposer
   GeneratedColumn<String> get phone =>
       $composableBuilder(column: $table.phone, builder: (column) => column);
 
+  GeneratedColumn<String> get email =>
+      $composableBuilder(column: $table.email, builder: (column) => column);
+
+  GeneratedColumn<String> get websiteUrl => $composableBuilder(
+    column: $table.websiteUrl,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get bookingUrl => $composableBuilder(
+    column: $table.bookingUrl,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<String> get servicesJson => $composableBuilder(
     column: $table.servicesJson,
     builder: (column) => column,
@@ -4369,6 +7200,11 @@ class $$MooringPlacesTableAnnotationComposer
 
   GeneratedColumn<String> get notes =>
       $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<int> get sourceUpdatedAtMs => $composableBuilder(
+    column: $table.sourceUpdatedAtMs,
+    builder: (column) => column,
+  );
 }
 
 class $$MooringPlacesTableTableManager
@@ -4409,8 +7245,12 @@ class $$MooringPlacesTableTableManager
                 Value<double> lon = const Value.absent(),
                 Value<String?> vhf = const Value.absent(),
                 Value<String?> phone = const Value.absent(),
+                Value<String?> email = const Value.absent(),
+                Value<String?> websiteUrl = const Value.absent(),
+                Value<String?> bookingUrl = const Value.absent(),
                 Value<String?> servicesJson = const Value.absent(),
                 Value<String?> notes = const Value.absent(),
+                Value<int?> sourceUpdatedAtMs = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MooringPlacesCompanion(
                 id: id,
@@ -4420,8 +7260,12 @@ class $$MooringPlacesTableTableManager
                 lon: lon,
                 vhf: vhf,
                 phone: phone,
+                email: email,
+                websiteUrl: websiteUrl,
+                bookingUrl: bookingUrl,
                 servicesJson: servicesJson,
                 notes: notes,
+                sourceUpdatedAtMs: sourceUpdatedAtMs,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -4433,8 +7277,12 @@ class $$MooringPlacesTableTableManager
                 required double lon,
                 Value<String?> vhf = const Value.absent(),
                 Value<String?> phone = const Value.absent(),
+                Value<String?> email = const Value.absent(),
+                Value<String?> websiteUrl = const Value.absent(),
+                Value<String?> bookingUrl = const Value.absent(),
                 Value<String?> servicesJson = const Value.absent(),
                 Value<String?> notes = const Value.absent(),
+                Value<int?> sourceUpdatedAtMs = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => MooringPlacesCompanion.insert(
                 id: id,
@@ -4444,8 +7292,12 @@ class $$MooringPlacesTableTableManager
                 lon: lon,
                 vhf: vhf,
                 phone: phone,
+                email: email,
+                websiteUrl: websiteUrl,
+                bookingUrl: bookingUrl,
                 servicesJson: servicesJson,
                 notes: notes,
+                sourceUpdatedAtMs: sourceUpdatedAtMs,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -4710,6 +7562,1447 @@ typedef $$MooringReviewDraftsTableProcessedTableManager =
       MooringReviewDraftRow,
       PrefetchHooks Function()
     >;
+typedef $$LogbookEntriesTableCreateCompanionBuilder =
+    LogbookEntriesCompanion Function({
+      required String id,
+      required int t,
+      required String category,
+      required String payloadJson,
+      Value<int> rowid,
+    });
+typedef $$LogbookEntriesTableUpdateCompanionBuilder =
+    LogbookEntriesCompanion Function({
+      Value<String> id,
+      Value<int> t,
+      Value<String> category,
+      Value<String> payloadJson,
+      Value<int> rowid,
+    });
+
+class $$LogbookEntriesTableFilterComposer
+    extends Composer<_$AppDatabase, $LogbookEntriesTable> {
+  $$LogbookEntriesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get t => $composableBuilder(
+    column: $table.t,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get payloadJson => $composableBuilder(
+    column: $table.payloadJson,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$LogbookEntriesTableOrderingComposer
+    extends Composer<_$AppDatabase, $LogbookEntriesTable> {
+  $$LogbookEntriesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get t => $composableBuilder(
+    column: $table.t,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get payloadJson => $composableBuilder(
+    column: $table.payloadJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$LogbookEntriesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $LogbookEntriesTable> {
+  $$LogbookEntriesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get t =>
+      $composableBuilder(column: $table.t, builder: (column) => column);
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<String> get payloadJson => $composableBuilder(
+    column: $table.payloadJson,
+    builder: (column) => column,
+  );
+}
+
+class $$LogbookEntriesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $LogbookEntriesTable,
+          LogbookEntryRow,
+          $$LogbookEntriesTableFilterComposer,
+          $$LogbookEntriesTableOrderingComposer,
+          $$LogbookEntriesTableAnnotationComposer,
+          $$LogbookEntriesTableCreateCompanionBuilder,
+          $$LogbookEntriesTableUpdateCompanionBuilder,
+          (
+            LogbookEntryRow,
+            BaseReferences<
+              _$AppDatabase,
+              $LogbookEntriesTable,
+              LogbookEntryRow
+            >,
+          ),
+          LogbookEntryRow,
+          PrefetchHooks Function()
+        > {
+  $$LogbookEntriesTableTableManager(
+    _$AppDatabase db,
+    $LogbookEntriesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LogbookEntriesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$LogbookEntriesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$LogbookEntriesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<int> t = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                Value<String> payloadJson = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => LogbookEntriesCompanion(
+                id: id,
+                t: t,
+                category: category,
+                payloadJson: payloadJson,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required int t,
+                required String category,
+                required String payloadJson,
+                Value<int> rowid = const Value.absent(),
+              }) => LogbookEntriesCompanion.insert(
+                id: id,
+                t: t,
+                category: category,
+                payloadJson: payloadJson,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$LogbookEntriesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $LogbookEntriesTable,
+      LogbookEntryRow,
+      $$LogbookEntriesTableFilterComposer,
+      $$LogbookEntriesTableOrderingComposer,
+      $$LogbookEntriesTableAnnotationComposer,
+      $$LogbookEntriesTableCreateCompanionBuilder,
+      $$LogbookEntriesTableUpdateCompanionBuilder,
+      (
+        LogbookEntryRow,
+        BaseReferences<_$AppDatabase, $LogbookEntriesTable, LogbookEntryRow>,
+      ),
+      LogbookEntryRow,
+      PrefetchHooks Function()
+    >;
+typedef $$TrackTripsTableCreateCompanionBuilder =
+    TrackTripsCompanion Function({
+      required String id,
+      required int startedAtMs,
+      Value<int?> endedAtMs,
+      Value<int> rowid,
+    });
+typedef $$TrackTripsTableUpdateCompanionBuilder =
+    TrackTripsCompanion Function({
+      Value<String> id,
+      Value<int> startedAtMs,
+      Value<int?> endedAtMs,
+      Value<int> rowid,
+    });
+
+class $$TrackTripsTableFilterComposer
+    extends Composer<_$AppDatabase, $TrackTripsTable> {
+  $$TrackTripsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get startedAtMs => $composableBuilder(
+    column: $table.startedAtMs,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get endedAtMs => $composableBuilder(
+    column: $table.endedAtMs,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$TrackTripsTableOrderingComposer
+    extends Composer<_$AppDatabase, $TrackTripsTable> {
+  $$TrackTripsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get startedAtMs => $composableBuilder(
+    column: $table.startedAtMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get endedAtMs => $composableBuilder(
+    column: $table.endedAtMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TrackTripsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TrackTripsTable> {
+  $$TrackTripsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get startedAtMs => $composableBuilder(
+    column: $table.startedAtMs,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get endedAtMs =>
+      $composableBuilder(column: $table.endedAtMs, builder: (column) => column);
+}
+
+class $$TrackTripsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TrackTripsTable,
+          TrackTripRow,
+          $$TrackTripsTableFilterComposer,
+          $$TrackTripsTableOrderingComposer,
+          $$TrackTripsTableAnnotationComposer,
+          $$TrackTripsTableCreateCompanionBuilder,
+          $$TrackTripsTableUpdateCompanionBuilder,
+          (
+            TrackTripRow,
+            BaseReferences<_$AppDatabase, $TrackTripsTable, TrackTripRow>,
+          ),
+          TrackTripRow,
+          PrefetchHooks Function()
+        > {
+  $$TrackTripsTableTableManager(_$AppDatabase db, $TrackTripsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TrackTripsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TrackTripsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TrackTripsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<int> startedAtMs = const Value.absent(),
+                Value<int?> endedAtMs = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TrackTripsCompanion(
+                id: id,
+                startedAtMs: startedAtMs,
+                endedAtMs: endedAtMs,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required int startedAtMs,
+                Value<int?> endedAtMs = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TrackTripsCompanion.insert(
+                id: id,
+                startedAtMs: startedAtMs,
+                endedAtMs: endedAtMs,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$TrackTripsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TrackTripsTable,
+      TrackTripRow,
+      $$TrackTripsTableFilterComposer,
+      $$TrackTripsTableOrderingComposer,
+      $$TrackTripsTableAnnotationComposer,
+      $$TrackTripsTableCreateCompanionBuilder,
+      $$TrackTripsTableUpdateCompanionBuilder,
+      (
+        TrackTripRow,
+        BaseReferences<_$AppDatabase, $TrackTripsTable, TrackTripRow>,
+      ),
+      TrackTripRow,
+      PrefetchHooks Function()
+    >;
+typedef $$TrackPointsTableCreateCompanionBuilder =
+    TrackPointsCompanion Function({
+      Value<int> id,
+      required String tripId,
+      required int t,
+      required double lat,
+      required double lon,
+      Value<double?> sog,
+      Value<double?> cog,
+    });
+typedef $$TrackPointsTableUpdateCompanionBuilder =
+    TrackPointsCompanion Function({
+      Value<int> id,
+      Value<String> tripId,
+      Value<int> t,
+      Value<double> lat,
+      Value<double> lon,
+      Value<double?> sog,
+      Value<double?> cog,
+    });
+
+class $$TrackPointsTableFilterComposer
+    extends Composer<_$AppDatabase, $TrackPointsTable> {
+  $$TrackPointsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get tripId => $composableBuilder(
+    column: $table.tripId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get t => $composableBuilder(
+    column: $table.t,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get lat => $composableBuilder(
+    column: $table.lat,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get lon => $composableBuilder(
+    column: $table.lon,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get sog => $composableBuilder(
+    column: $table.sog,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get cog => $composableBuilder(
+    column: $table.cog,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$TrackPointsTableOrderingComposer
+    extends Composer<_$AppDatabase, $TrackPointsTable> {
+  $$TrackPointsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get tripId => $composableBuilder(
+    column: $table.tripId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get t => $composableBuilder(
+    column: $table.t,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get lat => $composableBuilder(
+    column: $table.lat,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get lon => $composableBuilder(
+    column: $table.lon,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get sog => $composableBuilder(
+    column: $table.sog,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get cog => $composableBuilder(
+    column: $table.cog,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TrackPointsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TrackPointsTable> {
+  $$TrackPointsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get tripId =>
+      $composableBuilder(column: $table.tripId, builder: (column) => column);
+
+  GeneratedColumn<int> get t =>
+      $composableBuilder(column: $table.t, builder: (column) => column);
+
+  GeneratedColumn<double> get lat =>
+      $composableBuilder(column: $table.lat, builder: (column) => column);
+
+  GeneratedColumn<double> get lon =>
+      $composableBuilder(column: $table.lon, builder: (column) => column);
+
+  GeneratedColumn<double> get sog =>
+      $composableBuilder(column: $table.sog, builder: (column) => column);
+
+  GeneratedColumn<double> get cog =>
+      $composableBuilder(column: $table.cog, builder: (column) => column);
+}
+
+class $$TrackPointsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TrackPointsTable,
+          TrackPointRow,
+          $$TrackPointsTableFilterComposer,
+          $$TrackPointsTableOrderingComposer,
+          $$TrackPointsTableAnnotationComposer,
+          $$TrackPointsTableCreateCompanionBuilder,
+          $$TrackPointsTableUpdateCompanionBuilder,
+          (
+            TrackPointRow,
+            BaseReferences<_$AppDatabase, $TrackPointsTable, TrackPointRow>,
+          ),
+          TrackPointRow,
+          PrefetchHooks Function()
+        > {
+  $$TrackPointsTableTableManager(_$AppDatabase db, $TrackPointsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TrackPointsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TrackPointsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TrackPointsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> tripId = const Value.absent(),
+                Value<int> t = const Value.absent(),
+                Value<double> lat = const Value.absent(),
+                Value<double> lon = const Value.absent(),
+                Value<double?> sog = const Value.absent(),
+                Value<double?> cog = const Value.absent(),
+              }) => TrackPointsCompanion(
+                id: id,
+                tripId: tripId,
+                t: t,
+                lat: lat,
+                lon: lon,
+                sog: sog,
+                cog: cog,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String tripId,
+                required int t,
+                required double lat,
+                required double lon,
+                Value<double?> sog = const Value.absent(),
+                Value<double?> cog = const Value.absent(),
+              }) => TrackPointsCompanion.insert(
+                id: id,
+                tripId: tripId,
+                t: t,
+                lat: lat,
+                lon: lon,
+                sog: sog,
+                cog: cog,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$TrackPointsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TrackPointsTable,
+      TrackPointRow,
+      $$TrackPointsTableFilterComposer,
+      $$TrackPointsTableOrderingComposer,
+      $$TrackPointsTableAnnotationComposer,
+      $$TrackPointsTableCreateCompanionBuilder,
+      $$TrackPointsTableUpdateCompanionBuilder,
+      (
+        TrackPointRow,
+        BaseReferences<_$AppDatabase, $TrackPointsTable, TrackPointRow>,
+      ),
+      TrackPointRow,
+      PrefetchHooks Function()
+    >;
+typedef $$ChecklistInstancesTableCreateCompanionBuilder =
+    ChecklistInstancesCompanion Function({
+      required String id,
+      required String templateKey,
+      required String itemsJson,
+      required int updatedAtMs,
+      Value<bool> completed,
+      Value<int> rowid,
+    });
+typedef $$ChecklistInstancesTableUpdateCompanionBuilder =
+    ChecklistInstancesCompanion Function({
+      Value<String> id,
+      Value<String> templateKey,
+      Value<String> itemsJson,
+      Value<int> updatedAtMs,
+      Value<bool> completed,
+      Value<int> rowid,
+    });
+
+class $$ChecklistInstancesTableFilterComposer
+    extends Composer<_$AppDatabase, $ChecklistInstancesTable> {
+  $$ChecklistInstancesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get templateKey => $composableBuilder(
+    column: $table.templateKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get itemsJson => $composableBuilder(
+    column: $table.itemsJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get updatedAtMs => $composableBuilder(
+    column: $table.updatedAtMs,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get completed => $composableBuilder(
+    column: $table.completed,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ChecklistInstancesTableOrderingComposer
+    extends Composer<_$AppDatabase, $ChecklistInstancesTable> {
+  $$ChecklistInstancesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get templateKey => $composableBuilder(
+    column: $table.templateKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get itemsJson => $composableBuilder(
+    column: $table.itemsJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get updatedAtMs => $composableBuilder(
+    column: $table.updatedAtMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get completed => $composableBuilder(
+    column: $table.completed,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ChecklistInstancesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ChecklistInstancesTable> {
+  $$ChecklistInstancesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get templateKey => $composableBuilder(
+    column: $table.templateKey,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get itemsJson =>
+      $composableBuilder(column: $table.itemsJson, builder: (column) => column);
+
+  GeneratedColumn<int> get updatedAtMs => $composableBuilder(
+    column: $table.updatedAtMs,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get completed =>
+      $composableBuilder(column: $table.completed, builder: (column) => column);
+}
+
+class $$ChecklistInstancesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ChecklistInstancesTable,
+          ChecklistInstanceRow,
+          $$ChecklistInstancesTableFilterComposer,
+          $$ChecklistInstancesTableOrderingComposer,
+          $$ChecklistInstancesTableAnnotationComposer,
+          $$ChecklistInstancesTableCreateCompanionBuilder,
+          $$ChecklistInstancesTableUpdateCompanionBuilder,
+          (
+            ChecklistInstanceRow,
+            BaseReferences<
+              _$AppDatabase,
+              $ChecklistInstancesTable,
+              ChecklistInstanceRow
+            >,
+          ),
+          ChecklistInstanceRow,
+          PrefetchHooks Function()
+        > {
+  $$ChecklistInstancesTableTableManager(
+    _$AppDatabase db,
+    $ChecklistInstancesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ChecklistInstancesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ChecklistInstancesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ChecklistInstancesTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> templateKey = const Value.absent(),
+                Value<String> itemsJson = const Value.absent(),
+                Value<int> updatedAtMs = const Value.absent(),
+                Value<bool> completed = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ChecklistInstancesCompanion(
+                id: id,
+                templateKey: templateKey,
+                itemsJson: itemsJson,
+                updatedAtMs: updatedAtMs,
+                completed: completed,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String templateKey,
+                required String itemsJson,
+                required int updatedAtMs,
+                Value<bool> completed = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ChecklistInstancesCompanion.insert(
+                id: id,
+                templateKey: templateKey,
+                itemsJson: itemsJson,
+                updatedAtMs: updatedAtMs,
+                completed: completed,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ChecklistInstancesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ChecklistInstancesTable,
+      ChecklistInstanceRow,
+      $$ChecklistInstancesTableFilterComposer,
+      $$ChecklistInstancesTableOrderingComposer,
+      $$ChecklistInstancesTableAnnotationComposer,
+      $$ChecklistInstancesTableCreateCompanionBuilder,
+      $$ChecklistInstancesTableUpdateCompanionBuilder,
+      (
+        ChecklistInstanceRow,
+        BaseReferences<
+          _$AppDatabase,
+          $ChecklistInstancesTable,
+          ChecklistInstanceRow
+        >,
+      ),
+      ChecklistInstanceRow,
+      PrefetchHooks Function()
+    >;
+typedef $$VaultFilesTableCreateCompanionBuilder =
+    VaultFilesCompanion Function({
+      required String id,
+      required String displayName,
+      required String cipherPayloadBase64,
+      required int plainSizeBytes,
+      required int createdAtMs,
+      Value<int> rowid,
+    });
+typedef $$VaultFilesTableUpdateCompanionBuilder =
+    VaultFilesCompanion Function({
+      Value<String> id,
+      Value<String> displayName,
+      Value<String> cipherPayloadBase64,
+      Value<int> plainSizeBytes,
+      Value<int> createdAtMs,
+      Value<int> rowid,
+    });
+
+class $$VaultFilesTableFilterComposer
+    extends Composer<_$AppDatabase, $VaultFilesTable> {
+  $$VaultFilesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get cipherPayloadBase64 => $composableBuilder(
+    column: $table.cipherPayloadBase64,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get plainSizeBytes => $composableBuilder(
+    column: $table.plainSizeBytes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAtMs => $composableBuilder(
+    column: $table.createdAtMs,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$VaultFilesTableOrderingComposer
+    extends Composer<_$AppDatabase, $VaultFilesTable> {
+  $$VaultFilesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get cipherPayloadBase64 => $composableBuilder(
+    column: $table.cipherPayloadBase64,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get plainSizeBytes => $composableBuilder(
+    column: $table.plainSizeBytes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAtMs => $composableBuilder(
+    column: $table.createdAtMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$VaultFilesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VaultFilesTable> {
+  $$VaultFilesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get cipherPayloadBase64 => $composableBuilder(
+    column: $table.cipherPayloadBase64,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get plainSizeBytes => $composableBuilder(
+    column: $table.plainSizeBytes,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get createdAtMs => $composableBuilder(
+    column: $table.createdAtMs,
+    builder: (column) => column,
+  );
+}
+
+class $$VaultFilesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $VaultFilesTable,
+          VaultFileRow,
+          $$VaultFilesTableFilterComposer,
+          $$VaultFilesTableOrderingComposer,
+          $$VaultFilesTableAnnotationComposer,
+          $$VaultFilesTableCreateCompanionBuilder,
+          $$VaultFilesTableUpdateCompanionBuilder,
+          (
+            VaultFileRow,
+            BaseReferences<_$AppDatabase, $VaultFilesTable, VaultFileRow>,
+          ),
+          VaultFileRow,
+          PrefetchHooks Function()
+        > {
+  $$VaultFilesTableTableManager(_$AppDatabase db, $VaultFilesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VaultFilesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VaultFilesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VaultFilesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> displayName = const Value.absent(),
+                Value<String> cipherPayloadBase64 = const Value.absent(),
+                Value<int> plainSizeBytes = const Value.absent(),
+                Value<int> createdAtMs = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => VaultFilesCompanion(
+                id: id,
+                displayName: displayName,
+                cipherPayloadBase64: cipherPayloadBase64,
+                plainSizeBytes: plainSizeBytes,
+                createdAtMs: createdAtMs,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String displayName,
+                required String cipherPayloadBase64,
+                required int plainSizeBytes,
+                required int createdAtMs,
+                Value<int> rowid = const Value.absent(),
+              }) => VaultFilesCompanion.insert(
+                id: id,
+                displayName: displayName,
+                cipherPayloadBase64: cipherPayloadBase64,
+                plainSizeBytes: plainSizeBytes,
+                createdAtMs: createdAtMs,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$VaultFilesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $VaultFilesTable,
+      VaultFileRow,
+      $$VaultFilesTableFilterComposer,
+      $$VaultFilesTableOrderingComposer,
+      $$VaultFilesTableAnnotationComposer,
+      $$VaultFilesTableCreateCompanionBuilder,
+      $$VaultFilesTableUpdateCompanionBuilder,
+      (
+        VaultFileRow,
+        BaseReferences<_$AppDatabase, $VaultFilesTable, VaultFileRow>,
+      ),
+      VaultFileRow,
+      PrefetchHooks Function()
+    >;
+typedef $$ExpenseEntriesTableCreateCompanionBuilder =
+    ExpenseEntriesCompanion Function({
+      required String id,
+      required int t,
+      required String category,
+      required int amountMinor,
+      Value<String> currency,
+      Value<String?> note,
+      Value<int> rowid,
+    });
+typedef $$ExpenseEntriesTableUpdateCompanionBuilder =
+    ExpenseEntriesCompanion Function({
+      Value<String> id,
+      Value<int> t,
+      Value<String> category,
+      Value<int> amountMinor,
+      Value<String> currency,
+      Value<String?> note,
+      Value<int> rowid,
+    });
+
+class $$ExpenseEntriesTableFilterComposer
+    extends Composer<_$AppDatabase, $ExpenseEntriesTable> {
+  $$ExpenseEntriesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get t => $composableBuilder(
+    column: $table.t,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get amountMinor => $composableBuilder(
+    column: $table.amountMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ExpenseEntriesTableOrderingComposer
+    extends Composer<_$AppDatabase, $ExpenseEntriesTable> {
+  $$ExpenseEntriesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get t => $composableBuilder(
+    column: $table.t,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get amountMinor => $composableBuilder(
+    column: $table.amountMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get currency => $composableBuilder(
+    column: $table.currency,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ExpenseEntriesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ExpenseEntriesTable> {
+  $$ExpenseEntriesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get t =>
+      $composableBuilder(column: $table.t, builder: (column) => column);
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<int> get amountMinor => $composableBuilder(
+    column: $table.amountMinor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get currency =>
+      $composableBuilder(column: $table.currency, builder: (column) => column);
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+}
+
+class $$ExpenseEntriesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ExpenseEntriesTable,
+          ExpenseEntryRow,
+          $$ExpenseEntriesTableFilterComposer,
+          $$ExpenseEntriesTableOrderingComposer,
+          $$ExpenseEntriesTableAnnotationComposer,
+          $$ExpenseEntriesTableCreateCompanionBuilder,
+          $$ExpenseEntriesTableUpdateCompanionBuilder,
+          (
+            ExpenseEntryRow,
+            BaseReferences<
+              _$AppDatabase,
+              $ExpenseEntriesTable,
+              ExpenseEntryRow
+            >,
+          ),
+          ExpenseEntryRow,
+          PrefetchHooks Function()
+        > {
+  $$ExpenseEntriesTableTableManager(
+    _$AppDatabase db,
+    $ExpenseEntriesTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExpenseEntriesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ExpenseEntriesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ExpenseEntriesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<int> t = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                Value<int> amountMinor = const Value.absent(),
+                Value<String> currency = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ExpenseEntriesCompanion(
+                id: id,
+                t: t,
+                category: category,
+                amountMinor: amountMinor,
+                currency: currency,
+                note: note,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required int t,
+                required String category,
+                required int amountMinor,
+                Value<String> currency = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ExpenseEntriesCompanion.insert(
+                id: id,
+                t: t,
+                category: category,
+                amountMinor: amountMinor,
+                currency: currency,
+                note: note,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ExpenseEntriesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ExpenseEntriesTable,
+      ExpenseEntryRow,
+      $$ExpenseEntriesTableFilterComposer,
+      $$ExpenseEntriesTableOrderingComposer,
+      $$ExpenseEntriesTableAnnotationComposer,
+      $$ExpenseEntriesTableCreateCompanionBuilder,
+      $$ExpenseEntriesTableUpdateCompanionBuilder,
+      (
+        ExpenseEntryRow,
+        BaseReferences<_$AppDatabase, $ExpenseEntriesTable, ExpenseEntryRow>,
+      ),
+      ExpenseEntryRow,
+      PrefetchHooks Function()
+    >;
+typedef $$VhfRecordingsTableCreateCompanionBuilder =
+    VhfRecordingsCompanion Function({
+      required String id,
+      required int t,
+      required String path,
+      Value<String?> transcript,
+      Value<int?> durationMs,
+      Value<int> rowid,
+    });
+typedef $$VhfRecordingsTableUpdateCompanionBuilder =
+    VhfRecordingsCompanion Function({
+      Value<String> id,
+      Value<int> t,
+      Value<String> path,
+      Value<String?> transcript,
+      Value<int?> durationMs,
+      Value<int> rowid,
+    });
+
+class $$VhfRecordingsTableFilterComposer
+    extends Composer<_$AppDatabase, $VhfRecordingsTable> {
+  $$VhfRecordingsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get t => $composableBuilder(
+    column: $table.t,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get path => $composableBuilder(
+    column: $table.path,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get transcript => $composableBuilder(
+    column: $table.transcript,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get durationMs => $composableBuilder(
+    column: $table.durationMs,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$VhfRecordingsTableOrderingComposer
+    extends Composer<_$AppDatabase, $VhfRecordingsTable> {
+  $$VhfRecordingsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get t => $composableBuilder(
+    column: $table.t,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get path => $composableBuilder(
+    column: $table.path,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get transcript => $composableBuilder(
+    column: $table.transcript,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get durationMs => $composableBuilder(
+    column: $table.durationMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$VhfRecordingsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $VhfRecordingsTable> {
+  $$VhfRecordingsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get t =>
+      $composableBuilder(column: $table.t, builder: (column) => column);
+
+  GeneratedColumn<String> get path =>
+      $composableBuilder(column: $table.path, builder: (column) => column);
+
+  GeneratedColumn<String> get transcript => $composableBuilder(
+    column: $table.transcript,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get durationMs => $composableBuilder(
+    column: $table.durationMs,
+    builder: (column) => column,
+  );
+}
+
+class $$VhfRecordingsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $VhfRecordingsTable,
+          VhfRecordingRow,
+          $$VhfRecordingsTableFilterComposer,
+          $$VhfRecordingsTableOrderingComposer,
+          $$VhfRecordingsTableAnnotationComposer,
+          $$VhfRecordingsTableCreateCompanionBuilder,
+          $$VhfRecordingsTableUpdateCompanionBuilder,
+          (
+            VhfRecordingRow,
+            BaseReferences<_$AppDatabase, $VhfRecordingsTable, VhfRecordingRow>,
+          ),
+          VhfRecordingRow,
+          PrefetchHooks Function()
+        > {
+  $$VhfRecordingsTableTableManager(_$AppDatabase db, $VhfRecordingsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$VhfRecordingsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$VhfRecordingsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$VhfRecordingsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<int> t = const Value.absent(),
+                Value<String> path = const Value.absent(),
+                Value<String?> transcript = const Value.absent(),
+                Value<int?> durationMs = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => VhfRecordingsCompanion(
+                id: id,
+                t: t,
+                path: path,
+                transcript: transcript,
+                durationMs: durationMs,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required int t,
+                required String path,
+                Value<String?> transcript = const Value.absent(),
+                Value<int?> durationMs = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => VhfRecordingsCompanion.insert(
+                id: id,
+                t: t,
+                path: path,
+                transcript: transcript,
+                durationMs: durationMs,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$VhfRecordingsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $VhfRecordingsTable,
+      VhfRecordingRow,
+      $$VhfRecordingsTableFilterComposer,
+      $$VhfRecordingsTableOrderingComposer,
+      $$VhfRecordingsTableAnnotationComposer,
+      $$VhfRecordingsTableCreateCompanionBuilder,
+      $$VhfRecordingsTableUpdateCompanionBuilder,
+      (
+        VhfRecordingRow,
+        BaseReferences<_$AppDatabase, $VhfRecordingsTable, VhfRecordingRow>,
+      ),
+      VhfRecordingRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -4728,4 +9021,18 @@ class $AppDatabaseManager {
       $$MooringPlacesTableTableManager(_db, _db.mooringPlaces);
   $$MooringReviewDraftsTableTableManager get mooringReviewDrafts =>
       $$MooringReviewDraftsTableTableManager(_db, _db.mooringReviewDrafts);
+  $$LogbookEntriesTableTableManager get logbookEntries =>
+      $$LogbookEntriesTableTableManager(_db, _db.logbookEntries);
+  $$TrackTripsTableTableManager get trackTrips =>
+      $$TrackTripsTableTableManager(_db, _db.trackTrips);
+  $$TrackPointsTableTableManager get trackPoints =>
+      $$TrackPointsTableTableManager(_db, _db.trackPoints);
+  $$ChecklistInstancesTableTableManager get checklistInstances =>
+      $$ChecklistInstancesTableTableManager(_db, _db.checklistInstances);
+  $$VaultFilesTableTableManager get vaultFiles =>
+      $$VaultFilesTableTableManager(_db, _db.vaultFiles);
+  $$ExpenseEntriesTableTableManager get expenseEntries =>
+      $$ExpenseEntriesTableTableManager(_db, _db.expenseEntries);
+  $$VhfRecordingsTableTableManager get vhfRecordings =>
+      $$VhfRecordingsTableTableManager(_db, _db.vhfRecordings);
 }

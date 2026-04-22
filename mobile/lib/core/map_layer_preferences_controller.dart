@@ -8,27 +8,29 @@ class MapLayerVisibility {
   const MapLayerVisibility({
     required this.depthContours,
     required this.navigationAids,
+    required this.mooringPois,
   });
 
   final bool depthContours;
   final bool navigationAids;
 
+  /// Марины / якорные (Фаза 6). По умолчанию вкл., чтобы объекты были видны после сида.
+  final bool mooringPois;
+
   @override
   bool operator ==(Object other) =>
       other is MapLayerVisibility &&
       other.depthContours == depthContours &&
-      other.navigationAids == navigationAids;
+      other.navigationAids == navigationAids &&
+      other.mooringPois == mooringPois;
 
   @override
-  int get hashCode => Object.hash(depthContours, navigationAids);
+  int get hashCode => Object.hash(depthContours, navigationAids, mooringPois);
 }
 
 class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
-  MapLayerPreferencesController(
-    this._prefs,
-    this._audit,
-    this._sessionId,
-  ) : super(_initial(_prefs));
+  MapLayerPreferencesController(this._prefs, this._audit, this._sessionId)
+    : super(_initial(_prefs));
 
   final SharedPreferences _prefs;
   final AuditRepository _audit;
@@ -36,11 +38,13 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
 
   static const depthPreferenceKey = 'mapLayerDepthDemo';
   static const navAidsPreferenceKey = 'mapLayerNavAidsDemo';
+  static const mooringPoisPreferenceKey = 'mapLayerMooringPois';
 
   static MapLayerVisibility _initial(SharedPreferences prefs) {
     return MapLayerVisibility(
       depthContours: prefs.getBool(depthPreferenceKey) ?? false,
       navigationAids: prefs.getBool(navAidsPreferenceKey) ?? false,
+      mooringPois: prefs.getBool(mooringPoisPreferenceKey) ?? true,
     );
   }
 
@@ -50,6 +54,7 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
     state = MapLayerVisibility(
       depthContours: visible,
       navigationAids: state.navigationAids,
+      mooringPois: state.mooringPois,
     );
     await _audit.record(
       sessionId: _sessionId,
@@ -65,12 +70,29 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
     state = MapLayerVisibility(
       depthContours: state.depthContours,
       navigationAids: visible,
+      mooringPois: state.mooringPois,
     );
     await _audit.record(
       sessionId: _sessionId,
       module: 'M1',
       action: 'layer_toggle',
       contextJson: '{"layerId":"nav_aids_demo","visible":$visible}',
+    );
+  }
+
+  Future<void> setMooringPoisVisible(bool visible) async {
+    if (visible == state.mooringPois) return;
+    await _prefs.setBool(mooringPoisPreferenceKey, visible);
+    state = MapLayerVisibility(
+      depthContours: state.depthContours,
+      navigationAids: state.navigationAids,
+      mooringPois: visible,
+    );
+    await _audit.record(
+      sessionId: _sessionId,
+      module: 'M1',
+      action: 'layer_toggle',
+      contextJson: '{"layerId":"mooring_pois","visible":$visible}',
     );
   }
 }

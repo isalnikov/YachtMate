@@ -20,10 +20,12 @@ class AivdmAssembler {
       return AssembledAisPayload(s.payload, s.fillBits);
     }
     final key = '${s.sequenceId}_${s.fragmentsTotal}';
-    final buf =
-        _bufs.putIfAbsent(key, () => _FragBuf(total: s.fragmentsTotal));
+    final buf = _bufs.putIfAbsent(key, () => _FragBuf(total: s.fragmentsTotal));
 
-    buf.parts[s.fragmentIndex - 1] = _FragPart(payload: s.payload, fillBits: s.fillBits);
+    buf.parts[s.fragmentIndex - 1] = _FragPart(
+      payload: s.payload,
+      fillBits: s.fillBits,
+    );
     if (!buf.complete) return null;
 
     final assembled = buf.concatenatedPayload;
@@ -43,8 +45,8 @@ class _FragPart {
 
 class _FragBuf {
   _FragBuf({required int total})
-      : parts = List<_FragPart?>.filled(total, null),
-        _total = total;
+    : parts = List<_FragPart?>.filled(total, null),
+      _total = total;
 
   final List<_FragPart?> parts;
   final int _total;

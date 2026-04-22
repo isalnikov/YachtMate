@@ -11,7 +11,8 @@ bool pointInPolygonLonLat({
     final yi = ring[i].$2;
     final xj = ring[j].$1;
     final yj = ring[j].$2;
-    final intersect = ((yi > lat) != (yj > lat)) &&
+    final intersect =
+        ((yi > lat) != (yj > lat)) &&
         (lon < (xj - xi) * (lat - yi) / (yj - yi) + xi);
     if (intersect) inside = !inside;
   }

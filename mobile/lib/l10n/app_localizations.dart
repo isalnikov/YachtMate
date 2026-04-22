@@ -5,7 +5,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'app_localizations_de.dart';
 import 'app_localizations_en.dart';
+import 'app_localizations_es.dart';
+import 'app_localizations_fr.dart';
+import 'app_localizations_it.dart';
 import 'app_localizations_ru.dart';
 
 // ignore_for_file: type=lint
@@ -94,7 +98,11 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
+    Locale('de'),
     Locale('en'),
+    Locale('es'),
+    Locale('fr'),
+    Locale('it'),
     Locale('ru'),
   ];
 
@@ -149,7 +157,7 @@ abstract class AppLocalizations {
   /// No description provided for @languageSwitchTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Choose language (English / Russian)'**
+  /// **'Choose interface language'**
   String get languageSwitchTooltip;
 
   /// No description provided for @localeEnglish.
@@ -163,6 +171,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Russian'**
   String get localeRussian;
+
+  /// No description provided for @localeGerman.
+  ///
+  /// In en, this message translates to:
+  /// **'German'**
+  String get localeGerman;
+
+  /// No description provided for @localeFrench.
+  ///
+  /// In en, this message translates to:
+  /// **'French'**
+  String get localeFrench;
+
+  /// No description provided for @localeSpanish.
+  ///
+  /// In en, this message translates to:
+  /// **'Spanish'**
+  String get localeSpanish;
+
+  /// No description provided for @localeItalian.
+  ///
+  /// In en, this message translates to:
+  /// **'Italian'**
+  String get localeItalian;
 
   /// No description provided for @bootstrapNote.
   ///
@@ -247,6 +279,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Navigation marks (synthetic)'**
   String get mapLayerNavAids;
+
+  /// No description provided for @mapLayerMooringPois.
+  ///
+  /// In en, this message translates to:
+  /// **'Marinas & anchorages (catalog)'**
+  String get mapLayerMooringPois;
 
   /// No description provided for @mapDepthLegendTitle.
   ///
@@ -594,7 +632,7 @@ abstract class AppLocalizations {
   /// No description provided for @mooringReviewQueued.
   ///
   /// In en, this message translates to:
-  /// **'Review saved in outbox — sync when backend is configured.'**
+  /// **'Review saved in the outbox. Use “Sync reviews” on this tab when online (MVP uses a local acceptor until the server is connected).'**
   String get mooringReviewQueued;
 
   /// No description provided for @mooringDetailClose.
@@ -614,6 +652,1158 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Comments stay on device until upload; only IDs and ratings go to audit logs.'**
   String get mooringGdprHint;
+
+  /// No description provided for @mooringPendingSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending reviews (offline outbox)'**
+  String get mooringPendingSectionTitle;
+
+  /// No description provided for @mooringCatalogSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Directory'**
+  String get mooringCatalogSectionTitle;
+
+  /// No description provided for @mooringPendingReviewLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{placeId} · {stars} ★ · {time}'**
+  String mooringPendingReviewLine(String placeId, int stars, String time);
+
+  /// No description provided for @mooringEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get mooringEmail;
+
+  /// No description provided for @mooringWebsite.
+  ///
+  /// In en, this message translates to:
+  /// **'Website'**
+  String get mooringWebsite;
+
+  /// No description provided for @mooringBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Book berth'**
+  String get mooringBook;
+
+  /// No description provided for @mooringOpenMap.
+  ///
+  /// In en, this message translates to:
+  /// **'Open map'**
+  String get mooringOpenMap;
+
+  /// No description provided for @mooringCall.
+  ///
+  /// In en, this message translates to:
+  /// **'Call'**
+  String get mooringCall;
+
+  /// No description provided for @mooringSyncPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Sync reviews'**
+  String get mooringSyncPending;
+
+  /// No description provided for @mooringSyncDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitted {count} review(s).'**
+  String mooringSyncDone(int count);
+
+  /// No description provided for @mooringSyncFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not submit some drafts ({count}).'**
+  String mooringSyncFailed(int count);
+
+  /// No description provided for @mooringSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name'**
+  String get mooringSearchHint;
+
+  /// No description provided for @mooringSearchNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches your search.'**
+  String get mooringSearchNoResults;
+
+  /// No description provided for @mooringSvcElectricity.
+  ///
+  /// In en, this message translates to:
+  /// **'Electricity'**
+  String get mooringSvcElectricity;
+
+  /// No description provided for @mooringSvcWater.
+  ///
+  /// In en, this message translates to:
+  /// **'Water'**
+  String get mooringSvcWater;
+
+  /// No description provided for @mooringSvcWifi.
+  ///
+  /// In en, this message translates to:
+  /// **'Wi‑Fi'**
+  String get mooringSvcWifi;
+
+  /// No description provided for @mooringSvcFuel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel'**
+  String get mooringSvcFuel;
+
+  /// No description provided for @mooringSvcProtection.
+  ///
+  /// In en, this message translates to:
+  /// **'Shelter'**
+  String get mooringSvcProtection;
+
+  /// No description provided for @mooringSvcHolding.
+  ///
+  /// In en, this message translates to:
+  /// **'Holding'**
+  String get mooringSvcHolding;
+
+  /// No description provided for @logbookTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Ship\'s log'**
+  String get logbookTitle;
+
+  /// No description provided for @logbookEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No log entries yet. Tap + to add fuel, maintenance, or general notes.'**
+  String get logbookEmpty;
+
+  /// No description provided for @logbookAddEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Add entry'**
+  String get logbookAddEntry;
+
+  /// No description provided for @logbookCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get logbookCategory;
+
+  /// No description provided for @logbookCategoryNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note / general'**
+  String get logbookCategoryNote;
+
+  /// No description provided for @logbookCategoryFuel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel'**
+  String get logbookCategoryFuel;
+
+  /// No description provided for @logbookCategoryMaintenance.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance'**
+  String get logbookCategoryMaintenance;
+
+  /// No description provided for @logbookCategoryWatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Watch / handover'**
+  String get logbookCategoryWatch;
+
+  /// No description provided for @logbookCategoryOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get logbookCategoryOther;
+
+  /// No description provided for @logbookEntryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get logbookEntryTitle;
+
+  /// No description provided for @logbookEntryBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get logbookEntryBody;
+
+  /// No description provided for @logbookSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get logbookSave;
+
+  /// No description provided for @logbookCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get logbookCancel;
+
+  /// No description provided for @logbookExportCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export CSV'**
+  String get logbookExportCsv;
+
+  /// No description provided for @logbookExportCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'CSV copied to clipboard — paste into a spreadsheet or file.'**
+  String get logbookExportCopied;
+
+  /// No description provided for @logbookDeleteTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete entry'**
+  String get logbookDeleteTitle;
+
+  /// No description provided for @logbookDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this log entry from the device?'**
+  String get logbookDeleteConfirm;
+
+  /// No description provided for @logbookDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get logbookDelete;
+
+  /// No description provided for @logbookEntryDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Entry deleted.'**
+  String get logbookEntryDeleted;
+
+  /// No description provided for @logbookCrewNoDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the captain can delete log entries on this device.'**
+  String get logbookCrewNoDelete;
+
+  /// No description provided for @moreMenuHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety, log & crew'**
+  String get moreMenuHeadline;
+
+  /// No description provided for @moreMenuLogbook.
+  ///
+  /// In en, this message translates to:
+  /// **'Ship\'s log'**
+  String get moreMenuLogbook;
+
+  /// No description provided for @moreMenuSos.
+  ///
+  /// In en, this message translates to:
+  /// **'SOS / distress'**
+  String get moreMenuSos;
+
+  /// No description provided for @moreMenuTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'Track recording'**
+  String get moreMenuTrack;
+
+  /// No description provided for @moreMenuChecklists.
+  ///
+  /// In en, this message translates to:
+  /// **'Checklists'**
+  String get moreMenuChecklists;
+
+  /// No description provided for @moreMenuVault.
+  ///
+  /// In en, this message translates to:
+  /// **'Document vault'**
+  String get moreMenuVault;
+
+  /// No description provided for @moreMenuCrew.
+  ///
+  /// In en, this message translates to:
+  /// **'Crew & ship'**
+  String get moreMenuCrew;
+
+  /// No description provided for @sosTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Distress (SOS)'**
+  String get sosTitle;
+
+  /// No description provided for @sosBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Use only in a real emergency. Test mode records a critical audit event and does not open SMS or email.'**
+  String get sosBody;
+
+  /// No description provided for @sosTestMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Test mode (no external send)'**
+  String get sosTestMode;
+
+  /// No description provided for @sosVesselName.
+  ///
+  /// In en, this message translates to:
+  /// **'Vessel name'**
+  String get sosVesselName;
+
+  /// No description provided for @sosSmsNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS number (E.164, optional)'**
+  String get sosSmsNumber;
+
+  /// No description provided for @sosRegionRescue.
+  ///
+  /// In en, this message translates to:
+  /// **'Regional rescue (display only, verify locally)'**
+  String get sosRegionRescue;
+
+  /// No description provided for @sosOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open options'**
+  String get sosOpenSettings;
+
+  /// No description provided for @sosStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'I understand this is for genuine distress'**
+  String get sosStep1;
+
+  /// No description provided for @sosStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold the button to trigger (2s)'**
+  String get sosStep2;
+
+  /// No description provided for @sosHold.
+  ///
+  /// In en, this message translates to:
+  /// **'HOLD TO ACTIVATE'**
+  String get sosHold;
+
+  /// No description provided for @sosAfterTest.
+  ///
+  /// In en, this message translates to:
+  /// **'Test distress recorded. No message was sent.'**
+  String get sosAfterTest;
+
+  /// No description provided for @sosAfterLive.
+  ///
+  /// In en, this message translates to:
+  /// **'If a number is set, an SMS compose view may open. Add a body if the platform allows.'**
+  String get sosAfterLive;
+
+  /// No description provided for @sosNoNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Set an SMS number in the field above, or copy the text from the next dialog.'**
+  String get sosNoNumber;
+
+  /// No description provided for @sosCopyMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy message'**
+  String get sosCopyMessage;
+
+  /// No description provided for @sosMessageCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Message copied.'**
+  String get sosMessageCopied;
+
+  /// No description provided for @trackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip track'**
+  String get trackTitle;
+
+  /// No description provided for @trackRecordingActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording…'**
+  String get trackRecordingActive;
+
+  /// No description provided for @trackIdle.
+  ///
+  /// In en, this message translates to:
+  /// **'Not recording'**
+  String get trackIdle;
+
+  /// No description provided for @trackStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start recording'**
+  String get trackStart;
+
+  /// No description provided for @trackStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop & save'**
+  String get trackStop;
+
+  /// No description provided for @trackPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} points'**
+  String trackPoints(int count);
+
+  /// No description provided for @checklistsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety checklists'**
+  String get checklistsTitle;
+
+  /// No description provided for @checklistTplDeparture.
+  ///
+  /// In en, this message translates to:
+  /// **'Before departure'**
+  String get checklistTplDeparture;
+
+  /// No description provided for @checklistTplDocking.
+  ///
+  /// In en, this message translates to:
+  /// **'Docking / mooring'**
+  String get checklistTplDocking;
+
+  /// No description provided for @checklistTplStorm.
+  ///
+  /// In en, this message translates to:
+  /// **'Storm preparation'**
+  String get checklistTplStorm;
+
+  /// No description provided for @checklistComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all done'**
+  String get checklistComplete;
+
+  /// No description provided for @checklistCompletedAudit.
+  ///
+  /// In en, this message translates to:
+  /// **'Checklist completed.'**
+  String get checklistCompletedAudit;
+
+  /// No description provided for @vaultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Document vault'**
+  String get vaultTitle;
+
+  /// No description provided for @vaultPinSetupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create vault PIN'**
+  String get vaultPinSetupTitle;
+
+  /// No description provided for @vaultPinUnlockTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock vault'**
+  String get vaultPinUnlockTitle;
+
+  /// No description provided for @vaultPinHint.
+  ///
+  /// In en, this message translates to:
+  /// **'4–12 digits recommended'**
+  String get vaultPinHint;
+
+  /// No description provided for @vaultUnlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock'**
+  String get vaultUnlock;
+
+  /// No description provided for @vaultLockedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Documents are encrypted at rest with your PIN.'**
+  String get vaultLockedHint;
+
+  /// No description provided for @vaultEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No encrypted files stored yet.'**
+  String get vaultEmpty;
+
+  /// No description provided for @vaultPickFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick file'**
+  String get vaultPickFile;
+
+  /// No description provided for @vaultDecryptPreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview / decrypt check'**
+  String get vaultDecryptPreview;
+
+  /// No description provided for @vaultDeleteForbidden.
+  ///
+  /// In en, this message translates to:
+  /// **'Only the captain can delete vault files.'**
+  String get vaultDeleteForbidden;
+
+  /// No description provided for @crewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Crew & ship'**
+  String get crewTitle;
+
+  /// No description provided for @crewCreateShip.
+  ///
+  /// In en, this message translates to:
+  /// **'Create ship & invite code'**
+  String get crewCreateShip;
+
+  /// No description provided for @crewJoinShip.
+  ///
+  /// In en, this message translates to:
+  /// **'Join ship'**
+  String get crewJoinShip;
+
+  /// No description provided for @crewInviteExplain.
+  ///
+  /// In en, this message translates to:
+  /// **'Share this code so others can join the same ship ID on their device.'**
+  String get crewInviteExplain;
+
+  /// No description provided for @crewLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave ship'**
+  String get crewLeave;
+
+  /// No description provided for @crewRoleCaptain.
+  ///
+  /// In en, this message translates to:
+  /// **'Captain'**
+  String get crewRoleCaptain;
+
+  /// No description provided for @crewRoleCrew.
+  ///
+  /// In en, this message translates to:
+  /// **'Crew'**
+  String get crewRoleCrew;
+
+  /// No description provided for @moreMenuSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get moreMenuSettings;
+
+  /// No description provided for @settingsAccessibilitySection.
+  ///
+  /// In en, this message translates to:
+  /// **'Accessibility'**
+  String get settingsAccessibilitySection;
+
+  /// No description provided for @settingsGloveMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Glove mode'**
+  String get settingsGloveMode;
+
+  /// No description provided for @settingsGloveModeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Larger buttons and tap targets'**
+  String get settingsGloveModeSubtitle;
+
+  /// No description provided for @settingsTextSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Text size'**
+  String get settingsTextSize;
+
+  /// No description provided for @settingsTextSizeStandard.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get settingsTextSizeStandard;
+
+  /// No description provided for @settingsTextSizeLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'Large'**
+  String get settingsTextSizeLarge;
+
+  /// No description provided for @settingsTextSizeExtraLarge.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra large'**
+  String get settingsTextSizeExtraLarge;
+
+  /// No description provided for @settingsHighContrast.
+  ///
+  /// In en, this message translates to:
+  /// **'High contrast'**
+  String get settingsHighContrast;
+
+  /// No description provided for @settingsEnergySection.
+  ///
+  /// In en, this message translates to:
+  /// **'Battery & GPS'**
+  String get settingsEnergySection;
+
+  /// No description provided for @energyProfileEco.
+  ///
+  /// In en, this message translates to:
+  /// **'Eco passage'**
+  String get energyProfileEco;
+
+  /// No description provided for @energyProfilePassage.
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced'**
+  String get energyProfilePassage;
+
+  /// No description provided for @energyProfileSport.
+  ///
+  /// In en, this message translates to:
+  /// **'Precision'**
+  String get energyProfileSport;
+
+  /// No description provided for @energyProfileEcoDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Fewer GPS fixes while recording and lighter map work when the app is backgrounded.'**
+  String get energyProfileEcoDescription;
+
+  /// No description provided for @energyProfilePassageDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Default balance for coastal sailing.'**
+  String get energyProfilePassageDescription;
+
+  /// No description provided for @energyProfileSportDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'More frequent track points and faster AIS demo updates.'**
+  String get energyProfileSportDescription;
+
+  /// No description provided for @moreMenuKnots.
+  ///
+  /// In en, this message translates to:
+  /// **'Knot guide'**
+  String get moreMenuKnots;
+
+  /// No description provided for @knotsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Maritime knots'**
+  String get knotsTitle;
+
+  /// No description provided for @knotsSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search knots'**
+  String get knotsSearchHint;
+
+  /// No description provided for @knotsLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load knot catalog.'**
+  String get knotsLoadError;
+
+  /// No description provided for @knotsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'The knot catalog is empty.'**
+  String get knotsEmpty;
+
+  /// No description provided for @knotsNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No knots match your search.'**
+  String get knotsNoMatch;
+
+  /// No description provided for @knotStepsHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Steps'**
+  String get knotStepsHeading;
+
+  /// No description provided for @knotCategoryLoops.
+  ///
+  /// In en, this message translates to:
+  /// **'Loops'**
+  String get knotCategoryLoops;
+
+  /// No description provided for @knotCategoryBends.
+  ///
+  /// In en, this message translates to:
+  /// **'Bends'**
+  String get knotCategoryBends;
+
+  /// No description provided for @knotCategoryHitches.
+  ///
+  /// In en, this message translates to:
+  /// **'Hitches'**
+  String get knotCategoryHitches;
+
+  /// No description provided for @knotCategoryStoppers.
+  ///
+  /// In en, this message translates to:
+  /// **'Stoppers'**
+  String get knotCategoryStoppers;
+
+  /// No description provided for @knotCategoryEmergency.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency'**
+  String get knotCategoryEmergency;
+
+  /// No description provided for @moreMenuToolbox.
+  ///
+  /// In en, this message translates to:
+  /// **'Maritime toolbox'**
+  String get moreMenuToolbox;
+
+  /// No description provided for @moreMenuToolboxSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Anchor, compass, GRIB, shore, radio, medical, expenses…'**
+  String get moreMenuToolboxSubtitle;
+
+  /// No description provided for @toolboxTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Maritime toolbox'**
+  String get toolboxTitle;
+
+  /// No description provided for @toolboxLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Training and safety utilities; not a substitute for certified equipment or medical care.'**
+  String get toolboxLead;
+
+  /// No description provided for @toolboxAnchorWatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Anchor watch'**
+  String get toolboxAnchorWatch;
+
+  /// No description provided for @toolboxCompass.
+  ///
+  /// In en, this message translates to:
+  /// **'Compass & sun times'**
+  String get toolboxCompass;
+
+  /// No description provided for @toolboxGrib.
+  ///
+  /// In en, this message translates to:
+  /// **'GRIB files (import)'**
+  String get toolboxGrib;
+
+  /// No description provided for @toolboxCoastal.
+  ///
+  /// In en, this message translates to:
+  /// **'Coastal guide (POI)'**
+  String get toolboxCoastal;
+
+  /// No description provided for @toolboxVhf.
+  ///
+  /// In en, this message translates to:
+  /// **'VHF & COLREG trainer'**
+  String get toolboxVhf;
+
+  /// No description provided for @toolboxMedical.
+  ///
+  /// In en, this message translates to:
+  /// **'Medical glossary'**
+  String get toolboxMedical;
+
+  /// No description provided for @toolboxExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Voyager cashbook'**
+  String get toolboxExpenses;
+
+  /// No description provided for @anchorWatchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Anchor watch'**
+  String get anchorWatchTitle;
+
+  /// No description provided for @anchorWatchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Drop anchor when moored, set radius, then arm. Alarm if position drifts beyond the circle. For professional ground tackle use your own judgment.'**
+  String get anchorWatchHint;
+
+  /// No description provided for @anchorWatchRadius.
+  ///
+  /// In en, this message translates to:
+  /// **'Allowed radius'**
+  String get anchorWatchRadius;
+
+  /// No description provided for @anchorWatchDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance to anchor'**
+  String get anchorWatchDistance;
+
+  /// No description provided for @anchorWatchDrop.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark anchor position (GPS)'**
+  String get anchorWatchDrop;
+
+  /// No description provided for @anchorWatchArm.
+  ///
+  /// In en, this message translates to:
+  /// **'Arm watch'**
+  String get anchorWatchArm;
+
+  /// No description provided for @anchorWatchDisarm.
+  ///
+  /// In en, this message translates to:
+  /// **'Disarm'**
+  String get anchorWatchDisarm;
+
+  /// No description provided for @anchorWatchClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear anchor position'**
+  String get anchorWatchClear;
+
+  /// No description provided for @anchorWatchAlarmBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'VESSEL MOVED OUTSIDE ANCHOR CIRCLE'**
+  String get anchorWatchAlarmBanner;
+
+  /// No description provided for @anchorWatchDismissAlarm.
+  ///
+  /// In en, this message translates to:
+  /// **'Acknowledge'**
+  String get anchorWatchDismissAlarm;
+
+  /// No description provided for @anchorWatchGpsLost.
+  ///
+  /// In en, this message translates to:
+  /// **'No recent GPS fix — verify receiver and sky view.'**
+  String get anchorWatchGpsLost;
+
+  /// No description provided for @compassTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Compass & sun'**
+  String get compassTitle;
+
+  /// No description provided for @compassDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Magnetic compass uses device sensors; solar times are approximate.'**
+  String get compassDisclaimer;
+
+  /// No description provided for @compassUnavailablePlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Compass stream is unavailable on this platform.'**
+  String get compassUnavailablePlatform;
+
+  /// No description provided for @compassHeadingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Heading (magnetic variation not applied)'**
+  String get compassHeadingLabel;
+
+  /// No description provided for @astroSectionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Approximate sunrise / sunset (UTC converted to local)'**
+  String get astroSectionTitle;
+
+  /// No description provided for @astroNeedGps.
+  ///
+  /// In en, this message translates to:
+  /// **'Need a GPS fix to estimate sun times.'**
+  String get astroNeedGps;
+
+  /// No description provided for @astroSunrise.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunrise'**
+  String get astroSunrise;
+
+  /// No description provided for @astroSunset.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunset'**
+  String get astroSunset;
+
+  /// No description provided for @gribTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'GRIB import'**
+  String get gribTitle;
+
+  /// No description provided for @gribStubBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Decoder for GRIB (wgrib/ecCodes style) is not bundled yet. You can park a file path for future offline viewers.'**
+  String get gribStubBody;
+
+  /// No description provided for @gribLastPath.
+  ///
+  /// In en, this message translates to:
+  /// **'Last stub path'**
+  String get gribLastPath;
+
+  /// No description provided for @gribSimulatePick.
+  ///
+  /// In en, this message translates to:
+  /// **'Simulate picking a GRIB file'**
+  String get gribSimulatePick;
+
+  /// No description provided for @gribStubSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Stub path saved locally.'**
+  String get gribStubSaved;
+
+  /// No description provided for @coastalGuideTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Coastal POI'**
+  String get coastalGuideTitle;
+
+  /// No description provided for @coastalLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load coastal POIs.'**
+  String get coastalLoadError;
+
+  /// No description provided for @coastalEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No coastal POIs.'**
+  String get coastalEmpty;
+
+  /// No description provided for @medicalGlossaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Medical glossary'**
+  String get medicalGlossaryTitle;
+
+  /// No description provided for @medicalDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Educational snippets only — call emergency services when needed.'**
+  String get medicalDisclaimer;
+
+  /// No description provided for @medicalLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load medical glossary.'**
+  String get medicalLoadError;
+
+  /// No description provided for @vhfTrainingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'VHF & COLREG'**
+  String get vhfTrainingTitle;
+
+  /// No description provided for @vhfTabQuiz.
+  ///
+  /// In en, this message translates to:
+  /// **'COLREG quiz'**
+  String get vhfTabQuiz;
+
+  /// No description provided for @vhfTabSessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Recordings'**
+  String get vhfTabSessions;
+
+  /// No description provided for @vhfSessionsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Recordings stay on this device. Transcription uses the microphone (paraphrase), not offline file decoding.'**
+  String get vhfSessionsHint;
+
+  /// No description provided for @vhfSessionsLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load recordings list.'**
+  String get vhfSessionsLoadError;
+
+  /// No description provided for @vhfSessionsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No VHF recordings yet.'**
+  String get vhfSessionsEmpty;
+
+  /// No description provided for @vhfRecordStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get vhfRecordStart;
+
+  /// No description provided for @vhfRecordStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get vhfRecordStop;
+
+  /// No description provided for @vhfRecordWebUnsupported.
+  ///
+  /// In en, this message translates to:
+  /// **'Recording is not supported in the web build.'**
+  String get vhfRecordWebUnsupported;
+
+  /// No description provided for @vhfTranscribeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the mic: speak a short summary to store as text. For full verbatim from the audio file use a desktop tool with a GRIB/audio pipeline (post-MVP).'**
+  String get vhfTranscribeHint;
+
+  /// No description provided for @vhfTranscribeDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Transcript saved.'**
+  String get vhfTranscribeDone;
+
+  /// No description provided for @vhfQuizLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load quiz.'**
+  String get vhfQuizLoadError;
+
+  /// No description provided for @vhfQuizEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No quiz questions.'**
+  String get vhfQuizEmpty;
+
+  /// No description provided for @vhfQuizWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'Not quite — review COLREG.'**
+  String get vhfQuizWrong;
+
+  /// No description provided for @vhfQuizPrev.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get vhfQuizPrev;
+
+  /// No description provided for @vhfQuizNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get vhfQuizNext;
+
+  /// No description provided for @vhfQuizDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get vhfQuizDone;
+
+  /// No description provided for @vhfQuizComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Last question answered.'**
+  String get vhfQuizComplete;
+
+  /// No description provided for @expensesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Voyager cashbook'**
+  String get expensesTitle;
+
+  /// No description provided for @expensesDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Totals are stored only on device — no shore sync in MVP.'**
+  String get expensesDisclaimer;
+
+  /// No description provided for @expensesLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load expenses.'**
+  String get expensesLoadError;
+
+  /// No description provided for @expenseAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add expense'**
+  String get expenseAdd;
+
+  /// No description provided for @expenseSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get expenseSave;
+
+  /// No description provided for @expenseAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get expenseAmount;
+
+  /// No description provided for @expenseNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get expenseNote;
+
+  /// No description provided for @expenseEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No expenses logged.'**
+  String get expenseEmpty;
+
+  /// No description provided for @expenseCatFuel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel'**
+  String get expenseCatFuel;
+
+  /// No description provided for @expenseCatFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Food'**
+  String get expenseCatFood;
+
+  /// No description provided for @expenseCatMarina.
+  ///
+  /// In en, this message translates to:
+  /// **'Marina fees'**
+  String get expenseCatMarina;
+
+  /// No description provided for @expenseCatMooringFee.
+  ///
+  /// In en, this message translates to:
+  /// **'Mooring'**
+  String get expenseCatMooringFee;
+
+  /// No description provided for @expenseCatGear.
+  ///
+  /// In en, this message translates to:
+  /// **'Gear & repairs'**
+  String get expenseCatGear;
+
+  /// No description provided for @expenseCatProvisions.
+  ///
+  /// In en, this message translates to:
+  /// **'Provisions'**
+  String get expenseCatProvisions;
+
+  /// No description provided for @expenseCatOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get expenseCatOther;
 }
 
 class _AppLocalizationsDelegate
@@ -626,8 +1816,14 @@ class _AppLocalizationsDelegate
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'ru'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>[
+    'de',
+    'en',
+    'es',
+    'fr',
+    'it',
+    'ru',
+  ].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -636,8 +1832,16 @@ class _AppLocalizationsDelegate
 AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
+    case 'de':
+      return AppLocalizationsDe();
     case 'en':
       return AppLocalizationsEn();
+    case 'es':
+      return AppLocalizationsEs();
+    case 'fr':
+      return AppLocalizationsFr();
+    case 'it':
+      return AppLocalizationsIt();
     case 'ru':
       return AppLocalizationsRu();
   }

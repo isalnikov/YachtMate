@@ -11,10 +11,7 @@ Map<String, dynamic> aisTargetsToGeoJson(Map<int, AisTarget> targets) {
   for (final t in targets.values) {
     features.add({
       'type': 'Feature',
-      'properties': {
-        'mmsi': t.mmsi,
-        'sog': t.sogKnots,
-      },
+      'properties': {'mmsi': t.mmsi, 'sog': t.sogKnots},
       'geometry': {
         'type': 'Point',
         'coordinates': [t.longitudeDeg, t.latitudeDeg],

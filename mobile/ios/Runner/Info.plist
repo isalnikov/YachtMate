@@ -4,6 +4,10 @@
 <dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Captain Wrongel uses your location to plot the vessel on the chart and compute navigation.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Captain Wrongel records VHF practice sessions and uses the microphone when you dictate a transcript summary.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Captain Wrongel converts your spoken summary into text notes for recorded radio practice.</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>

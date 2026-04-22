@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 
 import '../../core/active_route_id.dart';
+import '../../core/energy_profile_controller.dart';
 import '../../core/logging/app_logger.dart';
 import '../../core/map_layer_preferences_controller.dart';
 import '../../core/providers.dart';
@@ -20,6 +21,7 @@ import '../../l10n/app_localizations.dart';
 import '../mooring/mooring_detail_sheet.dart';
 import '../mooring/mooring_providers.dart';
 import '../route/advisory_polyline_notifier.dart';
+import '../track/track_recording_controller.dart';
 import 'ais_target_layer.dart';
 import 'chart_engine_platform.dart';
 import 'demo_map_layers.dart';
@@ -35,13 +37,17 @@ class MapScreen extends ConsumerStatefulWidget {
   ConsumerState<MapScreen> createState() => _MapScreenState();
 }
 
-class _MapScreenState extends ConsumerState<MapScreen> {
-  static const _initial =
-      CameraPosition(target: LatLng(36.65, 29.12), zoom: 10);
+class _MapScreenState extends ConsumerState<MapScreen>
+    with WidgetsBindingObserver {
+  static const _initial = CameraPosition(
+    target: LatLng(36.65, 29.12),
+    zoom: 10,
+  );
 
   MapLibreMapController? _controller;
   Line? _routeLine;
   Line? _advisoryLine;
+  Line? _trackLine;
   bool _styleLoaded = false;
   bool _locResolved = false;
   bool _locOk = false;
@@ -54,11 +60,42 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   bool _aisLayerInstalled = false;
   bool _mooringLayerInstalled = false;
 
+  /// Экран ушёл в фон — при eco профиле временно отключаем тяжёлые демо-слои (Фаза 8).
+  bool _pausedBackground = false;
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => _resolveLocationPermission(),
+    );
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final bg = state == AppLifecycleState.paused;
+    if (_pausedBackground == bg) return;
+    setState(() => _pausedBackground = bg);
+    final c = _controller;
+    if (c == null || !_demoLayersInstalled) return;
+    final prefs = ref.read(mapLayerPreferencesProvider);
+    unawaited(applyCwDemoLayerVisibility(c, _effectiveDemoLayers(prefs)));
+  }
+
+  MapLayerVisibility _effectiveDemoLayers(MapLayerVisibility prefs) {
+    final eco = ref.read(energyProfileProvider) == EnergyProfile.eco;
+    if (!_pausedBackground || !eco) return prefs;
+    return MapLayerVisibility(
+      depthContours: false,
+      navigationAids: false,
+      mooringPois: prefs.mooringPois,
     );
   }
 
@@ -94,6 +131,31 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     if (line == null) {
       _routeLine = await c.addLine(
         LineOptions(geometry: geom, lineColor: '#FF7043', lineWidth: 4),
+      );
+    } else {
+      await c.updateLine(line, LineOptions(geometry: geom));
+    }
+  }
+
+  Future<void> _redrawTrackLine(List<TrackPointRow> pts) async {
+    final c = _controller;
+    if (c == null || !_styleLoaded) return;
+
+    if (pts.length < 2) {
+      final line = _trackLine;
+      if (line != null) {
+        await c.removeLine(line);
+        _trackLine = null;
+      }
+      return;
+    }
+
+    final geom = pts.map((p) => LatLng(p.lat, p.lon)).toList(growable: false);
+
+    final line = _trackLine;
+    if (line == null) {
+      _trackLine = await c.addLine(
+        LineOptions(geometry: geom, lineColor: '#00E676', lineWidth: 3),
       );
     } else {
       await c.updateLine(line, LineOptions(geometry: geom));
@@ -175,6 +237,10 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       _mooringLayerInstalled = true;
       final places = await ref.read(mooringRepositoryProvider).allPlaces();
       await updateMooringPlacesLayer(c, places);
+      await applyMooringPlacesVisibility(
+        c,
+        ref.read(mapLayerPreferencesProvider).mooringPois,
+      );
     }
     if (mounted) setState(() {});
   }
@@ -183,11 +249,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     final c = _controller;
     if (c == null || !_mooringLayerInstalled) return;
     try {
-      final hits = await c.queryRenderedFeatures(
-        screen,
-        [cwMooringCircleLayerId],
-        null,
-      );
+      final hits = await c.queryRenderedFeatures(screen, [
+        cwMooringCircleLayerId,
+      ], null);
       if (!context.mounted) return;
       if (hits.isEmpty) return;
       final top = hits.first;
@@ -199,7 +263,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       final place = await ref.read(mooringRepositoryProvider).placeById(id);
       if (!context.mounted) return;
       if (place == null) return;
-      await ref.read(auditRepositoryProvider).record(
+      await ref
+          .read(auditRepositoryProvider)
+          .record(
             sessionId: ref.read(sessionIdProvider),
             module: 'M6',
             action: 'mooring_marker_open',
@@ -261,7 +327,18 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     ref.listen<MapLayerVisibility>(mapLayerPreferencesProvider, (prev, next) {
       final c = _controller;
       if (c != null && _demoLayersInstalled) {
-        unawaited(applyCwDemoLayerVisibility(c, next));
+        unawaited(applyCwDemoLayerVisibility(c, _effectiveDemoLayers(next)));
+      }
+      if (c != null && _mooringLayerInstalled) {
+        unawaited(applyMooringPlacesVisibility(c, next.mooringPois));
+      }
+    });
+
+    ref.listen<EnergyProfile>(energyProfileProvider, (prev, next) {
+      final c = _controller;
+      if (c != null && _demoLayersInstalled) {
+        final prefs = ref.read(mapLayerPreferencesProvider);
+        unawaited(applyCwDemoLayerVisibility(c, _effectiveDemoLayers(prefs)));
       }
     });
 
@@ -276,17 +353,24 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       if (_styleLoaded) unawaited(_redrawAdvisoryLine());
     });
 
-    ref.listen<AsyncValue<List<MooringPlaceRow>>>(
-      mooringPlacesProvider,
-      (prev, next) {
-        next.whenData((places) {
-          final c = _controller;
-          if (c != null && _mooringLayerInstalled) {
-            unawaited(updateMooringPlacesLayer(c, places));
-          }
-        });
-      },
-    );
+    ref.listen<AsyncValue<List<MooringPlaceRow>>>(mooringPlacesProvider, (
+      prev,
+      next,
+    ) {
+      next.whenData((places) {
+        final c = _controller;
+        if (c != null && _mooringLayerInstalled) {
+          unawaited(updateMooringPlacesLayer(c, places));
+        }
+      });
+    });
+
+    ref.listen<AsyncValue<List<TrackPointRow>>>(activeTrackPointsProvider, (
+      prev,
+      next,
+    ) {
+      next.whenData((pts) => unawaited(_redrawTrackLine(pts)));
+    });
 
     if (!chartEngineSupported()) {
       return Center(

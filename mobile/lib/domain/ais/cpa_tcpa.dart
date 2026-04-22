@@ -5,10 +5,7 @@ import 'dart:math' as math;
 /// Вычисление на касательной плоскости (локальная плоскость на средней широте).
 /// Входные углы в градусах \[0..360), скорости — узлы.
 class CpaTcpaResult {
-  const CpaTcpaResult({
-    required this.cpaNm,
-    required this.tcpaHours,
-  });
+  const CpaTcpaResult({required this.cpaNm, required this.tcpaHours});
 
   /// Closest-point-of-approach distance (морские мили).
   final double cpaNm;

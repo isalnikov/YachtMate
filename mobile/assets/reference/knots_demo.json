@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "knots": [
+    {
+      "id": "bowline",
+      "category": "loops",
+      "titles": {
+        "en": "Bowline",
+        "ru": "Булинь"
+      },
+      "steps": {
+        "en": [
+          "Form a small loop in the standing part so the tail passes underneath.",
+          "Pass the working end up through the loop from below.",
+          "Lead the tail behind the standing part, then back down through the loop.",
+          "Dress and tighten; the knot should resemble a lifebelt."
+        ],
+        "ru": [
+          "Сделайте маленькую петлю на коренном конце так, чтобы ходовой проходил снизу.",
+          "Заведите ходовой конец снизу вверх через петлю.",
+          "Обведите коренной конец сзади и опустите ходовой обратно в петлю.",
+          "Подтяните и разровняйте — узел напоминает спасательный круг."
+        ]
+      }
+    },
+    {
+      "id": "cleat_hitch",
+      "category": "hitches",
+      "titles": {
+        "en": "Cleat hitch",
+        "ru": "Шкотовый узел на кнехте"
+      },
+      "steps": {
+        "en": [
+          "Take a full turn around the base of the cleat.",
+          "Cross diagonally over the top and tuck under the opposite horn.",
+          "Repeat the crossing pattern once or twice for heavy loads.",
+          "Finish with a locking half hitch if the line might work loose."
+        ],
+        "ru": [
+          "Обмотайте коренным концом основание кнехта полным витком.",
+          "Перейдите по диагонали через «голову» кнехта и заправьте под противоположный рог.",
+          "Повторите перекрестие ещё раз под нагрузку.",
+          "При необходимости завершите контрольным полуузлом."
+        ]
+      }
+    },
+    {
+      "id": "sheet_bend",
+      "category": "bends",
+      "titles": {
+        "en": "Sheet bend",
+        "ru": "Шлюпочный (смежный) узел"
+      },
+      "steps": {
+        "en": [
+          "Form a bight in the thicker rope and hold it as a U shape.",
+          "Pass the thinner line up through the bight, behind the back, and down.",
+          "Tuck the thinner working end under its own standing part.",
+          "Tighten both ropes; add a second turn (double sheet bend) for slippery line."
+        ],
+        "ru": [
+          "Согните более толстый трос петлёй-бёдром.",
+          "Проведите тонкий конец снизу вверх через петлю, за спиной и вниз.",
+          "Заведите рабочий конец тонкой линии под свой коренной участок.",
+          "Подтяните; для синтетики добавьте второй виток (двойной смежный)."
+        ]
+      }
+    },
+    {
+      "id": "figure_eight",
+      "category": "stoppers",
+      "titles": {
+        "en": "Figure-eight",
+        "ru": "Восьмёрка"
+      },
+      "steps": {
+        "en": [
+          "Make a loop in the rope with the working end crossing over the standing part.",
+          "Wrap the tail around behind the standing part.",
+          "Thread the tail back down through the first loop parallel to itself.",
+          "Dress the knot into a neat figure-eight; tighten firmly."
+        ],
+        "ru": [
+          "Сделайте петлю с перекрестием ходового над коренным.",
+          "Обведите ходовой конец за коренной частью.",
+          "Проденьте конец вниз через исходную петлю параллельно себе.",
+          "Разровняйте узел в виде восьмёрки и подтяните."
+        ]
+      }
+    },
+    {
+      "id": "round_turn_two_half",
+      "category": "hitches",
+      "titles": {
+        "en": "Round turn & two half hitches",
+        "ru": "Круговой виток и два полуштыка"
+      },
+      "steps": {
+        "en": [
+          "Take a full round turn around the rail or ring for friction.",
+          "Add the first half hitch across the standing part.",
+          "Add the second half hitch to lock the line.",
+          "Neaten and tension evenly."
+        ],
+        "ru": [
+          "Сделайте полный оборот вокруг рым-болта или перил для трения.",
+          "Завяжите первый полуштык поверх коренной части.",
+          "Добавьте второй полуштык для фиксации.",
+          "Подтяните и разровняйте нагрузку."
+        ]
+      }
+    },
+    {
+      "id": "reef_knot",
+      "category": "bends",
+      "titles": {
+        "en": "Reef knot",
+        "ru": "Прямой (рифовый) узел"
+      },
+      "steps": {
+        "en": [
+          "Cross left end over right and tuck through (first half knot).",
+          "Cross right end over left and tuck through (second half knot).",
+          "Both tails must exit on the same side of the knot for symmetry.",
+          "Use only for equal-diameter cordage under light load."
+        ],
+        "ru": [
+          "Левый конец поверх правого и завести на себя (первая половина).",
+          "Правый поверх левого и завести на себя (вторая половина).",
+          "Оба конца должны выходить с одной стороны узла.",
+          "Применять только для равных по толщине тросов при слабой нагрузке."
+        ]
+      }
+    }
+  ]
+}

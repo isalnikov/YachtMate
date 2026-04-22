@@ -39,6 +39,11 @@ Future<void> showMapLayerSheet(BuildContext context) async {
                     value: vis.navigationAids,
                     onChanged: (v) => notifier.setNavigationAidsVisible(v),
                   ),
+                  SwitchListTile(
+                    title: Text(l10n.mapLayerMooringPois),
+                    value: vis.mooringPois,
+                    onChanged: (v) => notifier.setMooringPoisVisible(v),
+                  ),
                   const Divider(height: 24),
                   Text(
                     l10n.mapDepthLegendTitle,
@@ -108,8 +113,8 @@ Future<void> showMapLayerSheet(BuildContext context) async {
                   Text(
                     l10n.mapDepthLegendBody,
                     style: Theme.of(ctx).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(ctx).colorScheme.onSurfaceVariant,
-                        ),
+                      color: Theme.of(ctx).colorScheme.onSurfaceVariant,
+                    ),
                   ),
                 ],
               );

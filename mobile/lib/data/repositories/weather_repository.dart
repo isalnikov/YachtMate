@@ -8,13 +8,10 @@ import '../local/app_database.dart';
 
 /// Open-Meteo Forecast + Marine (волна), SQLite-кэш с TTL (Фаза 4).
 class WeatherRepository {
-  WeatherRepository(
-    this._db, {
-    http.Client? httpClient,
-    Duration? timeout,
-  })  : _http = httpClient ?? http.Client(),
-        _ownsHttpClient = httpClient == null,
-        _timeout = timeout ?? const Duration(seconds: 18);
+  WeatherRepository(this._db, {http.Client? httpClient, Duration? timeout})
+    : _http = httpClient ?? http.Client(),
+      _ownsHttpClient = httpClient == null,
+      _timeout = timeout ?? const Duration(seconds: 18);
 
   final AppDatabase _db;
   final http.Client _http;
@@ -28,51 +25,51 @@ class WeatherRepository {
   }
 
   Uri _forecastUri(double lat, double lon) => Uri.parse(
-        'https://api.open-meteo.com/v1/forecast'
-        '?latitude=${lat.toString()}'
-        '&longitude=${lon.toString()}'
-        '&hourly=temperature_2m,precipitation,pressure_msl,'
-        'wind_speed_10m,wind_direction_10m'
-        '&wind_speed_unit=kn'
-        '&forecast_days=4',
-      );
+    'https://api.open-meteo.com/v1/forecast'
+    '?latitude=${lat.toString()}'
+    '&longitude=${lon.toString()}'
+    '&hourly=temperature_2m,precipitation,pressure_msl,'
+    'wind_speed_10m,wind_direction_10m'
+    '&wind_speed_unit=kn'
+    '&forecast_days=4',
+  );
 
   Uri _marineUri(double lat, double lon) => Uri.parse(
-        'https://marine-api.open-meteo.com/v1/marine'
-        '?latitude=${lat.toString()}'
-        '&longitude=${lon.toString()}'
-        '&hourly=wave_height'
-        '&forecast_days=4',
-      );
+    'https://marine-api.open-meteo.com/v1/marine'
+    '?latitude=${lat.toString()}'
+    '&longitude=${lon.toString()}'
+    '&hourly=wave_height'
+    '&forecast_days=4',
+  );
 
   Future<WeatherForecastBundle> loadForecast(double lat, double lon) async {
     final key = weatherGridKey(lat, lon);
     final now = DateTime.now().toUtc();
 
-    final row = await (_db.select(_db.weatherCacheRows)
-          ..where((t) => t.gridKey.equals(key)))
-        .getSingleOrNull();
+    final row = await (_db.select(
+      _db.weatherCacheRows,
+    )..where((t) => t.gridKey.equals(key))).getSingleOrNull();
 
     if (row != null &&
         weatherCacheEntryValid(expiresAtMs: row.expiresAtMs, now: now)) {
       return parseForecastJsonOnly(
         forecastJson: row.forecastJson,
-        fetchedAtUtc:
-            DateTime.fromMillisecondsSinceEpoch(row.fetchedAtMs, isUtc: true),
+        fetchedAtUtc: DateTime.fromMillisecondsSinceEpoch(
+          row.fetchedAtMs,
+          isUtc: true,
+        ),
       );
     }
 
     try {
-      final fcResp =
-          await _http.get(_forecastUri(lat, lon)).timeout(_timeout);
+      final fcResp = await _http.get(_forecastUri(lat, lon)).timeout(_timeout);
       if (fcResp.statusCode != 200) {
         throw HttpWeatherException(fcResp.statusCode);
       }
 
       String? marineBody;
       try {
-        final mrResp =
-            await _http.get(_marineUri(lat, lon)).timeout(_timeout);
+        final mrResp = await _http.get(_marineUri(lat, lon)).timeout(_timeout);
         if (mrResp.statusCode == 200) marineBody = mrResp.body;
       } catch (_) {
         marineBody = null;
@@ -81,7 +78,9 @@ class WeatherRepository {
       final fetchedAt = DateTime.now().toUtc();
       final ms = fetchedAt.millisecondsSinceEpoch;
 
-      await _db.into(_db.weatherCacheRows).insertOnConflictUpdate(
+      await _db
+          .into(_db.weatherCacheRows)
+          .insertOnConflictUpdate(
             WeatherCacheRowsCompanion(
               gridKey: Value(key),
               forecastJson: Value(fcResp.body),
@@ -101,8 +100,10 @@ class WeatherRepository {
       if (row != null) {
         return parseForecastJsonOnly(
           forecastJson: row.forecastJson,
-          fetchedAtUtc:
-              DateTime.fromMillisecondsSinceEpoch(row.fetchedAtMs, isUtc: true),
+          fetchedAtUtc: DateTime.fromMillisecondsSinceEpoch(
+            row.fetchedAtMs,
+            isUtc: true,
+          ),
           isStale: true,
         );
       }

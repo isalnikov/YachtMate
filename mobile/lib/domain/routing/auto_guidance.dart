@@ -54,10 +54,10 @@ AdvisoryRouteResult computeAdvisoryRoute({
     final center = grid.cellCenter(r, c);
     for (final z in forbidden) {
       if (pointInPolygonLonLat(
-            lon: center.$2,
-            lat: center.$1,
-            ring: z.ringLonLat,
-          )) {
+        lon: center.$2,
+        lat: center.$1,
+        ring: z.ringLonLat,
+      )) {
         return false;
       }
     }

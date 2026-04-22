@@ -20,10 +20,10 @@
 
 | Шаг | Действие | Выход |
 |-----|----------|--------|
-| 8.1 | Режим перчатки: увеличенные hit-targets; крупный шрифт; high contrast theme | Настройки доступности |
-| 8.2 | Профили энергии: частота GPS, FPS карты, отключение второстепенных слоёв в фоне | Preset «рекордер» / «рейс» |
-| 8.3 | Layout планшета; rotation; split-view (карта + журнал/погода) где уместно | Адаптивные макеты |
-| 8.4 | Переводы DE, FR, ES, IT; проверка длины строк в UI | Локализационные файлы |
+| 8.1 | Режим перчатки: увеличенные hit-targets; крупный шрифт; high contrast theme | Настройки доступности ([`settings_screen.dart`](../mobile/lib/features/settings/settings_screen.dart), [`accessibility_preferences_controller.dart`](../mobile/lib/core/accessibility_preferences_controller.dart)) |
+| 8.2 | Профили энергии: частота GPS, FPS карты, отключение второстепенных слоёв в фоне | Preset eco/passage/precision — интервал трека, AIS-демо; eco снимает слои карты при **paused** ([`energy_profile_controller.dart`](../mobile/lib/core/energy_profile_controller.dart)) |
+| 8.3 | Layout планшета; rotation; split-view (карта + журнал/погода) где уместно | `NavigationRail` при ширине ≥720px ([`shell_screen.dart`](../mobile/lib/features/shell/shell_screen.dart)); split-view карта+панель — отложено за рамками MVP |
+| 8.4 | Переводы DE, FR, ES, IT; проверка длины строк в UI | ARB `app_de`/`app_fr`/`app_es`/`app_it` + выбор в [`language_sheet.dart`](../mobile/lib/features/settings/language_sheet.dart) |
 
 ---
 

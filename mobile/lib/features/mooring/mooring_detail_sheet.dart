@@ -6,7 +6,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/providers.dart';
 import '../../data/local/app_database.dart';
 import '../../l10n/app_localizations.dart';
+import 'mooring_place_links.dart';
 import 'mooring_providers.dart';
+import 'mooring_service_labels.dart';
 
 Future<void> showMooringDetailSheet({
   required BuildContext context,
@@ -48,19 +50,24 @@ class _MooringDetailBodyState extends ConsumerState<_MooringDetailBody> {
   Future<void> _submit() async {
     final l10n = AppLocalizations.of(context)!;
     final messenger = ScaffoldMessenger.maybeOf(context);
-    await ref.read(mooringRepositoryProvider).queueReviewDraft(
+    await ref
+        .read(mooringRepositoryProvider)
+        .queueReviewDraft(
           placeId: widget.place.id,
           stars: _stars,
           comment: _comment.text.trim().isEmpty ? null : _comment.text.trim(),
         );
 
-    await ref.read(auditRepositoryProvider).record(
+    await ref
+        .read(auditRepositoryProvider)
+        .record(
           sessionId: ref.read(sessionIdProvider),
           module: 'M6',
           action: 'mooring_review_queue',
-          contextJson:
-              '{"placeId":"${widget.place.id}","stars":$_stars}',
+          contextJson: '{"placeId":"${widget.place.id}","stars":$_stars}',
         );
+
+    ref.invalidate(mooringPendingReviewsProvider);
 
     if (!mounted) return;
     Navigator.of(context).pop();
@@ -110,17 +117,62 @@ class _MooringDetailBodyState extends ConsumerState<_MooringDetailBody> {
             ],
             if ((p.phone ?? '').isNotEmpty)
               Text('${l10n.mooringPhone}: ${p.phone}'),
+            if ((p.email ?? '').isNotEmpty)
+              Text('${l10n.mooringEmail}: ${p.email}'),
             if ((p.notes ?? '').isNotEmpty) ...[
               const SizedBox(height: 12),
               Text(p.notes!, style: theme.textTheme.bodyMedium),
             ],
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 4,
+              children: [
+                if ((p.phone ?? '').isNotEmpty)
+                  TextButton.icon(
+                    icon: const Icon(Icons.call_outlined),
+                    label: Text(l10n.mooringCall),
+                    onPressed: () => dialPhoneNumber(p.phone!),
+                  ),
+                if ((p.email ?? '').isNotEmpty)
+                  TextButton.icon(
+                    icon: const Icon(Icons.mail_outline),
+                    label: Text(l10n.mooringEmail),
+                    onPressed: () => openEmail(p.email!),
+                  ),
+                if (parseHttpish(p.websiteUrl) != null)
+                  TextButton.icon(
+                    icon: const Icon(Icons.language),
+                    label: Text(l10n.mooringWebsite),
+                    onPressed: () =>
+                        openExternalUri(parseHttpish(p.websiteUrl)!),
+                  ),
+                if (parseHttpish(p.bookingUrl) != null)
+                  TextButton.icon(
+                    icon: const Icon(Icons.event_available_outlined),
+                    label: Text(l10n.mooringBook),
+                    onPressed: () =>
+                        openExternalUri(parseHttpish(p.bookingUrl)!),
+                  ),
+                TextButton.icon(
+                  icon: const Icon(Icons.map_outlined),
+                  label: Text(l10n.mooringOpenMap),
+                  onPressed: () => openInOpenStreetMap(lat: p.lat, lon: p.lon),
+                ),
+              ],
+            ),
             if (svc != null && svc.isNotEmpty) ...[
               const SizedBox(height: 12),
               Text(l10n.mooringServices, style: theme.textTheme.titleSmall),
               const SizedBox(height: 4),
-              Text(
-                svc.entries.map((e) => '${e.key}: ${e.value}').join('\n'),
-                style: theme.textTheme.bodySmall,
+              ...svc.entries.map(
+                (e) => Padding(
+                  padding: const EdgeInsets.only(bottom: 4),
+                  child: Text(
+                    mooringServiceLine(l10n, e),
+                    style: theme.textTheme.bodySmall,
+                  ),
+                ),
               ),
             ],
             const SizedBox(height: 16),

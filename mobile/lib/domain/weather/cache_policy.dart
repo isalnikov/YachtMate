@@ -8,11 +8,9 @@ String weatherGridKey(double lat, double lon) =>
 bool weatherCacheEntryValid({
   required int expiresAtMs,
   required DateTime now,
-}) =>
-    now.millisecondsSinceEpoch < expiresAtMs;
+}) => now.millisecondsSinceEpoch < expiresAtMs;
 
 int weatherExpiresAtMs({
   required int fetchedAtMs,
   Duration ttl = const Duration(hours: 1),
-}) =>
-    fetchedAtMs + ttl.inMilliseconds;
+}) => fetchedAtMs + ttl.inMilliseconds;

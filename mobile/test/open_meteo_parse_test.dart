@@ -26,7 +26,8 @@ void main() {
   });
 
   test('marine merges wave height by timestamp', () {
-    const marine = '{"hourly":{"time":["2026-04-22T12:00"],"wave_height":[1.25]}}';
+    const marine =
+        '{"hourly":{"time":["2026-04-22T12:00"],"wave_height":[1.25]}}';
     final b = parseOpenMeteoCombined(
       forecastJson: _minimalFc,
       marineJson: marine,

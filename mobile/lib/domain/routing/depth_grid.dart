@@ -30,10 +30,8 @@ class DepthGrid {
 
   /// Центр ячейки.
   (double lat, double lon) cellCenter(int row, int col) {
-    final lat =
-        originLatDeg + (row + 0.5) * latStepDeg;
-    final lon =
-        originLonDeg + (col + 0.5) * lonStepDeg;
+    final lat = originLatDeg + (row + 0.5) * latStepDeg;
+    final lon = originLonDeg + (col + 0.5) * lonStepDeg;
     return (lat, lon);
   }
 
@@ -51,11 +49,9 @@ class DepthGrid {
     final p2 = lat2 * math.pi / 180;
     final dp = (lat2 - lat1) * math.pi / 180;
     final dl = (lon2 - lon1) * math.pi / 180;
-    final h = math.sin(dp / 2) * math.sin(dp / 2) +
-        math.cos(p1) *
-            math.cos(p2) *
-            math.sin(dl / 2) *
-            math.sin(dl / 2);
+    final h =
+        math.sin(dp / 2) * math.sin(dp / 2) +
+        math.cos(p1) * math.cos(p2) * math.sin(dl / 2) * math.sin(dl / 2);
     return 2 * r * math.asin(math.min(1.0, math.sqrt(h)));
   }
 }

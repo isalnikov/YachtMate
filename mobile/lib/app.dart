@@ -35,7 +35,10 @@ class _CaptainWrongelAppState extends ConsumerState<CaptainWrongelApp> {
       );
       log.info('Bootstrap audit written', {'sessionId': session});
     } catch (e, st) {
-      log.warning('Bootstrap audit failed', {'error': '$e', 'sessionId': session});
+      log.warning('Bootstrap audit failed', {
+        'error': '$e',
+        'sessionId': session,
+      });
       FlutterError.reportError(
         FlutterErrorDetails(exception: e, stack: st, silent: true),
       );
@@ -46,6 +49,43 @@ class _CaptainWrongelAppState extends ConsumerState<CaptainWrongelApp> {
   Widget build(BuildContext context) {
     final locale = ref.watch(localeControllerProvider);
     final disclaimerOk = ref.watch(disclaimerAcceptedProvider);
+    final accessibility = ref.watch(accessibilityPreferencesProvider);
+
+    final baseTheme = accessibility.highContrast
+        ? CwTheme.materialHighContrast()
+        : CwTheme.material();
+
+    final glove = accessibility.gloveMode;
+    final scaled = accessibility.textScale;
+
+    final tunedTheme = glove
+        ? baseTheme.copyWith(
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(52, 52),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 14,
+                ),
+              ),
+            ),
+            filledButtonTheme: FilledButtonThemeData(
+              style: FilledButton.styleFrom(
+                minimumSize: const Size(52, 52),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 14,
+                ),
+              ),
+            ),
+            iconButtonTheme: IconButtonThemeData(
+              style: IconButton.styleFrom(
+                minimumSize: const Size(48, 48),
+                padding: const EdgeInsets.all(14),
+              ),
+            ),
+          )
+        : baseTheme;
 
     return MaterialApp(
       key: ValueKey(disclaimerOk),
@@ -55,7 +95,15 @@ class _CaptainWrongelAppState extends ConsumerState<CaptainWrongelApp> {
       locale: locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      theme: CwTheme.material(),
+      theme: tunedTheme,
+      builder: (context, child) {
+        if (child == null) return const SizedBox.shrink();
+        final mq = MediaQuery.of(context);
+        return MediaQuery(
+          data: mq.copyWith(textScaler: TextScaler.linear(scaled)),
+          child: child,
+        );
+      },
       home: disclaimerOk ? const ShellScreen() : const DisclaimerScreen(),
     );
   }

@@ -37,11 +37,7 @@ void main() {
     for (final p in r.points) {
       for (final z in demo.forbidden) {
         expect(
-          pointInPolygonLonLat(
-            lon: p.$2,
-            lat: p.$1,
-            ring: z.ringLonLat,
-          ),
+          pointInPolygonLonLat(lon: p.$2, lat: p.$1, ring: z.ringLonLat),
           false,
         );
       }

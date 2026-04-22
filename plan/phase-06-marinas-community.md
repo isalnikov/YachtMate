@@ -33,7 +33,19 @@
 ### Offline-first
 
 - Каталог марин для загруженных регионов доступен без сети (read-only).
-- Отзывы: очередь исходящих при восстановлении связи.
+- Отзывы: очередь исходящих; в приложении — **«Отправить отзывы»** на вкладке «Стоянка» и съём с очереди через сменяемый **`MooringReviewOutboundClient`** (MVP: loopback без сети; прод: HTTP).
+
+### Реализовано в коде (mobile)
+
+- **Каталог:** SQLite `mooring_places`, импорт GeoJSON (`replaceFromGeoJson`, инкрементальный **`mergeFromGeoJson`** с конфликтом по **`sourceUpdatedAtMs`**).
+- **Карточка:** VHF, телефон, email, услуги (локализованные ключи JSON), заметки, deeplink телефон / почта / сайт / бронирование / OSM.
+- **Очередь отзывов:** черновики, синхронизация через клиент + аудит `mooring_review_sync`.
+- **Карта:** маркеры, слой в настройках карт, аудит `mooring_marker_open`.
+
+### Вне текущего приложения
+
+- Crew Match / лента путешествий — отдельная спецификация.
+- Реальный REST для каталога и отзывов — заменить импорт и **`mooringReviewOutboundClientProvider`**.
 
 ### Crowdsourcing опасностей
 
@@ -60,5 +72,8 @@
 ## Чек-лист перехода к Фазе 7
 
 - [x] Политика GDPR для отзывов (MVP) — [`../docs/gdpr-marinas-community.md`](../docs/gdpr-marinas-community.md).
-- [x] Ключевые действия: `mooring_marker_open`, `mooring_review_queue` в **`user_action_audit`** (в `context_json` — `placeId` / `stars`, без текста отзыва).
-- [ ] Crew Match / бронирование / полноценная синхронизация отзывов с бэкендом.
+- [x] Ключевые действия: `mooring_marker_open`, `mooring_review_queue`, **`mooring_review_sync`** в **`user_action_audit`** (`placeId` / `stars` / счётчики отправки — без текста отзыва).
+- [x] Офлайн-каталог + merge пакетов + карточка с deeplink + очередь отзывов и съём через outbound-клиент.
+- [ ] Crew Match — не реализовано (отдельная фаза/спека).
+- [ ] Партнёрское бронирование (WebView/API) — только deeplink из каталога; интеграции нет.
+- [ ] Выгрузка отзывов на **боевой** сервер — подставить HTTP-реализацию вместо loopback.

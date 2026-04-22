@@ -23,10 +23,9 @@ Future<void> showMapLongPressSheet({
       final depthText = depthMeters != null
           ? '${depthMeters.round()} m'
           : l10n.mapLongPressDepthUnavailable;
-      final navText =
-          (navAidLabel != null && navAidLabel.isNotEmpty)
-              ? navAidLabel
-              : l10n.mapLongPressNavUnavailable;
+      final navText = (navAidLabel != null && navAidLabel.isNotEmpty)
+          ? navAidLabel
+          : l10n.mapLongPressNavUnavailable;
 
       return SafeArea(
         child: Padding(

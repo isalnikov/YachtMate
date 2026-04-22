@@ -23,7 +23,9 @@ class DisclaimerNotifier extends StateNotifier<bool> {
     state = true;
 
     try {
-      await _ref.read(auditRepositoryProvider).record(
+      await _ref
+          .read(auditRepositoryProvider)
+          .record(
             sessionId: _ref.read(sessionIdProvider),
             module: 'core',
             action: 'disclaimer_accept',

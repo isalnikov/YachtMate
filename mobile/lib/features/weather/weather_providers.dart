@@ -14,21 +14,20 @@ class WeatherPin {
 class WeatherPinNotifier extends StateNotifier<WeatherPin> {
   WeatherPinNotifier() : super(const WeatherPin(lat: 36.65, lon: 29.12));
 
-  void setPin(double lat, double lon) =>
-      state = WeatherPin(lat: lat, lon: lon);
+  void setPin(double lat, double lon) => state = WeatherPin(lat: lat, lon: lon);
 }
 
 final weatherPinProvider =
     StateNotifierProvider<WeatherPinNotifier, WeatherPin>((ref) {
-  return WeatherPinNotifier();
-});
+      return WeatherPinNotifier();
+    });
 
 final weatherForecastProvider =
     FutureProvider.autoDispose<WeatherForecastBundle>((ref) async {
-  final pin = ref.watch(weatherPinProvider);
-  final repo = ref.watch(weatherRepositoryProvider);
-  return repo.loadForecast(pin.lat, pin.lon);
-});
+      final pin = ref.watch(weatherPinProvider);
+      final repo = ref.watch(weatherRepositoryProvider);
+      return repo.loadForecast(pin.lat, pin.lon);
+    });
 
 final tideDemoProvider = FutureProvider<TideDemoStation>((ref) async {
   return ref.read(tidesRepositoryProvider).loadDemoBundled();

@@ -9,7 +9,11 @@ void main() {
       jsonDecode(_sampleGeoJson) as Map<String, dynamic>,
     );
 
-    final d = idx.nearestContourDepthM(lat: 59.92, lon: 30.25, maxDistanceM: 2000);
+    final d = idx.nearestContourDepthM(
+      lat: 59.92,
+      lon: 30.25,
+      maxDistanceM: 2000,
+    );
     expect(d, 5);
   });
 
@@ -18,8 +22,11 @@ void main() {
       jsonDecode(_sampleGeoJson) as Map<String, dynamic>,
     );
 
-    final label =
-        idx.nearestNavAidLabel(lat: 59.94, lon: 30.32, maxDistanceM: 100);
+    final label = idx.nearestNavAidLabel(
+      lat: 59.94,
+      lon: 30.32,
+      maxDistanceM: 100,
+    );
     expect(label, 'Demo beacon');
   });
 

@@ -51,3 +51,15 @@ Future<void> updateMooringPlacesLayer(
     await c.setGeoJsonSource(cwMooringSourceId, mooringPlacesToGeoJson(rows));
   } catch (_) {}
 }
+
+Future<void> applyMooringPlacesVisibility(
+  MapLibreMapController c,
+  bool visible,
+) async {
+  try {
+    await c.setLayerProperties(
+      cwMooringCircleLayerId,
+      CircleLayerProperties(visibility: visible ? 'visible' : 'none'),
+    );
+  } catch (_) {}
+}

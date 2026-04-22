@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "questions": [
+    {
+      "id": "q_head_on",
+      "prompt": {
+        "en": "Two power-driven vessels approaching head-on shall each alter course to ___ .",
+        "ru": "Два судна с механическим двигателем при лобовом подходе должны изменить курс ___ ."
+      },
+      "choices": [
+        { "key": "a", "text": { "en": "Starboard", "ru": "Вправо" } },
+        { "key": "b", "text": { "en": "Port", "ru": "Влево" } },
+        { "key": "c", "text": { "en": "Maintain course", "ru": "Держать курс" } }
+      ],
+      "correct": "a"
+    },
+    {
+      "id": "q_overtaking",
+      "prompt": {
+        "en": "Any vessel overtaking shall keep out of the way of the vessel being overtaken.",
+        "ru": "Обгоняющее судно должно уступать дорогу обгоняемому."
+      },
+      "choices": [
+        { "key": "a", "text": { "en": "True", "ru": "Верно" } },
+        { "key": "b", "text": { "en": "False", "ru": "Неверно" } }
+      ],
+      "correct": "a"
+    }
+  ]
+}

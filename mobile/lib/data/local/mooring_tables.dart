@@ -17,10 +17,20 @@ class MooringPlaces extends Table {
 
   TextColumn get phone => text().nullable()();
 
+  TextColumn get email => text().nullable()();
+
+  TextColumn get websiteUrl => text().nullable()();
+
+  /// Партнёрское бронирование или веб-форма (deeplink).
+  TextColumn get bookingUrl => text().nullable()();
+
   /// JSON: electricity, water, wifi, showers — флаги для карточки.
   TextColumn get servicesJson => text().nullable()();
 
   TextColumn get notes => text().nullable()();
+
+  /// Версия строки каталога для merge при импорте пакетов (новее побеждает).
+  IntColumn get sourceUpdatedAtMs => integer().nullable()();
 
   @override
   Set<Column<Object>>? get primaryKey => {id};

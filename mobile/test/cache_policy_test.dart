@@ -9,11 +9,17 @@ void main() {
   test('TTL validity respects expiresAtMs', () {
     final now = DateTime.utc(2026, 4, 22, 12);
     expect(
-      weatherCacheEntryValid(expiresAtMs: now.millisecondsSinceEpoch + 1, now: now),
+      weatherCacheEntryValid(
+        expiresAtMs: now.millisecondsSinceEpoch + 1,
+        now: now,
+      ),
       isTrue,
     );
     expect(
-      weatherCacheEntryValid(expiresAtMs: now.millisecondsSinceEpoch - 1, now: now),
+      weatherCacheEntryValid(
+        expiresAtMs: now.millisecondsSinceEpoch - 1,
+        now: now,
+      ),
       isFalse,
     );
   });
