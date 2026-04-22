@@ -38,5 +38,66 @@
   "mapLongPressNavAid": "Nearest mark",
   "mapLongPressNavUnavailable": "—",
   "mapLongPressAddWaypoint": "Add route waypoint",
-  "mapAisDemoTooltip": "AIS demo stream (recorded NMEA)"
+  "mapAisDemoTooltip": "AIS demo stream (recorded NMEA)",
+  "weatherScreenTitle": "Weather & tides",
+  "weatherRefreshTooltip": "Refresh forecast",
+  "weatherGpsTooltip": "Use GPS for forecast location",
+  "weatherStaleBanner": "Showing cached forecast — network or API unavailable.",
+  "weatherCoordinates": "Forecast pin: {lat}°, {lon}°",
+  "@weatherCoordinates": {
+    "placeholders": {
+      "lat": {"type": "String"},
+      "lon": {"type": "String"}
+    }
+  },
+  "weatherLastUpdated": "Model run reference: {time}",
+  "@weatherLastUpdated": {
+    "placeholders": {
+      "time": {"type": "String"}
+    }
+  },
+  "weatherLoadError": "Could not load forecast: {detail}",
+  "@weatherLoadError": {
+    "placeholders": {
+      "detail": {"type": "String"}
+    }
+  },
+  "weatherHourlyHeading": "Hourly (48 h)",
+  "weatherTidesSection": "Tides (demo)",
+  "weatherRefreshing": "Refreshing…",
+  "weatherGpsDenied": "Location permission denied.",
+  "weatherGpsUpdated": "Forecast uses your GPS position.",
+  "weatherGpsError": "GPS error: {detail}",
+  "@weatherGpsError": {
+    "placeholders": {
+      "detail": {"type": "String"}
+    }
+  },
+  "tidesHigh": "High water",
+  "tidesLow": "Low water",
+  "weatherWaveSuffix": " · wave {m} m",
+  "@weatherWaveSuffix": {
+    "placeholders": {
+      "m": {"type": "String"}
+    }
+  },
+  "weatherHourLine": "{tempC} °C · wind {windKn} kn / {windDir}° · rain {rainMm} mm · {pressHpa} hPa{wavePart}",
+  "@weatherHourLine": {
+    "placeholders": {
+      "tempC": {"type": "String"},
+      "windKn": {"type": "String"},
+      "windDir": {"type": "String"},
+      "rainMm": {"type": "String"},
+      "pressHpa": {"type": "String"},
+      "wavePart": {"type": "String"}
+    }
+  },
+  "weatherTideRow": "{time} · {height} · {kind}",
+  "@weatherTideRow": {
+    "placeholders": {
+      "time": {"type": "String"},
+      "height": {"type": "String"},
+      "kind": {"type": "String"}
+    }
+  }
 }

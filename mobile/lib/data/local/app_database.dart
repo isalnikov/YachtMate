@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 
 import 'route_tables.dart';
+import 'weather_tables.dart';
 
 part 'app_database.g.dart';
 
@@ -21,12 +22,20 @@ class UserActionAudits extends Table {
   TextColumn get contextJson => text().nullable()();
 }
 
-@DriftDatabase(tables: [UserActionAudits, Routes, RouteWaypoints, ChartRegions])
+@DriftDatabase(
+  tables: [
+    UserActionAudits,
+    Routes,
+    RouteWaypoints,
+    ChartRegions,
+    WeatherCacheRows,
+  ],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -38,6 +47,9 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(routes);
         await m.createTable(routeWaypoints);
         await m.createTable(chartRegions);
+      }
+      if (from < 3) {
+        await m.createTable(weatherCacheRows);
       }
     },
       );

@@ -1576,6 +1576,342 @@ class ChartRegionsCompanion extends UpdateCompanion<ChartRegionRow> {
   }
 }
 
+class $WeatherCacheRowsTable extends WeatherCacheRows
+    with TableInfo<$WeatherCacheRowsTable, WeatherCacheRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $WeatherCacheRowsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _gridKeyMeta = const VerificationMeta(
+    'gridKey',
+  );
+  @override
+  late final GeneratedColumn<String> gridKey = GeneratedColumn<String>(
+    'grid_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _forecastJsonMeta = const VerificationMeta(
+    'forecastJson',
+  );
+  @override
+  late final GeneratedColumn<String> forecastJson = GeneratedColumn<String>(
+    'forecast_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fetchedAtMsMeta = const VerificationMeta(
+    'fetchedAtMs',
+  );
+  @override
+  late final GeneratedColumn<int> fetchedAtMs = GeneratedColumn<int>(
+    'fetched_at_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _expiresAtMsMeta = const VerificationMeta(
+    'expiresAtMs',
+  );
+  @override
+  late final GeneratedColumn<int> expiresAtMs = GeneratedColumn<int>(
+    'expires_at_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    gridKey,
+    forecastJson,
+    fetchedAtMs,
+    expiresAtMs,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'weather_cache_rows';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<WeatherCacheRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('grid_key')) {
+      context.handle(
+        _gridKeyMeta,
+        gridKey.isAcceptableOrUnknown(data['grid_key']!, _gridKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_gridKeyMeta);
+    }
+    if (data.containsKey('forecast_json')) {
+      context.handle(
+        _forecastJsonMeta,
+        forecastJson.isAcceptableOrUnknown(
+          data['forecast_json']!,
+          _forecastJsonMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_forecastJsonMeta);
+    }
+    if (data.containsKey('fetched_at_ms')) {
+      context.handle(
+        _fetchedAtMsMeta,
+        fetchedAtMs.isAcceptableOrUnknown(
+          data['fetched_at_ms']!,
+          _fetchedAtMsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_fetchedAtMsMeta);
+    }
+    if (data.containsKey('expires_at_ms')) {
+      context.handle(
+        _expiresAtMsMeta,
+        expiresAtMs.isAcceptableOrUnknown(
+          data['expires_at_ms']!,
+          _expiresAtMsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_expiresAtMsMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {gridKey};
+  @override
+  WeatherCacheRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return WeatherCacheRow(
+      gridKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}grid_key'],
+      )!,
+      forecastJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}forecast_json'],
+      )!,
+      fetchedAtMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}fetched_at_ms'],
+      )!,
+      expiresAtMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}expires_at_ms'],
+      )!,
+    );
+  }
+
+  @override
+  $WeatherCacheRowsTable createAlias(String alias) {
+    return $WeatherCacheRowsTable(attachedDatabase, alias);
+  }
+}
+
+class WeatherCacheRow extends DataClass implements Insertable<WeatherCacheRow> {
+  final String gridKey;
+  final String forecastJson;
+  final int fetchedAtMs;
+  final int expiresAtMs;
+  const WeatherCacheRow({
+    required this.gridKey,
+    required this.forecastJson,
+    required this.fetchedAtMs,
+    required this.expiresAtMs,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['grid_key'] = Variable<String>(gridKey);
+    map['forecast_json'] = Variable<String>(forecastJson);
+    map['fetched_at_ms'] = Variable<int>(fetchedAtMs);
+    map['expires_at_ms'] = Variable<int>(expiresAtMs);
+    return map;
+  }
+
+  WeatherCacheRowsCompanion toCompanion(bool nullToAbsent) {
+    return WeatherCacheRowsCompanion(
+      gridKey: Value(gridKey),
+      forecastJson: Value(forecastJson),
+      fetchedAtMs: Value(fetchedAtMs),
+      expiresAtMs: Value(expiresAtMs),
+    );
+  }
+
+  factory WeatherCacheRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return WeatherCacheRow(
+      gridKey: serializer.fromJson<String>(json['gridKey']),
+      forecastJson: serializer.fromJson<String>(json['forecastJson']),
+      fetchedAtMs: serializer.fromJson<int>(json['fetchedAtMs']),
+      expiresAtMs: serializer.fromJson<int>(json['expiresAtMs']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'gridKey': serializer.toJson<String>(gridKey),
+      'forecastJson': serializer.toJson<String>(forecastJson),
+      'fetchedAtMs': serializer.toJson<int>(fetchedAtMs),
+      'expiresAtMs': serializer.toJson<int>(expiresAtMs),
+    };
+  }
+
+  WeatherCacheRow copyWith({
+    String? gridKey,
+    String? forecastJson,
+    int? fetchedAtMs,
+    int? expiresAtMs,
+  }) => WeatherCacheRow(
+    gridKey: gridKey ?? this.gridKey,
+    forecastJson: forecastJson ?? this.forecastJson,
+    fetchedAtMs: fetchedAtMs ?? this.fetchedAtMs,
+    expiresAtMs: expiresAtMs ?? this.expiresAtMs,
+  );
+  WeatherCacheRow copyWithCompanion(WeatherCacheRowsCompanion data) {
+    return WeatherCacheRow(
+      gridKey: data.gridKey.present ? data.gridKey.value : this.gridKey,
+      forecastJson: data.forecastJson.present
+          ? data.forecastJson.value
+          : this.forecastJson,
+      fetchedAtMs: data.fetchedAtMs.present
+          ? data.fetchedAtMs.value
+          : this.fetchedAtMs,
+      expiresAtMs: data.expiresAtMs.present
+          ? data.expiresAtMs.value
+          : this.expiresAtMs,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WeatherCacheRow(')
+          ..write('gridKey: $gridKey, ')
+          ..write('forecastJson: $forecastJson, ')
+          ..write('fetchedAtMs: $fetchedAtMs, ')
+          ..write('expiresAtMs: $expiresAtMs')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(gridKey, forecastJson, fetchedAtMs, expiresAtMs);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is WeatherCacheRow &&
+          other.gridKey == this.gridKey &&
+          other.forecastJson == this.forecastJson &&
+          other.fetchedAtMs == this.fetchedAtMs &&
+          other.expiresAtMs == this.expiresAtMs);
+}
+
+class WeatherCacheRowsCompanion extends UpdateCompanion<WeatherCacheRow> {
+  final Value<String> gridKey;
+  final Value<String> forecastJson;
+  final Value<int> fetchedAtMs;
+  final Value<int> expiresAtMs;
+  final Value<int> rowid;
+  const WeatherCacheRowsCompanion({
+    this.gridKey = const Value.absent(),
+    this.forecastJson = const Value.absent(),
+    this.fetchedAtMs = const Value.absent(),
+    this.expiresAtMs = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  WeatherCacheRowsCompanion.insert({
+    required String gridKey,
+    required String forecastJson,
+    required int fetchedAtMs,
+    required int expiresAtMs,
+    this.rowid = const Value.absent(),
+  }) : gridKey = Value(gridKey),
+       forecastJson = Value(forecastJson),
+       fetchedAtMs = Value(fetchedAtMs),
+       expiresAtMs = Value(expiresAtMs);
+  static Insertable<WeatherCacheRow> custom({
+    Expression<String>? gridKey,
+    Expression<String>? forecastJson,
+    Expression<int>? fetchedAtMs,
+    Expression<int>? expiresAtMs,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (gridKey != null) 'grid_key': gridKey,
+      if (forecastJson != null) 'forecast_json': forecastJson,
+      if (fetchedAtMs != null) 'fetched_at_ms': fetchedAtMs,
+      if (expiresAtMs != null) 'expires_at_ms': expiresAtMs,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  WeatherCacheRowsCompanion copyWith({
+    Value<String>? gridKey,
+    Value<String>? forecastJson,
+    Value<int>? fetchedAtMs,
+    Value<int>? expiresAtMs,
+    Value<int>? rowid,
+  }) {
+    return WeatherCacheRowsCompanion(
+      gridKey: gridKey ?? this.gridKey,
+      forecastJson: forecastJson ?? this.forecastJson,
+      fetchedAtMs: fetchedAtMs ?? this.fetchedAtMs,
+      expiresAtMs: expiresAtMs ?? this.expiresAtMs,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (gridKey.present) {
+      map['grid_key'] = Variable<String>(gridKey.value);
+    }
+    if (forecastJson.present) {
+      map['forecast_json'] = Variable<String>(forecastJson.value);
+    }
+    if (fetchedAtMs.present) {
+      map['fetched_at_ms'] = Variable<int>(fetchedAtMs.value);
+    }
+    if (expiresAtMs.present) {
+      map['expires_at_ms'] = Variable<int>(expiresAtMs.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WeatherCacheRowsCompanion(')
+          ..write('gridKey: $gridKey, ')
+          ..write('forecastJson: $forecastJson, ')
+          ..write('fetchedAtMs: $fetchedAtMs, ')
+          ..write('expiresAtMs: $expiresAtMs, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -1585,6 +1921,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $RoutesTable routes = $RoutesTable(this);
   late final $RouteWaypointsTable routeWaypoints = $RouteWaypointsTable(this);
   late final $ChartRegionsTable chartRegions = $ChartRegionsTable(this);
+  late final $WeatherCacheRowsTable weatherCacheRows = $WeatherCacheRowsTable(
+    this,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1594,6 +1933,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     routes,
     routeWaypoints,
     chartRegions,
+    weatherCacheRows,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -2696,6 +3036,199 @@ typedef $$ChartRegionsTableProcessedTableManager =
       ChartRegionRow,
       PrefetchHooks Function()
     >;
+typedef $$WeatherCacheRowsTableCreateCompanionBuilder =
+    WeatherCacheRowsCompanion Function({
+      required String gridKey,
+      required String forecastJson,
+      required int fetchedAtMs,
+      required int expiresAtMs,
+      Value<int> rowid,
+    });
+typedef $$WeatherCacheRowsTableUpdateCompanionBuilder =
+    WeatherCacheRowsCompanion Function({
+      Value<String> gridKey,
+      Value<String> forecastJson,
+      Value<int> fetchedAtMs,
+      Value<int> expiresAtMs,
+      Value<int> rowid,
+    });
+
+class $$WeatherCacheRowsTableFilterComposer
+    extends Composer<_$AppDatabase, $WeatherCacheRowsTable> {
+  $$WeatherCacheRowsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get gridKey => $composableBuilder(
+    column: $table.gridKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get forecastJson => $composableBuilder(
+    column: $table.forecastJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get fetchedAtMs => $composableBuilder(
+    column: $table.fetchedAtMs,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get expiresAtMs => $composableBuilder(
+    column: $table.expiresAtMs,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$WeatherCacheRowsTableOrderingComposer
+    extends Composer<_$AppDatabase, $WeatherCacheRowsTable> {
+  $$WeatherCacheRowsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get gridKey => $composableBuilder(
+    column: $table.gridKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get forecastJson => $composableBuilder(
+    column: $table.forecastJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get fetchedAtMs => $composableBuilder(
+    column: $table.fetchedAtMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get expiresAtMs => $composableBuilder(
+    column: $table.expiresAtMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$WeatherCacheRowsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $WeatherCacheRowsTable> {
+  $$WeatherCacheRowsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get gridKey =>
+      $composableBuilder(column: $table.gridKey, builder: (column) => column);
+
+  GeneratedColumn<String> get forecastJson => $composableBuilder(
+    column: $table.forecastJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get fetchedAtMs => $composableBuilder(
+    column: $table.fetchedAtMs,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get expiresAtMs => $composableBuilder(
+    column: $table.expiresAtMs,
+    builder: (column) => column,
+  );
+}
+
+class $$WeatherCacheRowsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $WeatherCacheRowsTable,
+          WeatherCacheRow,
+          $$WeatherCacheRowsTableFilterComposer,
+          $$WeatherCacheRowsTableOrderingComposer,
+          $$WeatherCacheRowsTableAnnotationComposer,
+          $$WeatherCacheRowsTableCreateCompanionBuilder,
+          $$WeatherCacheRowsTableUpdateCompanionBuilder,
+          (
+            WeatherCacheRow,
+            BaseReferences<
+              _$AppDatabase,
+              $WeatherCacheRowsTable,
+              WeatherCacheRow
+            >,
+          ),
+          WeatherCacheRow,
+          PrefetchHooks Function()
+        > {
+  $$WeatherCacheRowsTableTableManager(
+    _$AppDatabase db,
+    $WeatherCacheRowsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$WeatherCacheRowsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$WeatherCacheRowsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$WeatherCacheRowsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> gridKey = const Value.absent(),
+                Value<String> forecastJson = const Value.absent(),
+                Value<int> fetchedAtMs = const Value.absent(),
+                Value<int> expiresAtMs = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => WeatherCacheRowsCompanion(
+                gridKey: gridKey,
+                forecastJson: forecastJson,
+                fetchedAtMs: fetchedAtMs,
+                expiresAtMs: expiresAtMs,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String gridKey,
+                required String forecastJson,
+                required int fetchedAtMs,
+                required int expiresAtMs,
+                Value<int> rowid = const Value.absent(),
+              }) => WeatherCacheRowsCompanion.insert(
+                gridKey: gridKey,
+                forecastJson: forecastJson,
+                fetchedAtMs: fetchedAtMs,
+                expiresAtMs: expiresAtMs,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$WeatherCacheRowsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $WeatherCacheRowsTable,
+      WeatherCacheRow,
+      $$WeatherCacheRowsTableFilterComposer,
+      $$WeatherCacheRowsTableOrderingComposer,
+      $$WeatherCacheRowsTableAnnotationComposer,
+      $$WeatherCacheRowsTableCreateCompanionBuilder,
+      $$WeatherCacheRowsTableUpdateCompanionBuilder,
+      (
+        WeatherCacheRow,
+        BaseReferences<_$AppDatabase, $WeatherCacheRowsTable, WeatherCacheRow>,
+      ),
+      WeatherCacheRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -2708,4 +3241,6 @@ class $AppDatabaseManager {
       $$RouteWaypointsTableTableManager(_db, _db.routeWaypoints);
   $$ChartRegionsTableTableManager get chartRegions =>
       $$ChartRegionsTableTableManager(_db, _db.chartRegions);
+  $$WeatherCacheRowsTableTableManager get weatherCacheRows =>
+      $$WeatherCacheRowsTableTableManager(_db, _db.weatherCacheRows);
 }

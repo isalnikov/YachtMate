@@ -313,6 +313,121 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'AIS demo stream (recorded NMEA)'**
   String get mapAisDemoTooltip;
+
+  /// No description provided for @weatherScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Weather & tides'**
+  String get weatherScreenTitle;
+
+  /// No description provided for @weatherRefreshTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh forecast'**
+  String get weatherRefreshTooltip;
+
+  /// No description provided for @weatherGpsTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Use GPS for forecast location'**
+  String get weatherGpsTooltip;
+
+  /// No description provided for @weatherStaleBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing cached forecast — network or API unavailable.'**
+  String get weatherStaleBanner;
+
+  /// No description provided for @weatherCoordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'Forecast pin: {lat}°, {lon}°'**
+  String weatherCoordinates(String lat, String lon);
+
+  /// No description provided for @weatherLastUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Model run reference: {time}'**
+  String weatherLastUpdated(String time);
+
+  /// No description provided for @weatherLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load forecast: {detail}'**
+  String weatherLoadError(String detail);
+
+  /// No description provided for @weatherHourlyHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Hourly (48 h)'**
+  String get weatherHourlyHeading;
+
+  /// No description provided for @weatherTidesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Tides (demo)'**
+  String get weatherTidesSection;
+
+  /// No description provided for @weatherRefreshing.
+  ///
+  /// In en, this message translates to:
+  /// **'Refreshing…'**
+  String get weatherRefreshing;
+
+  /// No description provided for @weatherGpsDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission denied.'**
+  String get weatherGpsDenied;
+
+  /// No description provided for @weatherGpsUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Forecast uses your GPS position.'**
+  String get weatherGpsUpdated;
+
+  /// No description provided for @weatherGpsError.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS error: {detail}'**
+  String weatherGpsError(String detail);
+
+  /// No description provided for @tidesHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High water'**
+  String get tidesHigh;
+
+  /// No description provided for @tidesLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low water'**
+  String get tidesLow;
+
+  /// No description provided for @weatherWaveSuffix.
+  ///
+  /// In en, this message translates to:
+  /// **' · wave {m} m'**
+  String weatherWaveSuffix(String m);
+
+  /// No description provided for @weatherHourLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{tempC} °C · wind {windKn} kn / {windDir}° · rain {rainMm} mm · {pressHpa} hPa{wavePart}'**
+  String weatherHourLine(
+    String tempC,
+    String windKn,
+    String windDir,
+    String rainMm,
+    String pressHpa,
+    String wavePart,
+  );
+
+  /// No description provided for @weatherTideRow.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} · {height} · {kind}'**
+  String weatherTideRow(String time, String height, String kind);
 }
 
 class _AppLocalizationsDelegate

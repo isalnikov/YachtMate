@@ -7,6 +7,8 @@ import '../data/local/app_database.dart';
 import '../data/repositories/audit_repository.dart';
 import '../data/repositories/chart_region_repository.dart';
 import '../data/repositories/route_repository.dart';
+import '../data/repositories/tides_repository.dart';
+import '../data/repositories/weather_repository.dart';
 import 'locale_controller.dart';
 import 'logging/app_logger.dart';
 import 'map_layer_preferences_controller.dart';
@@ -30,6 +32,16 @@ final routeRepositoryProvider = Provider<RouteRepository>(
 
 final chartRegionRepositoryProvider = Provider<ChartRegionRepository>(
   (ref) => ChartRegionRepository(ref.watch(databaseProvider)),
+);
+
+final weatherRepositoryProvider = Provider<WeatherRepository>((ref) {
+  final r = WeatherRepository(ref.watch(databaseProvider));
+  ref.onDispose(r.dispose);
+  return r;
+});
+
+final tidesRepositoryProvider = Provider<TidesRepository>(
+  (ref) => TidesRepository(),
 );
 
 /// One UUID per process — correlates audit rows for this run.

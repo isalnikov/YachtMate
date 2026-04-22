@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../l10n/app_localizations.dart';
 import '../../widgets/language_button.dart';
 import '../map/map_screen.dart';
+import '../weather/weather_screen.dart';
 
 /// Five-tab shell aligned with [`docs/ui/`](/docs/ui/).
 class ShellScreen extends ConsumerStatefulWidget {
@@ -33,16 +34,9 @@ class _ShellScreenState extends ConsumerState<ShellScreen> {
         title: Text(l10n.appTitle),
         actions: const [LanguageButton()],
       ),
-      body: IndexedStack(
-        index: _index,
-        sizing: StackFit.expand,
-        children: [
-          const MapScreen(),
-          _PlaceholderTab(icon: destinations[1].$1, title: destinations[1].$2),
-          _PlaceholderTab(icon: destinations[2].$1, title: destinations[2].$2),
-          _PlaceholderTab(icon: destinations[3].$1, title: destinations[3].$2),
-          _PlaceholderTab(icon: destinations[4].$1, title: destinations[4].$2),
-        ],
+      body: KeyedSubtree(
+        key: ValueKey(_index),
+        child: _tabBody(_index, destinations),
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
@@ -54,6 +48,20 @@ class _ShellScreenState extends ConsumerState<ShellScreen> {
       ),
     );
   }
+}
+
+Widget _tabBody(
+  int index,
+  List<(IconData, String)> destinations,
+) {
+  return switch (index) {
+    0 => const MapScreen(),
+    1 => _PlaceholderTab(icon: destinations[1].$1, title: destinations[1].$2),
+    2 => const WeatherScreen(),
+    3 => _PlaceholderTab(icon: destinations[3].$1, title: destinations[3].$2),
+    4 => _PlaceholderTab(icon: destinations[4].$1, title: destinations[4].$2),
+    _ => const SizedBox.shrink(),
+  };
 }
 
 class _PlaceholderTab extends StatelessWidget {

@@ -121,4 +121,79 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get mapAisDemoTooltip => 'Демо AIS (записанный NMEA)';
+
+  @override
+  String get weatherScreenTitle => 'Погода и приливы';
+
+  @override
+  String get weatherRefreshTooltip => 'Обновить прогноз';
+
+  @override
+  String get weatherGpsTooltip => 'Точка прогноза по GPS';
+
+  @override
+  String get weatherStaleBanner => 'Показан кэш — нет сети или ошибка API.';
+
+  @override
+  String weatherCoordinates(String lat, String lon) {
+    return 'Точка прогноза: $lat°, $lon°';
+  }
+
+  @override
+  String weatherLastUpdated(String time) {
+    return 'Опорное время данных: $time';
+  }
+
+  @override
+  String weatherLoadError(String detail) {
+    return 'Не удалось загрузить прогноз: $detail';
+  }
+
+  @override
+  String get weatherHourlyHeading => 'Почасовой (48 ч)';
+
+  @override
+  String get weatherTidesSection => 'Приливы (демо)';
+
+  @override
+  String get weatherRefreshing => 'Обновление…';
+
+  @override
+  String get weatherGpsDenied => 'Нет доступа к геолокации.';
+
+  @override
+  String get weatherGpsUpdated => 'Точка прогноза по текущему GPS.';
+
+  @override
+  String weatherGpsError(String detail) {
+    return 'Ошибка GPS: $detail';
+  }
+
+  @override
+  String get tidesHigh => 'Вода растёт';
+
+  @override
+  String get tidesLow => 'Вода падает';
+
+  @override
+  String weatherWaveSuffix(String m) {
+    return ' · волна $m м';
+  }
+
+  @override
+  String weatherHourLine(
+    String tempC,
+    String windKn,
+    String windDir,
+    String rainMm,
+    String pressHpa,
+    String wavePart,
+  ) {
+    return '$tempC °C · ветер $windKn уз / $windDir° · осадки $rainMm мм · $pressHpa гПа$wavePart';
+  }
+
+  @override
+  String weatherTideRow(String time, String height, String kind) {
+    return '$time · $height · $kind';
+  }
 }

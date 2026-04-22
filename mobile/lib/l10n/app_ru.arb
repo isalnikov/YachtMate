@@ -35,5 +35,66 @@
   "mapLongPressNavAid": "Ближайший знак",
   "mapLongPressNavUnavailable": "—",
   "mapLongPressAddWaypoint": "Добавить точку маршрута",
-  "mapAisDemoTooltip": "Демо AIS (записанный NMEA)"
+  "mapAisDemoTooltip": "Демо AIS (записанный NMEA)",
+  "weatherScreenTitle": "Погода и приливы",
+  "weatherRefreshTooltip": "Обновить прогноз",
+  "weatherGpsTooltip": "Точка прогноза по GPS",
+  "weatherStaleBanner": "Показан кэш — нет сети или ошибка API.",
+  "weatherCoordinates": "Точка прогноза: {lat}°, {lon}°",
+  "@weatherCoordinates": {
+    "placeholders": {
+      "lat": {"type": "String"},
+      "lon": {"type": "String"}
+    }
+  },
+  "weatherLastUpdated": "Опорное время данных: {time}",
+  "@weatherLastUpdated": {
+    "placeholders": {
+      "time": {"type": "String"}
+    }
+  },
+  "weatherLoadError": "Не удалось загрузить прогноз: {detail}",
+  "@weatherLoadError": {
+    "placeholders": {
+      "detail": {"type": "String"}
+    }
+  },
+  "weatherHourlyHeading": "Почасовой (48 ч)",
+  "weatherTidesSection": "Приливы (демо)",
+  "weatherRefreshing": "Обновление…",
+  "weatherGpsDenied": "Нет доступа к геолокации.",
+  "weatherGpsUpdated": "Точка прогноза по текущему GPS.",
+  "weatherGpsError": "Ошибка GPS: {detail}",
+  "@weatherGpsError": {
+    "placeholders": {
+      "detail": {"type": "String"}
+    }
+  },
+  "tidesHigh": "Вода растёт",
+  "tidesLow": "Вода падает",
+  "weatherWaveSuffix": " · волна {m} м",
+  "@weatherWaveSuffix": {
+    "placeholders": {
+      "m": {"type": "String"}
+    }
+  },
+  "weatherHourLine": "{tempC} °C · ветер {windKn} уз / {windDir}° · осадки {rainMm} мм · {pressHpa} гПа{wavePart}",
+  "@weatherHourLine": {
+    "placeholders": {
+      "tempC": {"type": "String"},
+      "windKn": {"type": "String"},
+      "windDir": {"type": "String"},
+      "rainMm": {"type": "String"},
+      "pressHpa": {"type": "String"},
+      "wavePart": {"type": "String"}
+    }
+  },
+  "weatherTideRow": "{time} · {height} · {kind}",
+  "@weatherTideRow": {
+    "placeholders": {
+      "time": {"type": "String"},
+      "height": {"type": "String"},
+      "kind": {"type": "String"}
+    }
+  }
 }

@@ -1,0 +1,10 @@
+{
+  "stationName": "Demo tide curve (illustrative)",
+  "note": "Synthetic heights for UI testing — not for navigation.",
+  "events": [
+    { "time": "2026-04-22T03:15:00Z", "heightM": 3.4, "kind": "high" },
+    { "time": "2026-04-22T09:40:00Z", "heightM": 0.8, "kind": "low" },
+    { "time": "2026-04-22T15:55:00Z", "heightM": 3.1, "kind": "high" },
+    { "time": "2026-04-22T22:10:00Z", "heightM": 1.0, "kind": "low" }
+  ]
+}

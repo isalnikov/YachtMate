@@ -122,4 +122,80 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mapAisDemoTooltip => 'AIS demo stream (recorded NMEA)';
+
+  @override
+  String get weatherScreenTitle => 'Weather & tides';
+
+  @override
+  String get weatherRefreshTooltip => 'Refresh forecast';
+
+  @override
+  String get weatherGpsTooltip => 'Use GPS for forecast location';
+
+  @override
+  String get weatherStaleBanner =>
+      'Showing cached forecast — network or API unavailable.';
+
+  @override
+  String weatherCoordinates(String lat, String lon) {
+    return 'Forecast pin: $lat°, $lon°';
+  }
+
+  @override
+  String weatherLastUpdated(String time) {
+    return 'Model run reference: $time';
+  }
+
+  @override
+  String weatherLoadError(String detail) {
+    return 'Could not load forecast: $detail';
+  }
+
+  @override
+  String get weatherHourlyHeading => 'Hourly (48 h)';
+
+  @override
+  String get weatherTidesSection => 'Tides (demo)';
+
+  @override
+  String get weatherRefreshing => 'Refreshing…';
+
+  @override
+  String get weatherGpsDenied => 'Location permission denied.';
+
+  @override
+  String get weatherGpsUpdated => 'Forecast uses your GPS position.';
+
+  @override
+  String weatherGpsError(String detail) {
+    return 'GPS error: $detail';
+  }
+
+  @override
+  String get tidesHigh => 'High water';
+
+  @override
+  String get tidesLow => 'Low water';
+
+  @override
+  String weatherWaveSuffix(String m) {
+    return ' · wave $m m';
+  }
+
+  @override
+  String weatherHourLine(
+    String tempC,
+    String windKn,
+    String windDir,
+    String rainMm,
+    String pressHpa,
+    String wavePart,
+  ) {
+    return '$tempC °C · wind $windKn kn / $windDir° · rain $rainMm mm · $pressHpa hPa$wavePart';
+  }
+
+  @override
+  String weatherTideRow(String time, String height, String kind) {
+    return '$time · $height · $kind';
+  }
 }

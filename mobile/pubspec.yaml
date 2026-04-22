@@ -40,3 +40,4 @@ flutter:
   assets:
     - assets/map/demo_navigation_layers.geojson
     - assets/nmea/demo_feed.nmea
+    - assets/tides/demo_tides.json
