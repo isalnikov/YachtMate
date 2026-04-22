@@ -59,5 +59,6 @@
 
 ## Чек-лист перехода к Фазе 7
 
-- [ ] Политика GDPR для отзывов и профилей Crew Match задокументирована.
-- [ ] Ключевые действия сообщества отражены в **`user_action_audit`** без лишних персональных данных в payload.
+- [x] Политика GDPR для отзывов (MVP) — [`../docs/gdpr-marinas-community.md`](../docs/gdpr-marinas-community.md).
+- [x] Ключевые действия: `mooring_marker_open`, `mooring_review_queue` в **`user_action_audit`** (в `context_json` — `placeId` / `stars`, без текста отзыва).
+- [ ] Crew Match / бронирование / полноценная синхронизация отзывов с бэкендом.

@@ -524,6 +524,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not compute path: {reason}'**
   String routeAdvisoryFailed(String reason);
+
+  /// No description provided for @mooringScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Marinas & anchorages'**
+  String get mooringScreenTitle;
+
+  /// No description provided for @mooringKindMarina.
+  ///
+  /// In en, this message translates to:
+  /// **'Marina'**
+  String get mooringKindMarina;
+
+  /// No description provided for @mooringKindAnchorage.
+  ///
+  /// In en, this message translates to:
+  /// **'Anchorage'**
+  String get mooringKindAnchorage;
+
+  /// No description provided for @mooringVhf.
+  ///
+  /// In en, this message translates to:
+  /// **'VHF'**
+  String get mooringVhf;
+
+  /// No description provided for @mooringPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get mooringPhone;
+
+  /// No description provided for @mooringServices.
+  ///
+  /// In en, this message translates to:
+  /// **'Services / attributes'**
+  String get mooringServices;
+
+  /// No description provided for @mooringNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get mooringNotes;
+
+  /// No description provided for @mooringReviewTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Review (offline draft)'**
+  String get mooringReviewTitle;
+
+  /// No description provided for @mooringReviewStars.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating'**
+  String get mooringReviewStars;
+
+  /// No description provided for @mooringReviewComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Comment (stored locally until sync)'**
+  String get mooringReviewComment;
+
+  /// No description provided for @mooringReviewSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save draft'**
+  String get mooringReviewSave;
+
+  /// No description provided for @mooringReviewQueued.
+  ///
+  /// In en, this message translates to:
+  /// **'Review saved in outbox — sync when backend is configured.'**
+  String get mooringReviewQueued;
+
+  /// No description provided for @mooringDetailClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get mooringDetailClose;
+
+  /// No description provided for @mooringEmptyCatalog.
+  ///
+  /// In en, this message translates to:
+  /// **'No mooring POIs loaded.'**
+  String get mooringEmptyCatalog;
+
+  /// No description provided for @mooringGdprHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments stay on device until upload; only IDs and ratings go to audit logs.'**
+  String get mooringGdprHint;
 }
 
 class _AppLocalizationsDelegate

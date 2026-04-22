@@ -1912,6 +1912,967 @@ class WeatherCacheRowsCompanion extends UpdateCompanion<WeatherCacheRow> {
   }
 }
 
+class $MooringPlacesTable extends MooringPlaces
+    with TableInfo<$MooringPlacesTable, MooringPlaceRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MooringPlacesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _latMeta = const VerificationMeta('lat');
+  @override
+  late final GeneratedColumn<double> lat = GeneratedColumn<double>(
+    'lat',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _lonMeta = const VerificationMeta('lon');
+  @override
+  late final GeneratedColumn<double> lon = GeneratedColumn<double>(
+    'lon',
+    aliasedName,
+    false,
+    type: DriftSqlType.double,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _vhfMeta = const VerificationMeta('vhf');
+  @override
+  late final GeneratedColumn<String> vhf = GeneratedColumn<String>(
+    'vhf',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _phoneMeta = const VerificationMeta('phone');
+  @override
+  late final GeneratedColumn<String> phone = GeneratedColumn<String>(
+    'phone',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _servicesJsonMeta = const VerificationMeta(
+    'servicesJson',
+  );
+  @override
+  late final GeneratedColumn<String> servicesJson = GeneratedColumn<String>(
+    'services_json',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+    'notes',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    kind,
+    name,
+    lat,
+    lon,
+    vhf,
+    phone,
+    servicesJson,
+    notes,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'mooring_places';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MooringPlaceRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kindMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('lat')) {
+      context.handle(
+        _latMeta,
+        lat.isAcceptableOrUnknown(data['lat']!, _latMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_latMeta);
+    }
+    if (data.containsKey('lon')) {
+      context.handle(
+        _lonMeta,
+        lon.isAcceptableOrUnknown(data['lon']!, _lonMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_lonMeta);
+    }
+    if (data.containsKey('vhf')) {
+      context.handle(
+        _vhfMeta,
+        vhf.isAcceptableOrUnknown(data['vhf']!, _vhfMeta),
+      );
+    }
+    if (data.containsKey('phone')) {
+      context.handle(
+        _phoneMeta,
+        phone.isAcceptableOrUnknown(data['phone']!, _phoneMeta),
+      );
+    }
+    if (data.containsKey('services_json')) {
+      context.handle(
+        _servicesJsonMeta,
+        servicesJson.isAcceptableOrUnknown(
+          data['services_json']!,
+          _servicesJsonMeta,
+        ),
+      );
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+        _notesMeta,
+        notes.isAcceptableOrUnknown(data['notes']!, _notesMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MooringPlaceRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MooringPlaceRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      lat: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}lat'],
+      )!,
+      lon: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}lon'],
+      )!,
+      vhf: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}vhf'],
+      ),
+      phone: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}phone'],
+      ),
+      servicesJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}services_json'],
+      ),
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      ),
+    );
+  }
+
+  @override
+  $MooringPlacesTable createAlias(String alias) {
+    return $MooringPlacesTable(attachedDatabase, alias);
+  }
+}
+
+class MooringPlaceRow extends DataClass implements Insertable<MooringPlaceRow> {
+  final String id;
+  final String kind;
+  final String name;
+  final double lat;
+  final double lon;
+  final String? vhf;
+  final String? phone;
+
+  /// JSON: electricity, water, wifi, showers — флаги для карточки.
+  final String? servicesJson;
+  final String? notes;
+  const MooringPlaceRow({
+    required this.id,
+    required this.kind,
+    required this.name,
+    required this.lat,
+    required this.lon,
+    this.vhf,
+    this.phone,
+    this.servicesJson,
+    this.notes,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['kind'] = Variable<String>(kind);
+    map['name'] = Variable<String>(name);
+    map['lat'] = Variable<double>(lat);
+    map['lon'] = Variable<double>(lon);
+    if (!nullToAbsent || vhf != null) {
+      map['vhf'] = Variable<String>(vhf);
+    }
+    if (!nullToAbsent || phone != null) {
+      map['phone'] = Variable<String>(phone);
+    }
+    if (!nullToAbsent || servicesJson != null) {
+      map['services_json'] = Variable<String>(servicesJson);
+    }
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    return map;
+  }
+
+  MooringPlacesCompanion toCompanion(bool nullToAbsent) {
+    return MooringPlacesCompanion(
+      id: Value(id),
+      kind: Value(kind),
+      name: Value(name),
+      lat: Value(lat),
+      lon: Value(lon),
+      vhf: vhf == null && nullToAbsent ? const Value.absent() : Value(vhf),
+      phone: phone == null && nullToAbsent
+          ? const Value.absent()
+          : Value(phone),
+      servicesJson: servicesJson == null && nullToAbsent
+          ? const Value.absent()
+          : Value(servicesJson),
+      notes: notes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notes),
+    );
+  }
+
+  factory MooringPlaceRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MooringPlaceRow(
+      id: serializer.fromJson<String>(json['id']),
+      kind: serializer.fromJson<String>(json['kind']),
+      name: serializer.fromJson<String>(json['name']),
+      lat: serializer.fromJson<double>(json['lat']),
+      lon: serializer.fromJson<double>(json['lon']),
+      vhf: serializer.fromJson<String?>(json['vhf']),
+      phone: serializer.fromJson<String?>(json['phone']),
+      servicesJson: serializer.fromJson<String?>(json['servicesJson']),
+      notes: serializer.fromJson<String?>(json['notes']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'kind': serializer.toJson<String>(kind),
+      'name': serializer.toJson<String>(name),
+      'lat': serializer.toJson<double>(lat),
+      'lon': serializer.toJson<double>(lon),
+      'vhf': serializer.toJson<String?>(vhf),
+      'phone': serializer.toJson<String?>(phone),
+      'servicesJson': serializer.toJson<String?>(servicesJson),
+      'notes': serializer.toJson<String?>(notes),
+    };
+  }
+
+  MooringPlaceRow copyWith({
+    String? id,
+    String? kind,
+    String? name,
+    double? lat,
+    double? lon,
+    Value<String?> vhf = const Value.absent(),
+    Value<String?> phone = const Value.absent(),
+    Value<String?> servicesJson = const Value.absent(),
+    Value<String?> notes = const Value.absent(),
+  }) => MooringPlaceRow(
+    id: id ?? this.id,
+    kind: kind ?? this.kind,
+    name: name ?? this.name,
+    lat: lat ?? this.lat,
+    lon: lon ?? this.lon,
+    vhf: vhf.present ? vhf.value : this.vhf,
+    phone: phone.present ? phone.value : this.phone,
+    servicesJson: servicesJson.present ? servicesJson.value : this.servicesJson,
+    notes: notes.present ? notes.value : this.notes,
+  );
+  MooringPlaceRow copyWithCompanion(MooringPlacesCompanion data) {
+    return MooringPlaceRow(
+      id: data.id.present ? data.id.value : this.id,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      name: data.name.present ? data.name.value : this.name,
+      lat: data.lat.present ? data.lat.value : this.lat,
+      lon: data.lon.present ? data.lon.value : this.lon,
+      vhf: data.vhf.present ? data.vhf.value : this.vhf,
+      phone: data.phone.present ? data.phone.value : this.phone,
+      servicesJson: data.servicesJson.present
+          ? data.servicesJson.value
+          : this.servicesJson,
+      notes: data.notes.present ? data.notes.value : this.notes,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MooringPlaceRow(')
+          ..write('id: $id, ')
+          ..write('kind: $kind, ')
+          ..write('name: $name, ')
+          ..write('lat: $lat, ')
+          ..write('lon: $lon, ')
+          ..write('vhf: $vhf, ')
+          ..write('phone: $phone, ')
+          ..write('servicesJson: $servicesJson, ')
+          ..write('notes: $notes')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, kind, name, lat, lon, vhf, phone, servicesJson, notes);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MooringPlaceRow &&
+          other.id == this.id &&
+          other.kind == this.kind &&
+          other.name == this.name &&
+          other.lat == this.lat &&
+          other.lon == this.lon &&
+          other.vhf == this.vhf &&
+          other.phone == this.phone &&
+          other.servicesJson == this.servicesJson &&
+          other.notes == this.notes);
+}
+
+class MooringPlacesCompanion extends UpdateCompanion<MooringPlaceRow> {
+  final Value<String> id;
+  final Value<String> kind;
+  final Value<String> name;
+  final Value<double> lat;
+  final Value<double> lon;
+  final Value<String?> vhf;
+  final Value<String?> phone;
+  final Value<String?> servicesJson;
+  final Value<String?> notes;
+  final Value<int> rowid;
+  const MooringPlacesCompanion({
+    this.id = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.name = const Value.absent(),
+    this.lat = const Value.absent(),
+    this.lon = const Value.absent(),
+    this.vhf = const Value.absent(),
+    this.phone = const Value.absent(),
+    this.servicesJson = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MooringPlacesCompanion.insert({
+    required String id,
+    required String kind,
+    required String name,
+    required double lat,
+    required double lon,
+    this.vhf = const Value.absent(),
+    this.phone = const Value.absent(),
+    this.servicesJson = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       kind = Value(kind),
+       name = Value(name),
+       lat = Value(lat),
+       lon = Value(lon);
+  static Insertable<MooringPlaceRow> custom({
+    Expression<String>? id,
+    Expression<String>? kind,
+    Expression<String>? name,
+    Expression<double>? lat,
+    Expression<double>? lon,
+    Expression<String>? vhf,
+    Expression<String>? phone,
+    Expression<String>? servicesJson,
+    Expression<String>? notes,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (kind != null) 'kind': kind,
+      if (name != null) 'name': name,
+      if (lat != null) 'lat': lat,
+      if (lon != null) 'lon': lon,
+      if (vhf != null) 'vhf': vhf,
+      if (phone != null) 'phone': phone,
+      if (servicesJson != null) 'services_json': servicesJson,
+      if (notes != null) 'notes': notes,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MooringPlacesCompanion copyWith({
+    Value<String>? id,
+    Value<String>? kind,
+    Value<String>? name,
+    Value<double>? lat,
+    Value<double>? lon,
+    Value<String?>? vhf,
+    Value<String?>? phone,
+    Value<String?>? servicesJson,
+    Value<String?>? notes,
+    Value<int>? rowid,
+  }) {
+    return MooringPlacesCompanion(
+      id: id ?? this.id,
+      kind: kind ?? this.kind,
+      name: name ?? this.name,
+      lat: lat ?? this.lat,
+      lon: lon ?? this.lon,
+      vhf: vhf ?? this.vhf,
+      phone: phone ?? this.phone,
+      servicesJson: servicesJson ?? this.servicesJson,
+      notes: notes ?? this.notes,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (lat.present) {
+      map['lat'] = Variable<double>(lat.value);
+    }
+    if (lon.present) {
+      map['lon'] = Variable<double>(lon.value);
+    }
+    if (vhf.present) {
+      map['vhf'] = Variable<String>(vhf.value);
+    }
+    if (phone.present) {
+      map['phone'] = Variable<String>(phone.value);
+    }
+    if (servicesJson.present) {
+      map['services_json'] = Variable<String>(servicesJson.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MooringPlacesCompanion(')
+          ..write('id: $id, ')
+          ..write('kind: $kind, ')
+          ..write('name: $name, ')
+          ..write('lat: $lat, ')
+          ..write('lon: $lon, ')
+          ..write('vhf: $vhf, ')
+          ..write('phone: $phone, ')
+          ..write('servicesJson: $servicesJson, ')
+          ..write('notes: $notes, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MooringReviewDraftsTable extends MooringReviewDrafts
+    with TableInfo<$MooringReviewDraftsTable, MooringReviewDraftRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MooringReviewDraftsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _placeIdMeta = const VerificationMeta(
+    'placeId',
+  );
+  @override
+  late final GeneratedColumn<String> placeId = GeneratedColumn<String>(
+    'place_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _starsMeta = const VerificationMeta('stars');
+  @override
+  late final GeneratedColumn<int> stars = GeneratedColumn<int>(
+    'stars',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _commentMeta = const VerificationMeta(
+    'comment',
+  );
+  @override
+  late final GeneratedColumn<String> comment = GeneratedColumn<String>(
+    'comment',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMsMeta = const VerificationMeta(
+    'createdAtMs',
+  );
+  @override
+  late final GeneratedColumn<int> createdAtMs = GeneratedColumn<int>(
+    'created_at_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _syncedMeta = const VerificationMeta('synced');
+  @override
+  late final GeneratedColumn<bool> synced = GeneratedColumn<bool>(
+    'synced',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("synced" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    placeId,
+    stars,
+    comment,
+    createdAtMs,
+    synced,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'mooring_review_drafts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MooringReviewDraftRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('place_id')) {
+      context.handle(
+        _placeIdMeta,
+        placeId.isAcceptableOrUnknown(data['place_id']!, _placeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_placeIdMeta);
+    }
+    if (data.containsKey('stars')) {
+      context.handle(
+        _starsMeta,
+        stars.isAcceptableOrUnknown(data['stars']!, _starsMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_starsMeta);
+    }
+    if (data.containsKey('comment')) {
+      context.handle(
+        _commentMeta,
+        comment.isAcceptableOrUnknown(data['comment']!, _commentMeta),
+      );
+    }
+    if (data.containsKey('created_at_ms')) {
+      context.handle(
+        _createdAtMsMeta,
+        createdAtMs.isAcceptableOrUnknown(
+          data['created_at_ms']!,
+          _createdAtMsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMsMeta);
+    }
+    if (data.containsKey('synced')) {
+      context.handle(
+        _syncedMeta,
+        synced.isAcceptableOrUnknown(data['synced']!, _syncedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  MooringReviewDraftRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MooringReviewDraftRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      placeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}place_id'],
+      )!,
+      stars: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}stars'],
+      )!,
+      comment: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}comment'],
+      ),
+      createdAtMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}created_at_ms'],
+      )!,
+      synced: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}synced'],
+      )!,
+    );
+  }
+
+  @override
+  $MooringReviewDraftsTable createAlias(String alias) {
+    return $MooringReviewDraftsTable(attachedDatabase, alias);
+  }
+}
+
+class MooringReviewDraftRow extends DataClass
+    implements Insertable<MooringReviewDraftRow> {
+  final String id;
+  final String placeId;
+  final int stars;
+  final String? comment;
+  final int createdAtMs;
+  final bool synced;
+  const MooringReviewDraftRow({
+    required this.id,
+    required this.placeId,
+    required this.stars,
+    this.comment,
+    required this.createdAtMs,
+    required this.synced,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['place_id'] = Variable<String>(placeId);
+    map['stars'] = Variable<int>(stars);
+    if (!nullToAbsent || comment != null) {
+      map['comment'] = Variable<String>(comment);
+    }
+    map['created_at_ms'] = Variable<int>(createdAtMs);
+    map['synced'] = Variable<bool>(synced);
+    return map;
+  }
+
+  MooringReviewDraftsCompanion toCompanion(bool nullToAbsent) {
+    return MooringReviewDraftsCompanion(
+      id: Value(id),
+      placeId: Value(placeId),
+      stars: Value(stars),
+      comment: comment == null && nullToAbsent
+          ? const Value.absent()
+          : Value(comment),
+      createdAtMs: Value(createdAtMs),
+      synced: Value(synced),
+    );
+  }
+
+  factory MooringReviewDraftRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MooringReviewDraftRow(
+      id: serializer.fromJson<String>(json['id']),
+      placeId: serializer.fromJson<String>(json['placeId']),
+      stars: serializer.fromJson<int>(json['stars']),
+      comment: serializer.fromJson<String?>(json['comment']),
+      createdAtMs: serializer.fromJson<int>(json['createdAtMs']),
+      synced: serializer.fromJson<bool>(json['synced']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'placeId': serializer.toJson<String>(placeId),
+      'stars': serializer.toJson<int>(stars),
+      'comment': serializer.toJson<String?>(comment),
+      'createdAtMs': serializer.toJson<int>(createdAtMs),
+      'synced': serializer.toJson<bool>(synced),
+    };
+  }
+
+  MooringReviewDraftRow copyWith({
+    String? id,
+    String? placeId,
+    int? stars,
+    Value<String?> comment = const Value.absent(),
+    int? createdAtMs,
+    bool? synced,
+  }) => MooringReviewDraftRow(
+    id: id ?? this.id,
+    placeId: placeId ?? this.placeId,
+    stars: stars ?? this.stars,
+    comment: comment.present ? comment.value : this.comment,
+    createdAtMs: createdAtMs ?? this.createdAtMs,
+    synced: synced ?? this.synced,
+  );
+  MooringReviewDraftRow copyWithCompanion(MooringReviewDraftsCompanion data) {
+    return MooringReviewDraftRow(
+      id: data.id.present ? data.id.value : this.id,
+      placeId: data.placeId.present ? data.placeId.value : this.placeId,
+      stars: data.stars.present ? data.stars.value : this.stars,
+      comment: data.comment.present ? data.comment.value : this.comment,
+      createdAtMs: data.createdAtMs.present
+          ? data.createdAtMs.value
+          : this.createdAtMs,
+      synced: data.synced.present ? data.synced.value : this.synced,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MooringReviewDraftRow(')
+          ..write('id: $id, ')
+          ..write('placeId: $placeId, ')
+          ..write('stars: $stars, ')
+          ..write('comment: $comment, ')
+          ..write('createdAtMs: $createdAtMs, ')
+          ..write('synced: $synced')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, placeId, stars, comment, createdAtMs, synced);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MooringReviewDraftRow &&
+          other.id == this.id &&
+          other.placeId == this.placeId &&
+          other.stars == this.stars &&
+          other.comment == this.comment &&
+          other.createdAtMs == this.createdAtMs &&
+          other.synced == this.synced);
+}
+
+class MooringReviewDraftsCompanion
+    extends UpdateCompanion<MooringReviewDraftRow> {
+  final Value<String> id;
+  final Value<String> placeId;
+  final Value<int> stars;
+  final Value<String?> comment;
+  final Value<int> createdAtMs;
+  final Value<bool> synced;
+  final Value<int> rowid;
+  const MooringReviewDraftsCompanion({
+    this.id = const Value.absent(),
+    this.placeId = const Value.absent(),
+    this.stars = const Value.absent(),
+    this.comment = const Value.absent(),
+    this.createdAtMs = const Value.absent(),
+    this.synced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  MooringReviewDraftsCompanion.insert({
+    required String id,
+    required String placeId,
+    required int stars,
+    this.comment = const Value.absent(),
+    required int createdAtMs,
+    this.synced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       placeId = Value(placeId),
+       stars = Value(stars),
+       createdAtMs = Value(createdAtMs);
+  static Insertable<MooringReviewDraftRow> custom({
+    Expression<String>? id,
+    Expression<String>? placeId,
+    Expression<int>? stars,
+    Expression<String>? comment,
+    Expression<int>? createdAtMs,
+    Expression<bool>? synced,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (placeId != null) 'place_id': placeId,
+      if (stars != null) 'stars': stars,
+      if (comment != null) 'comment': comment,
+      if (createdAtMs != null) 'created_at_ms': createdAtMs,
+      if (synced != null) 'synced': synced,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  MooringReviewDraftsCompanion copyWith({
+    Value<String>? id,
+    Value<String>? placeId,
+    Value<int>? stars,
+    Value<String?>? comment,
+    Value<int>? createdAtMs,
+    Value<bool>? synced,
+    Value<int>? rowid,
+  }) {
+    return MooringReviewDraftsCompanion(
+      id: id ?? this.id,
+      placeId: placeId ?? this.placeId,
+      stars: stars ?? this.stars,
+      comment: comment ?? this.comment,
+      createdAtMs: createdAtMs ?? this.createdAtMs,
+      synced: synced ?? this.synced,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (placeId.present) {
+      map['place_id'] = Variable<String>(placeId.value);
+    }
+    if (stars.present) {
+      map['stars'] = Variable<int>(stars.value);
+    }
+    if (comment.present) {
+      map['comment'] = Variable<String>(comment.value);
+    }
+    if (createdAtMs.present) {
+      map['created_at_ms'] = Variable<int>(createdAtMs.value);
+    }
+    if (synced.present) {
+      map['synced'] = Variable<bool>(synced.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MooringReviewDraftsCompanion(')
+          ..write('id: $id, ')
+          ..write('placeId: $placeId, ')
+          ..write('stars: $stars, ')
+          ..write('comment: $comment, ')
+          ..write('createdAtMs: $createdAtMs, ')
+          ..write('synced: $synced, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -1924,6 +2885,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $WeatherCacheRowsTable weatherCacheRows = $WeatherCacheRowsTable(
     this,
   );
+  late final $MooringPlacesTable mooringPlaces = $MooringPlacesTable(this);
+  late final $MooringReviewDraftsTable mooringReviewDrafts =
+      $MooringReviewDraftsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1934,6 +2898,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     routeWaypoints,
     chartRegions,
     weatherCacheRows,
+    mooringPlaces,
+    mooringReviewDrafts,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -3229,6 +4195,521 @@ typedef $$WeatherCacheRowsTableProcessedTableManager =
       WeatherCacheRow,
       PrefetchHooks Function()
     >;
+typedef $$MooringPlacesTableCreateCompanionBuilder =
+    MooringPlacesCompanion Function({
+      required String id,
+      required String kind,
+      required String name,
+      required double lat,
+      required double lon,
+      Value<String?> vhf,
+      Value<String?> phone,
+      Value<String?> servicesJson,
+      Value<String?> notes,
+      Value<int> rowid,
+    });
+typedef $$MooringPlacesTableUpdateCompanionBuilder =
+    MooringPlacesCompanion Function({
+      Value<String> id,
+      Value<String> kind,
+      Value<String> name,
+      Value<double> lat,
+      Value<double> lon,
+      Value<String?> vhf,
+      Value<String?> phone,
+      Value<String?> servicesJson,
+      Value<String?> notes,
+      Value<int> rowid,
+    });
+
+class $$MooringPlacesTableFilterComposer
+    extends Composer<_$AppDatabase, $MooringPlacesTable> {
+  $$MooringPlacesTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get lat => $composableBuilder(
+    column: $table.lat,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get lon => $composableBuilder(
+    column: $table.lon,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get vhf => $composableBuilder(
+    column: $table.vhf,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get phone => $composableBuilder(
+    column: $table.phone,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get servicesJson => $composableBuilder(
+    column: $table.servicesJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$MooringPlacesTableOrderingComposer
+    extends Composer<_$AppDatabase, $MooringPlacesTable> {
+  $$MooringPlacesTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get lat => $composableBuilder(
+    column: $table.lat,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get lon => $composableBuilder(
+    column: $table.lon,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get vhf => $composableBuilder(
+    column: $table.vhf,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get phone => $composableBuilder(
+    column: $table.phone,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get servicesJson => $composableBuilder(
+    column: $table.servicesJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MooringPlacesTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MooringPlacesTable> {
+  $$MooringPlacesTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<double> get lat =>
+      $composableBuilder(column: $table.lat, builder: (column) => column);
+
+  GeneratedColumn<double> get lon =>
+      $composableBuilder(column: $table.lon, builder: (column) => column);
+
+  GeneratedColumn<String> get vhf =>
+      $composableBuilder(column: $table.vhf, builder: (column) => column);
+
+  GeneratedColumn<String> get phone =>
+      $composableBuilder(column: $table.phone, builder: (column) => column);
+
+  GeneratedColumn<String> get servicesJson => $composableBuilder(
+    column: $table.servicesJson,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+}
+
+class $$MooringPlacesTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MooringPlacesTable,
+          MooringPlaceRow,
+          $$MooringPlacesTableFilterComposer,
+          $$MooringPlacesTableOrderingComposer,
+          $$MooringPlacesTableAnnotationComposer,
+          $$MooringPlacesTableCreateCompanionBuilder,
+          $$MooringPlacesTableUpdateCompanionBuilder,
+          (
+            MooringPlaceRow,
+            BaseReferences<_$AppDatabase, $MooringPlacesTable, MooringPlaceRow>,
+          ),
+          MooringPlaceRow,
+          PrefetchHooks Function()
+        > {
+  $$MooringPlacesTableTableManager(_$AppDatabase db, $MooringPlacesTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MooringPlacesTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MooringPlacesTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MooringPlacesTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<double> lat = const Value.absent(),
+                Value<double> lon = const Value.absent(),
+                Value<String?> vhf = const Value.absent(),
+                Value<String?> phone = const Value.absent(),
+                Value<String?> servicesJson = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MooringPlacesCompanion(
+                id: id,
+                kind: kind,
+                name: name,
+                lat: lat,
+                lon: lon,
+                vhf: vhf,
+                phone: phone,
+                servicesJson: servicesJson,
+                notes: notes,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String kind,
+                required String name,
+                required double lat,
+                required double lon,
+                Value<String?> vhf = const Value.absent(),
+                Value<String?> phone = const Value.absent(),
+                Value<String?> servicesJson = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MooringPlacesCompanion.insert(
+                id: id,
+                kind: kind,
+                name: name,
+                lat: lat,
+                lon: lon,
+                vhf: vhf,
+                phone: phone,
+                servicesJson: servicesJson,
+                notes: notes,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$MooringPlacesTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MooringPlacesTable,
+      MooringPlaceRow,
+      $$MooringPlacesTableFilterComposer,
+      $$MooringPlacesTableOrderingComposer,
+      $$MooringPlacesTableAnnotationComposer,
+      $$MooringPlacesTableCreateCompanionBuilder,
+      $$MooringPlacesTableUpdateCompanionBuilder,
+      (
+        MooringPlaceRow,
+        BaseReferences<_$AppDatabase, $MooringPlacesTable, MooringPlaceRow>,
+      ),
+      MooringPlaceRow,
+      PrefetchHooks Function()
+    >;
+typedef $$MooringReviewDraftsTableCreateCompanionBuilder =
+    MooringReviewDraftsCompanion Function({
+      required String id,
+      required String placeId,
+      required int stars,
+      Value<String?> comment,
+      required int createdAtMs,
+      Value<bool> synced,
+      Value<int> rowid,
+    });
+typedef $$MooringReviewDraftsTableUpdateCompanionBuilder =
+    MooringReviewDraftsCompanion Function({
+      Value<String> id,
+      Value<String> placeId,
+      Value<int> stars,
+      Value<String?> comment,
+      Value<int> createdAtMs,
+      Value<bool> synced,
+      Value<int> rowid,
+    });
+
+class $$MooringReviewDraftsTableFilterComposer
+    extends Composer<_$AppDatabase, $MooringReviewDraftsTable> {
+  $$MooringReviewDraftsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get placeId => $composableBuilder(
+    column: $table.placeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get stars => $composableBuilder(
+    column: $table.stars,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get comment => $composableBuilder(
+    column: $table.comment,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get createdAtMs => $composableBuilder(
+    column: $table.createdAtMs,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get synced => $composableBuilder(
+    column: $table.synced,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$MooringReviewDraftsTableOrderingComposer
+    extends Composer<_$AppDatabase, $MooringReviewDraftsTable> {
+  $$MooringReviewDraftsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get placeId => $composableBuilder(
+    column: $table.placeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get stars => $composableBuilder(
+    column: $table.stars,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get comment => $composableBuilder(
+    column: $table.comment,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get createdAtMs => $composableBuilder(
+    column: $table.createdAtMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get synced => $composableBuilder(
+    column: $table.synced,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MooringReviewDraftsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $MooringReviewDraftsTable> {
+  $$MooringReviewDraftsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get placeId =>
+      $composableBuilder(column: $table.placeId, builder: (column) => column);
+
+  GeneratedColumn<int> get stars =>
+      $composableBuilder(column: $table.stars, builder: (column) => column);
+
+  GeneratedColumn<String> get comment =>
+      $composableBuilder(column: $table.comment, builder: (column) => column);
+
+  GeneratedColumn<int> get createdAtMs => $composableBuilder(
+    column: $table.createdAtMs,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get synced =>
+      $composableBuilder(column: $table.synced, builder: (column) => column);
+}
+
+class $$MooringReviewDraftsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $MooringReviewDraftsTable,
+          MooringReviewDraftRow,
+          $$MooringReviewDraftsTableFilterComposer,
+          $$MooringReviewDraftsTableOrderingComposer,
+          $$MooringReviewDraftsTableAnnotationComposer,
+          $$MooringReviewDraftsTableCreateCompanionBuilder,
+          $$MooringReviewDraftsTableUpdateCompanionBuilder,
+          (
+            MooringReviewDraftRow,
+            BaseReferences<
+              _$AppDatabase,
+              $MooringReviewDraftsTable,
+              MooringReviewDraftRow
+            >,
+          ),
+          MooringReviewDraftRow,
+          PrefetchHooks Function()
+        > {
+  $$MooringReviewDraftsTableTableManager(
+    _$AppDatabase db,
+    $MooringReviewDraftsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MooringReviewDraftsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MooringReviewDraftsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$MooringReviewDraftsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> placeId = const Value.absent(),
+                Value<int> stars = const Value.absent(),
+                Value<String?> comment = const Value.absent(),
+                Value<int> createdAtMs = const Value.absent(),
+                Value<bool> synced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MooringReviewDraftsCompanion(
+                id: id,
+                placeId: placeId,
+                stars: stars,
+                comment: comment,
+                createdAtMs: createdAtMs,
+                synced: synced,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String placeId,
+                required int stars,
+                Value<String?> comment = const Value.absent(),
+                required int createdAtMs,
+                Value<bool> synced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => MooringReviewDraftsCompanion.insert(
+                id: id,
+                placeId: placeId,
+                stars: stars,
+                comment: comment,
+                createdAtMs: createdAtMs,
+                synced: synced,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$MooringReviewDraftsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $MooringReviewDraftsTable,
+      MooringReviewDraftRow,
+      $$MooringReviewDraftsTableFilterComposer,
+      $$MooringReviewDraftsTableOrderingComposer,
+      $$MooringReviewDraftsTableAnnotationComposer,
+      $$MooringReviewDraftsTableCreateCompanionBuilder,
+      $$MooringReviewDraftsTableUpdateCompanionBuilder,
+      (
+        MooringReviewDraftRow,
+        BaseReferences<
+          _$AppDatabase,
+          $MooringReviewDraftsTable,
+          MooringReviewDraftRow
+        >,
+      ),
+      MooringReviewDraftRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -3243,4 +4724,8 @@ class $AppDatabaseManager {
       $$ChartRegionsTableTableManager(_db, _db.chartRegions);
   $$WeatherCacheRowsTableTableManager get weatherCacheRows =>
       $$WeatherCacheRowsTableTableManager(_db, _db.weatherCacheRows);
+  $$MooringPlacesTableTableManager get mooringPlaces =>
+      $$MooringPlacesTableTableManager(_db, _db.mooringPlaces);
+  $$MooringReviewDraftsTableTableManager get mooringReviewDrafts =>
+      $$MooringReviewDraftsTableTableManager(_db, _db.mooringReviewDrafts);
 }

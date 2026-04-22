@@ -255,4 +255,51 @@ class AppLocalizationsEn extends AppLocalizations {
   String routeAdvisoryFailed(String reason) {
     return 'Could not compute path: $reason';
   }
+
+  @override
+  String get mooringScreenTitle => 'Marinas & anchorages';
+
+  @override
+  String get mooringKindMarina => 'Marina';
+
+  @override
+  String get mooringKindAnchorage => 'Anchorage';
+
+  @override
+  String get mooringVhf => 'VHF';
+
+  @override
+  String get mooringPhone => 'Phone';
+
+  @override
+  String get mooringServices => 'Services / attributes';
+
+  @override
+  String get mooringNotes => 'Notes';
+
+  @override
+  String get mooringReviewTitle => 'Review (offline draft)';
+
+  @override
+  String get mooringReviewStars => 'Rating';
+
+  @override
+  String get mooringReviewComment => 'Comment (stored locally until sync)';
+
+  @override
+  String get mooringReviewSave => 'Save draft';
+
+  @override
+  String get mooringReviewQueued =>
+      'Review saved in outbox — sync when backend is configured.';
+
+  @override
+  String get mooringDetailClose => 'Close';
+
+  @override
+  String get mooringEmptyCatalog => 'No mooring POIs loaded.';
+
+  @override
+  String get mooringGdprHint =>
+      'Comments stay on device until upload; only IDs and ratings go to audit logs.';
 }

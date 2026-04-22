@@ -40,5 +40,6 @@ flutter:
   assets:
     - assets/map/demo_navigation_layers.geojson
     - assets/map/fethiye_navigation_layers.geojson
+    - assets/mooring/demo_moorings_fethiye.geojson
     - assets/nmea/demo_feed.nmea
     - assets/tides/demo_tides.json

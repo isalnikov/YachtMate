@@ -125,5 +125,20 @@
     "placeholders": {
       "reason": {"type": "String"}
     }
-  }
+  },
+  "mooringScreenTitle": "Marinas & anchorages",
+  "mooringKindMarina": "Marina",
+  "mooringKindAnchorage": "Anchorage",
+  "mooringVhf": "VHF",
+  "mooringPhone": "Phone",
+  "mooringServices": "Services / attributes",
+  "mooringNotes": "Notes",
+  "mooringReviewTitle": "Review (offline draft)",
+  "mooringReviewStars": "Rating",
+  "mooringReviewComment": "Comment (stored locally until sync)",
+  "mooringReviewSave": "Save draft",
+  "mooringReviewQueued": "Review saved in outbox — sync when backend is configured.",
+  "mooringDetailClose": "Close",
+  "mooringEmptyCatalog": "No mooring POIs loaded.",
+  "mooringGdprHint": "Comments stay on device until upload; only IDs and ratings go to audit logs."
 }

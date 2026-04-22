@@ -1,0 +1,65 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "fethiye_marina_demo",
+        "kind": "marina",
+        "name": "Fethiye Marina (demo catalog)",
+        "vhf": "72",
+        "phone": "+90 252 xxx xxxx",
+        "services": {"electricity": true, "water": true, "wifi": true, "fuel": true},
+        "notes": "Demo POI near Fethiye town — verify against official publications."
+      },
+      "geometry": {"type": "Point", "coordinates": [29.1045, 36.755]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "eregli_cove_anchor_demo",
+        "kind": "anchorage",
+        "name": "Eğril Cove anchorage (demo)",
+        "vhf": "",
+        "services": {"protection": "moderate", "holding": "mud"},
+        "notes": "Illustrative anchorage — crowdsourced-style attributes."
+      },
+      "geometry": {"type": "Point", "coordinates": [29.058, 36.692]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "gocek_port_demo",
+        "kind": "marina",
+        "name": "Göcek — marinas bay (demo)",
+        "vhf": "69",
+        "services": {"water": true, "electricity": true},
+        "notes": "Representative cluster; not a berth booking."
+      },
+      "geometry": {"type": "Point", "coordinates": [28.952, 36.754]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "calis_beach_anchor_demo",
+        "kind": "anchorage",
+        "name": "Çalış Beach roadstead (demo)",
+        "services": {"holding": "sand"},
+        "notes": "Open roadstead — verify weather before staying."
+      },
+      "geometry": {"type": "Point", "coordinates": [29.133, 36.638]}
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "karagozler_demo",
+        "kind": "marina",
+        "name": "Karagözler marina area (demo)",
+        "vhf": "71",
+        "services": {"electricity": true, "water": true},
+        "notes": "Demo contact placeholders only."
+      },
+      "geometry": {"type": "Point", "coordinates": [29.098, 36.742]}
+    }
+  ]
+}

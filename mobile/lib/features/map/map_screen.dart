@@ -1,4 +1,5 @@
 import 'dart:async' show unawaited;
+import 'dart:math' show Point;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,18 +10,22 @@ import '../../core/active_route_id.dart';
 import '../../core/logging/app_logger.dart';
 import '../../core/map_layer_preferences_controller.dart';
 import '../../core/providers.dart';
+import '../../data/local/app_database.dart';
 import '../../data/repositories/route_repository.dart';
 import '../../domain/ais/ais_target.dart';
 import '../../domain/map/demo_navigation_layers_index.dart';
 import '../../features/ais/ais_demo_provider.dart';
 import '../../features/ais/ais_targets_provider.dart';
 import '../../l10n/app_localizations.dart';
+import '../mooring/mooring_detail_sheet.dart';
+import '../mooring/mooring_providers.dart';
 import '../route/advisory_polyline_notifier.dart';
 import 'ais_target_layer.dart';
 import 'chart_engine_platform.dart';
 import 'demo_map_layers.dart';
 import 'map_layer_sheet.dart';
 import 'map_long_press_sheet.dart';
+import 'mooring_layer.dart';
 
 /// MapLibre chart, GNSS dot, draft route, слои и AIS demo (Фазы 1–3).
 class MapScreen extends ConsumerStatefulWidget {
@@ -47,6 +52,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
   DemoNavigationLayersIndex? _layersIndex;
   bool _demoLayersInstalled = false;
   bool _aisLayerInstalled = false;
+  bool _mooringLayerInstalled = false;
 
   @override
   void initState() {
@@ -162,7 +168,51 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       _aisLayerInstalled = true;
       await updateAisTargetsLayer(c, ref.read(aisTargetsProvider));
     }
+
+    await ref.read(mooringSeedFutureProvider.future);
+    if (c != null) {
+      await installMooringPlacesLayer(c);
+      _mooringLayerInstalled = true;
+      final places = await ref.read(mooringRepositoryProvider).allPlaces();
+      await updateMooringPlacesLayer(c, places);
+    }
     if (mounted) setState(() {});
+  }
+
+  Future<void> _handleMapTap(Point<double> screen) async {
+    final c = _controller;
+    if (c == null || !_mooringLayerInstalled) return;
+    try {
+      final hits = await c.queryRenderedFeatures(
+        screen,
+        [cwMooringCircleLayerId],
+        null,
+      );
+      if (!context.mounted) return;
+      if (hits.isEmpty) return;
+      final top = hits.first;
+      if (top is! Map) return;
+      final props = top['properties'];
+      if (props is! Map) return;
+      final id = props['id'];
+      if (id is! String) return;
+      final place = await ref.read(mooringRepositoryProvider).placeById(id);
+      if (!context.mounted) return;
+      if (place == null) return;
+      await ref.read(auditRepositoryProvider).record(
+            sessionId: ref.read(sessionIdProvider),
+            module: 'M6',
+            action: 'mooring_marker_open',
+            contextJson: '{"placeId":"$id"}',
+          );
+      if (!context.mounted) return;
+      await showMooringDetailSheet(
+        // Post-audit guard above; sheet is modal and does not navigate away.
+        // ignore: use_build_context_synchronously
+        context: context,
+        place: place,
+      );
+    } catch (_) {}
   }
 
   Future<void> _syncRouteDraftFromRepo() async {
@@ -226,6 +276,18 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       if (_styleLoaded) unawaited(_redrawAdvisoryLine());
     });
 
+    ref.listen<AsyncValue<List<MooringPlaceRow>>>(
+      mooringPlacesProvider,
+      (prev, next) {
+        next.whenData((places) {
+          final c = _controller;
+          if (c != null && _mooringLayerInstalled) {
+            unawaited(updateMooringPlacesLayer(c, places));
+          }
+        });
+      },
+    );
+
     if (!chartEngineSupported()) {
       return Center(
         child: Padding(
@@ -248,6 +310,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
           myLocationEnabled: showLoc,
           onMapCreated: (c) => _controller = c,
           onStyleLoadedCallback: () => unawaited(_afterStyleLoaded()),
+          onMapClick: (screen, _) => unawaited(_handleMapTap(screen)),
           onMapLongClick: (screen, coords) {
             unawaited(_handleMapLongPress(coords));
           },

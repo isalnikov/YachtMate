@@ -122,5 +122,20 @@
     "placeholders": {
       "reason": {"type": "String"}
     }
-  }
+  },
+  "mooringScreenTitle": "Стоянка (марины и якорные)",
+  "mooringKindMarina": "Марина",
+  "mooringKindAnchorage": "Якорная стоянка",
+  "mooringVhf": "УКВ",
+  "mooringPhone": "Телефон",
+  "mooringServices": "Услуги / свойства",
+  "mooringNotes": "Примечания",
+  "mooringReviewTitle": "Отзыв (офлайн-черновик)",
+  "mooringReviewStars": "Оценка",
+  "mooringReviewComment": "Комментарий (локально до синхронизации)",
+  "mooringReviewSave": "Сохранить черновик",
+  "mooringReviewQueued": "Отзыв сохранён в очереди — отправка при появлении сервера.",
+  "mooringDetailClose": "Закрыть",
+  "mooringEmptyCatalog": "Нет загруженных объектов стоянки.",
+  "mooringGdprHint": "Текст комментария остаётся на устройстве до выгрузки; в журнал аудита попадают только идентификаторы и оценка."
 }

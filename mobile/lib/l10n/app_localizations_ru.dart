@@ -253,4 +253,51 @@ class AppLocalizationsRu extends AppLocalizations {
   String routeAdvisoryFailed(String reason) {
     return 'Не удалось построить путь: $reason';
   }
+
+  @override
+  String get mooringScreenTitle => 'Стоянка (марины и якорные)';
+
+  @override
+  String get mooringKindMarina => 'Марина';
+
+  @override
+  String get mooringKindAnchorage => 'Якорная стоянка';
+
+  @override
+  String get mooringVhf => 'УКВ';
+
+  @override
+  String get mooringPhone => 'Телефон';
+
+  @override
+  String get mooringServices => 'Услуги / свойства';
+
+  @override
+  String get mooringNotes => 'Примечания';
+
+  @override
+  String get mooringReviewTitle => 'Отзыв (офлайн-черновик)';
+
+  @override
+  String get mooringReviewStars => 'Оценка';
+
+  @override
+  String get mooringReviewComment => 'Комментарий (локально до синхронизации)';
+
+  @override
+  String get mooringReviewSave => 'Сохранить черновик';
+
+  @override
+  String get mooringReviewQueued =>
+      'Отзыв сохранён в очереди — отправка при появлении сервера.';
+
+  @override
+  String get mooringDetailClose => 'Закрыть';
+
+  @override
+  String get mooringEmptyCatalog => 'Нет загруженных объектов стоянки.';
+
+  @override
+  String get mooringGdprHint =>
+      'Текст комментария остаётся на устройстве до выгрузки; в журнал аудита попадают только идентификаторы и оценка.';
 }

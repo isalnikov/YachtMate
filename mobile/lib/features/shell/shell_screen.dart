@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../l10n/app_localizations.dart';
 import '../../widgets/language_button.dart';
 import '../map/map_screen.dart';
+import '../mooring/mooring_screen.dart';
 import '../route/route_screen.dart';
 import '../weather/weather_screen.dart';
 
@@ -56,7 +57,7 @@ Widget _tabBody(int index, List<(IconData, String)> destinations) {
     0 => const MapScreen(),
     1 => const RouteScreen(),
     2 => const WeatherScreen(),
-    3 => _PlaceholderTab(icon: destinations[3].$1, title: destinations[3].$2),
+    3 => const MooringScreen(),
     4 => _PlaceholderTab(icon: destinations[4].$1, title: destinations[4].$2),
     _ => const SizedBox.shrink(),
   };
