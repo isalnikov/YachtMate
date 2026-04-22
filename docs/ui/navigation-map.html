@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Схема навигации UI — IDEAS2</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    pre.art {
+      background: var(--bg-panel);
+      padding: 14px;
+      border-radius: 12px;
+      overflow-x: auto;
+      border: 1px solid rgba(45,212,191,0.15);
+      color: var(--accent-orange);
+      font-size: 0.68rem;
+      line-height: 1.35;
+    }
+    .legend { font-size: 0.85rem; color: var(--text-muted); margin-top: 12px; }
+    .legend code { color: var(--accent-teal); }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <a href="more.html" style="color: var(--accent-teal);">←</a>
+      <span class="logo">Граф экранов</span>
+    </div>
+    <h1 class="screen-title">IDEAS2 → интерфейс Captain Wrongel</h1>
+    <p class="sub">Нижний док из <strong>5 пунктов</strong>; все дополнительные модули — в <code>more.html</code>.</p>
+
+    <pre class="art">
+                         ┌──────────────┐
+                         │ Disclaimer   │
+                         └──────┬───────┘
+                                │ accept
+                                ▼
+ ┌──────────────────────────────────────────────────────────────────────┐
+ │ НИЖНИЙ ДОК (всегда): Карта │ Маршрут │ Погода │ Стоянка │ Ещё          │
+ └──────────────────────────────────────────────────────────────────────┘
+       │              │           │           │              │
+       │              │           │           │              └──► more.html
+       │              │           │           │                    ├── AIS
+       │              │           │           │                    ├── Сообщество
+       │              │           │           │                    ├── Обучение
+       │              │           │           │                    ├── УКВ/SMCP
+       │              │           │           │                    ├── Журнал яхты
+       │              │           │           │                    ├── Безопасность/SOS
+       │              │           │           │                    ├── Инструменты офлайн
+       │              │           │           │                    ├── ИИ-помощник
+       │              │           │           │                    └── Настройки
+       │              │           │           │
+       │              │           │           └──► mooring.html (марины · якорь · берег)
+       │              │           │                 └── anchor.html (полный экран вахты)
+       │              │           │
+       │              │           └──► weather.html (+ блок #tides приливы)
+       │              │
+       │              └──► route.html (конструктор · GPX · «что если»)
+       │
+       └──► map.html (ядро навигации · слои)
+
+ Модальные поверх стека: SOS · якорная тревога · критические алерты AIS
+    </pre>
+
+    <div class="legend">
+      Соответствие модулям M1–M14: см. <a href="../../plan/IDEAS2-structured.md">plan/IDEAS2-structured.md</a>.
+    </div>
+    <p style="margin-top:20px;"><a class="btn secondary" href="map.html" style="display:inline-flex;">На карту</a></p>
+  </div>
+</body>
+</html>

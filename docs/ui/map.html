@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Карта — Captain Wrongel</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell" style="padding-bottom: 88px;">
+    <div class="topbar">
+      <a href="menu.html" style="color: var(--accent-teal); font-size: 1.5rem;">☰</a>
+      <span class="logo">Карта</span>
+      <a href="settings.html" style="font-size: 1.2rem;">⚙</a>
+    </div>
+    <div class="map-placeholder" title="MapLibre + тайлы / MBTiles">
+      <span style="position:absolute; bottom: 12px; right: 12px; font-size:0.7rem; color: var(--text-muted);">N 59.94° E 30.32° · SOG 4.2 kn</span>
+    </div>
+    <div class="card" style="margin-top: 12px;">
+      <h3>Оверлей</h3>
+      <p class="sub" style="margin:0;">Слои: погода · приливы · AIS · маршрут · опасности</p>
+    </div>
+  </div>
+  <nav class="nav-dock" aria-label="Основное меню">
+    <a class="active" href="map.html"><span class="icon">🗺</span>Карта</a>
+    <a href="route.html"><span class="icon">📐</span>Маршрут</a>
+    <a href="weather.html"><span class="icon">🌤</span>Погода</a>
+    <a href="mooring.html"><span class="icon">⚓</span>Стоянка</a>
+    <a href="more.html"><span class="icon">⋯</span>Ещё</a>
+  </nav>
+</body>
+</html>

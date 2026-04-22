@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Погода — Captain Wrongel</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell" style="padding-bottom: 88px;">
+    <div class="topbar">
+      <a href="map.html" style="color: var(--accent-teal);">←</a>
+      <span class="logo">Погода</span>
+      <a href="more.html" title="Ещё модули">⋯</a>
+    </div>
+    <div class="card">
+      <h3>Слой карты · модели</h3>
+      <p class="sub" style="margin:0;">ECMWF / GFS / ICON · изобары · шкала времени · порывы</p>
+    </div>
+    <div class="card">
+      <h3>Экстремальная среда</h3>
+      <p>Штормовые предупреждения · туман · шквал · опционально слой молний</p>
+    </div>
+    <div class="card" id="tides">
+      <h3>Приливы и течения</h3>
+      <p>HW/LW · график · астрономия · атлас течений (регион)</p>
+      <p class="note">Связано со стоянкой: быстрый переход — <a href="mooring.html">Стоянка</a></p>
+    </div>
+    <div class="card">
+      <h3>GRIB офлайн</h3>
+      <p><a href="tools.html">Импорт файла → Инструменты</a></p>
+    </div>
+  </div>
+  <nav class="nav-dock">
+    <a href="map.html"><span class="icon">🗺</span>Карта</a>
+    <a href="route.html"><span class="icon">📐</span>Маршрут</a>
+    <a class="active" href="weather.html"><span class="icon">🌤</span>Погода</a>
+    <a href="mooring.html"><span class="icon">⚓</span>Стоянка</a>
+    <a href="more.html"><span class="icon">⋯</span>Ещё</a>
+  </nav>
+</body>
+</html>
