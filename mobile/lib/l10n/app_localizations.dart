@@ -428,6 +428,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{time} · {height} · {kind}'**
   String weatherTideRow(String time, String height, String kind);
+
+  /// No description provided for @routeScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Route (advisory)'**
+  String get routeScreenTitle;
+
+  /// No description provided for @routeAdvisoryDisclaimerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Advisory routing (synthetic)'**
+  String get routeAdvisoryDisclaimerTitle;
+
+  /// No description provided for @routeAdvisoryDisclaimerBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The path is computed on a demo depth grid, not an official chart. It is for orientation only; you are responsible for safe navigation and depth under keel.'**
+  String get routeAdvisoryDisclaimerBody;
+
+  /// No description provided for @routeAdvisoryDisclaimerAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'I understand'**
+  String get routeAdvisoryDisclaimerAccept;
+
+  /// No description provided for @routeActiveRouteLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Current draft: {id}'**
+  String routeActiveRouteLabel(String id);
+
+  /// No description provided for @routeActiveRouteUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'none'**
+  String get routeActiveRouteUnknown;
+
+  /// No description provided for @routeShipDraftM.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft (m)'**
+  String get routeShipDraftM;
+
+  /// No description provided for @routeShipClearanceM.
+  ///
+  /// In en, this message translates to:
+  /// **'Under-keel clearance (m)'**
+  String get routeShipClearanceM;
+
+  /// No description provided for @routeComputeAdvisory.
+  ///
+  /// In en, this message translates to:
+  /// **'Compute advisory path'**
+  String get routeComputeAdvisory;
+
+  /// No description provided for @routeClearAdvisory.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear path'**
+  String get routeClearAdvisory;
+
+  /// No description provided for @routeSyntheticNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth grid samples the same synthetic contour GeoJSON as the map layer — not official survey data.'**
+  String get routeSyntheticNote;
+
+  /// No description provided for @routeAdvisoryChartLoadFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load demo chart contours for routing.'**
+  String get routeAdvisoryChartLoadFailed;
+
+  /// No description provided for @routeAdvisoryNoRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved route yet. Add waypoints on the map.'**
+  String get routeAdvisoryNoRoute;
+
+  /// No description provided for @routeAdvisoryNeedTwoPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Need at least two waypoints (start and end).'**
+  String get routeAdvisoryNeedTwoPoints;
+
+  /// No description provided for @routeAdvisoryComputed.
+  ///
+  /// In en, this message translates to:
+  /// **'Advisory polyline drawn on the map.'**
+  String get routeAdvisoryComputed;
+
+  /// No description provided for @routeAdvisoryFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not compute path: {reason}'**
+  String routeAdvisoryFailed(String reason);
 }
 
 class _AppLocalizationsDelegate

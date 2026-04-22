@@ -74,6 +74,16 @@ class RouteRepository {
       _db.routes,
     )..where((r) => r.id.equals(routeId))).getSingleOrNull();
   }
+
+  /// Most recently updated route (for restoring draft / advisory tab).
+  Future<String?> latestRouteId() async {
+    final row =
+        await (_db.select(_db.routes)
+              ..orderBy([(r) => OrderingTerm.desc(r.updatedAt)])
+              ..limit(1))
+            .getSingleOrNull();
+    return row?.id;
+  }
 }
 
 class WaypointDraft {

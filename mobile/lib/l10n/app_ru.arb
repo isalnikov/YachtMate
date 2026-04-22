@@ -96,5 +96,31 @@
       "height": {"type": "String"},
       "kind": {"type": "String"}
     }
+  },
+  "routeScreenTitle": "Маршрут (advisory)",
+  "routeAdvisoryDisclaimerTitle": "Advisory-маршрут (синтетика)",
+  "routeAdvisoryDisclaimerBody": "Линия считается по демонстрационной глубинной сетке, не по официальной карте. Только для ориентира; безопасность и запас под килем обеспечиваете вы.",
+  "routeAdvisoryDisclaimerAccept": "Понимаю",
+  "routeActiveRouteLabel": "Текущий черновик: {id}",
+  "@routeActiveRouteLabel": {
+    "placeholders": {
+      "id": {"type": "String"}
+    }
+  },
+  "routeActiveRouteUnknown": "нет",
+  "routeShipDraftM": "Осада (м)",
+  "routeShipClearanceM": "Запас под килем (м)",
+  "routeComputeAdvisory": "Рассчитать advisory-путь",
+  "routeClearAdvisory": "Скрыть линию",
+  "routeSyntheticNote": "Глубины по тем же синтетическим изобатам, что на карте — не официальный промер.",
+  "routeAdvisoryChartLoadFailed": "Не удалось загрузить контуры карты для расчёта.",
+  "routeAdvisoryNoRoute": "Нет сохранённого маршрута. Добавьте точки на карте.",
+  "routeAdvisoryNeedTwoPoints": "Нужны минимум две точки (начало и конец).",
+  "routeAdvisoryComputed": "Advisory-полилиния показана на карте.",
+  "routeAdvisoryFailed": "Не удалось построить путь: {reason}",
+  "@routeAdvisoryFailed": {
+    "placeholders": {
+      "reason": {"type": "String"}
+    }
   }
 }

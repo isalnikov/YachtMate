@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../l10n/app_localizations.dart';
 import '../../widgets/language_button.dart';
 import '../map/map_screen.dart';
+import '../route/route_screen.dart';
 import '../weather/weather_screen.dart';
 
 /// Five-tab shell aligned with [`docs/ui/`](/docs/ui/).
@@ -50,13 +51,10 @@ class _ShellScreenState extends ConsumerState<ShellScreen> {
   }
 }
 
-Widget _tabBody(
-  int index,
-  List<(IconData, String)> destinations,
-) {
+Widget _tabBody(int index, List<(IconData, String)> destinations) {
   return switch (index) {
     0 => const MapScreen(),
-    1 => _PlaceholderTab(icon: destinations[1].$1, title: destinations[1].$2),
+    1 => const RouteScreen(),
     2 => const WeatherScreen(),
     3 => _PlaceholderTab(icon: destinations[3].$1, title: destinations[3].$2),
     4 => _PlaceholderTab(icon: destinations[4].$1, title: destinations[4].$2),

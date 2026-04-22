@@ -196,4 +196,61 @@ class AppLocalizationsRu extends AppLocalizations {
   String weatherTideRow(String time, String height, String kind) {
     return '$time · $height · $kind';
   }
+
+  @override
+  String get routeScreenTitle => 'Маршрут (advisory)';
+
+  @override
+  String get routeAdvisoryDisclaimerTitle => 'Advisory-маршрут (синтетика)';
+
+  @override
+  String get routeAdvisoryDisclaimerBody =>
+      'Линия считается по демонстрационной глубинной сетке, не по официальной карте. Только для ориентира; безопасность и запас под килем обеспечиваете вы.';
+
+  @override
+  String get routeAdvisoryDisclaimerAccept => 'Понимаю';
+
+  @override
+  String routeActiveRouteLabel(String id) {
+    return 'Текущий черновик: $id';
+  }
+
+  @override
+  String get routeActiveRouteUnknown => 'нет';
+
+  @override
+  String get routeShipDraftM => 'Осада (м)';
+
+  @override
+  String get routeShipClearanceM => 'Запас под килем (м)';
+
+  @override
+  String get routeComputeAdvisory => 'Рассчитать advisory-путь';
+
+  @override
+  String get routeClearAdvisory => 'Скрыть линию';
+
+  @override
+  String get routeSyntheticNote =>
+      'Глубины по тем же синтетическим изобатам, что на карте — не официальный промер.';
+
+  @override
+  String get routeAdvisoryChartLoadFailed =>
+      'Не удалось загрузить контуры карты для расчёта.';
+
+  @override
+  String get routeAdvisoryNoRoute =>
+      'Нет сохранённого маршрута. Добавьте точки на карте.';
+
+  @override
+  String get routeAdvisoryNeedTwoPoints =>
+      'Нужны минимум две точки (начало и конец).';
+
+  @override
+  String get routeAdvisoryComputed => 'Advisory-полилиния показана на карте.';
+
+  @override
+  String routeAdvisoryFailed(String reason) {
+    return 'Не удалось построить путь: $reason';
+  }
 }

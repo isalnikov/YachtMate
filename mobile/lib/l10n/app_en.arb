@@ -99,5 +99,31 @@
       "height": {"type": "String"},
       "kind": {"type": "String"}
     }
+  },
+  "routeScreenTitle": "Route (advisory)",
+  "routeAdvisoryDisclaimerTitle": "Advisory routing (synthetic)",
+  "routeAdvisoryDisclaimerBody": "The path is computed on a demo depth grid, not an official chart. It is for orientation only; you are responsible for safe navigation and depth under keel.",
+  "routeAdvisoryDisclaimerAccept": "I understand",
+  "routeActiveRouteLabel": "Current draft: {id}",
+  "@routeActiveRouteLabel": {
+    "placeholders": {
+      "id": {"type": "String"}
+    }
+  },
+  "routeActiveRouteUnknown": "none",
+  "routeShipDraftM": "Draft (m)",
+  "routeShipClearanceM": "Under-keel clearance (m)",
+  "routeComputeAdvisory": "Compute advisory path",
+  "routeClearAdvisory": "Clear path",
+  "routeSyntheticNote": "Depth grid samples the same synthetic contour GeoJSON as the map layer — not official survey data.",
+  "routeAdvisoryChartLoadFailed": "Could not load demo chart contours for routing.",
+  "routeAdvisoryNoRoute": "No saved route yet. Add waypoints on the map.",
+  "routeAdvisoryNeedTwoPoints": "Need at least two waypoints (start and end).",
+  "routeAdvisoryComputed": "Advisory polyline drawn on the map.",
+  "routeAdvisoryFailed": "Could not compute path: {reason}",
+  "@routeAdvisoryFailed": {
+    "placeholders": {
+      "reason": {"type": "String"}
+    }
   }
 }

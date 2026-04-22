@@ -198,4 +198,61 @@ class AppLocalizationsEn extends AppLocalizations {
   String weatherTideRow(String time, String height, String kind) {
     return '$time · $height · $kind';
   }
+
+  @override
+  String get routeScreenTitle => 'Route (advisory)';
+
+  @override
+  String get routeAdvisoryDisclaimerTitle => 'Advisory routing (synthetic)';
+
+  @override
+  String get routeAdvisoryDisclaimerBody =>
+      'The path is computed on a demo depth grid, not an official chart. It is for orientation only; you are responsible for safe navigation and depth under keel.';
+
+  @override
+  String get routeAdvisoryDisclaimerAccept => 'I understand';
+
+  @override
+  String routeActiveRouteLabel(String id) {
+    return 'Current draft: $id';
+  }
+
+  @override
+  String get routeActiveRouteUnknown => 'none';
+
+  @override
+  String get routeShipDraftM => 'Draft (m)';
+
+  @override
+  String get routeShipClearanceM => 'Under-keel clearance (m)';
+
+  @override
+  String get routeComputeAdvisory => 'Compute advisory path';
+
+  @override
+  String get routeClearAdvisory => 'Clear path';
+
+  @override
+  String get routeSyntheticNote =>
+      'Depth grid samples the same synthetic contour GeoJSON as the map layer — not official survey data.';
+
+  @override
+  String get routeAdvisoryChartLoadFailed =>
+      'Could not load demo chart contours for routing.';
+
+  @override
+  String get routeAdvisoryNoRoute =>
+      'No saved route yet. Add waypoints on the map.';
+
+  @override
+  String get routeAdvisoryNeedTwoPoints =>
+      'Need at least two waypoints (start and end).';
+
+  @override
+  String get routeAdvisoryComputed => 'Advisory polyline drawn on the map.';
+
+  @override
+  String routeAdvisoryFailed(String reason) {
+    return 'Could not compute path: $reason';
+  }
 }

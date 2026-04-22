@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 
+import '../../core/active_route_id.dart';
 import '../../core/logging/app_logger.dart';
 import '../../core/map_layer_preferences_controller.dart';
 import '../../core/providers.dart';
@@ -14,6 +15,7 @@ import '../../domain/map/demo_navigation_layers_index.dart';
 import '../../features/ais/ais_demo_provider.dart';
 import '../../features/ais/ais_targets_provider.dart';
 import '../../l10n/app_localizations.dart';
+import '../route/advisory_polyline_notifier.dart';
 import 'ais_target_layer.dart';
 import 'chart_engine_platform.dart';
 import 'demo_map_layers.dart';
@@ -33,6 +35,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
 
   MapLibreMapController? _controller;
   Line? _routeLine;
+  Line? _advisoryLine;
   bool _styleLoaded = false;
   bool _locResolved = false;
   bool _locOk = false;
@@ -90,6 +93,32 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     }
   }
 
+  Future<void> _redrawAdvisoryLine() async {
+    final c = _controller;
+    if (c == null || !_styleLoaded) return;
+
+    final pts = ref.read(advisoryPolylineProvider);
+    if (pts == null || pts.length < 2) {
+      final line = _advisoryLine;
+      if (line != null) {
+        await c.removeLine(line);
+        _advisoryLine = null;
+      }
+      return;
+    }
+
+    final geom = pts.map((p) => LatLng(p.$1, p.$2)).toList(growable: false);
+
+    final line = _advisoryLine;
+    if (line == null) {
+      _advisoryLine = await c.addLine(
+        LineOptions(geometry: geom, lineColor: '#FFC107', lineWidth: 5),
+      );
+    } else {
+      await c.updateLine(line, LineOptions(geometry: geom));
+    }
+  }
+
   Future<void> _persistRouteWaypoint(LatLng pos) async {
     final repo = ref.read(routeRepositoryProvider);
     final audit = ref.read(auditRepositoryProvider);
@@ -106,13 +135,17 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       contextJson: '{"routeId":"$_routeId","points":${_wps.length}}',
     );
 
+    await ref.read(activeRouteIdProvider.notifier).setActive(_routeId!);
+
     await _redrawRouteLine();
     if (mounted) setState(() {});
   }
 
   Future<void> _afterStyleLoaded() async {
     setState(() => _styleLoaded = true);
+    await _syncRouteDraftFromRepo();
     await _redrawRouteLine();
+    await _redrawAdvisoryLine();
 
     final full = await loadDemoLayersGeoJson();
     final c = _controller;
@@ -131,6 +164,24 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     if (mounted) setState(() {});
   }
 
+  Future<void> _syncRouteDraftFromRepo() async {
+    await ref.read(activeRouteIdProvider.notifier).hydrate();
+    final id = ref.read(activeRouteIdProvider);
+    if (id == null || !mounted) return;
+
+    final rows = await ref.read(routeRepositoryProvider).waypointsOrdered(id);
+    if (!mounted) return;
+
+    setState(() {
+      _routeId = id;
+      _wps
+        ..clear()
+        ..addAll(
+          rows.map((r) => WaypointDraft(lat: r.lat, lon: r.lon, name: r.name)),
+        );
+    });
+  }
+
   Future<void> _handleMapLongPress(LatLng pos) async {
     if (!mounted) return;
     final idx = _layersIndex;
@@ -139,8 +190,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     String? navLabel;
     if (idx != null) {
       depthM = idx.nearestContourDepthM(lat: pos.latitude, lon: pos.longitude);
-      navLabel =
-          idx.nearestNavAidLabel(lat: pos.latitude, lon: pos.longitude);
+      navLabel = idx.nearestNavAidLabel(lat: pos.latitude, lon: pos.longitude);
     }
 
     await showMapLongPressSheet(
@@ -169,6 +219,10 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       if (c != null && _aisLayerInstalled) {
         unawaited(updateAisTargetsLayer(c, next));
       }
+    });
+
+    ref.listen(advisoryPolylineProvider, (prev, next) {
+      if (_styleLoaded) unawaited(_redrawAdvisoryLine());
     });
 
     if (!chartEngineSupported()) {

@@ -31,4 +31,17 @@ void main() {
     final gone = await repo.routeById(id);
     expect(gone, null);
   });
+
+  test('latestRouteId returns route with newest updatedAt', () async {
+    final repo = RouteRepository(db);
+    final a = await repo.createDraftRoute(name: 'A');
+    await Future<void>.delayed(const Duration(milliseconds: 3));
+    await repo.createDraftRoute(name: 'B');
+
+    await repo.replaceWaypoints(a, [
+      const WaypointDraft(lat: 59.9, lon: 30.4),
+    ]);
+
+    expect(await repo.latestRouteId(), a);
+  });
 }
