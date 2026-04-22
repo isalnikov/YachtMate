@@ -118,4 +118,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get mapLongPressAddWaypoint => 'Добавить точку маршрута';
+
+  @override
+  String get mapAisDemoTooltip => 'Демо AIS (записанный NMEA)';
 }

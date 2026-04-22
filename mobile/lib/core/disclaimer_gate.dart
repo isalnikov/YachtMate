@@ -20,15 +20,18 @@ class DisclaimerNotifier extends StateNotifier<bool> {
   Future<void> accept() async {
     final prefs = _ref.read(sharedPreferencesProvider);
     await prefs.setBool(kDisclaimerV1AcceptedKey, true);
-    await _ref
-        .read(auditRepositoryProvider)
-        .record(
-          sessionId: _ref.read(sessionIdProvider),
-          module: 'core',
-          action: 'disclaimer_accept',
-          contextJson: '{"version":1}',
-        );
     state = true;
+
+    try {
+      await _ref.read(auditRepositoryProvider).record(
+            sessionId: _ref.read(sessionIdProvider),
+            module: 'core',
+            action: 'disclaimer_accept',
+            contextJson: '{"version":1}',
+          );
+    } catch (_) {
+      // UI must not depend on audit (e.g. Drift/sql.js on web); prefs already persisted.
+    }
   }
 }
 

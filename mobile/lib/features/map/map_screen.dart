@@ -9,14 +9,18 @@ import '../../core/logging/app_logger.dart';
 import '../../core/map_layer_preferences_controller.dart';
 import '../../core/providers.dart';
 import '../../data/repositories/route_repository.dart';
+import '../../domain/ais/ais_target.dart';
 import '../../domain/map/demo_navigation_layers_index.dart';
+import '../../features/ais/ais_demo_provider.dart';
+import '../../features/ais/ais_targets_provider.dart';
 import '../../l10n/app_localizations.dart';
+import 'ais_target_layer.dart';
 import 'chart_engine_platform.dart';
 import 'demo_map_layers.dart';
 import 'map_layer_sheet.dart';
 import 'map_long_press_sheet.dart';
 
-/// MapLibre chart, GNSS dot, draft route, демо-слои и long-press (Фазы 1–2).
+/// MapLibre chart, GNSS dot, draft route, слои и AIS demo (Фазы 1–3).
 class MapScreen extends ConsumerStatefulWidget {
   const MapScreen({super.key});
 
@@ -38,6 +42,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
 
   DemoNavigationLayersIndex? _layersIndex;
   bool _demoLayersInstalled = false;
+  bool _aisLayerInstalled = false;
 
   @override
   void initState() {
@@ -118,6 +123,11 @@ class _MapScreenState extends ConsumerState<MapScreen> {
         _demoLayersInstalled = await installCwDemoLayers(c, full, vis);
       }
     }
+    if (c != null) {
+      await installAisTargetLayer(c);
+      _aisLayerInstalled = true;
+      await updateAisTargetsLayer(c, ref.read(aisTargetsProvider));
+    }
     if (mounted) setState(() {});
   }
 
@@ -151,6 +161,13 @@ class _MapScreenState extends ConsumerState<MapScreen> {
       final c = _controller;
       if (c != null && _demoLayersInstalled) {
         unawaited(applyCwDemoLayerVisibility(c, next));
+      }
+    });
+
+    ref.listen<Map<int, AisTarget>>(aisTargetsProvider, (prev, next) {
+      final c = _controller;
+      if (c != null && _aisLayerInstalled) {
+        unawaited(updateAisTargetsLayer(c, next));
       }
     });
 
@@ -188,6 +205,24 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             ),
           ),
         if (_styleLoaded) ...[
+          Positioned(
+            right: 12,
+            bottom: 164,
+            child: FloatingActionButton.small(
+              heroTag: 'ais_demo',
+              tooltip: l10n.mapAisDemoTooltip,
+              backgroundColor: ref.watch(aisDemoProvider)
+                  ? Theme.of(context).colorScheme.primaryContainer
+                  : null,
+              onPressed: () =>
+                  unawaited(ref.read(aisDemoProvider.notifier).toggle()),
+              child: Icon(
+                ref.watch(aisDemoProvider)
+                    ? Icons.stop_circle_outlined
+                    : Icons.play_circle_outline,
+              ),
+            ),
+          ),
           Positioned(
             right: 12,
             bottom: 88,

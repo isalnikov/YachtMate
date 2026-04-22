@@ -119,4 +119,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mapLongPressAddWaypoint => 'Add route waypoint';
+
+  @override
+  String get mapAisDemoTooltip => 'AIS demo stream (recorded NMEA)';
 }

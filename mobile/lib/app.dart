@@ -48,6 +48,7 @@ class _CaptainWrongelAppState extends ConsumerState<CaptainWrongelApp> {
     final disclaimerOk = ref.watch(disclaimerAcceptedProvider);
 
     return MaterialApp(
+      key: ValueKey(disclaimerOk),
       title: 'Captain Wrongel',
       onGenerateTitle: (context) =>
           AppLocalizations.of(context)?.appTitle ?? 'Captain Wrongel',

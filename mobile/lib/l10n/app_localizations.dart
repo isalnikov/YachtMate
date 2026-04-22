@@ -307,6 +307,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add route waypoint'**
   String get mapLongPressAddWaypoint;
+
+  /// No description provided for @mapAisDemoTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'AIS demo stream (recorded NMEA)'**
+  String get mapAisDemoTooltip;
 }
 
 class _AppLocalizationsDelegate

@@ -34,5 +34,6 @@
   "mapLongPressDepthUnavailable": "Нет изобаты поблизости — включите слой или сместите точку.",
   "mapLongPressNavAid": "Ближайший знак",
   "mapLongPressNavUnavailable": "—",
-  "mapLongPressAddWaypoint": "Добавить точку маршрута"
+  "mapLongPressAddWaypoint": "Добавить точку маршрута",
+  "mapAisDemoTooltip": "Демо AIS (записанный NMEA)"
 }
