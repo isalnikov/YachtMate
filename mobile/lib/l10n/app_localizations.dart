@@ -199,6 +199,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'I understand — continue'**
   String get disclaimerAccept;
+
+  /// No description provided for @offlineCacheStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloading tiles for the visible region…'**
+  String get offlineCacheStart;
+
+  /// No description provided for @offlineCacheDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline region saved'**
+  String get offlineCacheDone;
+
+  /// No description provided for @offlineCacheFail.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not cache offline tiles (network or engine).'**
+  String get offlineCacheFail;
 }
 
 class _AppLocalizationsDelegate

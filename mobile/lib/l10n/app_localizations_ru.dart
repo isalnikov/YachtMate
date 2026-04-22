@@ -61,4 +61,14 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get disclaimerAccept => 'Понимаю — продолжить';
+
+  @override
+  String get offlineCacheStart => 'Загрузка тайлов для видимой области…';
+
+  @override
+  String get offlineCacheDone => 'Офлайн-регион сохранён';
+
+  @override
+  String get offlineCacheFail =>
+      'Не удалось сохранить тайлы (сеть или движок карты).';
 }

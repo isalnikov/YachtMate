@@ -19,5 +19,8 @@
   "disclaimerTitle": "Navigation notice",
   "disclaimerP1": "Captain Wrongel is not an ECDIS, radar, or official nautical chart system. Charts and GPS may be inaccurate or outdated.",
   "disclaimerP2": "You alone are responsible for safe navigation, collision avoidance (COLREG), and verifying all information against official publications.",
-  "disclaimerAccept": "I understand — continue"
+  "disclaimerAccept": "I understand — continue",
+  "offlineCacheStart": "Downloading tiles for the visible region…",
+  "offlineCacheDone": "Offline region saved",
+  "offlineCacheFail": "Could not cache offline tiles (network or engine)."
 }

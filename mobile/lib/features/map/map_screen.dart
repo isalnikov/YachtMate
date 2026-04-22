@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 
+import '../../core/logging/app_logger.dart';
 import '../../core/providers.dart';
 import '../../data/repositories/route_repository.dart';
 import '../../l10n/app_localizations.dart';
@@ -136,7 +137,64 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               child: Center(child: Text(l10n.mapLoadingStyle)),
             ),
           ),
+        if (_styleLoaded)
+          Positioned(
+            right: 12,
+            bottom: 12,
+            child: FloatingActionButton.small(
+              heroTag: 'offline_region',
+              onPressed: () => unawaited(_cacheVisibleRegion(context)),
+              child: const Icon(Icons.cloud_download_outlined),
+            ),
+          ),
       ],
     );
+  }
+
+  Future<void> _cacheVisibleRegion(BuildContext context) async {
+    final c = _controller;
+    final messenger = ScaffoldMessenger.maybeOf(context);
+    final l10n = AppLocalizations.of(context)!;
+    final log = AppLogger('offline');
+
+    if (c == null) return;
+
+    messenger?.showSnackBar(SnackBar(content: Text(l10n.offlineCacheStart)));
+
+    try {
+      final bounds = await c.getVisibleRegion();
+      final pack = await downloadOfflineRegion(
+        OfflineRegionDefinition(
+          bounds: bounds,
+          mapStyleUrl: MapLibreStyles.demo,
+          minZoom: 0,
+          maxZoom: 12,
+        ),
+      );
+
+      await ref
+          .read(chartRegionRepositoryProvider)
+          .upsert(
+            regionId: 'offline_${pack.id}',
+            path: 'sqlite:${pack.id}',
+            licenseTier: 'demo',
+          );
+
+      await ref
+          .read(auditRepositoryProvider)
+          .record(
+            sessionId: ref.read(sessionIdProvider),
+            module: 'M1',
+            action: 'chart_region_mount',
+            contextJson: '{"offlineId":${pack.id},"minZoom":0,"maxZoom":12}',
+          );
+
+      messenger?.hideCurrentSnackBar();
+      messenger?.showSnackBar(SnackBar(content: Text(l10n.offlineCacheDone)));
+    } catch (e) {
+      log.warning('offline_download_failed', {'error': e.toString()});
+      messenger?.hideCurrentSnackBar();
+      messenger?.showSnackBar(SnackBar(content: Text(l10n.offlineCacheFail)));
+    }
   }
 }

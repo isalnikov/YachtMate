@@ -62,4 +62,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get disclaimerAccept => 'I understand — continue';
+
+  @override
+  String get offlineCacheStart => 'Downloading tiles for the visible region…';
+
+  @override
+  String get offlineCacheDone => 'Offline region saved';
+
+  @override
+  String get offlineCacheFail =>
+      'Could not cache offline tiles (network or engine).';
 }
