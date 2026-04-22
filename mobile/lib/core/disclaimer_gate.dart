@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'providers.dart';
@@ -19,7 +20,12 @@ class DisclaimerNotifier extends StateNotifier<bool> {
 
   Future<void> accept() async {
     final prefs = _ref.read(sharedPreferencesProvider);
-    await prefs.setBool(kDisclaimerV1AcceptedKey, true);
+    try {
+      await prefs.setBool(kDisclaimerV1AcceptedKey, true);
+    } catch (e, st) {
+      // Never block navigation after explicit tap (storage quota, platform quirks).
+      debugPrint('Disclaimer prefs persist failed: $e\n$st');
+    }
     state = true;
 
     try {

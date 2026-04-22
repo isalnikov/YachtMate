@@ -42,6 +42,7 @@ class DisclaimerScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 24),
               FilledButton(
+                key: const Key('disclaimer_accept'),
                 onPressed: () async {
                   await ref.read(disclaimerAcceptedProvider.notifier).accept();
                 },

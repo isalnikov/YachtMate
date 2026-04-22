@@ -88,7 +88,6 @@ class _CaptainWrongelAppState extends ConsumerState<CaptainWrongelApp> {
         : baseTheme;
 
     return MaterialApp(
-      key: ValueKey(disclaimerOk),
       title: 'Captain Wrongel',
       onGenerateTitle: (context) =>
           AppLocalizations.of(context)?.appTitle ?? 'Captain Wrongel',
