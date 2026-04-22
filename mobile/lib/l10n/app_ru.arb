@@ -10,5 +10,7 @@
   "languageLabel": "Язык",
   "localeEnglish": "Английский",
   "localeRussian": "Русский",
-  "bootstrapNote": "Оболочка фазы 0 — карта и навигация в фазе 1."
+  "bootstrapNote": "Оболочка фазы 0 — карта и навигация в фазе 1.",
+  "mapUnavailableOnPlatform": "Карта MapLibre на Android, iOS или в браузере. На Linux desktop — заглушка.",
+  "mapLoadingStyle": "Загрузка стиля карты…"
 }

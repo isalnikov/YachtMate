@@ -40,4 +40,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get bootstrapNote => 'Оболочка фазы 0 — карта и навигация в фазе 1.';
+
+  @override
+  String get mapUnavailableOnPlatform =>
+      'Карта MapLibre на Android, iOS или в браузере. На Linux desktop — заглушка.';
+
+  @override
+  String get mapLoadingStyle => 'Загрузка стиля карты…';
 }

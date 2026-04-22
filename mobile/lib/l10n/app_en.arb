@@ -13,5 +13,7 @@
   "languageLabel": "Language",
   "localeEnglish": "English",
   "localeRussian": "Russian",
-  "bootstrapNote": "Phase 0 shell — navigation and charts follow in Phase 1."
+  "bootstrapNote": "Phase 0 shell — navigation and charts follow in Phase 1.",
+  "mapUnavailableOnPlatform": "Raster/vector charts run on Android, iOS, or web. Linux desktop shows this placeholder.",
+  "mapLoadingStyle": "Loading chart style…"
 }

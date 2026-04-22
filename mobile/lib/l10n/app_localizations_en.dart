@@ -41,4 +41,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get bootstrapNote =>
       'Phase 0 shell — navigation and charts follow in Phase 1.';
+
+  @override
+  String get mapUnavailableOnPlatform =>
+      'Raster/vector charts run on Android, iOS, or web. Linux desktop shows this placeholder.';
+
+  @override
+  String get mapLoadingStyle => 'Loading chart style…';
 }

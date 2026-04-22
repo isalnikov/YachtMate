@@ -3,8 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/providers.dart';
 import '../../l10n/app_localizations.dart';
+import '../map/map_screen.dart';
 
-/// Five-tab shell aligned with [`docs/ui/`](/docs/ui/) — placeholders until Phase 1+.
+/// Five-tab shell aligned with [`docs/ui/`](/docs/ui/).
 class ShellScreen extends ConsumerStatefulWidget {
   const ShellScreen({super.key});
 
@@ -37,28 +38,28 @@ class _ShellScreenState extends ConsumerState<ShellScreen> {
           ),
         ],
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(destinations[_index].$1, size: 56),
-              const SizedBox(height: 16),
-              Text(
-                destinations[_index].$2,
-                style: Theme.of(context).textTheme.headlineSmall,
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 12),
-              Text(
-                l10n.bootstrapNote,
-                style: Theme.of(context).textTheme.bodyMedium,
-                textAlign: TextAlign.center,
-              ),
-            ],
+      body: IndexedStack(
+        index: _index,
+        sizing: StackFit.expand,
+        children: [
+          const MapScreen(),
+          _PlaceholderTab(
+            icon: destinations[1].$1,
+            title: destinations[1].$2,
           ),
-        ),
+          _PlaceholderTab(
+            icon: destinations[2].$1,
+            title: destinations[2].$2,
+          ),
+          _PlaceholderTab(
+            icon: destinations[3].$1,
+            title: destinations[3].$2,
+          ),
+          _PlaceholderTab(
+            icon: destinations[4].$1,
+            title: destinations[4].$2,
+          ),
+        ],
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
@@ -113,6 +114,44 @@ class _ShellScreenState extends ConsumerState<ShellScreen> {
           ),
         );
       },
+    );
+  }
+}
+
+class _PlaceholderTab extends StatelessWidget {
+  const _PlaceholderTab({
+    required this.icon,
+    required this.title,
+  });
+
+  final IconData icon;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 56),
+            const SizedBox(height: 16),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.headlineSmall,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              l10n.bootstrapNote,
+              style: Theme.of(context).textTheme.bodyMedium,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

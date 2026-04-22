@@ -163,6 +163,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Phase 0 shell — navigation and charts follow in Phase 1.'**
   String get bootstrapNote;
+
+  /// No description provided for @mapUnavailableOnPlatform.
+  ///
+  /// In en, this message translates to:
+  /// **'Raster/vector charts run on Android, iOS, or web. Linux desktop shows this placeholder.'**
+  String get mapUnavailableOnPlatform;
+
+  /// No description provided for @mapLoadingStyle.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading chart style…'**
+  String get mapLoadingStyle;
 }
 
 class _AppLocalizationsDelegate
