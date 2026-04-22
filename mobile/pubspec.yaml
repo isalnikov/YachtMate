@@ -37,3 +37,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  assets:
+    - assets/map/demo_navigation_layers.geojson

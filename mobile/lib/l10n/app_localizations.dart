@@ -223,6 +223,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not cache offline tiles (network or engine).'**
   String get offlineCacheFail;
+
+  /// No description provided for @mapLayersTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Map layers'**
+  String get mapLayersTooltip;
+
+  /// No description provided for @mapLayersSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Map layers (demo)'**
+  String get mapLayersSheetTitle;
+
+  /// No description provided for @mapLayerDepthContours.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth contours (synthetic)'**
+  String get mapLayerDepthContours;
+
+  /// No description provided for @mapLayerNavAids.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation marks (synthetic)'**
+  String get mapLayerNavAids;
+
+  /// No description provided for @mapDepthLegendTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Legend'**
+  String get mapDepthLegendTitle;
+
+  /// No description provided for @mapDepthLegendBody.
+  ///
+  /// In en, this message translates to:
+  /// **'5 m (light blue), 10 m (blue), 20 m (dark blue). Synthetic GeoJSON — not for navigation.'**
+  String get mapDepthLegendBody;
+
+  /// No description provided for @mapLongPressTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Position (WGS84)'**
+  String get mapLongPressTitle;
+
+  /// No description provided for @mapLongPressLatitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Latitude'**
+  String get mapLongPressLatitude;
+
+  /// No description provided for @mapLongPressLongitude.
+  ///
+  /// In en, this message translates to:
+  /// **'Longitude'**
+  String get mapLongPressLongitude;
+
+  /// No description provided for @mapLongPressDepth.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth (demo)'**
+  String get mapLongPressDepth;
+
+  /// No description provided for @mapLongPressDepthUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No contour within range — enable the layer or move closer.'**
+  String get mapLongPressDepthUnavailable;
+
+  /// No description provided for @mapLongPressNavAid.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearest mark'**
+  String get mapLongPressNavAid;
+
+  /// No description provided for @mapLongPressNavUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'—'**
+  String get mapLongPressNavUnavailable;
+
+  /// No description provided for @mapLongPressAddWaypoint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add route waypoint'**
+  String get mapLongPressAddWaypoint;
 }
 
 class _AppLocalizationsDelegate

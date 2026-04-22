@@ -74,4 +74,48 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get offlineCacheFail =>
       'Не удалось сохранить тайлы (сеть или движок карты).';
+
+  @override
+  String get mapLayersTooltip => 'Слои карты';
+
+  @override
+  String get mapLayersSheetTitle => 'Слои карты (демо)';
+
+  @override
+  String get mapLayerDepthContours => 'Изобаты (синтетика)';
+
+  @override
+  String get mapLayerNavAids => 'Навигационные знаки (синтетика)';
+
+  @override
+  String get mapDepthLegendTitle => 'Легенда';
+
+  @override
+  String get mapDepthLegendBody =>
+      '5 м (голубой), 10 м (синий), 20 м (тёмно-синий). Синтетический GeoJSON — не для плавания.';
+
+  @override
+  String get mapLongPressTitle => 'Позиция (WGS84)';
+
+  @override
+  String get mapLongPressLatitude => 'Широта';
+
+  @override
+  String get mapLongPressLongitude => 'Долгота';
+
+  @override
+  String get mapLongPressDepth => 'Глубина (демо-слой)';
+
+  @override
+  String get mapLongPressDepthUnavailable =>
+      'Нет изобаты поблизости — включите слой или сместите точку.';
+
+  @override
+  String get mapLongPressNavAid => 'Ближайший знак';
+
+  @override
+  String get mapLongPressNavUnavailable => '—';
+
+  @override
+  String get mapLongPressAddWaypoint => 'Добавить точку маршрута';
 }

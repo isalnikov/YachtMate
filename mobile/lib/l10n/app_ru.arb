@@ -20,5 +20,19 @@
   "disclaimerAccept": "Понимаю — продолжить",
   "offlineCacheStart": "Загрузка тайлов для видимой области…",
   "offlineCacheDone": "Офлайн-регион сохранён",
-  "offlineCacheFail": "Не удалось сохранить тайлы (сеть или движок карты)."
+  "offlineCacheFail": "Не удалось сохранить тайлы (сеть или движок карты).",
+  "mapLayersTooltip": "Слои карты",
+  "mapLayersSheetTitle": "Слои карты (демо)",
+  "mapLayerDepthContours": "Изобаты (синтетика)",
+  "mapLayerNavAids": "Навигационные знаки (синтетика)",
+  "mapDepthLegendTitle": "Легенда",
+  "mapDepthLegendBody": "5 м (голубой), 10 м (синий), 20 м (тёмно-синий). Синтетический GeoJSON — не для плавания.",
+  "mapLongPressTitle": "Позиция (WGS84)",
+  "mapLongPressLatitude": "Широта",
+  "mapLongPressLongitude": "Долгота",
+  "mapLongPressDepth": "Глубина (демо-слой)",
+  "mapLongPressDepthUnavailable": "Нет изобаты поблизости — включите слой или сместите точку.",
+  "mapLongPressNavAid": "Ближайший знак",
+  "mapLongPressNavUnavailable": "—",
+  "mapLongPressAddWaypoint": "Добавить точку маршрута"
 }

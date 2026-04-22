@@ -9,6 +9,7 @@ import '../data/repositories/chart_region_repository.dart';
 import '../data/repositories/route_repository.dart';
 import 'locale_controller.dart';
 import 'logging/app_logger.dart';
+import 'map_layer_preferences_controller.dart';
 
 /// Injected after `SharedPreferences.getInstance()` in [main].
 final sharedPreferencesProvider = Provider<SharedPreferences>(
@@ -41,6 +42,16 @@ final rootLoggerProvider = Provider<AppLogger>((ref) => AppLogger('app'));
 final localeControllerProvider =
     StateNotifierProvider<LocaleController, Locale>((ref) {
   return LocaleController(
+    ref.watch(sharedPreferencesProvider),
+    ref.watch(auditRepositoryProvider),
+    ref.watch(sessionIdProvider),
+  );
+});
+
+final mapLayerPreferencesProvider =
+    StateNotifierProvider<MapLayerPreferencesController, MapLayerVisibility>(
+        (ref) {
+  return MapLayerPreferencesController(
     ref.watch(sharedPreferencesProvider),
     ref.watch(auditRepositoryProvider),
     ref.watch(sessionIdProvider),

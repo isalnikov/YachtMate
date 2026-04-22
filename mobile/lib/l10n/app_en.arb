@@ -23,5 +23,19 @@
   "disclaimerAccept": "I understand — continue",
   "offlineCacheStart": "Downloading tiles for the visible region…",
   "offlineCacheDone": "Offline region saved",
-  "offlineCacheFail": "Could not cache offline tiles (network or engine)."
+  "offlineCacheFail": "Could not cache offline tiles (network or engine).",
+  "mapLayersTooltip": "Map layers",
+  "mapLayersSheetTitle": "Map layers (demo)",
+  "mapLayerDepthContours": "Depth contours (synthetic)",
+  "mapLayerNavAids": "Navigation marks (synthetic)",
+  "mapDepthLegendTitle": "Legend",
+  "mapDepthLegendBody": "5 m (light blue), 10 m (blue), 20 m (dark blue). Synthetic GeoJSON — not for navigation.",
+  "mapLongPressTitle": "Position (WGS84)",
+  "mapLongPressLatitude": "Latitude",
+  "mapLongPressLongitude": "Longitude",
+  "mapLongPressDepth": "Depth (demo)",
+  "mapLongPressDepthUnavailable": "No contour within range — enable the layer or move closer.",
+  "mapLongPressNavAid": "Nearest mark",
+  "mapLongPressNavUnavailable": "—",
+  "mapLongPressAddWaypoint": "Add route waypoint"
 }

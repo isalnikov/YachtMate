@@ -6,12 +6,17 @@ import 'package:geolocator/geolocator.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 
 import '../../core/logging/app_logger.dart';
+import '../../core/map_layer_preferences_controller.dart';
 import '../../core/providers.dart';
 import '../../data/repositories/route_repository.dart';
+import '../../domain/map/demo_navigation_layers_index.dart';
 import '../../l10n/app_localizations.dart';
 import 'chart_engine_platform.dart';
+import 'demo_map_layers.dart';
+import 'map_layer_sheet.dart';
+import 'map_long_press_sheet.dart';
 
-/// MapLibre chart, GNSS dot, draft route polyline (Фаза 1.1–1.4).
+/// MapLibre chart, GNSS dot, draft route, демо-слои и long-press (Фазы 1–2).
 class MapScreen extends ConsumerStatefulWidget {
   const MapScreen({super.key});
 
@@ -30,6 +35,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
 
   final List<WaypointDraft> _wps = [];
   String? _routeId;
+
+  DemoNavigationLayersIndex? _layersIndex;
+  bool _demoLayersInstalled = false;
 
   @override
   void initState() {
@@ -77,7 +85,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     }
   }
 
-  Future<void> _onLongPress(LatLng pos) async {
+  Future<void> _persistRouteWaypoint(LatLng pos) async {
     final repo = ref.read(routeRepositoryProvider);
     final audit = ref.read(auditRepositoryProvider);
 
@@ -97,9 +105,54 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     if (mounted) setState(() {});
   }
 
+  Future<void> _afterStyleLoaded() async {
+    setState(() => _styleLoaded = true);
+    await _redrawRouteLine();
+
+    final full = await loadDemoLayersGeoJson();
+    final c = _controller;
+    if (full != null) {
+      _layersIndex = DemoNavigationLayersIndex.fromGeoJson(full);
+      if (c != null) {
+        final vis = ref.read(mapLayerPreferencesProvider);
+        _demoLayersInstalled = await installCwDemoLayers(c, full, vis);
+      }
+    }
+    if (mounted) setState(() {});
+  }
+
+  Future<void> _handleMapLongPress(LatLng pos) async {
+    if (!mounted) return;
+    final idx = _layersIndex;
+
+    double? depthM;
+    String? navLabel;
+    if (idx != null) {
+      depthM = idx.nearestContourDepthM(lat: pos.latitude, lon: pos.longitude);
+      navLabel =
+          idx.nearestNavAidLabel(lat: pos.latitude, lon: pos.longitude);
+    }
+
+    await showMapLongPressSheet(
+      context: context,
+      lat: pos.latitude,
+      lon: pos.longitude,
+      depthMeters: depthM,
+      navAidLabel: navLabel,
+      onAddWaypoint: () => unawaited(_persistRouteWaypoint(pos)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+
+    ref.listen<MapLayerVisibility>(mapLayerPreferencesProvider, (prev, next) {
+      final c = _controller;
+      if (c != null && _demoLayersInstalled) {
+        unawaited(applyCwDemoLayerVisibility(c, next));
+      }
+    });
 
     if (!chartEngineSupported()) {
       return Center(
@@ -122,12 +175,9 @@ class _MapScreenState extends ConsumerState<MapScreen> {
           trackCameraPosition: true,
           myLocationEnabled: showLoc,
           onMapCreated: (c) => _controller = c,
-          onStyleLoadedCallback: () {
-            setState(() => _styleLoaded = true);
-            unawaited(_redrawRouteLine());
-          },
+          onStyleLoadedCallback: () => unawaited(_afterStyleLoaded()),
           onMapLongClick: (screen, coords) {
-            unawaited(_onLongPress(coords));
+            unawaited(_handleMapLongPress(coords));
           },
         ),
         if (!_styleLoaded)
@@ -137,7 +187,17 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               child: Center(child: Text(l10n.mapLoadingStyle)),
             ),
           ),
-        if (_styleLoaded)
+        if (_styleLoaded) ...[
+          Positioned(
+            right: 12,
+            bottom: 88,
+            child: FloatingActionButton.small(
+              heroTag: 'map_layers',
+              tooltip: l10n.mapLayersTooltip,
+              onPressed: () => unawaited(showMapLayerSheet(context)),
+              child: const Icon(Icons.layers_outlined),
+            ),
+          ),
           Positioned(
             right: 12,
             bottom: 12,
@@ -147,6 +207,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               child: const Icon(Icons.cloud_download_outlined),
             ),
           ),
+        ],
       ],
     );
   }

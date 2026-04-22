@@ -1,0 +1,50 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "depth_m": 5,
+        "source": "demo_synthetic"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[30.22, 59.91], [30.28, 59.93], [30.38, 59.95]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "depth_m": 10,
+        "source": "demo_synthetic"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[30.20, 59.94], [30.44, 59.97]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "depth_m": 20,
+        "source": "demo_synthetic"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [[30.15, 59.88], [30.42, 59.90]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "kind": "beacon",
+        "name": "Demo beacon",
+        "source": "demo_synthetic"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.32, 59.94]
+      }
+    }
+  ]
+}

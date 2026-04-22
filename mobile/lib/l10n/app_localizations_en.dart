@@ -75,4 +75,48 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get offlineCacheFail =>
       'Could not cache offline tiles (network or engine).';
+
+  @override
+  String get mapLayersTooltip => 'Map layers';
+
+  @override
+  String get mapLayersSheetTitle => 'Map layers (demo)';
+
+  @override
+  String get mapLayerDepthContours => 'Depth contours (synthetic)';
+
+  @override
+  String get mapLayerNavAids => 'Navigation marks (synthetic)';
+
+  @override
+  String get mapDepthLegendTitle => 'Legend';
+
+  @override
+  String get mapDepthLegendBody =>
+      '5 m (light blue), 10 m (blue), 20 m (dark blue). Synthetic GeoJSON — not for navigation.';
+
+  @override
+  String get mapLongPressTitle => 'Position (WGS84)';
+
+  @override
+  String get mapLongPressLatitude => 'Latitude';
+
+  @override
+  String get mapLongPressLongitude => 'Longitude';
+
+  @override
+  String get mapLongPressDepth => 'Depth (demo)';
+
+  @override
+  String get mapLongPressDepthUnavailable =>
+      'No contour within range — enable the layer or move closer.';
+
+  @override
+  String get mapLongPressNavAid => 'Nearest mark';
+
+  @override
+  String get mapLongPressNavUnavailable => '—';
+
+  @override
+  String get mapLongPressAddWaypoint => 'Add route waypoint';
 }
