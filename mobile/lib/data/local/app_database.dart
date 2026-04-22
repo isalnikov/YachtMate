@@ -1,9 +1,4 @@
-import 'dart:io';
-
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
-import 'package:path/path.dart' as p;
-import 'package:path_provider/path_provider.dart';
 
 import 'route_tables.dart';
 
@@ -45,15 +40,7 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(chartRegions);
       }
     },
-  );
+      );
 }
 
-/// Opens [AppDatabase] on a SQLite file under application documents.
-Future<AppDatabase> openAppDatabase() async {
-  final dir = await getApplicationDocumentsDirectory();
-  final file = File(p.join(dir.path, 'app.db'));
-  final executor = LazyDatabase(() async {
-    return NativeDatabase.createInBackground(file);
-  });
-  return AppDatabase(executor);
-}
+/// Открытие БД см. [open_database.dart] (ffi на io, sql.js на web).
