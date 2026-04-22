@@ -29,7 +29,7 @@
   "mapLayerDepthContours": "Depth contours (synthetic)",
   "mapLayerNavAids": "Navigation marks (synthetic)",
   "mapDepthLegendTitle": "Legend",
-  "mapDepthLegendBody": "5 m (light blue), 10 m (blue), 20 m (dark blue). Synthetic GeoJSON — not for navigation.",
+  "mapDepthLegendBody": "Blue lines: EMODnet Bathymetry contours (example region: Fethiye, Turkey). Single display color — depth values drive routing grid only. Not official charts.",
   "mapLongPressTitle": "Position (WGS84)",
   "mapLongPressLatitude": "Latitude",
   "mapLongPressLongitude": "Longitude",

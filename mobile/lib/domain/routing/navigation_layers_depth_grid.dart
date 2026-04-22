@@ -8,14 +8,14 @@ import 'depth_grid.dart';
 DepthGrid buildNavigationLayersDepthGrid(
   DemoNavigationLayersIndex index, {
 
-  /// Юго-западный угол сетки — охват `demo_navigation_layers.geojson`.
-  double originLatDeg = 59.88,
-  double originLonDeg = 30.15,
-  int rows = 45,
-  int cols = 48,
-  double latStepDeg = 0.002,
-  double lonStepDeg = 0.006,
-  double maxContourDistanceM = 2000,
+  /// Юго-западный угол — охват выгрузки EMODnet contours (район Фетхие, Турция).
+  double originLatDeg = 36.35,
+  double originLonDeg = 27.80,
+  int rows = 56,
+  int cols = 82,
+  double latStepDeg = 0.0125,
+  double lonStepDeg = 0.025,
+  double maxContourDistanceM = 8000,
 }) {
   final depth = List.generate(
     rows,

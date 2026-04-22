@@ -12,7 +12,7 @@ class WeatherPin {
 }
 
 class WeatherPinNotifier extends StateNotifier<WeatherPin> {
-  WeatherPinNotifier() : super(const WeatherPin(lat: 59.94, lon: 30.32));
+  WeatherPinNotifier() : super(const WeatherPin(lat: 36.65, lon: 29.12));
 
   void setPin(double lat, double lon) =>
       state = WeatherPin(lat: lat, lon: lon);

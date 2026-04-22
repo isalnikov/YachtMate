@@ -31,7 +31,8 @@ class MapScreen extends ConsumerStatefulWidget {
 }
 
 class _MapScreenState extends ConsumerState<MapScreen> {
-  static const _initial = CameraPosition(target: LatLng(59.94, 30.32), zoom: 9);
+  static const _initial =
+      CameraPosition(target: LatLng(36.65, 29.12), zoom: 10);
 
   MapLibreMapController? _controller;
   Line? _routeLine;

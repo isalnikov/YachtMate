@@ -28,8 +28,12 @@ void main() {
       final idx = DemoNavigationLayersIndex.fromGeoJson(root);
       final grid = buildNavigationLayersDepthGrid(
         idx,
+        originLatDeg: 59.88,
+        originLonDeg: 30.15,
         rows: 24,
         cols: 32,
+        latStepDeg: 0.002,
+        lonStepDeg: 0.006,
         maxContourDistanceM: 4000,
       );
 

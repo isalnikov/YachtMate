@@ -26,7 +26,7 @@
   "mapLayerDepthContours": "Изобаты (синтетика)",
   "mapLayerNavAids": "Навигационные знаки (синтетика)",
   "mapDepthLegendTitle": "Легенда",
-  "mapDepthLegendBody": "5 м (голубой), 10 м (синий), 20 м (тёмно-синий). Синтетический GeoJSON — не для плавания.",
+  "mapDepthLegendBody": "Синие линии: изобаты EMODnet Bathymetry (пример: район Фетхие, Турция). На карте один цвет; значения глубин идут в расчёт сетки. Не официальные карты.",
   "mapLongPressTitle": "Позиция (WGS84)",
   "mapLongPressLatitude": "Широта",
   "mapLongPressLongitude": "Долгота",

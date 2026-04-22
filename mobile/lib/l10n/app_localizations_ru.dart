@@ -92,7 +92,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get mapDepthLegendBody =>
-      '5 м (голубой), 10 м (синий), 20 м (тёмно-синий). Синтетический GeoJSON — не для плавания.';
+      'Синие линии: изобаты EMODnet Bathymetry (пример: район Фетхие, Турция). На карте один цвет; значения глубин идут в расчёт сетки. Не официальные карты.';
 
   @override
   String get mapLongPressTitle => 'Позиция (WGS84)';

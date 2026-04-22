@@ -93,7 +93,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mapDepthLegendBody =>
-      '5 m (light blue), 10 m (blue), 20 m (dark blue). Synthetic GeoJSON — not for navigation.';
+      'Blue lines: EMODnet Bathymetry contours (example region: Fethiye, Turkey). Single display color — depth values drive routing grid only. Not official charts.';
 
   @override
   String get mapLongPressTitle => 'Position (WGS84)';

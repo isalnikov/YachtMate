@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 
 import '../../core/map_layer_preferences_controller.dart';
+import 'map_navigation_asset.dart';
 
 /// Идентификаторы стиля MapLibre для демо-слоёв (Фаза 2). См. `docs/data-licensing.md`.
 const cwDemoDepthSourceId = 'cw_demo_depth';
@@ -13,8 +14,7 @@ const cwDemoNavLayerId = 'cw_demo_nav_circles';
 
 Future<Map<String, dynamic>?> loadDemoLayersGeoJson() async {
   try {
-    final raw = await rootBundle
-        .loadString('assets/map/demo_navigation_layers.geojson');
+    final raw = await rootBundle.loadString(kNavigationLayersGeoJsonAsset);
     return jsonDecode(raw) as Map<String, dynamic>;
   } catch (_) {
     return null;
@@ -72,17 +72,7 @@ Future<bool> installCwDemoLayers(
       cwDemoDepthSourceId,
       cwDemoDepthLayerId,
       LineLayerProperties(
-        lineColor: [
-          'match',
-          ['get', 'depth_m'],
-          5,
-          '#4FC3F7',
-          10,
-          '#0288D1',
-          20,
-          '#01579B',
-          '#757575',
-        ],
+        lineColor: '#0277BD',
         lineWidth: 2.5,
         lineOpacity: 0.95,
         visibility: visibility.depthContours ? 'visible' : 'none',
