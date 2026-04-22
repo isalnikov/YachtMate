@@ -1,0 +1,28 @@
+# Flutter/Dart
+**/doc/api/
+**/ios/.symlinks/
+**/ios/Pods/
+**/ios/**/Flutter/ephemeral/
+**/macos/**/Flutter/ephemeral/
+**/linux/**/Flutter/ephemeral/
+**/windows/**/Flutter/ephemeral/
+**/android/.gradle/
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+**/android/**/GeneratedPluginRegistrant.java
+**/android/**/local.properties
+**/.dart_tool/
+**/build/
+**/*.iml
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/coverage/
+
+# Optional: local Flutter SDK checkout (CI uses flutter-action)
+.flutter-sdk/
+
+# IDE
+.idea/
+*.swp
+.DS_Store

@@ -1,0 +1,14 @@
+{
+  "@@locale": "ru",
+  "appTitle": "Captain Wrongel",
+  "tabMap": "Карта",
+  "tabRoute": "Маршрут",
+  "tabWeather": "Погода",
+  "tabMooring": "Стоянка",
+  "tabMore": "Ещё",
+  "settingsTitle": "Настройки",
+  "languageLabel": "Язык",
+  "localeEnglish": "Английский",
+  "localeRussian": "Русский",
+  "bootstrapNote": "Оболочка фазы 0 — карта и навигация в фазе 1."
+}

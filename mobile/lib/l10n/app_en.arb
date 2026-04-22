@@ -1,0 +1,17 @@
+{
+  "@@locale": "en",
+  "appTitle": "Captain Wrongel",
+  "@appTitle": {
+    "description": "Application name shown in UI and task switcher."
+  },
+  "tabMap": "Map",
+  "tabRoute": "Route",
+  "tabWeather": "Weather",
+  "tabMooring": "Mooring",
+  "tabMore": "More",
+  "settingsTitle": "Settings",
+  "languageLabel": "Language",
+  "localeEnglish": "English",
+  "localeRussian": "Russian",
+  "bootstrapNote": "Phase 0 shell — navigation and charts follow in Phase 1."
+}

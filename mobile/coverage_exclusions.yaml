@@ -1,0 +1,5 @@
+# Paths excluded from coverage gate (finальный план §9).
+# Apply with: lcov --remove coverage/lcov.info ... (see mobile/README.md)
+exclude:
+  - "**/*.g.dart"
+  - "lib/main.dart"
