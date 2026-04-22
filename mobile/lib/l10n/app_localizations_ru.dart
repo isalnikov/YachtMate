@@ -47,4 +47,18 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get mapLoadingStyle => 'Загрузка стиля карты…';
+
+  @override
+  String get disclaimerTitle => 'Уведомление о навигации';
+
+  @override
+  String get disclaimerP1 =>
+      'Captain Wrongel не является ECDIS, радаром или официальной навигационной картой. Карты и GPS могут содержать ошибки.';
+
+  @override
+  String get disclaimerP2 =>
+      'Ответственность за безопасную навигацию, COLREG и сверку с официальными материалами полностью на судоводителе.';
+
+  @override
+  String get disclaimerAccept => 'Понимаю — продолжить';
 }

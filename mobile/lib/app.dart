@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/disclaimer_gate.dart';
 import 'core/providers.dart';
 import 'core/theme/cw_theme.dart';
+import 'features/legal/disclaimer_screen.dart';
 import 'features/shell/shell_screen.dart';
 import 'l10n/app_localizations.dart';
 
@@ -36,15 +38,17 @@ class _CaptainWrongelAppState extends ConsumerState<CaptainWrongelApp> {
   @override
   Widget build(BuildContext context) {
     final locale = ref.watch(localeControllerProvider);
+    final disclaimerOk = ref.watch(disclaimerAcceptedProvider);
 
     return MaterialApp(
       title: 'Captain Wrongel',
-      onGenerateTitle: (context) => AppLocalizations.of(context)?.appTitle ?? 'Captain Wrongel',
+      onGenerateTitle: (context) =>
+          AppLocalizations.of(context)?.appTitle ?? 'Captain Wrongel',
       locale: locale,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: CwTheme.material(),
-      home: const ShellScreen(),
+      home: disclaimerOk ? const ShellScreen() : const DisclaimerScreen(),
     );
   }
 }

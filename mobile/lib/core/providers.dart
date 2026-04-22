@@ -60,5 +60,5 @@ class LocaleController extends StateNotifier<Locale> {
 
 final localeControllerProvider =
     StateNotifierProvider<LocaleController, Locale>((ref) {
-  return LocaleController(ref.watch(sharedPreferencesProvider));
-});
+      return LocaleController(ref.watch(sharedPreferencesProvider));
+    });

@@ -15,7 +15,9 @@ class ChartRegionRepository {
     String? checksum,
   }) async {
     final now = DateTime.now().millisecondsSinceEpoch;
-    await _db.into(_db.chartRegions).insertOnConflictUpdate(
+    await _db
+        .into(_db.chartRegions)
+        .insertOnConflictUpdate(
           ChartRegionsCompanion.insert(
             regionId: regionId,
             path: path,
@@ -29,7 +31,8 @@ class ChartRegionRepository {
   Future<List<ChartRegionRow>> all() => _db.select(_db.chartRegions).get();
 
   Future<void> delete(String regionId) async {
-    await (_db.delete(_db.chartRegions)..where((c) => c.regionId.equals(regionId)))
-        .go();
+    await (_db.delete(
+      _db.chartRegions,
+    )..where((c) => c.regionId.equals(regionId))).go();
   }
 }

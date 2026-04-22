@@ -26,15 +26,20 @@ class AppLogger {
     _emit('DEBUG', message, attrs);
   }
 
-  void info(String message, [Map<String, Object?>? attrs]) => _emit('INFO', message, attrs);
+  void info(String message, [Map<String, Object?>? attrs]) =>
+      _emit('INFO', message, attrs);
 
-  void warning(String message, [Map<String, Object?>? attrs]) => _emit('WARN', message, attrs);
+  void warning(String message, [Map<String, Object?>? attrs]) =>
+      _emit('WARN', message, attrs);
 
-  void error(String message, [Map<String, Object?>? attrs]) => _emit('ERROR', message, attrs);
+  void error(String message, [Map<String, Object?>? attrs]) =>
+      _emit('ERROR', message, attrs);
 
   void _emit(String level, String message, Map<String, Object?>? attrs) {
     final sanitized = _sanitize(attrs);
-    final payload = sanitized == null ? message : '$message ${jsonEncode(sanitized)}';
+    final payload = sanitized == null
+        ? message
+        : '$message ${jsonEncode(sanitized)}';
     developer.log(payload, name: '$tag|$level');
   }
 
@@ -43,7 +48,9 @@ class AppLogger {
     if (!kReleaseMode) return attrs;
     return {
       for (final e in attrs.entries)
-        e.key: _redactedKeys.contains(e.key.toLowerCase()) ? '[redacted]' : e.value,
+        e.key: _redactedKeys.contains(e.key.toLowerCase())
+            ? '[redacted]'
+            : e.value,
     };
   }
 }

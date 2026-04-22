@@ -14,7 +14,9 @@ class RouteRepository {
   Future<String> createDraftRoute({required String name}) async {
     final id = _uuid.v4();
     final now = DateTime.now().millisecondsSinceEpoch;
-    await _db.into(_db.routes).insert(
+    await _db
+        .into(_db.routes)
+        .insert(
           RoutesCompanion.insert(
             id: id,
             name: name,
@@ -32,12 +34,14 @@ class RouteRepository {
   ) async {
     final now = DateTime.now().millisecondsSinceEpoch;
     await _db.transaction(() async {
-      await (_db.delete(_db.routeWaypoints)
-            ..where((w) => w.routeId.equals(routeId)))
-          .go();
+      await (_db.delete(
+        _db.routeWaypoints,
+      )..where((w) => w.routeId.equals(routeId))).go();
       var seq = 0;
       for (final p in points) {
-        await _db.into(_db.routeWaypoints).insert(
+        await _db
+            .into(_db.routeWaypoints)
+            .insert(
               RouteWaypointsCompanion.insert(
                 id: _uuid.v4(),
                 routeId: routeId,
@@ -49,8 +53,8 @@ class RouteRepository {
             );
       }
       await (_db.update(_db.routes)..where((r) => r.id.equals(routeId))).write(
-            RoutesCompanion(updatedAt: Value(now)),
-          );
+        RoutesCompanion(updatedAt: Value(now)),
+      );
     });
   }
 
@@ -66,17 +70,14 @@ class RouteRepository {
   }
 
   Future<RouteEntity?> routeById(String routeId) {
-    return (_db.select(_db.routes)..where((r) => r.id.equals(routeId)))
-        .getSingleOrNull();
+    return (_db.select(
+      _db.routes,
+    )..where((r) => r.id.equals(routeId))).getSingleOrNull();
   }
 }
 
 class WaypointDraft {
-  const WaypointDraft({
-    required this.lat,
-    required this.lon,
-    this.name,
-  });
+  const WaypointDraft({required this.lat, required this.lon, this.name});
 
   final double lat;
   final double lon;

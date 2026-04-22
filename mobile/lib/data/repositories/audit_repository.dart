@@ -17,17 +17,19 @@ class AuditRepository {
     String? contextJson,
   }) {
     final now = DateTime.now().millisecondsSinceEpoch;
-    return _db.into(_db.userActionAudits).insert(
+    return _db
+        .into(_db.userActionAudits)
+        .insert(
           UserActionAuditsCompanion.insert(
             t: now,
             sessionId: sessionId,
             module: module,
             action: action,
             severity: Value(severity),
-            contextJson:
-                contextJson != null ? Value(contextJson) : const Value.absent(),
+            contextJson: contextJson != null
+                ? Value(contextJson)
+                : const Value.absent(),
           ),
         );
   }
-
 }

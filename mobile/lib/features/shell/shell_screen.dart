@@ -43,22 +43,10 @@ class _ShellScreenState extends ConsumerState<ShellScreen> {
         sizing: StackFit.expand,
         children: [
           const MapScreen(),
-          _PlaceholderTab(
-            icon: destinations[1].$1,
-            title: destinations[1].$2,
-          ),
-          _PlaceholderTab(
-            icon: destinations[2].$1,
-            title: destinations[2].$2,
-          ),
-          _PlaceholderTab(
-            icon: destinations[3].$1,
-            title: destinations[3].$2,
-          ),
-          _PlaceholderTab(
-            icon: destinations[4].$1,
-            title: destinations[4].$2,
-          ),
+          _PlaceholderTab(icon: destinations[1].$1, title: destinations[1].$2),
+          _PlaceholderTab(icon: destinations[2].$1, title: destinations[2].$2),
+          _PlaceholderTab(icon: destinations[3].$1, title: destinations[3].$2),
+          _PlaceholderTab(icon: destinations[4].$1, title: destinations[4].$2),
         ],
       ),
       bottomNavigationBar: NavigationBar(
@@ -92,7 +80,9 @@ class _ShellScreenState extends ConsumerState<ShellScreen> {
               ),
               ListTile(
                 title: Text(l10n.localeEnglish),
-                trailing: locale.languageCode == 'en' ? const Icon(Icons.check) : null,
+                trailing: locale.languageCode == 'en'
+                    ? const Icon(Icons.check)
+                    : null,
                 onTap: () async {
                   await ref
                       .read(localeControllerProvider.notifier)
@@ -102,7 +92,9 @@ class _ShellScreenState extends ConsumerState<ShellScreen> {
               ),
               ListTile(
                 title: Text(l10n.localeRussian),
-                trailing: locale.languageCode == 'ru' ? const Icon(Icons.check) : null,
+                trailing: locale.languageCode == 'ru'
+                    ? const Icon(Icons.check)
+                    : null,
                 onTap: () async {
                   await ref
                       .read(localeControllerProvider.notifier)
@@ -119,10 +111,7 @@ class _ShellScreenState extends ConsumerState<ShellScreen> {
 }
 
 class _PlaceholderTab extends StatelessWidget {
-  const _PlaceholderTab({
-    required this.icon,
-    required this.title,
-  });
+  const _PlaceholderTab({required this.icon, required this.title});
 
   final IconData icon;
   final String title;

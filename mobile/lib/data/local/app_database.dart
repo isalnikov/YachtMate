@@ -35,17 +35,17 @@ class AppDatabase extends _$AppDatabase {
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
-        onCreate: (Migrator m) async {
-          await m.createAll();
-        },
-        onUpgrade: (Migrator m, int from, int to) async {
-          if (from < 2) {
-            await m.createTable(routes);
-            await m.createTable(routeWaypoints);
-            await m.createTable(chartRegions);
-          }
-        },
-      );
+    onCreate: (Migrator m) async {
+      await m.createAll();
+    },
+    onUpgrade: (Migrator m, int from, int to) async {
+      if (from < 2) {
+        await m.createTable(routes);
+        await m.createTable(routeWaypoints);
+        await m.createTable(chartRegions);
+      }
+    },
+  );
 }
 
 /// Opens [AppDatabase] on a SQLite file under application documents.

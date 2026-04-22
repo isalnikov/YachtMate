@@ -21,7 +21,8 @@ class Routes extends Table {
 class RouteWaypoints extends Table {
   TextColumn get id => text()();
 
-  TextColumn get routeId => text().references(Routes, #id, onDelete: KeyAction.cascade)();
+  TextColumn get routeId =>
+      text().references(Routes, #id, onDelete: KeyAction.cascade)();
 
   IntColumn get seq => integer()();
 

@@ -175,6 +175,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Loading chart style…'**
   String get mapLoadingStyle;
+
+  /// No description provided for @disclaimerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation notice'**
+  String get disclaimerTitle;
+
+  /// No description provided for @disclaimerP1.
+  ///
+  /// In en, this message translates to:
+  /// **'Captain Wrongel is not an ECDIS, radar, or official nautical chart system. Charts and GPS may be inaccurate or outdated.'**
+  String get disclaimerP1;
+
+  /// No description provided for @disclaimerP2.
+  ///
+  /// In en, this message translates to:
+  /// **'You alone are responsible for safe navigation, collision avoidance (COLREG), and verifying all information against official publications.'**
+  String get disclaimerP2;
+
+  /// No description provided for @disclaimerAccept.
+  ///
+  /// In en, this message translates to:
+  /// **'I understand — continue'**
+  String get disclaimerAccept;
 }
 
 class _AppLocalizationsDelegate

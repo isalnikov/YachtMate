@@ -48,4 +48,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mapLoadingStyle => 'Loading chart style…';
+
+  @override
+  String get disclaimerTitle => 'Navigation notice';
+
+  @override
+  String get disclaimerP1 =>
+      'Captain Wrongel is not an ECDIS, radar, or official nautical chart system. Charts and GPS may be inaccurate or outdated.';
+
+  @override
+  String get disclaimerP2 =>
+      'You alone are responsible for safe navigation, collision avoidance (COLREG), and verifying all information against official publications.';
+
+  @override
+  String get disclaimerAccept => 'I understand — continue';
 }
