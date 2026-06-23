@@ -34,6 +34,9 @@
 
   <!-- Drift web: exposes global initSqlJs for package:drift/web.dart -->
   <script src="https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/sql-wasm.js"></script>
+  <!-- CanvasKit/WASM: if the Flutter CDN returns HTML (MIME error), run:
+       flutter run -d chrome --no-web-resources-cdn
+       or ./tool/run_web_dev.sh -->
 </head>
 <body>
   <!--

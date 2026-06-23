@@ -34,7 +34,9 @@ class _ShellScreenState extends ConsumerState<ShellScreen> {
       (Icons.more_horiz, l10n.tabMore),
     ];
 
-    final wide = MediaQuery.sizeOf(context).width >= _railBreakpointWidth;
+    final width = MediaQuery.sizeOf(context).width;
+    final wide = width >= _railBreakpointWidth;
+    final useExtendedRail = width >= 900;
 
     final body = KeyedSubtree(key: ValueKey(_index), child: _tabBody(_index));
 
@@ -47,10 +49,12 @@ class _ShellScreenState extends ConsumerState<ShellScreen> {
         body: Row(
           children: [
             NavigationRail(
-              extended: MediaQuery.sizeOf(context).width >= 900,
+              extended: useExtendedRail,
               selectedIndex: _index,
               onDestinationSelected: (i) => setState(() => _index = i),
-              labelType: NavigationRailLabelType.all,
+              labelType: useExtendedRail
+                  ? NavigationRailLabelType.none
+                  : NavigationRailLabelType.all,
               destinations: [
                 for (final d in destinations)
                   NavigationRailDestination(

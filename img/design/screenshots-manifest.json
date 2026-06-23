@@ -1,0 +1,12 @@
+[
+  {"id": "navionics", "app": "Navionics® Boating", "category": "navigation", "count": 5, "app_id": 744920098},
+  {"id": "isailor", "app": "Wärtsilä iSailor", "category": "navigation", "count": 5, "app_id": 398456162},
+  {"id": "inavx", "app": "iNavX: Marine Navigation", "category": "navigation", "count": 5, "app_id": 286616280},
+  {"id": "windy", "app": "Windy.app — Wind, Tides, Radar", "category": "weather", "count": 5, "app_id": 997079492},
+  {"id": "windfinder", "app": "Windfinder: Wind & Weather map", "category": "weather", "count": 5, "app_id": 336829635},
+  {"id": "windy_app", "app": "Windy.com", "category": "weather", "count": 5, "app_id": 1161387262},
+  {"id": "clime", "app": "Clime: NOAA Weather Radar Live", "category": "weather", "count": 5, "app_id": 749133753},
+  {"id": "navily", "app": "Navily", "category": "mooring", "count": 5, "app_id": 881103205},
+  {"id": "marine_traffic", "app": "MarineTraffic - Ship Tracking", "category": "ais", "count": 0, "app_id": 563910324, "note": "No screenshots in iTunes API"},
+  {"id": "tide_alert", "app": "USPS Mobile (tide placeholder)", "category": "tides", "count": 5, "app_id": 339597578}
+]
