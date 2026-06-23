@@ -1,5 +1,6 @@
 import 'package:captain_wrongel/core/theme/cw_theme.dart';
 import 'package:captain_wrongel/data/local/app_database.dart';
+import 'package:captain_wrongel/features/mooring/mooring_rating_aggregator.dart';
 import 'package:captain_wrongel/features/mooring/widgets/mooring_card.dart';
 import 'package:captain_wrongel/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,8 @@ void main() {
     email: null,
     websiteUrl: null,
     bookingUrl: null,
-    servicesJson: '{"depthM":3}',
+    servicesJson:
+        '{"depthM":3,"photoUrl":"https://example.com/marina.jpg","seedRating":4.0}',
     notes: null,
     sourceUpdatedAtMs: null,
   );
@@ -52,7 +54,56 @@ void main() {
     expect(find.text('Fethiye Marina'), findsOneWidget);
     expect(find.text('3 m'), findsOneWidget);
     expect(find.text('2.4 nm'), findsOneWidget);
+    expect(find.text('4.0'), findsOneWidget);
     expect(find.byIcon(Icons.star_rounded), findsWidgets);
+  });
+
+  testWidgets('MooringCard shows network image when photoUrl is set', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      wrap(
+        MooringCard(
+          place: place,
+          onTap: () {},
+        ),
+      ),
+    );
+    await tester.pump();
+
+    expect(find.byType(Image), findsOneWidget);
+    final image = tester.widget<Image>(find.byType(Image));
+    expect(image.image, isA<NetworkImage>());
+  });
+
+  testWidgets('MooringCard aggregates review drafts into rating', (
+    tester,
+  ) async {
+    final reviews = [
+      MooringReviewDraftRow(
+        id: 'r1',
+        placeId: 'demo_marina',
+        stars: 5,
+        comment: null,
+        createdAtMs: 1,
+        synced: false,
+      ),
+    ];
+    final rating = mooringAggregatedRatingStars(place: place, reviews: reviews);
+
+    await tester.pumpWidget(
+      wrap(
+        MooringCard(
+          place: place,
+          reviews: reviews,
+          onTap: () {},
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text(rating.toStringAsFixed(1)), findsOneWidget);
+    expect(rating, 4.5);
   });
 
   testWidgets('MooringCard tap invokes callback', (tester) async {

@@ -1912,6 +1912,336 @@ class WeatherCacheRowsCompanion extends UpdateCompanion<WeatherCacheRow> {
   }
 }
 
+class $TidesCacheRowsTable extends TidesCacheRows
+    with TableInfo<$TidesCacheRowsTable, TidesCacheRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TidesCacheRowsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _gridKeyMeta = const VerificationMeta(
+    'gridKey',
+  );
+  @override
+  late final GeneratedColumn<String> gridKey = GeneratedColumn<String>(
+    'grid_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tidesJsonMeta = const VerificationMeta(
+    'tidesJson',
+  );
+  @override
+  late final GeneratedColumn<String> tidesJson = GeneratedColumn<String>(
+    'tides_json',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _fetchedAtMsMeta = const VerificationMeta(
+    'fetchedAtMs',
+  );
+  @override
+  late final GeneratedColumn<int> fetchedAtMs = GeneratedColumn<int>(
+    'fetched_at_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _expiresAtMsMeta = const VerificationMeta(
+    'expiresAtMs',
+  );
+  @override
+  late final GeneratedColumn<int> expiresAtMs = GeneratedColumn<int>(
+    'expires_at_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    gridKey,
+    tidesJson,
+    fetchedAtMs,
+    expiresAtMs,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'tides_cache_rows';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TidesCacheRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('grid_key')) {
+      context.handle(
+        _gridKeyMeta,
+        gridKey.isAcceptableOrUnknown(data['grid_key']!, _gridKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_gridKeyMeta);
+    }
+    if (data.containsKey('tides_json')) {
+      context.handle(
+        _tidesJsonMeta,
+        tidesJson.isAcceptableOrUnknown(data['tides_json']!, _tidesJsonMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tidesJsonMeta);
+    }
+    if (data.containsKey('fetched_at_ms')) {
+      context.handle(
+        _fetchedAtMsMeta,
+        fetchedAtMs.isAcceptableOrUnknown(
+          data['fetched_at_ms']!,
+          _fetchedAtMsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_fetchedAtMsMeta);
+    }
+    if (data.containsKey('expires_at_ms')) {
+      context.handle(
+        _expiresAtMsMeta,
+        expiresAtMs.isAcceptableOrUnknown(
+          data['expires_at_ms']!,
+          _expiresAtMsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_expiresAtMsMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {gridKey};
+  @override
+  TidesCacheRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TidesCacheRow(
+      gridKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}grid_key'],
+      )!,
+      tidesJson: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tides_json'],
+      )!,
+      fetchedAtMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}fetched_at_ms'],
+      )!,
+      expiresAtMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}expires_at_ms'],
+      )!,
+    );
+  }
+
+  @override
+  $TidesCacheRowsTable createAlias(String alias) {
+    return $TidesCacheRowsTable(attachedDatabase, alias);
+  }
+}
+
+class TidesCacheRow extends DataClass implements Insertable<TidesCacheRow> {
+  final String gridKey;
+  final String tidesJson;
+  final int fetchedAtMs;
+  final int expiresAtMs;
+  const TidesCacheRow({
+    required this.gridKey,
+    required this.tidesJson,
+    required this.fetchedAtMs,
+    required this.expiresAtMs,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['grid_key'] = Variable<String>(gridKey);
+    map['tides_json'] = Variable<String>(tidesJson);
+    map['fetched_at_ms'] = Variable<int>(fetchedAtMs);
+    map['expires_at_ms'] = Variable<int>(expiresAtMs);
+    return map;
+  }
+
+  TidesCacheRowsCompanion toCompanion(bool nullToAbsent) {
+    return TidesCacheRowsCompanion(
+      gridKey: Value(gridKey),
+      tidesJson: Value(tidesJson),
+      fetchedAtMs: Value(fetchedAtMs),
+      expiresAtMs: Value(expiresAtMs),
+    );
+  }
+
+  factory TidesCacheRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TidesCacheRow(
+      gridKey: serializer.fromJson<String>(json['gridKey']),
+      tidesJson: serializer.fromJson<String>(json['tidesJson']),
+      fetchedAtMs: serializer.fromJson<int>(json['fetchedAtMs']),
+      expiresAtMs: serializer.fromJson<int>(json['expiresAtMs']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'gridKey': serializer.toJson<String>(gridKey),
+      'tidesJson': serializer.toJson<String>(tidesJson),
+      'fetchedAtMs': serializer.toJson<int>(fetchedAtMs),
+      'expiresAtMs': serializer.toJson<int>(expiresAtMs),
+    };
+  }
+
+  TidesCacheRow copyWith({
+    String? gridKey,
+    String? tidesJson,
+    int? fetchedAtMs,
+    int? expiresAtMs,
+  }) => TidesCacheRow(
+    gridKey: gridKey ?? this.gridKey,
+    tidesJson: tidesJson ?? this.tidesJson,
+    fetchedAtMs: fetchedAtMs ?? this.fetchedAtMs,
+    expiresAtMs: expiresAtMs ?? this.expiresAtMs,
+  );
+  TidesCacheRow copyWithCompanion(TidesCacheRowsCompanion data) {
+    return TidesCacheRow(
+      gridKey: data.gridKey.present ? data.gridKey.value : this.gridKey,
+      tidesJson: data.tidesJson.present ? data.tidesJson.value : this.tidesJson,
+      fetchedAtMs: data.fetchedAtMs.present
+          ? data.fetchedAtMs.value
+          : this.fetchedAtMs,
+      expiresAtMs: data.expiresAtMs.present
+          ? data.expiresAtMs.value
+          : this.expiresAtMs,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TidesCacheRow(')
+          ..write('gridKey: $gridKey, ')
+          ..write('tidesJson: $tidesJson, ')
+          ..write('fetchedAtMs: $fetchedAtMs, ')
+          ..write('expiresAtMs: $expiresAtMs')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(gridKey, tidesJson, fetchedAtMs, expiresAtMs);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TidesCacheRow &&
+          other.gridKey == this.gridKey &&
+          other.tidesJson == this.tidesJson &&
+          other.fetchedAtMs == this.fetchedAtMs &&
+          other.expiresAtMs == this.expiresAtMs);
+}
+
+class TidesCacheRowsCompanion extends UpdateCompanion<TidesCacheRow> {
+  final Value<String> gridKey;
+  final Value<String> tidesJson;
+  final Value<int> fetchedAtMs;
+  final Value<int> expiresAtMs;
+  final Value<int> rowid;
+  const TidesCacheRowsCompanion({
+    this.gridKey = const Value.absent(),
+    this.tidesJson = const Value.absent(),
+    this.fetchedAtMs = const Value.absent(),
+    this.expiresAtMs = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TidesCacheRowsCompanion.insert({
+    required String gridKey,
+    required String tidesJson,
+    required int fetchedAtMs,
+    required int expiresAtMs,
+    this.rowid = const Value.absent(),
+  }) : gridKey = Value(gridKey),
+       tidesJson = Value(tidesJson),
+       fetchedAtMs = Value(fetchedAtMs),
+       expiresAtMs = Value(expiresAtMs);
+  static Insertable<TidesCacheRow> custom({
+    Expression<String>? gridKey,
+    Expression<String>? tidesJson,
+    Expression<int>? fetchedAtMs,
+    Expression<int>? expiresAtMs,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (gridKey != null) 'grid_key': gridKey,
+      if (tidesJson != null) 'tides_json': tidesJson,
+      if (fetchedAtMs != null) 'fetched_at_ms': fetchedAtMs,
+      if (expiresAtMs != null) 'expires_at_ms': expiresAtMs,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TidesCacheRowsCompanion copyWith({
+    Value<String>? gridKey,
+    Value<String>? tidesJson,
+    Value<int>? fetchedAtMs,
+    Value<int>? expiresAtMs,
+    Value<int>? rowid,
+  }) {
+    return TidesCacheRowsCompanion(
+      gridKey: gridKey ?? this.gridKey,
+      tidesJson: tidesJson ?? this.tidesJson,
+      fetchedAtMs: fetchedAtMs ?? this.fetchedAtMs,
+      expiresAtMs: expiresAtMs ?? this.expiresAtMs,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (gridKey.present) {
+      map['grid_key'] = Variable<String>(gridKey.value);
+    }
+    if (tidesJson.present) {
+      map['tides_json'] = Variable<String>(tidesJson.value);
+    }
+    if (fetchedAtMs.present) {
+      map['fetched_at_ms'] = Variable<int>(fetchedAtMs.value);
+    }
+    if (expiresAtMs.present) {
+      map['expires_at_ms'] = Variable<int>(expiresAtMs.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TidesCacheRowsCompanion(')
+          ..write('gridKey: $gridKey, ')
+          ..write('tidesJson: $tidesJson, ')
+          ..write('fetchedAtMs: $fetchedAtMs, ')
+          ..write('expiresAtMs: $expiresAtMs, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $MooringPlacesTable extends MooringPlaces
     with TableInfo<$MooringPlacesTable, MooringPlaceRow> {
   @override
@@ -5640,6 +5970,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $WeatherCacheRowsTable weatherCacheRows = $WeatherCacheRowsTable(
     this,
   );
+  late final $TidesCacheRowsTable tidesCacheRows = $TidesCacheRowsTable(this);
   late final $MooringPlacesTable mooringPlaces = $MooringPlacesTable(this);
   late final $MooringReviewDraftsTable mooringReviewDrafts =
       $MooringReviewDraftsTable(this);
@@ -5661,6 +5992,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     routeWaypoints,
     chartRegions,
     weatherCacheRows,
+    tidesCacheRows,
     mooringPlaces,
     mooringReviewDrafts,
     logbookEntries,
@@ -6963,6 +7295,193 @@ typedef $$WeatherCacheRowsTableProcessedTableManager =
         BaseReferences<_$AppDatabase, $WeatherCacheRowsTable, WeatherCacheRow>,
       ),
       WeatherCacheRow,
+      PrefetchHooks Function()
+    >;
+typedef $$TidesCacheRowsTableCreateCompanionBuilder =
+    TidesCacheRowsCompanion Function({
+      required String gridKey,
+      required String tidesJson,
+      required int fetchedAtMs,
+      required int expiresAtMs,
+      Value<int> rowid,
+    });
+typedef $$TidesCacheRowsTableUpdateCompanionBuilder =
+    TidesCacheRowsCompanion Function({
+      Value<String> gridKey,
+      Value<String> tidesJson,
+      Value<int> fetchedAtMs,
+      Value<int> expiresAtMs,
+      Value<int> rowid,
+    });
+
+class $$TidesCacheRowsTableFilterComposer
+    extends Composer<_$AppDatabase, $TidesCacheRowsTable> {
+  $$TidesCacheRowsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get gridKey => $composableBuilder(
+    column: $table.gridKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get tidesJson => $composableBuilder(
+    column: $table.tidesJson,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get fetchedAtMs => $composableBuilder(
+    column: $table.fetchedAtMs,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get expiresAtMs => $composableBuilder(
+    column: $table.expiresAtMs,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$TidesCacheRowsTableOrderingComposer
+    extends Composer<_$AppDatabase, $TidesCacheRowsTable> {
+  $$TidesCacheRowsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get gridKey => $composableBuilder(
+    column: $table.gridKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get tidesJson => $composableBuilder(
+    column: $table.tidesJson,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get fetchedAtMs => $composableBuilder(
+    column: $table.fetchedAtMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get expiresAtMs => $composableBuilder(
+    column: $table.expiresAtMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TidesCacheRowsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TidesCacheRowsTable> {
+  $$TidesCacheRowsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get gridKey =>
+      $composableBuilder(column: $table.gridKey, builder: (column) => column);
+
+  GeneratedColumn<String> get tidesJson =>
+      $composableBuilder(column: $table.tidesJson, builder: (column) => column);
+
+  GeneratedColumn<int> get fetchedAtMs => $composableBuilder(
+    column: $table.fetchedAtMs,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get expiresAtMs => $composableBuilder(
+    column: $table.expiresAtMs,
+    builder: (column) => column,
+  );
+}
+
+class $$TidesCacheRowsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TidesCacheRowsTable,
+          TidesCacheRow,
+          $$TidesCacheRowsTableFilterComposer,
+          $$TidesCacheRowsTableOrderingComposer,
+          $$TidesCacheRowsTableAnnotationComposer,
+          $$TidesCacheRowsTableCreateCompanionBuilder,
+          $$TidesCacheRowsTableUpdateCompanionBuilder,
+          (
+            TidesCacheRow,
+            BaseReferences<_$AppDatabase, $TidesCacheRowsTable, TidesCacheRow>,
+          ),
+          TidesCacheRow,
+          PrefetchHooks Function()
+        > {
+  $$TidesCacheRowsTableTableManager(
+    _$AppDatabase db,
+    $TidesCacheRowsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TidesCacheRowsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TidesCacheRowsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TidesCacheRowsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> gridKey = const Value.absent(),
+                Value<String> tidesJson = const Value.absent(),
+                Value<int> fetchedAtMs = const Value.absent(),
+                Value<int> expiresAtMs = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TidesCacheRowsCompanion(
+                gridKey: gridKey,
+                tidesJson: tidesJson,
+                fetchedAtMs: fetchedAtMs,
+                expiresAtMs: expiresAtMs,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String gridKey,
+                required String tidesJson,
+                required int fetchedAtMs,
+                required int expiresAtMs,
+                Value<int> rowid = const Value.absent(),
+              }) => TidesCacheRowsCompanion.insert(
+                gridKey: gridKey,
+                tidesJson: tidesJson,
+                fetchedAtMs: fetchedAtMs,
+                expiresAtMs: expiresAtMs,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$TidesCacheRowsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TidesCacheRowsTable,
+      TidesCacheRow,
+      $$TidesCacheRowsTableFilterComposer,
+      $$TidesCacheRowsTableOrderingComposer,
+      $$TidesCacheRowsTableAnnotationComposer,
+      $$TidesCacheRowsTableCreateCompanionBuilder,
+      $$TidesCacheRowsTableUpdateCompanionBuilder,
+      (
+        TidesCacheRow,
+        BaseReferences<_$AppDatabase, $TidesCacheRowsTable, TidesCacheRow>,
+      ),
+      TidesCacheRow,
       PrefetchHooks Function()
     >;
 typedef $$MooringPlacesTableCreateCompanionBuilder =
@@ -9017,6 +9536,8 @@ class $AppDatabaseManager {
       $$ChartRegionsTableTableManager(_db, _db.chartRegions);
   $$WeatherCacheRowsTableTableManager get weatherCacheRows =>
       $$WeatherCacheRowsTableTableManager(_db, _db.weatherCacheRows);
+  $$TidesCacheRowsTableTableManager get tidesCacheRows =>
+      $$TidesCacheRowsTableTableManager(_db, _db.tidesCacheRows);
   $$MooringPlacesTableTableManager get mooringPlaces =>
       $$MooringPlacesTableTableManager(_db, _db.mooringPlaces);
   $$MooringReviewDraftsTableTableManager get mooringReviewDrafts =>

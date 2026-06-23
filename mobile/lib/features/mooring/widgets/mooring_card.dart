@@ -7,27 +7,31 @@ import '../../../data/local/app_database.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../../widgets/cw_card.dart';
 import '../mooring_list_helpers.dart';
+import '../mooring_rating_aggregator.dart';
 
-/// Navily-style mooring list card: 16:9 photo placeholder, name, stars, depth chip.
+/// Navily-style mooring list card: 16:9 photo, name, stars, depth chip.
 class MooringCard extends StatelessWidget {
   const MooringCard({
     super.key,
     required this.place,
     required this.onTap,
     this.distanceNm,
+    this.reviews = const [],
   });
 
   final MooringPlaceRow place;
   final VoidCallback onTap;
   final double? distanceNm;
+  final List<MooringReviewDraftRow> reviews;
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colors = context.cwColors;
-    final rating = mooringDemoRatingStars(place.id);
+    final rating = mooringAggregatedRatingStars(place: place, reviews: reviews);
     final depthText = mooringDepthChipText(place) ?? l10n.mooringDepthUnknown;
     final kindLabel = _kindLabel(l10n, place.kind);
+    final photoUrl = mooringPhotoUrl(place);
 
     return CwCard(
       onTap: onTap,
@@ -38,7 +42,11 @@ class MooringCard extends StatelessWidget {
         children: [
           AspectRatio(
             aspectRatio: 16 / 9,
-            child: _PhotoPlaceholder(kind: place.kind, colors: colors),
+            child: _MooringPhoto(
+              photoUrl: photoUrl,
+              kind: place.kind,
+              colors: colors,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(CwSpacing.m),
@@ -117,6 +125,38 @@ class MooringCard extends StatelessWidget {
       kMooringKindBuoy => Icons.place_outlined,
       _ => Icons.location_on_outlined,
     };
+  }
+}
+
+class _MooringPhoto extends StatelessWidget {
+  const _MooringPhoto({
+    required this.photoUrl,
+    required this.kind,
+    required this.colors,
+  });
+
+  final String? photoUrl;
+  final String kind;
+  final CwColors colors;
+
+  @override
+  Widget build(BuildContext context) {
+    final url = photoUrl;
+    if (url != null) {
+      return Image.network(
+        url,
+        fit: BoxFit.cover,
+        width: double.infinity,
+        height: double.infinity,
+        errorBuilder: (_, __, ___) =>
+            _PhotoPlaceholder(kind: kind, colors: colors),
+        loadingBuilder: (_, child, progress) {
+          if (progress == null) return child;
+          return _PhotoPlaceholder(kind: kind, colors: colors);
+        },
+      );
+    }
+    return _PhotoPlaceholder(kind: kind, colors: colors);
   }
 }
 

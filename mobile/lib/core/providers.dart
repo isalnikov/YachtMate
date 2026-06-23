@@ -57,9 +57,11 @@ final weatherRepositoryProvider = Provider<WeatherRepository>((ref) {
   return r;
 });
 
-final tidesRepositoryProvider = Provider<TidesRepository>(
-  (ref) => TidesRepository(),
-);
+final tidesRepositoryProvider = Provider<TidesRepository>((ref) {
+  final r = TidesRepository(ref.watch(databaseProvider));
+  ref.onDispose(r.dispose);
+  return r;
+});
 
 final logbookRepositoryProvider = Provider<LogbookRepository>(
   (ref) => LogbookRepository(ref.watch(databaseProvider)),

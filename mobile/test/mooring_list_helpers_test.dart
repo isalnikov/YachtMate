@@ -1,5 +1,6 @@
 import 'package:captain_wrongel/data/local/app_database.dart';
 import 'package:captain_wrongel/features/mooring/mooring_list_helpers.dart';
+import 'package:captain_wrongel/features/mooring/mooring_rating_aggregator.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 MooringPlaceRow _place({
@@ -78,17 +79,32 @@ void main() {
     expect(sorted.first.id, 'm1');
   });
 
-  test('sortMooringPlaces orders by demo rating descending', () {
+  test('sortMooringPlaces orders by aggregated rating descending', () {
+    final ratedPlaces = [
+      _place(
+        id: 'low',
+        kind: kMooringKindMarina,
+        name: 'Low',
+        servicesJson: '{"seedRating":3.0}',
+      ),
+      _place(
+        id: 'high',
+        kind: kMooringKindMarina,
+        name: 'High',
+        servicesJson: '{"seedRating":4.8}',
+      ),
+    ];
     final sorted = sortMooringPlaces(
-      places: places,
+      places: ratedPlaces,
       mode: MooringSortMode.rating,
     );
     final ratings = sorted
-        .map((p) => mooringDemoRatingStars(p.id))
+        .map((p) => mooringAggregatedRatingStars(place: p))
         .toList(growable: false);
     for (var i = 0; i < ratings.length - 1; i++) {
       expect(ratings[i], greaterThanOrEqualTo(ratings[i + 1]));
     }
+    expect(sorted.first.id, 'high');
   });
 
   test('mooringDepthChipText reads depthM and holding', () {

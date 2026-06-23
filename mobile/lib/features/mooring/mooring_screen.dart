@@ -47,13 +47,20 @@ class _MooringScreenState extends ConsumerState<MooringScreen> {
     });
   }
 
-  List<MooringPlaceRow> _visiblePlaces(List<MooringPlaceRow> places) {
+  List<MooringPlaceRow> _visiblePlaces(
+    List<MooringPlaceRow> places,
+    List<MooringReviewDraftRow> reviews,
+  ) {
     final filtered = filterMooringPlaces(
       places: places,
       query: _search.text,
       kindFilters: _kindFilters,
     );
-    return sortMooringPlaces(places: filtered, mode: _sortMode);
+    return sortMooringPlaces(
+      places: filtered,
+      mode: _sortMode,
+      reviews: reviews,
+    );
   }
 
   Future<void> _syncReviews(AppLocalizations l10n) async {
@@ -74,6 +81,7 @@ class _MooringScreenState extends ConsumerState<MooringScreen> {
                 '{"submitted":${stats.submitted},"failed":${stats.failed}}',
           );
       ref.invalidate(mooringPendingReviewsProvider);
+      ref.invalidate(mooringReviewDraftsProvider);
       if (!mounted) return;
       if (stats.failed == 0) {
         messenger?.showSnackBar(
@@ -99,13 +107,15 @@ class _MooringScreenState extends ConsumerState<MooringScreen> {
     final theme = Theme.of(context);
     final placesAsync = ref.watch(mooringPlacesProvider);
     final pendingAsync = ref.watch(mooringPendingReviewsProvider);
+    final reviewsAsync = ref.watch(mooringReviewDraftsProvider);
 
     return placesAsync.when(
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, _) => Center(child: Text('$e')),
       data: (places) {
         final pending = pendingAsync.valueOrNull ?? [];
-        final visible = _visiblePlaces(places);
+        final reviews = reviewsAsync.valueOrNull ?? [];
+        final visible = _visiblePlaces(places, reviews);
         final emptyCatalog =
             places.isEmpty && pending.isEmpty && _search.text.trim().isEmpty;
 
@@ -127,6 +137,7 @@ class _MooringScreenState extends ConsumerState<MooringScreen> {
                 theme: theme,
                 places: places,
                 pending: pending,
+                reviews: reviews,
                 visible: visible,
               );
             }
@@ -135,6 +146,7 @@ class _MooringScreenState extends ConsumerState<MooringScreen> {
               theme: theme,
               places: places,
               pending: pending,
+              reviews: reviews,
               visible: visible,
             );
           },
@@ -148,6 +160,7 @@ class _MooringScreenState extends ConsumerState<MooringScreen> {
     required ThemeData theme,
     required List<MooringPlaceRow> places,
     required List<MooringReviewDraftRow> pending,
+    required List<MooringReviewDraftRow> reviews,
     required List<MooringPlaceRow> visible,
   }) {
     final showDistance = _sortMode == MooringSortMode.distance;
@@ -176,6 +189,7 @@ class _MooringScreenState extends ConsumerState<MooringScreen> {
               theme: theme,
               places: places,
               pending: pending,
+              reviews: reviews,
               visible: visible,
               showDistance: showDistance,
               showMapToggle: false,
@@ -191,6 +205,7 @@ class _MooringScreenState extends ConsumerState<MooringScreen> {
     required ThemeData theme,
     required List<MooringPlaceRow> places,
     required List<MooringReviewDraftRow> pending,
+    required List<MooringReviewDraftRow> reviews,
     required List<MooringPlaceRow> visible,
   }) {
     final showDistance = _sortMode == MooringSortMode.distance;
@@ -238,6 +253,7 @@ class _MooringScreenState extends ConsumerState<MooringScreen> {
               theme: theme,
               places: places,
               pending: pending,
+              reviews: reviews,
               visible: visible,
               showDistance: showDistance,
               showMapToggle: true,
@@ -253,6 +269,7 @@ class _MooringScreenState extends ConsumerState<MooringScreen> {
     required ThemeData theme,
     required List<MooringPlaceRow> places,
     required List<MooringReviewDraftRow> pending,
+    required List<MooringReviewDraftRow> reviews,
     required List<MooringPlaceRow> visible,
     required bool showDistance,
     required bool showMapToggle,
@@ -369,6 +386,7 @@ class _MooringScreenState extends ConsumerState<MooringScreen> {
               child: MooringCard(
                 place: p,
                 distanceNm: distance,
+                reviews: reviews,
                 onTap: () => _openPlace(p),
               ),
             );

@@ -13,7 +13,14 @@
         "websiteUrl": "https://www.openstreetmap.org",
         "bookingUrl": "https://www.openstreetmap.org",
         "sourceUpdatedAtMs": 1730000000000,
-        "services": {"electricity": true, "water": true, "wifi": true, "fuel": true},
+        "services": {
+          "electricity": true,
+          "water": true,
+          "wifi": true,
+          "fuel": true,
+          "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Fethiye_Marina.jpg/640px-Fethiye_Marina.jpg",
+          "seedRating": 4.2
+        },
         "notes": "Demo POI near Fethiye town — verify against official publications."
       },
       "geometry": {"type": "Point", "coordinates": [29.1045, 36.755]}

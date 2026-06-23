@@ -8,6 +8,7 @@ import 'route_tables.dart';
 import 'track_tables.dart';
 import 'vault_tables.dart';
 import 'vhf_tables.dart';
+import 'tides_tables.dart';
 import 'weather_tables.dart';
 
 part 'app_database.g.dart';
@@ -36,6 +37,7 @@ class UserActionAudits extends Table {
     RouteWaypoints,
     ChartRegions,
     WeatherCacheRows,
+    TidesCacheRows,
     MooringPlaces,
     MooringReviewDrafts,
     LogbookEntries,
@@ -51,7 +53,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase(super.executor);
 
   @override
-  int get schemaVersion => 8;
+  int get schemaVersion => 9;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -89,6 +91,9 @@ class AppDatabase extends _$AppDatabase {
       if (from < 8) {
         await m.createTable(expenseEntries);
         await m.createTable(vhfRecordings);
+      }
+      if (from < 9) {
+        await m.createTable(tidesCacheRows);
       }
     },
   );

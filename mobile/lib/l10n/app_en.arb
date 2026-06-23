@@ -204,6 +204,8 @@
   "tidesHighShort": "HW",
   "tidesLowShort": "LW",
   "tidesEmpty": "No tide data available.",
+  "tidesStaleBanner": "Showing cached tides — network or API unavailable.",
+  "tidesDemoBanner": "Illustrative demo data — no live station for this location.",
   "tidesHeightM": "{height} m",
   "@tidesHeightM": {
     "placeholders": {

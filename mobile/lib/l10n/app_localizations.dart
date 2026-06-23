@@ -821,6 +821,18 @@ abstract class AppLocalizations {
   /// **'No tide data available.'**
   String get tidesEmpty;
 
+  /// No description provided for @tidesStaleBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing cached tides — network or API unavailable.'**
+  String get tidesStaleBanner;
+
+  /// No description provided for @tidesDemoBanner.
+  ///
+  /// In en, this message translates to:
+  /// **'Illustrative demo data — no live station for this location.'**
+  String get tidesDemoBanner;
+
   /// No description provided for @tidesHeightM.
   ///
   /// In en, this message translates to:

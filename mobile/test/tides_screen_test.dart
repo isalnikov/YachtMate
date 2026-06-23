@@ -1,7 +1,9 @@
 import 'package:captain_wrongel/domain/tides/tide_demo_models.dart';
+import 'package:captain_wrongel/domain/tides/tide_station_bundle.dart';
 import 'package:captain_wrongel/domain/tides/tide_week_schedule.dart';
 import 'package:captain_wrongel/features/tides/tides_screen.dart';
 import 'package:captain_wrongel/features/tides/widgets/tide_curve_chart.dart';
+import 'package:captain_wrongel/features/weather/weather_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -54,8 +56,24 @@ void main() {
   });
 
   testWidgets('TidesScreen renders demo station and sections', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(800, 1600));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    final demoBundle = TideStationBundle(
+      station: TideDemoStation(
+        stationName: 'Demo tide curve (illustrative)',
+        note: 'Synthetic heights for UI testing — not for navigation.',
+        events: anchorEvents,
+      ),
+      fetchedAtUtc: DateTime.utc(2026, 4, 22),
+      isDemo: true,
+    );
+
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          tidesProvider.overrideWith((ref) async => demoBundle),
+        ],
         child: MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
@@ -68,10 +86,16 @@ void main() {
     expect(find.text('Tides'), findsOneWidget);
     expect(find.text('Demo tide curve (illustrative)'), findsOneWidget);
     expect(find.text("Today's curve (demo)"), findsOneWidget);
-    expect(find.text('7-day schedule (demo)'), findsOneWidget);
     expect(find.text('Moon phase'), findsOneWidget);
     expect(find.textContaining('Sunrise'), findsOneWidget);
     expect(find.byType(CustomPaint), findsWidgets);
+
+    await tester.scrollUntilVisible(
+      find.text('7-day schedule (demo)'),
+      48,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(find.text('7-day schedule (demo)'), findsOneWidget);
 
     await tester.scrollUntilVisible(
       find.text('Day'),

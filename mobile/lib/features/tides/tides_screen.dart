@@ -6,6 +6,7 @@ import '../../core/theme/cw_tokens.dart';
 import '../../domain/astro/moon_phase.dart';
 import '../../domain/astro/suncalc_port.dart';
 import '../../domain/tides/tide_demo_models.dart';
+import '../../domain/tides/tide_station_bundle.dart';
 import '../../domain/tides/tide_week_schedule.dart';
 import '../../l10n/app_localizations.dart';
 import '../weather/weather_providers.dart';
@@ -20,14 +21,14 @@ class TidesScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final locale = Localizations.localeOf(context).toLanguageTag();
-    final tideAsync = ref.watch(tideDemoProvider);
+    final tideAsync = ref.watch(tidesProvider);
     final pin = ref.watch(weatherPinProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.tidesScreenTitle)),
       body: tideAsync.when(
-        data: (station) => _TidesBody(
-          station: station,
+        data: (bundle) => _TidesBody(
+          bundle: bundle,
           locale: locale,
           l10n: l10n,
           lat: pin.lat,
@@ -42,18 +43,20 @@ class TidesScreen extends ConsumerWidget {
 
 class _TidesBody extends StatelessWidget {
   const _TidesBody({
-    required this.station,
+    required this.bundle,
     required this.locale,
     required this.l10n,
     required this.lat,
     required this.lon,
   });
 
-  final TideDemoStation station;
+  final TideStationBundle bundle;
   final String locale;
   final AppLocalizations l10n;
   final double lat;
   final double lon;
+
+  TideDemoStation get station => bundle.station;
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +89,24 @@ class _TidesBody extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(CwSpacing.m),
       children: [
+        if (bundle.isStale)
+          Card(
+            color: theme.colorScheme.errorContainer,
+            margin: const EdgeInsets.only(bottom: CwSpacing.m),
+            child: ListTile(
+              leading: const Icon(Icons.cloud_off_outlined),
+              title: Text(l10n.tidesStaleBanner),
+            ),
+          ),
+        if (bundle.isDemo)
+          Card(
+            color: theme.colorScheme.surfaceContainerHighest,
+            margin: const EdgeInsets.only(bottom: CwSpacing.m),
+            child: ListTile(
+              leading: const Icon(Icons.info_outline),
+              title: Text(l10n.tidesDemoBanner),
+            ),
+          ),
         Text(station.stationName, style: theme.textTheme.titleLarge),
         const SizedBox(height: CwSpacing.xs),
         Text(station.note, style: theme.textTheme.bodySmall),

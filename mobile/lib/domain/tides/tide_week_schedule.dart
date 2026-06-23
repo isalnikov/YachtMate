@@ -13,11 +13,18 @@ class TideDaySchedule {
   final List<TideEvent> lows;
 }
 
-/// Shifts bundled demo events into a 7-day illustrative schedule.
+/// Shifts bundled demo events into a 7-day illustrative schedule, or groups
+/// live multi-day API extremes by local calendar day.
 List<TideDaySchedule> buildTideWeekSchedule(List<TideEvent> anchorEvents) {
   if (anchorEvents.isEmpty) return const [];
 
-  final sorted = [...anchorEvents]..sort((a, b) => a.timeUtc.compareTo(b.timeUtc));
+  final sorted = [...anchorEvents]
+    ..sort((a, b) => a.timeUtc.compareTo(b.timeUtc));
+
+  if (_spansMultipleLocalDays(sorted)) {
+    return _weekFromActualEvents(sorted);
+  }
+
   final firstLocal = sorted.first.timeUtc.toLocal();
   final anchorDay = DateTime(firstLocal.year, firstLocal.month, firstLocal.day);
 
@@ -60,9 +67,70 @@ List<TideDaySchedule> buildTideWeekSchedule(List<TideEvent> anchorEvents) {
   return rows;
 }
 
+bool _spansMultipleLocalDays(List<TideEvent> sorted) {
+  if (sorted.length < 5) return false;
+  final span = sorted.last.timeUtc.difference(sorted.first.timeUtc);
+  if (span < const Duration(hours: 25)) return false;
+
+  final days = <String>{};
+  for (final e in sorted) {
+    final l = e.timeUtc.toLocal();
+    days.add('${l.year}-${l.month}-${l.day}');
+    if (days.length > 1) return true;
+  }
+  return false;
+}
+
+List<TideDaySchedule> _weekFromActualEvents(List<TideEvent> sorted) {
+  final firstLocal = sorted.first.timeUtc.toLocal();
+  final anchorDay = DateTime(firstLocal.year, firstLocal.month, firstLocal.day);
+  const days = 7;
+
+  final rows = <TideDaySchedule>[];
+  for (var d = 0; d < days; d++) {
+    final dayStart = anchorDay.add(Duration(days: d));
+    final dayEnd = dayStart.add(const Duration(days: 1));
+    final highs = <TideEvent>[];
+    final lows = <TideEvent>[];
+
+    for (final e in sorted) {
+      final local = e.timeUtc.toLocal();
+      if (local.isBefore(dayStart) || !local.isBefore(dayEnd)) continue;
+      if (e.isHigh) {
+        highs.add(e);
+      } else {
+        lows.add(e);
+      }
+    }
+
+    highs.sort((a, b) => a.timeUtc.compareTo(b.timeUtc));
+    lows.sort((a, b) => a.timeUtc.compareTo(b.timeUtc));
+    rows.add(TideDaySchedule(dateLocal: dayStart, highs: highs, lows: lows));
+  }
+  return rows;
+}
+
 /// Events for the first chart day, extended one cycle for smooth ends.
 List<TideEvent> chartEventsForDay(List<TideEvent> anchorEvents, DateTime dayLocal) {
   if (anchorEvents.isEmpty) return const [];
+
+  final sorted = [...anchorEvents]
+    ..sort((a, b) => a.timeUtc.compareTo(b.timeUtc));
+
+  if (_spansMultipleLocalDays(sorted)) {
+    final dayStart = DateTime(dayLocal.year, dayLocal.month, dayLocal.day);
+    final dayEnd = dayStart.add(const Duration(days: 1));
+    final onDay = sorted
+        .where((e) {
+          final local = e.timeUtc.toLocal();
+          return !local.isBefore(dayStart) && local.isBefore(dayEnd);
+        })
+        .toList();
+    if (onDay.length >= 2) {
+      return _extendCycle(onDay);
+    }
+    if (onDay.isNotEmpty) return onDay;
+  }
 
   final week = buildTideWeekSchedule(anchorEvents);
   if (week.isEmpty) return const [];
@@ -78,6 +146,11 @@ List<TideEvent> chartEventsForDay(List<TideEvent> anchorEvents, DateTime dayLoca
   final events = [...day.highs, ...day.lows]
     ..sort((a, b) => a.timeUtc.compareTo(b.timeUtc));
 
+  if (events.length < 2) return events;
+  return _extendCycle(events);
+}
+
+List<TideEvent> _extendCycle(List<TideEvent> events) {
   if (events.length < 2) return events;
 
   final first = events.first;

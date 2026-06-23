@@ -409,6 +409,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get tidesEmpty => 'No tide data available.';
 
   @override
+  String get tidesStaleBanner =>
+      'Showing cached tides — network or API unavailable.';
+
+  @override
+  String get tidesDemoBanner =>
+      'Illustrative demo data — no live station for this location.';
+
+  @override
   String tidesHeightM(String height) {
     return '$height m';
   }

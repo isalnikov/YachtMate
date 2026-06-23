@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/providers.dart';
 import '../../domain/tides/tide_demo_models.dart';
+import '../../domain/tides/tide_station_bundle.dart';
 import '../../domain/weather/weather_forecast_view.dart';
 
 class WeatherPin {
@@ -29,9 +30,14 @@ final weatherForecastProvider =
       return repo.loadForecast(pin.lat, pin.lon);
     });
 
-final tideDemoProvider = FutureProvider<TideDemoStation>((ref) async {
-  return ref.read(tidesRepositoryProvider).loadDemoBundled();
+final tidesProvider = FutureProvider.autoDispose<TideStationBundle>((ref) async {
+  final pin = ref.watch(weatherPinProvider);
+  final repo = ref.watch(tidesRepositoryProvider);
+  return repo.loadTides(pin.lat, pin.lon);
 });
+
+/// Back-compat alias for tests and weather screen tide section.
+final tideDemoProvider = tidesProvider;
 
 /// Index into the 48-hour forecast slice shown on [WeatherScreen].
 final selectedHourIndexProvider = StateProvider<int>((ref) => 0);

@@ -42,6 +42,28 @@ DepthGrid buildNavigationLayersDepthGrid(
   );
 }
 
+/// True when [depthM] is missing or shallower than [needDepthM] (draft + clearance).
+bool isShallowDepth(double? depthM, double needDepthM) {
+  if (needDepthM <= 0) return false;
+  if (depthM == null || depthM.isNaN) return true;
+  return depthM < needDepthM;
+}
+
+/// Cell indices on [grid] that are shallower than [needDepthM].
+List<(int row, int col)> collectShallowCells(DepthGrid grid, double needDepthM) {
+  if (needDepthM <= 0) return const [];
+
+  final out = <(int, int)>[];
+  for (var i = 0; i < grid.rows; i++) {
+    for (var j = 0; j < grid.cols; j++) {
+      if (isShallowDepth(grid.depthAtCell(i, j), needDepthM)) {
+        out.add((i, j));
+      }
+    }
+  }
+  return out;
+}
+
 /// Сценарий advisory с сеткой из контуров карты (без синтетических запретных полигонов).
 class NavigationLayersRoutingScenario {
   NavigationLayersRoutingScenario._(this.grid, this.forbidden);

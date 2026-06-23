@@ -172,6 +172,12 @@ class MooringRepository {
         .get();
   }
 
+  Future<List<MooringReviewDraftRow>> allReviewDrafts() {
+    return (_db.select(_db.mooringReviewDrafts)
+          ..orderBy([(t) => OrderingTerm.desc(t.createdAtMs)]))
+        .get();
+  }
+
   Future<void> markReviewDraftSynced(String draftId) async {
     await (_db.update(_db.mooringReviewDrafts)
           ..where((t) => t.id.equals(draftId)))

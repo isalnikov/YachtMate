@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import '../../data/local/app_database.dart';
 import '../../domain/anchor/geo.dart';
+import 'mooring_rating_aggregator.dart';
 
 /// Catalog kind values used by filter chips.
 const kMooringKindMarina = 'marina';
@@ -78,6 +79,7 @@ List<MooringPlaceRow> sortMooringPlaces({
   required MooringSortMode mode,
   double refLat = kMooringDemoRefLat,
   double refLon = kMooringDemoRefLon,
+  Iterable<MooringReviewDraftRow> reviews = const [],
 }) {
   final sorted = List<MooringPlaceRow>.from(places);
   switch (mode) {
@@ -91,8 +93,8 @@ List<MooringPlaceRow> sortMooringPlaces({
       });
     case MooringSortMode.rating:
       sorted.sort((a, b) {
-        final ra = mooringDemoRatingStars(a.id);
-        final rb = mooringDemoRatingStars(b.id);
+        final ra = mooringAggregatedRatingStars(place: a, reviews: reviews);
+        final rb = mooringAggregatedRatingStars(place: b, reviews: reviews);
         final cmp = rb.compareTo(ra);
         if (cmp != 0) return cmp;
         return a.name.compareTo(b.name);

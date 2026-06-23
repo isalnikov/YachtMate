@@ -412,6 +412,14 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tidesEmpty => 'Нет данных о приливах.';
 
   @override
+  String get tidesStaleBanner =>
+      'Показан кэш приливов — нет сети или ошибка API.';
+
+  @override
+  String get tidesDemoBanner =>
+      'Демо-данные — для этой точки нет живой станции.';
+
+  @override
   String tidesHeightM(String height) {
     return '$height м';
   }

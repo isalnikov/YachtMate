@@ -196,6 +196,8 @@
   "tidesHighShort": "ПМ",
   "tidesLowShort": "ММ",
   "tidesEmpty": "Нет данных о приливах.",
+  "tidesStaleBanner": "Показан кэш приливов — нет сети или ошибка API.",
+  "tidesDemoBanner": "Демо-данные — для этой точки нет живой станции.",
   "tidesHeightM": "{height} м",
   "@tidesHeightM": {
     "placeholders": {

@@ -8,14 +8,19 @@ import 'package:geolocator/geolocator.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 
 import '../../core/active_route_id.dart';
+import '../../core/accessibility_preferences_controller.dart';
 import '../../core/energy_profile_controller.dart';
 import '../../core/logging/app_logger.dart';
 import '../../core/map_layer_preferences_controller.dart';
 import '../../core/providers.dart';
+import '../../core/theme/cw_theme_mode.dart';
+import '../../core/ship_routing_preferences.dart';
+import '../../core/vessel_prefs.dart';
 import '../../data/local/app_database.dart';
 import '../../data/repositories/route_repository.dart';
 import '../../domain/ais/ais_target.dart';
 import '../../domain/map/demo_navigation_layers_index.dart';
+import '../../domain/routing/navigation_layers_depth_grid.dart';
 import '../../features/ais/ais_demo_provider.dart';
 import '../../features/ais/ais_targets_provider.dart';
 import '../../l10n/app_localizations.dart';
@@ -27,10 +32,14 @@ import '../route/route_corridor_preferences.dart';
 import '../track/track_recording_controller.dart';
 import 'ais_target_layer.dart';
 import 'chart_engine_platform.dart';
+import 'chart_style_resolver.dart';
 import 'demo_map_layers.dart';
+import 'map_layer_kinds.dart';
 import 'map_layer_sheet.dart';
+import 'map_tile_overlay_controller.dart';
 import 'map_long_press_sheet.dart';
 import 'mooring_layer.dart';
+import 'shallow_highlight_layer.dart';
 import 'widgets/map_controls_overlay.dart';
 import 'widgets/map_peek_sheet.dart';
 import 'widgets/map_status_pill.dart';
@@ -55,6 +64,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
   Line? _advisoryLine;
   Line? _trackLine;
   bool _styleLoaded = false;
+  String? _appliedStyleUrl;
   bool _locResolved = false;
   bool _locOk = false;
 
@@ -63,6 +73,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
 
   DemoNavigationLayersIndex? _layersIndex;
   bool _demoLayersInstalled = false;
+  bool _shallowHighlightInstalled = false;
   bool _aisLayerInstalled = false;
   bool _mooringLayerInstalled = false;
 
@@ -101,6 +112,57 @@ class _MapScreenState extends ConsumerState<MapScreen>
     if (c == null || !_demoLayersInstalled) return;
     final prefs = ref.read(mapLayerPreferencesProvider);
     unawaited(applyCwDemoLayerVisibility(c, _effectiveDemoLayers(prefs)));
+  }
+
+  CwThemeMode _cwThemeMode() {
+    return CwThemeMode.resolve(
+      nightRedEnabled: ref.read(themeModeProvider),
+      highContrastEnabled: ref.read(accessibilityPreferencesProvider).highContrast,
+    );
+  }
+
+  String _chartStyleUrl([MapLayerVisibility? overridePrefs]) {
+    final chartStyle = overridePrefs?.chartStyle ??
+        ref.read(mapLayerPreferencesProvider).chartStyle;
+    return chartStyleUrlFor(
+      chartStyle: chartStyle,
+      themeMode: _cwThemeMode(),
+    );
+  }
+
+  void _resetStyleDependentLayers() {
+    _styleLoaded = false;
+    _demoLayersInstalled = false;
+    _shallowHighlightInstalled = false;
+    _aisLayerInstalled = false;
+    _mooringLayerInstalled = false;
+    _advisoryLine = null;
+    _trackLine = null;
+  }
+
+  Future<void> _swapChartStyleIfNeeded(
+    String url, {
+    bool audit = true,
+  }) async {
+    final c = _controller;
+    if (c == null || _appliedStyleUrl == url) return;
+
+    final firstLoad = _appliedStyleUrl == null;
+    _appliedStyleUrl = url;
+
+    if (firstLoad) return;
+
+    if (mounted) setState(_resetStyleDependentLayers);
+
+    await c.setStyle(url);
+
+    if (!audit) return;
+    await ref.read(auditRepositoryProvider).record(
+          sessionId: ref.read(sessionIdProvider),
+          module: 'M1',
+          action: 'layer_select',
+          contextJson: '{"layerId":"chart_style_url","value":"$url"}',
+        );
   }
 
   MapLayerVisibility _effectiveDemoLayers(MapLayerVisibility prefs) {
@@ -201,18 +263,64 @@ class _MapScreenState extends ConsumerState<MapScreen>
     if (mounted) setState(() {});
   }
 
+  String? _overlayBelowLayerId() {
+    if (_demoLayersInstalled) return cwDemoDepthLayerId;
+    if (_aisLayerInstalled) return cwAisLayerId;
+    if (_mooringLayerInstalled) return cwMooringCircleLayerId;
+    return null;
+  }
+
+  Future<void> _applyMapTileOverlay(MapOverlayKind kind) async {
+    final c = _controller;
+    if (c == null || !_styleLoaded) return;
+    await applyMapTileOverlay(
+      c,
+      kind,
+      belowLayerId: _overlayBelowLayerId(),
+    );
+  }
+
+  Future<void> _syncShallowHighlightLayer() async {
+    final c = _controller;
+    final idx = _layersIndex;
+    if (c == null || !_shallowHighlightInstalled || idx == null) return;
+
+    final vis = ref.read(mapLayerPreferencesProvider);
+    final draftM = ref.read(vesselPrefsProvider).draftM;
+    final clearanceM = ref.read(shipRoutingPreferencesProvider).clearanceM;
+    final grid = buildNavigationLayersDepthGrid(idx);
+
+    await updateShallowHighlightLayer(
+      c,
+      grid: grid,
+      needDepthM: draftM + clearanceM,
+    );
+    await applyShallowHighlightVisibility(c, vis.shallowHighlight);
+  }
+
   Future<void> _afterStyleLoaded() async {
+    _appliedStyleUrl = _chartStyleUrl();
     setState(() => _styleLoaded = true);
     await _syncRouteDraftFromRepo();
     await _redrawAdvisoryLine();
 
-    final full = await loadDemoLayersGeoJson();
     final c = _controller;
+    if (c != null) {
+      final overlay = ref.read(mapLayerPreferencesProvider).overlay;
+      await applyMapTileOverlay(c, overlay);
+    }
+
+    final full = await loadDemoLayersGeoJson();
     if (full != null) {
       _layersIndex = DemoNavigationLayersIndex.fromGeoJson(full);
       if (c != null) {
         final vis = ref.read(mapLayerPreferencesProvider);
         _demoLayersInstalled = await installCwDemoLayers(c, full, vis);
+        if (_demoLayersInstalled) {
+          await installShallowHighlightLayer(c);
+          _shallowHighlightInstalled = true;
+          await _syncShallowHighlightLayer();
+        }
       }
     }
     if (c != null) {
@@ -433,16 +541,54 @@ class _MapScreenState extends ConsumerState<MapScreen>
       if (c != null && _demoLayersInstalled) {
         unawaited(applyCwDemoLayerVisibility(c, _effectiveDemoLayers(next)));
       }
+      if (c != null && _shallowHighlightInstalled) {
+        if (prev?.shallowHighlight != next.shallowHighlight) {
+          unawaited(applyShallowHighlightVisibility(c, next.shallowHighlight));
+        }
+      }
       if (c != null && _mooringLayerInstalled) {
         unawaited(applyMooringPlacesVisibility(c, next.mooringPois));
       }
+      if (c != null &&
+          _styleLoaded &&
+          prev?.overlay != next.overlay) {
+        unawaited(_applyMapTileOverlay(next.overlay));
+      }
+      if (prev?.chartStyle != next.chartStyle) {
+        unawaited(_swapChartStyleIfNeeded(_chartStyleUrl(next), audit: false));
+      }
     });
+
+    ref.listen<bool>(themeModeProvider, (prev, next) {
+      if (prev == next) return;
+      unawaited(_swapChartStyleIfNeeded(_chartStyleUrl()));
+    });
+
+    ref.listen<AccessibilityPreferences>(
+      accessibilityPreferencesProvider,
+      (prev, next) {
+        if (prev?.highContrast == next.highContrast) return;
+        unawaited(_swapChartStyleIfNeeded(_chartStyleUrl()));
+      },
+    );
 
     ref.listen<EnergyProfile>(energyProfileProvider, (prev, next) {
       final c = _controller;
       if (c != null && _demoLayersInstalled) {
         final prefs = ref.read(mapLayerPreferencesProvider);
         unawaited(applyCwDemoLayerVisibility(c, _effectiveDemoLayers(prefs)));
+      }
+    });
+
+    ref.listen<VesselProfile>(vesselPrefsProvider, (prev, next) {
+      if (prev?.draftM != next.draftM) {
+        unawaited(_syncShallowHighlightLayer());
+      }
+    });
+
+    ref.listen<ShipRoutingParams>(shipRoutingPreferencesProvider, (prev, next) {
+      if (prev?.clearanceM != next.clearanceM) {
+        unawaited(_syncShallowHighlightLayer());
       }
     });
 
@@ -493,6 +639,14 @@ class _MapScreenState extends ConsumerState<MapScreen>
     }
 
     final showLoc = _locResolved && _locOk;
+    final chartStyleUrl = chartStyleUrlFor(
+      chartStyle: ref.watch(mapLayerPreferencesProvider).chartStyle,
+      themeMode: CwThemeMode.resolve(
+        nightRedEnabled: ref.watch(themeModeProvider),
+        highContrastEnabled:
+            ref.watch(accessibilityPreferencesProvider).highContrast,
+      ),
+    );
     final centerMeta = _mapPointMeta(_mapCenter);
     final showCorridor = ref.watch(routeCorridorVisibleProvider);
     final routePoints = _wps
@@ -502,6 +656,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
     return Stack(
       children: [
         MapLibreMap(
+          styleString: chartStyleUrl,
           initialCameraPosition: _initial,
           trackCameraPosition: true,
           compassEnabled: false,
@@ -607,7 +762,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
       final pack = await downloadOfflineRegion(
         OfflineRegionDefinition(
           bounds: bounds,
-          mapStyleUrl: MapLibreStyles.demo,
+          mapStyleUrl: _chartStyleUrl(),
           minZoom: 0,
           maxZoom: 12,
         ),

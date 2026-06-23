@@ -33,3 +33,10 @@ final mooringPendingReviewsProvider =
       await ref.watch(mooringSeedFutureProvider.future);
       return ref.read(mooringRepositoryProvider).pendingReviews();
     });
+
+/// Все локальные черновики отзывов (для агрегации рейтинга на карточках).
+final mooringReviewDraftsProvider =
+    FutureProvider.autoDispose<List<MooringReviewDraftRow>>((ref) async {
+      await ref.watch(mooringSeedFutureProvider.future);
+      return ref.read(mooringRepositoryProvider).allReviewDrafts();
+    });

@@ -62,6 +62,7 @@ class _MooringReviewSectionState extends ConsumerState<MooringReviewSection> {
           );
 
       ref.invalidate(mooringPendingReviewsProvider);
+      ref.invalidate(mooringReviewDraftsProvider);
 
       if (!mounted) return;
       widget.onQueued?.call();

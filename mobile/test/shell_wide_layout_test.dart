@@ -4,6 +4,7 @@ import 'package:captain_wrongel/core/onboarding_prefs.dart';
 import 'package:captain_wrongel/core/providers.dart';
 import 'package:captain_wrongel/data/local/app_database.dart';
 import 'package:captain_wrongel/domain/tides/tide_demo_models.dart';
+import 'package:captain_wrongel/domain/tides/tide_station_bundle.dart';
 import 'package:captain_wrongel/domain/weather/weather_forecast_view.dart';
 import 'package:captain_wrongel/core/locale_controller.dart';
 import 'package:captain_wrongel/features/mooring/mooring_providers.dart';
@@ -56,10 +57,14 @@ final _testForecast = WeatherForecastBundle(
   ],
 );
 
-final _testTide = TideDemoStation(
-  stationName: 'Test Harbor',
-  note: 'Demo tides',
-  events: const [],
+final _testTide = TideStationBundle(
+  station: TideDemoStation(
+    stationName: 'Test Harbor',
+    note: 'Demo tides',
+    events: const [],
+  ),
+  fetchedAtUtc: DateTime.utc(2026, 4, 22),
+  isDemo: true,
 );
 
 Future<void> _pumpShell(
@@ -89,7 +94,7 @@ Future<void> _pumpShell(
         }),
         sessionIdProvider.overrideWith((ref) => 'wide-shell-test'),
         weatherForecastProvider.overrideWith((ref) async => _testForecast),
-        tideDemoProvider.overrideWith((ref) async => _testTide),
+        tidesProvider.overrideWith((ref) async => _testTide),
         mooringPlacesProvider.overrideWith((ref) async => [_demoMooringPlace]),
         mooringPendingReviewsProvider.overrideWith((ref) async => []),
         ...extraOverrides,

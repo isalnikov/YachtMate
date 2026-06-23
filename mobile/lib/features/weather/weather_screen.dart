@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../../core/providers.dart';
 import '../../core/theme/cw_tokens.dart';
-import '../../domain/tides/tide_demo_models.dart';
+import '../../domain/tides/tide_station_bundle.dart';
 import '../../domain/weather/weather_forecast_view.dart';
 import '../../l10n/app_localizations.dart';
 import '../../widgets/cw_split_view.dart';
@@ -119,7 +119,7 @@ class _ForecastBody extends ConsumerStatefulWidget {
   const _ForecastBody({required this.bundle, required this.tideAsync});
 
   final WeatherForecastBundle bundle;
-  final AsyncValue<TideDemoStation> tideAsync;
+  final AsyncValue<TideStationBundle> tideAsync;
 
   @override
   ConsumerState<_ForecastBody> createState() => _ForecastBodyState();
@@ -297,32 +297,45 @@ class _ForecastBodyState extends ConsumerState<_ForecastBody> {
       ),
       const SizedBox(height: CwSpacing.s),
       widget.tideAsync.when(
-        data: (s) => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              s.stationName,
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            const SizedBox(height: CwSpacing.xs),
-            Text(s.note, style: Theme.of(context).textTheme.bodySmall),
-            const SizedBox(height: CwSpacing.m - CwSpacing.xs),
-            for (final e in s.events)
-              ListTile(
-                dense: true,
-                leading: Icon(
-                  e.isHigh ? Icons.arrow_upward : Icons.arrow_downward,
-                ),
-                title: Text(
-                  l10n.weatherTideRow(
-                    timeFmt.format(e.timeUtc.toLocal()),
-                    '${e.heightM.toStringAsFixed(1)} m',
-                    e.isHigh ? l10n.tidesHigh : l10n.tidesLow,
+        data: (bundle) {
+          final s = bundle.station;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (bundle.isStale)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: CwSpacing.s),
+                  child: Text(
+                    l10n.tidesStaleBanner,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
                   ),
                 ),
+              Text(
+                s.stationName,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
-          ],
-        ),
+              const SizedBox(height: CwSpacing.xs),
+              Text(s.note, style: Theme.of(context).textTheme.bodySmall),
+              const SizedBox(height: CwSpacing.m - CwSpacing.xs),
+              for (final e in s.events)
+                ListTile(
+                  dense: true,
+                  leading: Icon(
+                    e.isHigh ? Icons.arrow_upward : Icons.arrow_downward,
+                  ),
+                  title: Text(
+                    l10n.weatherTideRow(
+                      timeFmt.format(e.timeUtc.toLocal()),
+                      '${e.heightM.toStringAsFixed(1)} m',
+                      e.isHigh ? l10n.tidesHigh : l10n.tidesLow,
+                    ),
+                  ),
+                ),
+            ],
+          );
+        },
         loading: () => const LinearProgressIndicator(),
         error: (e, _) => Text('$e'),
       ),
