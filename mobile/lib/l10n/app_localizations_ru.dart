@@ -103,6 +103,42 @@ class AppLocalizationsRu extends AppLocalizations {
   String get mapLayerMooringPois => 'Марины и якорные (каталог)';
 
   @override
+  String get mapLayerSectionOverlays => 'Наложения';
+
+  @override
+  String get mapLayerSectionChart => 'Карта';
+
+  @override
+  String get mapLayerSectionShallow => 'Мелководье';
+
+  @override
+  String get mapLayerOverlayNone => 'Без наложения';
+
+  @override
+  String get mapLayerOverlaySatellite => 'Спутник';
+
+  @override
+  String get mapLayerOverlayRelief => 'Рельеф';
+
+  @override
+  String get mapLayerOverlaySonar => 'Сонар';
+
+  @override
+  String get mapLayerChartStandard => 'Стандарт';
+
+  @override
+  String get mapLayerChartPaper => 'Бумажная';
+
+  @override
+  String get mapLayerChartSimple => 'Простая';
+
+  @override
+  String get mapLayerChartNight => 'Ночная';
+
+  @override
+  String get mapLayerShallowHighlight => 'Подсветка мелководья';
+
+  @override
   String get mapDepthLegendTitle => 'Легенда';
 
   @override
@@ -135,7 +171,128 @@ class AppLocalizationsRu extends AppLocalizations {
   String get mapLongPressAddWaypoint => 'Добавить точку маршрута';
 
   @override
+  String get mapNavigateHere => 'Навигация сюда';
+
+  @override
+  String get mapCoordsCopied => 'Координаты скопированы';
+
+  @override
+  String get mapPeekCoordsSemantic =>
+      'Координаты центра карты — нажмите, чтобы скопировать';
+
+  @override
+  String mapPeekDepthMeters(int meters) {
+    return 'Глубина: $meters м';
+  }
+
+  @override
   String get mapAisDemoTooltip => 'Демо AIS (записанный NMEA)';
+
+  @override
+  String get aisScreenTitle => 'AIS';
+
+  @override
+  String get moreMenuAis => 'AIS и трафик';
+
+  @override
+  String get moreMenuAisSubtitle => 'Локальный NMEA · CPA/TCPA · фильтры';
+
+  @override
+  String get aisFilterAll => 'Все';
+
+  @override
+  String get aisFilterCargo => 'Грузовые';
+
+  @override
+  String get aisFilterTanker => 'Танкеры';
+
+  @override
+  String get aisFilterPleasure => 'Яхты';
+
+  @override
+  String get aisLocalStreamTitle => 'Локальный поток';
+
+  @override
+  String get aisLocalStreamBody => 'NMEA 0183 · Wi‑Fi/BT шлюз · CPA/TCPA';
+
+  @override
+  String get aisDemoStart => 'Демо';
+
+  @override
+  String get aisDemoStop => 'Стоп';
+
+  @override
+  String get aisDemoActive => 'Демо NMEA активно';
+
+  @override
+  String aisTargetsCount(int count) {
+    return 'Целей: $count';
+  }
+
+  @override
+  String get aisTapVessel => 'Нажмите на судно для деталей';
+
+  @override
+  String aisVesselSog(String knots) {
+    return '$knots уз';
+  }
+
+  @override
+  String aisVesselCog(String degrees) {
+    return '$degrees°';
+  }
+
+  @override
+  String aisVesselCpa(String nm) {
+    return '$nm м.м.';
+  }
+
+  @override
+  String aisVesselTcpa(String minutes) {
+    return '$minutes мин';
+  }
+
+  @override
+  String get aisCpaWarning => 'CPA < 1 м.м.';
+
+  @override
+  String get mapZoomInTooltip => 'Приблизить';
+
+  @override
+  String get mapZoomOutTooltip => 'Отдалить';
+
+  @override
+  String get mapCompassNorthUpTooltip =>
+      'Север вверху — нажмите для курса вверх';
+
+  @override
+  String get mapCompassHeadingUpTooltip =>
+      'Курс вверху — нажмите для севера вверху';
+
+  @override
+  String get mapFollowGpsTooltip => 'Следовать GPS';
+
+  @override
+  String get mapFollowGpsActiveTooltip =>
+      'Следование GPS — нажмите, чтобы остановить';
+
+  @override
+  String get mapGpsStatusSemantic =>
+      'Статус GPS — нажмите для настроек геолокации';
+
+  @override
+  String mapGpsAccuracyMeters(int meters) {
+    return '±$meters м';
+  }
+
+  @override
+  String mapGpsSogKnots(String knots) {
+    return '$knots уз';
+  }
+
+  @override
+  String get mapGpsLocationSettingsHint =>
+      'Проверьте разрешение геолокации и точность GPS в настройках системы.';
 
   @override
   String get weatherScreenTitle => 'Погода и приливы';
@@ -166,6 +323,18 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get weatherHourlyHeading => 'Почасовой (48 ч)';
+
+  @override
+  String get weatherLayerWindTooltip => 'Слой ветра';
+
+  @override
+  String get weatherLayerWavesTooltip => 'Слой волн';
+
+  @override
+  String get weatherLayerTempTooltip => 'Слой температуры';
+
+  @override
+  String get weatherLayerPressureTooltip => 'Слой давления';
 
   @override
   String get weatherTidesSection => 'Приливы (демо)';
@@ -211,6 +380,58 @@ class AppLocalizationsRu extends AppLocalizations {
   String weatherTideRow(String time, String height, String kind) {
     return '$time · $height · $kind';
   }
+
+  @override
+  String get weatherSeeAllTides => 'Все приливы';
+
+  @override
+  String get tidesScreenTitle => 'Приливы';
+
+  @override
+  String get tidesCurveHeading => 'Кривая на сегодня (демо)';
+
+  @override
+  String get tidesTableHeading => 'Расписание на 7 дней (демо)';
+
+  @override
+  String get tidesMoonHeading => 'Фаза Луны';
+
+  @override
+  String get tidesSunHeading => 'Восход и закат (прибл.)';
+
+  @override
+  String get tidesTableDay => 'День';
+
+  @override
+  String get tidesHighShort => 'ПМ';
+
+  @override
+  String get tidesLowShort => 'ММ';
+
+  @override
+  String get tidesEmpty => 'Нет данных о приливах.';
+
+  @override
+  String tidesHeightM(String height) {
+    return '$height м';
+  }
+
+  @override
+  String tidesTableCell(String time, String height, String kind) {
+    return '$time · $height · $kind';
+  }
+
+  @override
+  String tidesSunLine(String sunrise, String sunset) {
+    return 'Восход $sunrise · Закат $sunset';
+  }
+
+  @override
+  String get moreMenuTides => 'Приливы';
+
+  @override
+  String get moreMenuTidesSubtitle =>
+      'Демо-кривая, таблица 7 дней, Луна и Солнце';
 
   @override
   String get routeScreenTitle => 'Маршрут (advisory)';
@@ -270,6 +491,76 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String get routePlanRoute => 'Построить маршрут';
+
+  @override
+  String get routeStatsTitle => 'Сводка маршрута';
+
+  @override
+  String get routeStatsDistance => 'Дистанция';
+
+  @override
+  String get routeStatsEta => 'ETA';
+
+  @override
+  String get routeStatsWaypointCount => 'Точки';
+
+  @override
+  String routeStatsDistanceValue(String nm) {
+    return '$nm м.м.';
+  }
+
+  @override
+  String get routeStatsEtaUnknown => '—';
+
+  @override
+  String routeStatsEtaMinutes(int minutes) {
+    return '$minutes мин';
+  }
+
+  @override
+  String routeStatsEtaHours(int hours) {
+    return '$hours ч';
+  }
+
+  @override
+  String routeStatsEtaHoursMinutes(int hours, int minutes) {
+    return '$hours ч $minutes мин';
+  }
+
+  @override
+  String routeStatsWaypointCountValue(int count) {
+    return '$count';
+  }
+
+  @override
+  String get routeWaypointListTitle => 'Точки маршрута';
+
+  @override
+  String get routeWaypointEmpty => 'Нет точек. Добавьте их на карте.';
+
+  @override
+  String routeWaypointDefaultName(int index) {
+    return 'Т$index';
+  }
+
+  @override
+  String get routeSafetyOk =>
+      'Проверка глубины по точкам пройдена (демо-сетка).';
+
+  @override
+  String routeSafetyShallow(int index) {
+    return 'Мелководье у Т$index: осадка + запас превышают глубину по демо-сетке.';
+  }
+
+  @override
+  String get routeShowCorridor => 'Коридор безопасности';
+
+  @override
+  String get routeShowCorridorSubtitle =>
+      'Зелёный буфер ±50 м вокруг маршрута на карте';
+
+  @override
   String get mooringScreenTitle => 'Стоянка (марины и якорные)';
 
   @override
@@ -277,6 +568,29 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get mooringKindAnchorage => 'Якорная стоянка';
+
+  @override
+  String get mooringKindBuoy => 'Буй';
+
+  @override
+  String get mooringViewList => 'Список';
+
+  @override
+  String get mooringSortDistance => 'Расстояние';
+
+  @override
+  String get mooringSortRating => 'Рейтинг';
+
+  @override
+  String get mooringDepthUnknown => 'Глубина н/д';
+
+  @override
+  String mooringDistanceNm(String distance) {
+    return '$distance м.миль';
+  }
+
+  @override
+  String get mooringEmptyFiltered => 'Снимите фильтры или измените поиск.';
 
   @override
   String get mooringVhf => 'УКВ';
@@ -511,6 +825,33 @@ class AppLocalizationsRu extends AppLocalizations {
   String get sosMessageCopied => 'Текст скопирован.';
 
   @override
+  String get sosTypeLabel => 'Тип ЧС';
+
+  @override
+  String get sosTypeMedical => 'Медицинская';
+
+  @override
+  String get sosTypeFire => 'Пожар';
+
+  @override
+  String get sosTypeSinking => 'Затопление';
+
+  @override
+  String get sosTypeManOverboard => 'Человек за бортом';
+
+  @override
+  String get sosMessagePreview => 'Предпросмотр сообщения';
+
+  @override
+  String get sosCoordsPending => 'Определение координат…';
+
+  @override
+  String get sosTimerActive => 'Бедствие активно';
+
+  @override
+  String get sosTimerElapsed => 'Прошло';
+
+  @override
   String get trackTitle => 'Трек рейса';
 
   @override
@@ -628,7 +969,92 @@ class AppLocalizationsRu extends AppLocalizations {
   String get settingsHighContrast => 'Высокий контраст';
 
   @override
+  String get settingsNightWatch => 'Ночная вахта (красный)';
+
+  @override
+  String get settingsNightWatchSubtitle =>
+      'Красный интерфейс для сохранения ночного зрения';
+
+  @override
+  String get settingsNightWatchChartNightHint =>
+      'Совет: Слои карты → Карта → Ночь хорошо сочетается с этой темой.';
+
+  @override
+  String get settingsNightWatchChartDayHint =>
+      'Совет: Слои карты → Карта → Стандарт для дневной палитры.';
+
+  @override
   String get settingsEnergySection => 'Батарея и GPS';
+
+  @override
+  String get settingsVesselSection => 'Судно';
+
+  @override
+  String get settingsDisplaySection => 'Интерфейс';
+
+  @override
+  String get settingsAboutSection => 'О приложении';
+
+  @override
+  String get settingsVesselName => 'Название судна';
+
+  @override
+  String settingsVesselLoa(String unit) {
+    return 'Длина ($unit)';
+  }
+
+  @override
+  String settingsVesselDraft(String unit) {
+    return 'Осада ($unit)';
+  }
+
+  @override
+  String get settingsVesselType => 'Тип корпуса';
+
+  @override
+  String get settingsVesselTypeSailing => 'Парусная яхта';
+
+  @override
+  String get settingsVesselTypeMotor => 'Моторная яхта';
+
+  @override
+  String get settingsVesselTypeCatamaran => 'Катамаран';
+
+  @override
+  String get settingsVesselTypeOther => 'Другое';
+
+  @override
+  String get settingsUnits => 'Единицы';
+
+  @override
+  String get settingsUnitsMetric => 'Метрические';
+
+  @override
+  String get settingsUnitsImperial => 'Имперские';
+
+  @override
+  String get settingsTheme => 'Тема';
+
+  @override
+  String get settingsThemeDeck => 'Палуба';
+
+  @override
+  String get settingsThemeNightRed => 'Ночь (красная)';
+
+  @override
+  String get settingsThemeHighContrast => 'Высокий контраст';
+
+  @override
+  String get settingsAboutAppName => 'Captain Wrongel';
+
+  @override
+  String settingsAboutVersion(String version) {
+    return 'Версия $version';
+  }
+
+  @override
+  String get settingsAboutTagline =>
+      'Офлайн-навигатор для яхт. Не для основной навигации.';
 
   @override
   String get energyProfileEco => 'Эко-проход';
@@ -688,6 +1114,27 @@ class AppLocalizationsRu extends AppLocalizations {
   String get knotCategoryEmergency => 'Аварийные';
 
   @override
+  String get knotCategoryAll => 'Все';
+
+  @override
+  String get knotCategoryFavorites => 'Избранное';
+
+  @override
+  String get knotDifficultyEasy => 'Легко';
+
+  @override
+  String get knotDifficultyMedium => 'Средне';
+
+  @override
+  String get knotDifficultyHard => 'Сложно';
+
+  @override
+  String get knotAddFavorite => 'В избранное';
+
+  @override
+  String get knotRemoveFavorite => 'Убрать из избранного';
+
+  @override
   String get moreMenuToolbox => 'Морская мастерская';
 
   @override
@@ -723,6 +1170,18 @@ class AppLocalizationsRu extends AppLocalizations {
   String get toolboxExpenses => 'Судовая касса';
 
   @override
+  String get toolboxSectionNavigation => 'Навигация';
+
+  @override
+  String get toolboxSectionSafety => 'Безопасность';
+
+  @override
+  String get toolboxSectionReference => 'Справочник';
+
+  @override
+  String get badgeNew => 'НОВ';
+
+  @override
   String get anchorWatchTitle => 'Якорная вахта';
 
   @override
@@ -756,6 +1215,22 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get anchorWatchGpsLost =>
       'Нет свежей GPS-навигации — проверьте приёмник и небо.';
+
+  @override
+  String get anchorWatchMapPlaceholder =>
+      'Отметьте якорь, чтобы показать зону на карте';
+
+  @override
+  String get anchorWatchInZone => 'В ЗОНЕ';
+
+  @override
+  String get anchorWatchDrifting => 'СНОС';
+
+  @override
+  String get anchorWatchDisarmed => 'Вахта выкл.';
+
+  @override
+  String get anchorWatchArmedBadge => 'ВАХТА';
 
   @override
   String get compassTitle => 'Компас и солнце';
@@ -823,10 +1298,49 @@ class AppLocalizationsRu extends AppLocalizations {
   String get vhfTrainingTitle => 'УКВ и COLREG';
 
   @override
+  String get vhfTabScenarios => 'Сценарии';
+
+  @override
   String get vhfTabQuiz => 'Викторина COLREG';
 
   @override
   String get vhfTabSessions => 'Записи';
+
+  @override
+  String get vhfScenariosLoadError => 'Не удалось загрузить сценарии УКВ.';
+
+  @override
+  String get vhfScenariosEmpty => 'Нет доступных сценариев УКВ.';
+
+  @override
+  String get vhfScenarioPickHint =>
+      'Выберите сценарий для отработки радиообмена.';
+
+  @override
+  String get vhfScenarioBack => 'Все сценарии';
+
+  @override
+  String get vhfDifficultyBeginner => 'Начальный';
+
+  @override
+  String get vhfDifficultyIntermediate => 'Средний';
+
+  @override
+  String get vhfDifficultyAdvanced => 'Продвинутый';
+
+  @override
+  String get vhfDialogueShore => 'Берег';
+
+  @override
+  String get vhfDialogueYou => 'Вы';
+
+  @override
+  String vhfQuizProgress(int current, int total) {
+    return 'Вопрос $current из $total';
+  }
+
+  @override
+  String get vhfQuizPickAnswer => 'Сначала выберите ответ.';
 
   @override
   String get vhfSessionsHint =>
@@ -920,4 +1434,74 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get expenseCatOther => 'Прочее';
+
+  @override
+  String get onboardingWelcomeTagline => 'Captain Wrongel';
+
+  @override
+  String get onboardingWelcomeTitle => 'Ваш помощник в каждом походе';
+
+  @override
+  String get onboardingWelcomeSubtitle =>
+      'Офлайн-карты, погода, стоянки — всё на одной палубе.';
+
+  @override
+  String get onboardingNext => 'Далее';
+
+  @override
+  String get onboardingBack => 'Назад';
+
+  @override
+  String get onboardingGetStarted => 'Начать';
+
+  @override
+  String get onboardingPermissionsTitle => 'Разрешения';
+
+  @override
+  String get onboardingPermissionsBody =>
+      'Геолокация нужна для карт, погоды и якорной вахты. Уведомления предупредят о дрейфе и изменении погоды.';
+
+  @override
+  String get onboardingLocationTitle => 'Геолокация';
+
+  @override
+  String get onboardingLocationButton => 'Разрешить геолокацию';
+
+  @override
+  String get onboardingNotificationTitle => 'Уведомления';
+
+  @override
+  String get onboardingNotificationButton => 'Разрешить уведомления';
+
+  @override
+  String get onboardingExperienceTitle => 'Ваш опыт';
+
+  @override
+  String get onboardingExperienceBody =>
+      'Подстроим подсказки и настройки под ваш стиль плавания.';
+
+  @override
+  String get onboardingExperienceBeginner => 'Новичок';
+
+  @override
+  String get onboardingExperienceCruiser => 'Круизный';
+
+  @override
+  String get onboardingExperienceRacer => 'Гонщик';
+
+  @override
+  String get onboardingRegionTitle => 'Где вы ходите?';
+
+  @override
+  String get onboardingRegionBody =>
+      'Приоритет карт и стоянок для вашего региона.';
+
+  @override
+  String get onboardingRegionMediterranean => 'Средиземноморье';
+
+  @override
+  String get onboardingRegionCaribbean => 'Карибы';
+
+  @override
+  String get onboardingRegionOther => 'Другое';
 }

@@ -3,6 +3,7 @@ import 'package:captain_wrongel/core/disclaimer_gate.dart';
 import 'package:captain_wrongel/core/providers.dart';
 import 'package:captain_wrongel/data/local/app_database.dart';
 import 'package:captain_wrongel/features/legal/disclaimer_screen.dart';
+import 'package:captain_wrongel/features/onboarding/onboarding_flow.dart';
 import 'package:captain_wrongel/features/shell/shell_screen.dart';
 import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
@@ -52,11 +53,27 @@ void main() {
     await tester.tap(find.byKey(const Key('disclaimer_accept')));
     await tester.pumpAndSettle();
 
+    expect(find.byType(OnboardingFlow), findsOneWidget);
+    expect(find.byType(ShellScreen), findsNothing);
+
+    await tester.tap(find.byKey(const Key('onboarding_next')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('onboarding_next')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('onboarding_experience_beginner')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('onboarding_next')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('onboarding_region_other')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('onboarding_get_started')));
+    await tester.pumpAndSettle();
+
     expect(
       exceptions,
       isEmpty,
       reason:
-          'No Flutter framework errors during disclaimer → shell transition',
+          'No Flutter framework errors during disclaimer → onboarding → shell',
     );
     expect(find.byType(ShellScreen), findsOneWidget);
     expect(find.byType(DisclaimerScreen), findsNothing);

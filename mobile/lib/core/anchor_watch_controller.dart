@@ -1,11 +1,21 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/repositories/audit_repository.dart';
 import '../domain/anchor/geo.dart';
+
+/// GPS fix recorded while anchor watch is armed (drift trail).
+@immutable
+class AnchorDriftPoint {
+  const AnchorDriftPoint({required this.lat, required this.lon});
+
+  final double lat;
+  final double lon;
+}
 
 class AnchorWatchState {
   const AnchorWatchState({
@@ -17,6 +27,9 @@ class AnchorWatchState {
     this.gpsLost = false,
     this.lastDistanceM,
     this.lastFixAt,
+    this.currentLat,
+    this.currentLon,
+    this.driftHistory = const [],
   });
 
   final bool armed;
@@ -27,8 +40,16 @@ class AnchorWatchState {
   final bool gpsLost;
   final double? lastDistanceM;
   final DateTime? lastFixAt;
+  final double? currentLat;
+  final double? currentLon;
+  final List<AnchorDriftPoint> driftHistory;
 
   bool get hasAnchor => anchorLat != null && anchorLon != null;
+
+  bool get isDrifting =>
+      armed &&
+      lastDistanceM != null &&
+      lastDistanceM! > radiusM;
 
   AnchorWatchState copyWith({
     bool? armed,
@@ -40,6 +61,10 @@ class AnchorWatchState {
     bool? gpsLost,
     double? lastDistanceM,
     DateTime? lastFixAt,
+    double? currentLat,
+    double? currentLon,
+    List<AnchorDriftPoint>? driftHistory,
+    bool clearDriftHistory = false,
   }) {
     return AnchorWatchState(
       armed: armed ?? this.armed,
@@ -50,6 +75,11 @@ class AnchorWatchState {
       gpsLost: gpsLost ?? this.gpsLost,
       lastDistanceM: lastDistanceM ?? this.lastDistanceM,
       lastFixAt: lastFixAt ?? this.lastFixAt,
+      currentLat: clearAnchor == true ? null : (currentLat ?? this.currentLat),
+      currentLon: clearAnchor == true ? null : (currentLon ?? this.currentLon),
+      driftHistory: clearDriftHistory || clearAnchor == true
+          ? const []
+          : (driftHistory ?? this.driftHistory),
     );
   }
 }
@@ -72,6 +102,9 @@ class AnchorWatchController extends StateNotifier<AnchorWatchState> {
   static const armedKey = 'anchorWatchArmed';
 
   static const _gpsTimeout = Duration(seconds: 45);
+  static const _maxDriftHistory = 120;
+  static const _minRadiusM = 20.0;
+  static const _maxRadiusM = 200.0;
 
   Timer? _timer;
 
@@ -89,10 +122,10 @@ class AnchorWatchController extends StateNotifier<AnchorWatchState> {
   }
 
   Future<void> setRadiusMeters(double r) async {
-    if (r < 5) return;
-    if (r == state.radiusM) return;
-    await _prefs.setDouble(radiusKey, r);
-    state = state.copyWith(radiusM: r);
+    final clamped = r.clamp(_minRadiusM, _maxRadiusM);
+    if (clamped == state.radiusM) return;
+    await _prefs.setDouble(radiusKey, clamped);
+    state = state.copyWith(radiusM: clamped);
   }
 
   Future<void> dropAnchor() async {
@@ -120,7 +153,12 @@ class AnchorWatchController extends StateNotifier<AnchorWatchState> {
   Future<void> arm() async {
     if (!state.hasAnchor) return;
     await _prefs.setBool(armedKey, true);
-    state = state.copyWith(armed: true, alarmLatched: false, gpsLost: false);
+    state = state.copyWith(
+      armed: true,
+      alarmLatched: false,
+      gpsLost: false,
+      clearDriftHistory: true,
+    );
     _startTimer();
     await _tick();
     await _audit.record(
@@ -134,7 +172,12 @@ class AnchorWatchController extends StateNotifier<AnchorWatchState> {
   Future<void> disarm() async {
     await _prefs.setBool(armedKey, false);
     _stopTimer();
-    state = state.copyWith(armed: false, alarmLatched: false, gpsLost: false);
+    state = state.copyWith(
+      armed: false,
+      alarmLatched: false,
+      gpsLost: false,
+      clearDriftHistory: true,
+    );
     await _audit.record(
       sessionId: _sessionId,
       module: 'M6',
@@ -162,34 +205,60 @@ class AnchorWatchController extends StateNotifier<AnchorWatchState> {
 
   Future<void> _tick() async {
     if (!state.armed || !state.hasAnchor) return;
-    final aLat = state.anchorLat!;
-    final aLon = state.anchorLon!;
 
     try {
       final p = await Geolocator.getCurrentPosition();
-      final d = haversineMeters(aLat, aLon, p.latitude, p.longitude);
-      final now = DateTime.now();
-      var next = state.copyWith(
-        lastDistanceM: d,
-        lastFixAt: now,
-        gpsLost: false,
-      );
-      if (d > state.radiusM && !state.alarmLatched) {
-        next = next.copyWith(alarmLatched: true);
-        await _audit.record(
-          sessionId: _sessionId,
-          module: 'M6',
-          action: 'anchor_alarm',
-          contextJson:
-              '{"distanceM":${d.toStringAsFixed(1)},"radiusM":${state.radiusM.toStringAsFixed(0)}}',
-        );
-      }
-      state = next;
+      await _ingestPosition(p.latitude, p.longitude);
     } catch (_) {
       final last = state.lastFixAt;
       final lost = last == null || DateTime.now().difference(last) > _gpsTimeout;
       state = state.copyWith(gpsLost: lost);
     }
+  }
+
+  /// Test hook: apply a GPS fix without calling [Geolocator].
+  @visibleForTesting
+  Future<void> ingestPositionForTest(double lat, double lon) =>
+      _ingestPosition(lat, lon);
+
+  Future<void> _ingestPosition(double lat, double lon) async {
+    if (!state.armed || !state.hasAnchor) return;
+    final aLat = state.anchorLat!;
+    final aLon = state.anchorLon!;
+
+    final d = haversineMeters(aLat, aLon, lat, lon);
+    final now = DateTime.now();
+    final history = [
+      ...state.driftHistory,
+      AnchorDriftPoint(lat: lat, lon: lon),
+    ];
+    if (history.length > _maxDriftHistory) {
+      history.removeRange(0, history.length - _maxDriftHistory);
+    }
+
+    var next = state.copyWith(
+      lastDistanceM: d,
+      lastFixAt: now,
+      gpsLost: false,
+      currentLat: lat,
+      currentLon: lon,
+      driftHistory: history,
+    );
+    if (shouldLatchAnchorAlarm(
+      distanceM: d,
+      radiusM: state.radiusM,
+      alarmLatched: state.alarmLatched,
+    )) {
+      next = next.copyWith(alarmLatched: true);
+      await _audit.record(
+        sessionId: _sessionId,
+        module: 'M6',
+        action: 'anchor_alarm',
+        contextJson:
+            '{"distanceM":${d.toStringAsFixed(1)},"radiusM":${state.radiusM.toStringAsFixed(0)}}',
+      );
+    }
+    state = next;
   }
 
   @override

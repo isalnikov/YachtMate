@@ -1,6 +1,7 @@
 import 'package:captain_wrongel/app.dart';
 import 'package:captain_wrongel/core/disclaimer_gate.dart';
 import 'package:captain_wrongel/core/locale_controller.dart';
+import 'package:captain_wrongel/core/onboarding_prefs.dart';
 import 'package:captain_wrongel/core/providers.dart';
 import 'package:captain_wrongel/data/local/app_database.dart';
 import 'package:drift/native.dart';
@@ -13,6 +14,7 @@ void main() {
   testWidgets('language sheet switches UI to Russian', (tester) async {
     SharedPreferences.setMockInitialValues({
       kDisclaimerV1AcceptedKey: true,
+      kOnboardingCompleteKey: true,
       LocaleController.localePreferenceKey: 'en',
     });
     final prefs = await SharedPreferences.getInstance();
@@ -33,7 +35,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Map'), findsWidgets);
 
-    await tester.tap(find.byIcon(Icons.language_outlined));
+    await tester.tap(find.text('EN'));
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Russian'));

@@ -7,6 +7,7 @@ class HourlyWeatherPoint {
     required this.pressureHpa,
     required this.windSpeedKn,
     required this.windDirectionDeg,
+    this.windGustKn,
     this.waveHeightM,
   });
 
@@ -16,6 +17,7 @@ class HourlyWeatherPoint {
   final double pressureHpa;
   final double windSpeedKn;
   final double windDirectionDeg;
+  final double? windGustKn;
   final double? waveHeightM;
 }
 

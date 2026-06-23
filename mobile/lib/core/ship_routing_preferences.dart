@@ -3,28 +3,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'providers.dart';
 
-/// Осадка и запас под килем для проверки глубины по сетке (демо Фаза 5).
+/// Under-keel clearance for depth grid checks (demonstration phase 5).
 class ShipRoutingParams {
-  const ShipRoutingParams({required this.draftM, required this.clearanceM});
+  const ShipRoutingParams({required this.clearanceM});
 
-  final double draftM;
   final double clearanceM;
 
-  ShipRoutingParams copyWith({double? draftM, double? clearanceM}) {
-    return ShipRoutingParams(
-      draftM: draftM ?? this.draftM,
-      clearanceM: clearanceM ?? this.clearanceM,
-    );
+  ShipRoutingParams copyWith({double? clearanceM}) {
+    return ShipRoutingParams(clearanceM: clearanceM ?? this.clearanceM);
   }
 
   @override
   bool operator ==(Object other) =>
-      other is ShipRoutingParams &&
-      other.draftM == draftM &&
-      other.clearanceM == clearanceM;
+      other is ShipRoutingParams && other.clearanceM == clearanceM;
 
   @override
-  int get hashCode => Object.hash(draftM, clearanceM);
+  int get hashCode => clearanceM.hashCode;
 }
 
 class ShipRoutingPreferencesNotifier extends StateNotifier<ShipRoutingParams> {
@@ -33,20 +27,12 @@ class ShipRoutingPreferencesNotifier extends StateNotifier<ShipRoutingParams> {
 
   final Ref _ref;
 
-  static const _draftKey = 'ship_draft_m';
   static const _clearanceKey = 'ship_clearance_m';
 
   static ShipRoutingParams _initial(SharedPreferences prefs) {
     return ShipRoutingParams(
-      draftM: prefs.getDouble(_draftKey) ?? 2.5,
       clearanceM: prefs.getDouble(_clearanceKey) ?? 1.0,
     );
-  }
-
-  Future<void> setDraftM(double v) async {
-    if (v <= 0 || v == state.draftM) return;
-    await _ref.read(sharedPreferencesProvider).setDouble(_draftKey, v);
-    state = state.copyWith(draftM: v);
   }
 
   Future<void> setClearanceM(double v) async {

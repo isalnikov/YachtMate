@@ -1,0 +1,124 @@
+{
+  "version": 1,
+  "scenarios": [
+    {
+      "id": "marina_checkin",
+      "title": {
+        "en": "Marina check-in",
+        "ru": "Заезд в марину"
+      },
+      "summary": {
+        "en": "Request a berth on VHF channel 17.",
+        "ru": "Запросить место на канале 17."
+      },
+      "difficulty": "beginner",
+      "lines": [
+        {
+          "speaker": "you",
+          "text": {
+            "en": "Marina Fethiye, Marina Fethiye, this is sailing yacht Sea Breeze, Sea Breeze, over.",
+            "ru": "Марина Фетхие, Марина Фетхие, парусная яхта Sea Breeze, Sea Breeze, приём."
+          }
+        },
+        {
+          "speaker": "shore",
+          "text": {
+            "en": "Sea Breeze, Marina Fethiye. Good morning. State your length and draft, over.",
+            "ru": "Sea Breeze, Марина Фетхие. Доброе утро. Сообщите длину и осадку, приём."
+          }
+        },
+        {
+          "speaker": "you",
+          "text": {
+            "en": "Marina Fethiye, Sea Breeze. Twelve metres, draft one point eight metres. Request berth for one night, over.",
+            "ru": "Марина Фетхие, Sea Breeze. Двенадцать метров, осадка полтора восемь. Прошу место на одну ночь, приём."
+          }
+        },
+        {
+          "speaker": "shore",
+          "text": {
+            "en": "Sea Breeze, proceed to pontoon Charlie, berth four. Stand by on channel seventeen, out.",
+            "ru": "Sea Breeze, следуйте на понтон Charlie, место четыре. Ожидайте на семнадцатом канале, конец связи."
+          }
+        }
+      ]
+    },
+    {
+      "id": "coast_guard_query",
+      "title": {
+        "en": "Coast guard query",
+        "ru": "Запрос береговой охраны"
+      },
+      "summary": {
+        "en": "Respond to a routine safety call.",
+        "ru": "Ответ на плановый запрос безопасности."
+      },
+      "difficulty": "intermediate",
+      "lines": [
+        {
+          "speaker": "shore",
+          "text": {
+            "en": "All stations, all stations, this is Turkish Coast Guard. For urgent navigational warnings, switch to channel sixteen, out.",
+            "ru": "Всем судам, всем судам, береговая охрана Турции. Срочные навигационные предупреждения — канал шестнадцать, конец связи."
+          }
+        },
+        {
+          "speaker": "you",
+          "text": {
+            "en": "Turkish Coast Guard, Turkish Coast Guard, sailing yacht Sea Breeze. Position three six degrees four two north, zero two nine degrees one zero east. All safe, over.",
+            "ru": "Береговая охрана Турции, парусная яхта Sea Breeze. Позиция три шесть северной, ноль два девять восточной. Всё в порядке, приём."
+          }
+        },
+        {
+          "speaker": "shore",
+          "text": {
+            "en": "Sea Breeze, roger. Maintain listening watch on channel sixteen. Coast Guard, out.",
+            "ru": "Sea Breeze, принято. Слушайте шестнадцатый канал. Береговая охрана, конец связи."
+          }
+        }
+      ]
+    },
+    {
+      "id": "pan_pan_medical",
+      "title": {
+        "en": "PAN PAN medical",
+        "ru": "PAN PAN — медицина"
+      },
+      "summary": {
+        "en": "Urgent medical assistance, not distress.",
+        "ru": "Срочная медпомощь без бедствия."
+      },
+      "difficulty": "advanced",
+      "lines": [
+        {
+          "speaker": "you",
+          "text": {
+            "en": "Pan pan, pan pan, pan pan. All stations, all stations, all stations. This is sailing yacht Sea Breeze, Sea Breeze, Sea Breeze. Position three six degrees four two north, zero two nine degrees one zero east. One crew member injured, conscious, request medical advice, over.",
+            "ru": "Пан-пан, пан-пан, пан-пан. Всем судам. Парусная яхта Sea Breeze. Позиция три шесть северной, ноль два девять восточной. Один член экипажа травмирован, в сознании, прошу медицинский совет, приём."
+          }
+        },
+        {
+          "speaker": "shore",
+          "text": {
+            "en": "Sea Breeze, Coast Guard. Roger pan pan. State nature of injury and number of persons on board, over.",
+            "ru": "Sea Breeze, береговая охрана. Приняли пан-пан. Характер травмы и число людей на борту, приём."
+          }
+        },
+        {
+          "speaker": "you",
+          "text": {
+            "en": "Coast Guard, Sea Breeze. Suspected ankle fracture after fall in cockpit. Four persons on board, over.",
+            "ru": "Береговая охрана, Sea Breeze. Подозрение на перелом лодыжки после падения в кокпите. Четверо на борту, приём."
+          }
+        },
+        {
+          "speaker": "shore",
+          "text": {
+            "en": "Sea Breeze, stand by. Medical advice relayed. Prepare for possible medevac to nearest port. Coast Guard, out.",
+            "ru": "Sea Breeze, ожидайте. Передадим медицинские рекомендации. Готовьтесь к возможной эвакуации в ближайший порт. Береговая охрана, конец связи."
+          }
+        }
+      ]
+    }
+  ]
+}

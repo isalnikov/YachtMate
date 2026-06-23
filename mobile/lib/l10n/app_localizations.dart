@@ -286,6 +286,78 @@ abstract class AppLocalizations {
   /// **'Marinas & anchorages (catalog)'**
   String get mapLayerMooringPois;
 
+  /// No description provided for @mapLayerSectionOverlays.
+  ///
+  /// In en, this message translates to:
+  /// **'Overlays'**
+  String get mapLayerSectionOverlays;
+
+  /// No description provided for @mapLayerSectionChart.
+  ///
+  /// In en, this message translates to:
+  /// **'Chart'**
+  String get mapLayerSectionChart;
+
+  /// No description provided for @mapLayerSectionShallow.
+  ///
+  /// In en, this message translates to:
+  /// **'Shallow'**
+  String get mapLayerSectionShallow;
+
+  /// No description provided for @mapLayerOverlayNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No Overlay'**
+  String get mapLayerOverlayNone;
+
+  /// No description provided for @mapLayerOverlaySatellite.
+  ///
+  /// In en, this message translates to:
+  /// **'Satellite'**
+  String get mapLayerOverlaySatellite;
+
+  /// No description provided for @mapLayerOverlayRelief.
+  ///
+  /// In en, this message translates to:
+  /// **'Relief Shading'**
+  String get mapLayerOverlayRelief;
+
+  /// No description provided for @mapLayerOverlaySonar.
+  ///
+  /// In en, this message translates to:
+  /// **'Sonar'**
+  String get mapLayerOverlaySonar;
+
+  /// No description provided for @mapLayerChartStandard.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get mapLayerChartStandard;
+
+  /// No description provided for @mapLayerChartPaper.
+  ///
+  /// In en, this message translates to:
+  /// **'Paper'**
+  String get mapLayerChartPaper;
+
+  /// No description provided for @mapLayerChartSimple.
+  ///
+  /// In en, this message translates to:
+  /// **'Simple'**
+  String get mapLayerChartSimple;
+
+  /// No description provided for @mapLayerChartNight.
+  ///
+  /// In en, this message translates to:
+  /// **'Night'**
+  String get mapLayerChartNight;
+
+  /// No description provided for @mapLayerShallowHighlight.
+  ///
+  /// In en, this message translates to:
+  /// **'Shallow highlight'**
+  String get mapLayerShallowHighlight;
+
   /// No description provided for @mapDepthLegendTitle.
   ///
   /// In en, this message translates to:
@@ -346,11 +418,209 @@ abstract class AppLocalizations {
   /// **'Add route waypoint'**
   String get mapLongPressAddWaypoint;
 
+  /// No description provided for @mapNavigateHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigate here'**
+  String get mapNavigateHere;
+
+  /// No description provided for @mapCoordsCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'Coordinates copied'**
+  String get mapCoordsCopied;
+
+  /// No description provided for @mapPeekCoordsSemantic.
+  ///
+  /// In en, this message translates to:
+  /// **'Map center coordinates — tap to copy'**
+  String get mapPeekCoordsSemantic;
+
+  /// No description provided for @mapPeekDepthMeters.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth: {meters} m'**
+  String mapPeekDepthMeters(int meters);
+
   /// No description provided for @mapAisDemoTooltip.
   ///
   /// In en, this message translates to:
   /// **'AIS demo stream (recorded NMEA)'**
   String get mapAisDemoTooltip;
+
+  /// No description provided for @aisScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'AIS'**
+  String get aisScreenTitle;
+
+  /// No description provided for @moreMenuAis.
+  ///
+  /// In en, this message translates to:
+  /// **'AIS traffic'**
+  String get moreMenuAis;
+
+  /// No description provided for @moreMenuAisSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Local NMEA · CPA/TCPA · vessel filters'**
+  String get moreMenuAisSubtitle;
+
+  /// No description provided for @aisFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get aisFilterAll;
+
+  /// No description provided for @aisFilterCargo.
+  ///
+  /// In en, this message translates to:
+  /// **'Cargo'**
+  String get aisFilterCargo;
+
+  /// No description provided for @aisFilterTanker.
+  ///
+  /// In en, this message translates to:
+  /// **'Tanker'**
+  String get aisFilterTanker;
+
+  /// No description provided for @aisFilterPleasure.
+  ///
+  /// In en, this message translates to:
+  /// **'Pleasure'**
+  String get aisFilterPleasure;
+
+  /// No description provided for @aisLocalStreamTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Local stream'**
+  String get aisLocalStreamTitle;
+
+  /// No description provided for @aisLocalStreamBody.
+  ///
+  /// In en, this message translates to:
+  /// **'NMEA 0183 · Wi‑Fi/BT gateway · CPA/TCPA'**
+  String get aisLocalStreamBody;
+
+  /// No description provided for @aisDemoStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start demo'**
+  String get aisDemoStart;
+
+  /// No description provided for @aisDemoStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get aisDemoStop;
+
+  /// No description provided for @aisDemoActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo NMEA stream active'**
+  String get aisDemoActive;
+
+  /// No description provided for @aisTargetsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} targets'**
+  String aisTargetsCount(int count);
+
+  /// No description provided for @aisTapVessel.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap a vessel for details'**
+  String get aisTapVessel;
+
+  /// No description provided for @aisVesselSog.
+  ///
+  /// In en, this message translates to:
+  /// **'{knots} kn'**
+  String aisVesselSog(String knots);
+
+  /// No description provided for @aisVesselCog.
+  ///
+  /// In en, this message translates to:
+  /// **'{degrees}°'**
+  String aisVesselCog(String degrees);
+
+  /// No description provided for @aisVesselCpa.
+  ///
+  /// In en, this message translates to:
+  /// **'{nm} nm'**
+  String aisVesselCpa(String nm);
+
+  /// No description provided for @aisVesselTcpa.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String aisVesselTcpa(String minutes);
+
+  /// No description provided for @aisCpaWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'CPA < 1 nm'**
+  String get aisCpaWarning;
+
+  /// No description provided for @mapZoomInTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom in'**
+  String get mapZoomInTooltip;
+
+  /// No description provided for @mapZoomOutTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Zoom out'**
+  String get mapZoomOutTooltip;
+
+  /// No description provided for @mapCompassNorthUpTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'North up — tap for heading up'**
+  String get mapCompassNorthUpTooltip;
+
+  /// No description provided for @mapCompassHeadingUpTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Heading up — tap for north up'**
+  String get mapCompassHeadingUpTooltip;
+
+  /// No description provided for @mapFollowGpsTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow GPS'**
+  String get mapFollowGpsTooltip;
+
+  /// No description provided for @mapFollowGpsActiveTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Following GPS — tap to stop'**
+  String get mapFollowGpsActiveTooltip;
+
+  /// No description provided for @mapGpsStatusSemantic.
+  ///
+  /// In en, this message translates to:
+  /// **'GPS status — tap for location settings'**
+  String get mapGpsStatusSemantic;
+
+  /// No description provided for @mapGpsAccuracyMeters.
+  ///
+  /// In en, this message translates to:
+  /// **'±{meters} m'**
+  String mapGpsAccuracyMeters(int meters);
+
+  /// No description provided for @mapGpsSogKnots.
+  ///
+  /// In en, this message translates to:
+  /// **'{knots} kn'**
+  String mapGpsSogKnots(String knots);
+
+  /// No description provided for @mapGpsLocationSettingsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Check location permission and GPS accuracy in system settings.'**
+  String get mapGpsLocationSettingsHint;
 
   /// No description provided for @weatherScreenTitle.
   ///
@@ -399,6 +669,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Hourly (48 h)'**
   String get weatherHourlyHeading;
+
+  /// No description provided for @weatherLayerWindTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Wind layer'**
+  String get weatherLayerWindTooltip;
+
+  /// No description provided for @weatherLayerWavesTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Wave layer'**
+  String get weatherLayerWavesTooltip;
+
+  /// No description provided for @weatherLayerTempTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Temperature layer'**
+  String get weatherLayerTempTooltip;
+
+  /// No description provided for @weatherLayerPressureTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Pressure layer'**
+  String get weatherLayerPressureTooltip;
 
   /// No description provided for @weatherTidesSection.
   ///
@@ -466,6 +760,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{time} · {height} · {kind}'**
   String weatherTideRow(String time, String height, String kind);
+
+  /// No description provided for @weatherSeeAllTides.
+  ///
+  /// In en, this message translates to:
+  /// **'See all tides'**
+  String get weatherSeeAllTides;
+
+  /// No description provided for @tidesScreenTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Tides'**
+  String get tidesScreenTitle;
+
+  /// No description provided for @tidesCurveHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s curve (demo)'**
+  String get tidesCurveHeading;
+
+  /// No description provided for @tidesTableHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'7-day schedule (demo)'**
+  String get tidesTableHeading;
+
+  /// No description provided for @tidesMoonHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Moon phase'**
+  String get tidesMoonHeading;
+
+  /// No description provided for @tidesSunHeading.
+  ///
+  /// In en, this message translates to:
+  /// **'Sun times (approx.)'**
+  String get tidesSunHeading;
+
+  /// No description provided for @tidesTableDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get tidesTableDay;
+
+  /// No description provided for @tidesHighShort.
+  ///
+  /// In en, this message translates to:
+  /// **'HW'**
+  String get tidesHighShort;
+
+  /// No description provided for @tidesLowShort.
+  ///
+  /// In en, this message translates to:
+  /// **'LW'**
+  String get tidesLowShort;
+
+  /// No description provided for @tidesEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No tide data available.'**
+  String get tidesEmpty;
+
+  /// No description provided for @tidesHeightM.
+  ///
+  /// In en, this message translates to:
+  /// **'{height} m'**
+  String tidesHeightM(String height);
+
+  /// No description provided for @tidesTableCell.
+  ///
+  /// In en, this message translates to:
+  /// **'{time} · {height} · {kind}'**
+  String tidesTableCell(String time, String height, String kind);
+
+  /// No description provided for @tidesSunLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunrise {sunrise} · Sunset {sunset}'**
+  String tidesSunLine(String sunrise, String sunset);
+
+  /// No description provided for @moreMenuTides.
+  ///
+  /// In en, this message translates to:
+  /// **'Tides'**
+  String get moreMenuTides;
+
+  /// No description provided for @moreMenuTidesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo curve, 7-day table, moon & sun'**
+  String get moreMenuTidesSubtitle;
 
   /// No description provided for @routeScreenTitle.
   ///
@@ -563,6 +947,114 @@ abstract class AppLocalizations {
   /// **'Could not compute path: {reason}'**
   String routeAdvisoryFailed(String reason);
 
+  /// No description provided for @routePlanRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan route'**
+  String get routePlanRoute;
+
+  /// No description provided for @routeStatsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Route summary'**
+  String get routeStatsTitle;
+
+  /// No description provided for @routeStatsDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance'**
+  String get routeStatsDistance;
+
+  /// No description provided for @routeStatsEta.
+  ///
+  /// In en, this message translates to:
+  /// **'ETA'**
+  String get routeStatsEta;
+
+  /// No description provided for @routeStatsWaypointCount.
+  ///
+  /// In en, this message translates to:
+  /// **'WPs'**
+  String get routeStatsWaypointCount;
+
+  /// No description provided for @routeStatsDistanceValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{nm} nm'**
+  String routeStatsDistanceValue(String nm);
+
+  /// No description provided for @routeStatsEtaUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'—'**
+  String get routeStatsEtaUnknown;
+
+  /// No description provided for @routeStatsEtaMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min'**
+  String routeStatsEtaMinutes(int minutes);
+
+  /// No description provided for @routeStatsEtaHours.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} h'**
+  String routeStatsEtaHours(int hours);
+
+  /// No description provided for @routeStatsEtaHoursMinutes.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours} h {minutes} min'**
+  String routeStatsEtaHoursMinutes(int hours, int minutes);
+
+  /// No description provided for @routeStatsWaypointCountValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}'**
+  String routeStatsWaypointCountValue(int count);
+
+  /// No description provided for @routeWaypointListTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Waypoints'**
+  String get routeWaypointListTitle;
+
+  /// No description provided for @routeWaypointEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No waypoints yet. Add points on the map.'**
+  String get routeWaypointEmpty;
+
+  /// No description provided for @routeWaypointDefaultName.
+  ///
+  /// In en, this message translates to:
+  /// **'WP {index}'**
+  String routeWaypointDefaultName(int index);
+
+  /// No description provided for @routeSafetyOk.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth check OK along waypoints (demo grid).'**
+  String get routeSafetyOk;
+
+  /// No description provided for @routeSafetyShallow.
+  ///
+  /// In en, this message translates to:
+  /// **'Shallow water at WP {index}: draft + clearance exceeds demo depth.'**
+  String routeSafetyShallow(int index);
+
+  /// No description provided for @routeShowCorridor.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety corridor'**
+  String get routeShowCorridor;
+
+  /// No description provided for @routeShowCorridorSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Green ±50 m buffer around the route on the map'**
+  String get routeShowCorridorSubtitle;
+
   /// No description provided for @mooringScreenTitle.
   ///
   /// In en, this message translates to:
@@ -580,6 +1072,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Anchorage'**
   String get mooringKindAnchorage;
+
+  /// No description provided for @mooringKindBuoy.
+  ///
+  /// In en, this message translates to:
+  /// **'Mooring buoy'**
+  String get mooringKindBuoy;
+
+  /// No description provided for @mooringViewList.
+  ///
+  /// In en, this message translates to:
+  /// **'List'**
+  String get mooringViewList;
+
+  /// No description provided for @mooringSortDistance.
+  ///
+  /// In en, this message translates to:
+  /// **'Distance'**
+  String get mooringSortDistance;
+
+  /// No description provided for @mooringSortRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Rating'**
+  String get mooringSortRating;
+
+  /// No description provided for @mooringDepthUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Depth n/a'**
+  String get mooringDepthUnknown;
+
+  /// No description provided for @mooringDistanceNm.
+  ///
+  /// In en, this message translates to:
+  /// **'{distance} nm'**
+  String mooringDistanceNm(String distance);
+
+  /// No description provided for @mooringEmptyFiltered.
+  ///
+  /// In en, this message translates to:
+  /// **'Try clearing filters or broadening your search.'**
+  String get mooringEmptyFiltered;
 
   /// No description provided for @mooringVhf.
   ///
@@ -1019,6 +1553,60 @@ abstract class AppLocalizations {
   /// **'Message copied.'**
   String get sosMessageCopied;
 
+  /// No description provided for @sosTypeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Emergency type'**
+  String get sosTypeLabel;
+
+  /// No description provided for @sosTypeMedical.
+  ///
+  /// In en, this message translates to:
+  /// **'Medical'**
+  String get sosTypeMedical;
+
+  /// No description provided for @sosTypeFire.
+  ///
+  /// In en, this message translates to:
+  /// **'Fire'**
+  String get sosTypeFire;
+
+  /// No description provided for @sosTypeSinking.
+  ///
+  /// In en, this message translates to:
+  /// **'Sinking'**
+  String get sosTypeSinking;
+
+  /// No description provided for @sosTypeManOverboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Man overboard'**
+  String get sosTypeManOverboard;
+
+  /// No description provided for @sosMessagePreview.
+  ///
+  /// In en, this message translates to:
+  /// **'Message preview'**
+  String get sosMessagePreview;
+
+  /// No description provided for @sosCoordsPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Acquiring position…'**
+  String get sosCoordsPending;
+
+  /// No description provided for @sosTimerActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Distress active'**
+  String get sosTimerActive;
+
+  /// No description provided for @sosTimerElapsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Elapsed'**
+  String get sosTimerElapsed;
+
   /// No description provided for @trackTitle.
   ///
   /// In en, this message translates to:
@@ -1247,11 +1835,161 @@ abstract class AppLocalizations {
   /// **'High contrast'**
   String get settingsHighContrast;
 
+  /// No description provided for @settingsNightWatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Night watch (red)'**
+  String get settingsNightWatch;
+
+  /// No description provided for @settingsNightWatchSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Red UI to preserve night vision'**
+  String get settingsNightWatchSubtitle;
+
+  /// No description provided for @settingsNightWatchChartNightHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip: Map layers → Chart → Night pairs well with this theme.'**
+  String get settingsNightWatchChartNightHint;
+
+  /// No description provided for @settingsNightWatchChartDayHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tip: Map layers → Chart → Standard for a daytime chart palette.'**
+  String get settingsNightWatchChartDayHint;
+
   /// No description provided for @settingsEnergySection.
   ///
   /// In en, this message translates to:
   /// **'Battery & GPS'**
   String get settingsEnergySection;
+
+  /// No description provided for @settingsVesselSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Vessel'**
+  String get settingsVesselSection;
+
+  /// No description provided for @settingsDisplaySection.
+  ///
+  /// In en, this message translates to:
+  /// **'Display'**
+  String get settingsDisplaySection;
+
+  /// No description provided for @settingsAboutSection.
+  ///
+  /// In en, this message translates to:
+  /// **'About'**
+  String get settingsAboutSection;
+
+  /// No description provided for @settingsVesselName.
+  ///
+  /// In en, this message translates to:
+  /// **'Vessel name'**
+  String get settingsVesselName;
+
+  /// No description provided for @settingsVesselLoa.
+  ///
+  /// In en, this message translates to:
+  /// **'Length overall ({unit})'**
+  String settingsVesselLoa(String unit);
+
+  /// No description provided for @settingsVesselDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft ({unit})'**
+  String settingsVesselDraft(String unit);
+
+  /// No description provided for @settingsVesselType.
+  ///
+  /// In en, this message translates to:
+  /// **'Hull type'**
+  String get settingsVesselType;
+
+  /// No description provided for @settingsVesselTypeSailing.
+  ///
+  /// In en, this message translates to:
+  /// **'Sailing yacht'**
+  String get settingsVesselTypeSailing;
+
+  /// No description provided for @settingsVesselTypeMotor.
+  ///
+  /// In en, this message translates to:
+  /// **'Motor yacht'**
+  String get settingsVesselTypeMotor;
+
+  /// No description provided for @settingsVesselTypeCatamaran.
+  ///
+  /// In en, this message translates to:
+  /// **'Catamaran'**
+  String get settingsVesselTypeCatamaran;
+
+  /// No description provided for @settingsVesselTypeOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get settingsVesselTypeOther;
+
+  /// No description provided for @settingsUnits.
+  ///
+  /// In en, this message translates to:
+  /// **'Units'**
+  String get settingsUnits;
+
+  /// No description provided for @settingsUnitsMetric.
+  ///
+  /// In en, this message translates to:
+  /// **'Metric'**
+  String get settingsUnitsMetric;
+
+  /// No description provided for @settingsUnitsImperial.
+  ///
+  /// In en, this message translates to:
+  /// **'Imperial'**
+  String get settingsUnitsImperial;
+
+  /// No description provided for @settingsTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get settingsTheme;
+
+  /// No description provided for @settingsThemeDeck.
+  ///
+  /// In en, this message translates to:
+  /// **'Deck'**
+  String get settingsThemeDeck;
+
+  /// No description provided for @settingsThemeNightRed.
+  ///
+  /// In en, this message translates to:
+  /// **'Night red'**
+  String get settingsThemeNightRed;
+
+  /// No description provided for @settingsThemeHighContrast.
+  ///
+  /// In en, this message translates to:
+  /// **'High contrast'**
+  String get settingsThemeHighContrast;
+
+  /// No description provided for @settingsAboutAppName.
+  ///
+  /// In en, this message translates to:
+  /// **'Captain Wrongel'**
+  String get settingsAboutAppName;
+
+  /// No description provided for @settingsAboutVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version {version}'**
+  String settingsAboutVersion(String version);
+
+  /// No description provided for @settingsAboutTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline-first yacht navigator. Not for primary navigation.'**
+  String get settingsAboutTagline;
 
   /// No description provided for @energyProfileEco.
   ///
@@ -1361,6 +2099,48 @@ abstract class AppLocalizations {
   /// **'Emergency'**
   String get knotCategoryEmergency;
 
+  /// No description provided for @knotCategoryAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get knotCategoryAll;
+
+  /// No description provided for @knotCategoryFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get knotCategoryFavorites;
+
+  /// No description provided for @knotDifficultyEasy.
+  ///
+  /// In en, this message translates to:
+  /// **'Easy'**
+  String get knotDifficultyEasy;
+
+  /// No description provided for @knotDifficultyMedium.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get knotDifficultyMedium;
+
+  /// No description provided for @knotDifficultyHard.
+  ///
+  /// In en, this message translates to:
+  /// **'Hard'**
+  String get knotDifficultyHard;
+
+  /// No description provided for @knotAddFavorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to favorites'**
+  String get knotAddFavorite;
+
+  /// No description provided for @knotRemoveFavorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from favorites'**
+  String get knotRemoveFavorite;
+
   /// No description provided for @moreMenuToolbox.
   ///
   /// In en, this message translates to:
@@ -1427,6 +2207,30 @@ abstract class AppLocalizations {
   /// **'Voyager cashbook'**
   String get toolboxExpenses;
 
+  /// No description provided for @toolboxSectionNavigation.
+  ///
+  /// In en, this message translates to:
+  /// **'Navigation'**
+  String get toolboxSectionNavigation;
+
+  /// No description provided for @toolboxSectionSafety.
+  ///
+  /// In en, this message translates to:
+  /// **'Safety'**
+  String get toolboxSectionSafety;
+
+  /// No description provided for @toolboxSectionReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get toolboxSectionReference;
+
+  /// No description provided for @badgeNew.
+  ///
+  /// In en, this message translates to:
+  /// **'NEW'**
+  String get badgeNew;
+
   /// No description provided for @anchorWatchTitle.
   ///
   /// In en, this message translates to:
@@ -1492,6 +2296,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No recent GPS fix — verify receiver and sky view.'**
   String get anchorWatchGpsLost;
+
+  /// No description provided for @anchorWatchMapPlaceholder.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark anchor position to show zone map'**
+  String get anchorWatchMapPlaceholder;
+
+  /// No description provided for @anchorWatchInZone.
+  ///
+  /// In en, this message translates to:
+  /// **'IN ZONE'**
+  String get anchorWatchInZone;
+
+  /// No description provided for @anchorWatchDrifting.
+  ///
+  /// In en, this message translates to:
+  /// **'DRIFTING'**
+  String get anchorWatchDrifting;
+
+  /// No description provided for @anchorWatchDisarmed.
+  ///
+  /// In en, this message translates to:
+  /// **'Disarmed'**
+  String get anchorWatchDisarmed;
+
+  /// No description provided for @anchorWatchArmedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'ARMED'**
+  String get anchorWatchArmedBadge;
 
   /// No description provided for @compassTitle.
   ///
@@ -1613,6 +2447,12 @@ abstract class AppLocalizations {
   /// **'VHF & COLREG'**
   String get vhfTrainingTitle;
 
+  /// No description provided for @vhfTabScenarios.
+  ///
+  /// In en, this message translates to:
+  /// **'Scenarios'**
+  String get vhfTabScenarios;
+
   /// No description provided for @vhfTabQuiz.
   ///
   /// In en, this message translates to:
@@ -1624,6 +2464,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Recordings'**
   String get vhfTabSessions;
+
+  /// No description provided for @vhfScenariosLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not load VHF scenarios.'**
+  String get vhfScenariosLoadError;
+
+  /// No description provided for @vhfScenariosEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No VHF scenarios available.'**
+  String get vhfScenariosEmpty;
+
+  /// No description provided for @vhfScenarioPickHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a scenario to practice radio calls.'**
+  String get vhfScenarioPickHint;
+
+  /// No description provided for @vhfScenarioBack.
+  ///
+  /// In en, this message translates to:
+  /// **'All scenarios'**
+  String get vhfScenarioBack;
+
+  /// No description provided for @vhfDifficultyBeginner.
+  ///
+  /// In en, this message translates to:
+  /// **'Beginner'**
+  String get vhfDifficultyBeginner;
+
+  /// No description provided for @vhfDifficultyIntermediate.
+  ///
+  /// In en, this message translates to:
+  /// **'Intermediate'**
+  String get vhfDifficultyIntermediate;
+
+  /// No description provided for @vhfDifficultyAdvanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get vhfDifficultyAdvanced;
+
+  /// No description provided for @vhfDialogueShore.
+  ///
+  /// In en, this message translates to:
+  /// **'Shore'**
+  String get vhfDialogueShore;
+
+  /// No description provided for @vhfDialogueYou.
+  ///
+  /// In en, this message translates to:
+  /// **'You'**
+  String get vhfDialogueYou;
+
+  /// No description provided for @vhfQuizProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'Question {current} of {total}'**
+  String vhfQuizProgress(int current, int total);
+
+  /// No description provided for @vhfQuizPickAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an answer first.'**
+  String get vhfQuizPickAnswer;
 
   /// No description provided for @vhfSessionsHint.
   ///
@@ -1804,6 +2710,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Other'**
   String get expenseCatOther;
+
+  /// No description provided for @onboardingWelcomeTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Captain Wrongel'**
+  String get onboardingWelcomeTagline;
+
+  /// No description provided for @onboardingWelcomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your crewmate on every voyage'**
+  String get onboardingWelcomeTitle;
+
+  /// No description provided for @onboardingWelcomeSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline charts, weather, moorings — one deck.'**
+  String get onboardingWelcomeSubtitle;
+
+  /// No description provided for @onboardingNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get onboardingNext;
+
+  /// No description provided for @onboardingBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get onboardingBack;
+
+  /// No description provided for @onboardingGetStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get started'**
+  String get onboardingGetStarted;
+
+  /// No description provided for @onboardingPermissionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enable permissions'**
+  String get onboardingPermissionsTitle;
+
+  /// No description provided for @onboardingPermissionsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Location powers charts, weather, and anchor watch. Notifications alert you to drift and weather changes.'**
+  String get onboardingPermissionsBody;
+
+  /// No description provided for @onboardingLocationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Location'**
+  String get onboardingLocationTitle;
+
+  /// No description provided for @onboardingLocationButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow location'**
+  String get onboardingLocationButton;
+
+  /// No description provided for @onboardingNotificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get onboardingNotificationTitle;
+
+  /// No description provided for @onboardingNotificationButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Allow notifications'**
+  String get onboardingNotificationButton;
+
+  /// No description provided for @onboardingExperienceTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your experience'**
+  String get onboardingExperienceTitle;
+
+  /// No description provided for @onboardingExperienceBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll tune tips and defaults to match your sailing style.'**
+  String get onboardingExperienceBody;
+
+  /// No description provided for @onboardingExperienceBeginner.
+  ///
+  /// In en, this message translates to:
+  /// **'Beginner'**
+  String get onboardingExperienceBeginner;
+
+  /// No description provided for @onboardingExperienceCruiser.
+  ///
+  /// In en, this message translates to:
+  /// **'Cruiser'**
+  String get onboardingExperienceCruiser;
+
+  /// No description provided for @onboardingExperienceRacer.
+  ///
+  /// In en, this message translates to:
+  /// **'Racer'**
+  String get onboardingExperienceRacer;
+
+  /// No description provided for @onboardingRegionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Where do you sail?'**
+  String get onboardingRegionTitle;
+
+  /// No description provided for @onboardingRegionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We prioritize charts and mooring data for your region.'**
+  String get onboardingRegionBody;
+
+  /// No description provided for @onboardingRegionMediterranean.
+  ///
+  /// In en, this message translates to:
+  /// **'Mediterranean'**
+  String get onboardingRegionMediterranean;
+
+  /// No description provided for @onboardingRegionCaribbean.
+  ///
+  /// In en, this message translates to:
+  /// **'Caribbean'**
+  String get onboardingRegionCaribbean;
+
+  /// No description provided for @onboardingRegionOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get onboardingRegionOther;
 }
 
 class _AppLocalizationsDelegate

@@ -29,7 +29,7 @@ class WeatherRepository {
     '?latitude=${lat.toString()}'
     '&longitude=${lon.toString()}'
     '&hourly=temperature_2m,precipitation,pressure_msl,'
-    'wind_speed_10m,wind_direction_10m'
+    'wind_speed_10m,wind_direction_10m,wind_gusts_10m'
     '&wind_speed_unit=kn'
     '&forecast_days=4',
   );

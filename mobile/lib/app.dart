@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/disclaimer_gate.dart';
+import 'core/onboarding_prefs.dart';
 import 'core/providers.dart';
-import 'core/theme/cw_theme.dart';
+import 'core/theme/cw_theme_mode.dart';
 import 'features/legal/disclaimer_screen.dart';
+import 'features/onboarding/onboarding_flow.dart';
 import 'features/shell/shell_screen.dart';
 import 'l10n/app_localizations.dart';
 
@@ -49,11 +51,15 @@ class _CaptainWrongelAppState extends ConsumerState<CaptainWrongelApp> {
   Widget build(BuildContext context) {
     final locale = ref.watch(localeControllerProvider);
     final disclaimerOk = ref.watch(disclaimerAcceptedProvider);
+    final onboardingOk = ref.watch(onboardingCompleteProvider);
     final accessibility = ref.watch(accessibilityPreferencesProvider);
+    final nightRedEnabled = ref.watch(themeModeProvider);
 
-    final baseTheme = accessibility.highContrast
-        ? CwTheme.materialHighContrast()
-        : CwTheme.material();
+    final themeMode = CwThemeMode.resolve(
+      nightRedEnabled: nightRedEnabled,
+      highContrastEnabled: accessibility.highContrast,
+    );
+    final baseTheme = themeMode.materialTheme;
 
     final glove = accessibility.gloveMode;
     final scaled = accessibility.textScale;
@@ -103,7 +109,11 @@ class _CaptainWrongelAppState extends ConsumerState<CaptainWrongelApp> {
           child: child,
         );
       },
-      home: disclaimerOk ? const ShellScreen() : const DisclaimerScreen(),
+      home: !disclaimerOk
+          ? const DisclaimerScreen()
+          : !onboardingOk
+              ? const OnboardingFlow()
+              : const ShellScreen(),
     );
   }
 }

@@ -1,7 +1,8 @@
-import 'dart:async' show unawaited;
+import 'dart:async' show StreamSubscription, unawaited;
 import 'dart:math' show Point;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
@@ -19,8 +20,10 @@ import '../../features/ais/ais_demo_provider.dart';
 import '../../features/ais/ais_targets_provider.dart';
 import '../../l10n/app_localizations.dart';
 import '../mooring/mooring_detail_sheet.dart';
+import '../mooring/mooring_map_navigation.dart';
 import '../mooring/mooring_providers.dart';
 import '../route/advisory_polyline_notifier.dart';
+import '../route/route_corridor_preferences.dart';
 import '../track/track_recording_controller.dart';
 import 'ais_target_layer.dart';
 import 'chart_engine_platform.dart';
@@ -28,6 +31,10 @@ import 'demo_map_layers.dart';
 import 'map_layer_sheet.dart';
 import 'map_long_press_sheet.dart';
 import 'mooring_layer.dart';
+import 'widgets/map_controls_overlay.dart';
+import 'widgets/map_peek_sheet.dart';
+import 'widgets/map_status_pill.dart';
+import 'widgets/route_overlay_layer.dart';
 
 /// MapLibre chart, GNSS dot, draft route, слои и AIS demo (Фазы 1–3).
 class MapScreen extends ConsumerStatefulWidget {
@@ -45,7 +52,6 @@ class _MapScreenState extends ConsumerState<MapScreen>
   );
 
   MapLibreMapController? _controller;
-  Line? _routeLine;
   Line? _advisoryLine;
   Line? _trackLine;
   bool _styleLoaded = false;
@@ -63,6 +69,13 @@ class _MapScreenState extends ConsumerState<MapScreen>
   /// Экран ушёл в фон — при eco профиле временно отключаем тяжёлые демо-слои (Фаза 8).
   bool _pausedBackground = false;
 
+  bool _headingUp = false;
+  bool _followGps = false;
+  double _mapBearing = 0;
+  LatLng _mapCenter = _initial.target;
+  int _cameraTick = 0;
+  StreamSubscription<CompassEvent>? _compassSub;
+
   @override
   void initState() {
     super.initState();
@@ -75,6 +88,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _stopCompassListen();
     super.dispose();
   }
 
@@ -96,6 +110,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
       depthContours: false,
       navigationAids: false,
       mooringPois: prefs.mooringPois,
+      overlay: prefs.overlay,
+      chartStyle: prefs.chartStyle,
+      shallowHighlight: prefs.shallowHighlight,
     );
   }
 
@@ -110,31 +127,6 @@ class _MapScreenState extends ConsumerState<MapScreen>
       _locOk =
           p == LocationPermission.always || p == LocationPermission.whileInUse;
     });
-  }
-
-  Future<void> _redrawRouteLine() async {
-    final c = _controller;
-    if (c == null || !_styleLoaded) return;
-
-    if (_wps.length < 2) {
-      final line = _routeLine;
-      if (line != null) {
-        await c.removeLine(line);
-        _routeLine = null;
-      }
-      return;
-    }
-
-    final geom = _wps.map((w) => LatLng(w.lat, w.lon)).toList(growable: false);
-
-    final line = _routeLine;
-    if (line == null) {
-      _routeLine = await c.addLine(
-        LineOptions(geometry: geom, lineColor: '#FF7043', lineWidth: 4),
-      );
-    } else {
-      await c.updateLine(line, LineOptions(geometry: geom));
-    }
   }
 
   Future<void> _redrawTrackLine(List<TrackPointRow> pts) async {
@@ -206,14 +198,12 @@ class _MapScreenState extends ConsumerState<MapScreen>
 
     await ref.read(activeRouteIdProvider.notifier).setActive(_routeId!);
 
-    await _redrawRouteLine();
     if (mounted) setState(() {});
   }
 
   Future<void> _afterStyleLoaded() async {
     setState(() => _styleLoaded = true);
     await _syncRouteDraftFromRepo();
-    await _redrawRouteLine();
     await _redrawAdvisoryLine();
 
     final full = await loadDemoLayersGeoJson();
@@ -243,6 +233,20 @@ class _MapScreenState extends ConsumerState<MapScreen>
       );
     }
     if (mounted) setState(() {});
+    await _applyPendingCameraTarget();
+  }
+
+  Future<void> _applyPendingCameraTarget() async {
+    final target = ref.read(mapCameraTargetProvider);
+    final c = _controller;
+    if (target == null || c == null || !_styleLoaded) return;
+    await c.animateCamera(
+      CameraUpdate.newLatLngZoom(
+        LatLng(target.lat, target.lon),
+        target.zoom,
+      ),
+    );
+    ref.read(mapCameraTargetProvider.notifier).clear();
   }
 
   Future<void> _handleMapTap(Point<double> screen) async {
@@ -299,24 +303,124 @@ class _MapScreenState extends ConsumerState<MapScreen>
     });
   }
 
+  Future<void> _zoomIn() async {
+    final c = _controller;
+    if (c == null) return;
+    await c.animateCamera(CameraUpdate.zoomIn());
+  }
+
+  Future<void> _zoomOut() async {
+    final c = _controller;
+    if (c == null) return;
+    await c.animateCamera(CameraUpdate.zoomOut());
+  }
+
+  void _toggleCompass() {
+    setState(() => _headingUp = !_headingUp);
+    unawaited(_syncCompassMode());
+  }
+
+  Future<void> _syncCompassMode() async {
+    final c = _controller;
+    if (c == null) return;
+
+    if (!_headingUp) {
+      _stopCompassListen();
+      await c.animateCamera(CameraUpdate.bearingTo(0));
+      if (_followGps) {
+        await c.updateMyLocationTrackingMode(MyLocationTrackingMode.tracking);
+      }
+      return;
+    }
+
+    if (_followGps) {
+      _stopCompassListen();
+      await c.updateMyLocationTrackingMode(
+        MyLocationTrackingMode.trackingCompass,
+      );
+      return;
+    }
+
+    _startCompassListen();
+  }
+
+  void _startCompassListen() {
+    _compassSub?.cancel();
+    final stream = FlutterCompass.events;
+    if (stream == null) return;
+    _compassSub = stream.listen((event) {
+      final heading = event.heading;
+      final c = _controller;
+      if (heading == null || c == null || !_headingUp || _followGps) return;
+      unawaited(
+        c.animateCamera(
+          CameraUpdate.bearingTo(heading),
+          duration: const Duration(milliseconds: 200),
+        ),
+      );
+    });
+  }
+
+  void _stopCompassListen() {
+    unawaited(_compassSub?.cancel());
+    _compassSub = null;
+  }
+
+  void _toggleFollowGps() {
+    setState(() => _followGps = !_followGps);
+    unawaited(_syncFollowGps());
+  }
+
+  Future<void> _syncFollowGps() async {
+    final c = _controller;
+    if (c == null) return;
+
+    if (!_followGps) {
+      await c.updateMyLocationTrackingMode(MyLocationTrackingMode.none);
+      if (_headingUp) _startCompassListen();
+      return;
+    }
+
+    _stopCompassListen();
+    final mode = _headingUp
+        ? MyLocationTrackingMode.trackingCompass
+        : MyLocationTrackingMode.tracking;
+    await c.updateMyLocationTrackingMode(mode);
+  }
+
+  void _onCameraTrackingDismissed() {
+    if (!mounted || !_followGps) return;
+    setState(() => _followGps = false);
+    if (_headingUp) _startCompassListen();
+  }
+
+  ({double? depthM, String? navLabel}) _mapPointMeta(LatLng pos) {
+    final idx = _layersIndex;
+    if (idx == null) return (depthM: null, navLabel: null);
+    return (
+      depthM: idx.nearestContourDepthM(lat: pos.latitude, lon: pos.longitude),
+      navLabel: idx.nearestNavAidLabel(lat: pos.latitude, lon: pos.longitude),
+    );
+  }
+
   Future<void> _handleMapLongPress(LatLng pos) async {
     if (!mounted) return;
-    final idx = _layersIndex;
-
-    double? depthM;
-    String? navLabel;
-    if (idx != null) {
-      depthM = idx.nearestContourDepthM(lat: pos.latitude, lon: pos.longitude);
-      navLabel = idx.nearestNavAidLabel(lat: pos.latitude, lon: pos.longitude);
-    }
+    final meta = _mapPointMeta(pos);
 
     await showMapLongPressSheet(
       context: context,
       lat: pos.latitude,
       lon: pos.longitude,
-      depthMeters: depthM,
-      navAidLabel: navLabel,
+      depthMeters: meta.depthM,
+      navAidLabel: meta.navLabel,
       onAddWaypoint: () => unawaited(_persistRouteWaypoint(pos)),
+      onNavigateHere: () {
+        final c = _controller;
+        if (c == null) return;
+        unawaited(
+          c.animateCamera(CameraUpdate.newLatLng(pos)),
+        );
+      },
     );
   }
 
@@ -365,6 +469,10 @@ class _MapScreenState extends ConsumerState<MapScreen>
       });
     });
 
+    ref.listen<MapCameraTarget?>(mapCameraTargetProvider, (prev, next) {
+      if (next != null) unawaited(_applyPendingCameraTarget());
+    });
+
     ref.listen<AsyncValue<List<TrackPointRow>>>(activeTrackPointsProvider, (
       prev,
       next,
@@ -385,19 +493,39 @@ class _MapScreenState extends ConsumerState<MapScreen>
     }
 
     final showLoc = _locResolved && _locOk;
+    final centerMeta = _mapPointMeta(_mapCenter);
+    final showCorridor = ref.watch(routeCorridorVisibleProvider);
+    final routePoints = _wps
+        .map((w) => (lat: w.lat, lon: w.lon))
+        .toList(growable: false);
 
     return Stack(
       children: [
         MapLibreMap(
           initialCameraPosition: _initial,
           trackCameraPosition: true,
+          compassEnabled: false,
           myLocationEnabled: showLoc,
+          myLocationTrackingMode: _followGps
+              ? (_headingUp
+                  ? MyLocationTrackingMode.trackingCompass
+                  : MyLocationTrackingMode.tracking)
+              : MyLocationTrackingMode.none,
           onMapCreated: (c) => _controller = c,
           onStyleLoadedCallback: () => unawaited(_afterStyleLoaded()),
           onMapClick: (screen, _) => unawaited(_handleMapTap(screen)),
           onMapLongClick: (screen, coords) {
             unawaited(_handleMapLongPress(coords));
           },
+          onCameraMove: (pos) {
+            if (!mounted) return;
+            setState(() {
+              _mapBearing = pos.bearing;
+              _mapCenter = pos.target;
+              _cameraTick++;
+            });
+          },
+          onCameraTrackingDismissed: _onCameraTrackingDismissed,
         ),
         if (!_styleLoaded)
           Positioned.fill(
@@ -407,6 +535,18 @@ class _MapScreenState extends ConsumerState<MapScreen>
             ),
           ),
         if (_styleLoaded) ...[
+          const MapStatusPill(),
+          MapControlsOverlay(
+            enabled: true,
+            headingUp: _headingUp,
+            mapBearing: _mapBearing,
+            followGps: _followGps,
+            onZoomIn: () => unawaited(_zoomIn()),
+            onZoomOut: () => unawaited(_zoomOut()),
+            onCompassToggle: _toggleCompass,
+            onLayers: () => unawaited(showMapLayerSheet(context)),
+            onFollowGpsToggle: showLoc ? _toggleFollowGps : null,
+          ),
           Positioned(
             right: 12,
             bottom: 164,
@@ -427,16 +567,6 @@ class _MapScreenState extends ConsumerState<MapScreen>
           ),
           Positioned(
             right: 12,
-            bottom: 88,
-            child: FloatingActionButton.small(
-              heroTag: 'map_layers',
-              tooltip: l10n.mapLayersTooltip,
-              onPressed: () => unawaited(showMapLayerSheet(context)),
-              child: const Icon(Icons.layers_outlined),
-            ),
-          ),
-          Positioned(
-            right: 12,
             bottom: 12,
             child: FloatingActionButton.small(
               heroTag: 'offline_region',
@@ -444,6 +574,19 @@ class _MapScreenState extends ConsumerState<MapScreen>
               child: const Icon(Icons.cloud_download_outlined),
             ),
           ),
+          MapPeekSheet(
+            lat: _mapCenter.latitude,
+            lon: _mapCenter.longitude,
+            depthMeters: centerMeta.depthM,
+            navAidLabel: centerMeta.navLabel,
+          ),
+          if (_controller != null && routePoints.length >= 2)
+            RouteOverlayLayer(
+              controller: _controller!,
+              waypoints: routePoints,
+              showCorridor: showCorridor,
+              cameraTick: _cameraTick,
+            ),
         ],
       ],
     );

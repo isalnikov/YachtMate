@@ -4,6 +4,11 @@
     {
       "id": "bowline",
       "category": "loops",
+      "difficulty": "easy",
+      "useCases": {
+        "en": "Fixed loop at the end of a line",
+        "ru": "Несъёмная петля на конце троса"
+      },
       "titles": {
         "en": "Bowline",
         "ru": "Булинь"
@@ -26,6 +31,11 @@
     {
       "id": "cleat_hitch",
       "category": "hitches",
+      "difficulty": "easy",
+      "useCases": {
+        "en": "Secure a line to a cleat",
+        "ru": "Крепление шкота на кнехте"
+      },
       "titles": {
         "en": "Cleat hitch",
         "ru": "Шкотовый узел на кнехте"
@@ -48,6 +58,11 @@
     {
       "id": "sheet_bend",
       "category": "bends",
+      "difficulty": "medium",
+      "useCases": {
+        "en": "Join two ropes of different diameter",
+        "ru": "Соединение тросов разной толщины"
+      },
       "titles": {
         "en": "Sheet bend",
         "ru": "Шлюпочный (смежный) узел"
@@ -70,6 +85,11 @@
     {
       "id": "figure_eight",
       "category": "stoppers",
+      "difficulty": "easy",
+      "useCases": {
+        "en": "Stopper knot at the rope end",
+        "ru": "Стопорный узел на конце троса"
+      },
       "titles": {
         "en": "Figure-eight",
         "ru": "Восьмёрка"
@@ -92,6 +112,11 @@
     {
       "id": "round_turn_two_half",
       "category": "hitches",
+      "difficulty": "medium",
+      "useCases": {
+        "en": "Attach a line to a ring or post",
+        "ru": "Крепление к рым-болту или столбу"
+      },
       "titles": {
         "en": "Round turn & two half hitches",
         "ru": "Круговой виток и два полуштыка"
@@ -114,6 +139,11 @@
     {
       "id": "reef_knot",
       "category": "bends",
+      "difficulty": "easy",
+      "useCases": {
+        "en": "Join two equal lines under light load",
+        "ru": "Соединение равных тросов при слабой нагрузке"
+      },
       "titles": {
         "en": "Reef knot",
         "ru": "Прямой (рифовый) узел"

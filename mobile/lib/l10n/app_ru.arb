@@ -30,6 +30,18 @@
   "mapLayerDepthContours": "Изобаты (синтетика)",
   "mapLayerNavAids": "Навигационные знаки (синтетика)",
   "mapLayerMooringPois": "Марины и якорные (каталог)",
+  "mapLayerSectionOverlays": "Наложения",
+  "mapLayerSectionChart": "Карта",
+  "mapLayerSectionShallow": "Мелководье",
+  "mapLayerOverlayNone": "Без наложения",
+  "mapLayerOverlaySatellite": "Спутник",
+  "mapLayerOverlayRelief": "Рельеф",
+  "mapLayerOverlaySonar": "Сонар",
+  "mapLayerChartStandard": "Стандарт",
+  "mapLayerChartPaper": "Бумажная",
+  "mapLayerChartSimple": "Простая",
+  "mapLayerChartNight": "Ночная",
+  "mapLayerShallowHighlight": "Подсветка мелководья",
   "mapDepthLegendTitle": "Легенда",
   "mapDepthLegendBody": "Синие линии: изобаты EMODnet Bathymetry (пример: район Фетхие, Турция). На карте один цвет; значения глубин идут в расчёт сетки. Не официальные карты.",
   "mapLongPressTitle": "Позиция (WGS84)",
@@ -40,7 +52,75 @@
   "mapLongPressNavAid": "Ближайший знак",
   "mapLongPressNavUnavailable": "—",
   "mapLongPressAddWaypoint": "Добавить точку маршрута",
+  "mapNavigateHere": "Навигация сюда",
+  "mapCoordsCopied": "Координаты скопированы",
+  "mapPeekCoordsSemantic": "Координаты центра карты — нажмите, чтобы скопировать",
+  "mapPeekDepthMeters": "Глубина: {meters} м",
   "mapAisDemoTooltip": "Демо AIS (записанный NMEA)",
+  "aisScreenTitle": "AIS",
+  "moreMenuAis": "AIS и трафик",
+  "moreMenuAisSubtitle": "Локальный NMEA · CPA/TCPA · фильтры",
+  "aisFilterAll": "Все",
+  "aisFilterCargo": "Грузовые",
+  "aisFilterTanker": "Танкеры",
+  "aisFilterPleasure": "Яхты",
+  "aisLocalStreamTitle": "Локальный поток",
+  "aisLocalStreamBody": "NMEA 0183 · Wi‑Fi/BT шлюз · CPA/TCPA",
+  "aisDemoStart": "Демо",
+  "aisDemoStop": "Стоп",
+  "aisDemoActive": "Демо NMEA активно",
+  "aisTargetsCount": "Целей: {count}",
+  "@aisTargetsCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "aisTapVessel": "Нажмите на судно для деталей",
+  "aisVesselSog": "{knots} уз",
+  "@aisVesselSog": {
+    "placeholders": {
+      "knots": {"type": "String"}
+    }
+  },
+  "aisVesselCog": "{degrees}°",
+  "@aisVesselCog": {
+    "placeholders": {
+      "degrees": {"type": "String"}
+    }
+  },
+  "aisVesselCpa": "{nm} м.м.",
+  "@aisVesselCpa": {
+    "placeholders": {
+      "nm": {"type": "String"}
+    }
+  },
+  "aisVesselTcpa": "{minutes} мин",
+  "@aisVesselTcpa": {
+    "placeholders": {
+      "minutes": {"type": "String"}
+    }
+  },
+  "aisCpaWarning": "CPA < 1 м.м.",
+  "mapZoomInTooltip": "Приблизить",
+  "mapZoomOutTooltip": "Отдалить",
+  "mapCompassNorthUpTooltip": "Север вверху — нажмите для курса вверх",
+  "mapCompassHeadingUpTooltip": "Курс вверху — нажмите для севера вверху",
+  "mapFollowGpsTooltip": "Следовать GPS",
+  "mapFollowGpsActiveTooltip": "Следование GPS — нажмите, чтобы остановить",
+  "mapGpsStatusSemantic": "Статус GPS — нажмите для настроек геолокации",
+  "mapGpsAccuracyMeters": "±{meters} м",
+  "@mapGpsAccuracyMeters": {
+    "placeholders": {
+      "meters": {"type": "int"}
+    }
+  },
+  "mapGpsSogKnots": "{knots} уз",
+  "@mapGpsSogKnots": {
+    "placeholders": {
+      "knots": {"type": "String"}
+    }
+  },
+  "mapGpsLocationSettingsHint": "Проверьте разрешение геолокации и точность GPS в настройках системы.",
   "weatherScreenTitle": "Погода и приливы",
   "weatherRefreshTooltip": "Обновить прогноз",
   "weatherGpsTooltip": "Точка прогноза по GPS",
@@ -65,6 +145,10 @@
     }
   },
   "weatherHourlyHeading": "Почасовой (48 ч)",
+  "weatherLayerWindTooltip": "Слой ветра",
+  "weatherLayerWavesTooltip": "Слой волн",
+  "weatherLayerTempTooltip": "Слой температуры",
+  "weatherLayerPressureTooltip": "Слой давления",
   "weatherTidesSection": "Приливы (демо)",
   "weatherRefreshing": "Обновление…",
   "weatherGpsDenied": "Нет доступа к геолокации.",
@@ -102,6 +186,39 @@
       "kind": {"type": "String"}
     }
   },
+  "weatherSeeAllTides": "Все приливы",
+  "tidesScreenTitle": "Приливы",
+  "tidesCurveHeading": "Кривая на сегодня (демо)",
+  "tidesTableHeading": "Расписание на 7 дней (демо)",
+  "tidesMoonHeading": "Фаза Луны",
+  "tidesSunHeading": "Восход и закат (прибл.)",
+  "tidesTableDay": "День",
+  "tidesHighShort": "ПМ",
+  "tidesLowShort": "ММ",
+  "tidesEmpty": "Нет данных о приливах.",
+  "tidesHeightM": "{height} м",
+  "@tidesHeightM": {
+    "placeholders": {
+      "height": {"type": "String"}
+    }
+  },
+  "tidesTableCell": "{time} · {height} · {kind}",
+  "@tidesTableCell": {
+    "placeholders": {
+      "time": {"type": "String"},
+      "height": {"type": "String"},
+      "kind": {"type": "String"}
+    }
+  },
+  "tidesSunLine": "Восход {sunrise} · Закат {sunset}",
+  "@tidesSunLine": {
+    "placeholders": {
+      "sunrise": {"type": "String"},
+      "sunset": {"type": "String"}
+    }
+  },
+  "moreMenuTides": "Приливы",
+  "moreMenuTidesSubtitle": "Демо-кривая, таблица 7 дней, Луна и Солнце",
   "routeScreenTitle": "Маршрут (advisory)",
   "routeAdvisoryDisclaimerTitle": "Advisory-маршрут (синтетика)",
   "routeAdvisoryDisclaimerBody": "Линия считается по демонстрационной глубинной сетке, не по официальной карте. Только для ориентира; безопасность и запас под килем обеспечиваете вы.",
@@ -128,9 +245,75 @@
       "reason": {"type": "String"}
     }
   },
+  "routePlanRoute": "Построить маршрут",
+  "routeStatsTitle": "Сводка маршрута",
+  "routeStatsDistance": "Дистанция",
+  "routeStatsEta": "ETA",
+  "routeStatsWaypointCount": "Точки",
+  "routeStatsDistanceValue": "{nm} м.м.",
+  "@routeStatsDistanceValue": {
+    "placeholders": {
+      "nm": {"type": "String"}
+    }
+  },
+  "routeStatsEtaUnknown": "—",
+  "routeStatsEtaMinutes": "{minutes} мин",
+  "@routeStatsEtaMinutes": {
+    "placeholders": {
+      "minutes": {"type": "int"}
+    }
+  },
+  "routeStatsEtaHours": "{hours} ч",
+  "@routeStatsEtaHours": {
+    "placeholders": {
+      "hours": {"type": "int"}
+    }
+  },
+  "routeStatsEtaHoursMinutes": "{hours} ч {minutes} мин",
+  "@routeStatsEtaHoursMinutes": {
+    "placeholders": {
+      "hours": {"type": "int"},
+      "minutes": {"type": "int"}
+    }
+  },
+  "routeStatsWaypointCountValue": "{count}",
+  "@routeStatsWaypointCountValue": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "routeWaypointListTitle": "Точки маршрута",
+  "routeWaypointEmpty": "Нет точек. Добавьте их на карте.",
+  "routeWaypointDefaultName": "Т{index}",
+  "@routeWaypointDefaultName": {
+    "placeholders": {
+      "index": {"type": "int"}
+    }
+  },
+  "routeSafetyOk": "Проверка глубины по точкам пройдена (демо-сетка).",
+  "routeSafetyShallow": "Мелководье у Т{index}: осадка + запас превышают глубину по демо-сетке.",
+  "@routeSafetyShallow": {
+    "placeholders": {
+      "index": {"type": "int"}
+    }
+  },
+  "routeShowCorridor": "Коридор безопасности",
+  "routeShowCorridorSubtitle": "Зелёный буфер ±50 м вокруг маршрута на карте",
   "mooringScreenTitle": "Стоянка (марины и якорные)",
   "mooringKindMarina": "Марина",
   "mooringKindAnchorage": "Якорная стоянка",
+  "mooringKindBuoy": "Буй",
+  "mooringViewList": "Список",
+  "mooringSortDistance": "Расстояние",
+  "mooringSortRating": "Рейтинг",
+  "mooringDepthUnknown": "Глубина н/д",
+  "mooringDistanceNm": "{distance} м.миль",
+  "@mooringDistanceNm": {
+    "placeholders": {
+      "distance": {"type": "String"}
+    }
+  },
+  "mooringEmptyFiltered": "Снимите фильтры или измените поиск.",
   "mooringVhf": "УКВ",
   "mooringPhone": "Телефон",
   "mooringServices": "Услуги / свойства",
@@ -221,6 +404,15 @@
   "sosNoNumber": "Укажите номер SMS выше или скопируйте текст.",
   "sosCopyMessage": "Копировать текст",
   "sosMessageCopied": "Текст скопирован.",
+  "sosTypeLabel": "Тип ЧС",
+  "sosTypeMedical": "Медицинская",
+  "sosTypeFire": "Пожар",
+  "sosTypeSinking": "Затопление",
+  "sosTypeManOverboard": "Человек за бортом",
+  "sosMessagePreview": "Предпросмотр сообщения",
+  "sosCoordsPending": "Определение координат…",
+  "sosTimerActive": "Бедствие активно",
+  "sosTimerElapsed": "Прошло",
   "trackTitle": "Трек рейса",
   "trackRecordingActive": "Запись…",
   "trackIdle": "Запись выключена",
@@ -260,7 +452,53 @@
   "settingsTextSizeLarge": "Крупный",
   "settingsTextSizeExtraLarge": "Очень крупный",
   "settingsHighContrast": "Высокий контраст",
+  "settingsNightWatch": "Ночная вахта (красный)",
+  "settingsNightWatchSubtitle": "Красный интерфейс для сохранения ночного зрения",
+  "settingsNightWatchChartNightHint": "Совет: Слои карты → Карта → Ночь хорошо сочетается с этой темой.",
+  "settingsNightWatchChartDayHint": "Совет: Слои карты → Карта → Стандарт для дневной палитры.",
   "settingsEnergySection": "Батарея и GPS",
+  "settingsVesselSection": "Судно",
+  "settingsDisplaySection": "Интерфейс",
+  "settingsAboutSection": "О приложении",
+  "settingsVesselName": "Название судна",
+  "settingsVesselLoa": "Длина ({unit})",
+  "@settingsVesselLoa": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsVesselDraft": "Осада ({unit})",
+  "@settingsVesselDraft": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsVesselType": "Тип корпуса",
+  "settingsVesselTypeSailing": "Парусная яхта",
+  "settingsVesselTypeMotor": "Моторная яхта",
+  "settingsVesselTypeCatamaran": "Катамаран",
+  "settingsVesselTypeOther": "Другое",
+  "settingsUnits": "Единицы",
+  "settingsUnitsMetric": "Метрические",
+  "settingsUnitsImperial": "Имперские",
+  "settingsTheme": "Тема",
+  "settingsThemeDeck": "Палуба",
+  "settingsThemeNightRed": "Ночь (красная)",
+  "settingsThemeHighContrast": "Высокий контраст",
+  "settingsAboutAppName": "Captain Wrongel",
+  "settingsAboutVersion": "Версия {version}",
+  "@settingsAboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsAboutTagline": "Офлайн-навигатор для яхт. Не для основной навигации.",
   "energyProfileEco": "Эко-проход",
   "energyProfilePassage": "Сбалансированный",
   "energyProfileSport": "Точность",
@@ -279,6 +517,13 @@
   "knotCategoryHitches": "Штыки и крепления",
   "knotCategoryStoppers": "Стопорные узлы",
   "knotCategoryEmergency": "Аварийные",
+  "knotCategoryAll": "Все",
+  "knotCategoryFavorites": "Избранное",
+  "knotDifficultyEasy": "Легко",
+  "knotDifficultyMedium": "Средне",
+  "knotDifficultyHard": "Сложно",
+  "knotAddFavorite": "В избранное",
+  "knotRemoveFavorite": "Убрать из избранного",
   "moreMenuToolbox": "Морская мастерская",
   "moreMenuToolboxSubtitle": "Якорь, компас, GRIB, берег, радио, медицина, расходы…",
   "toolboxTitle": "Морская мастерская",
@@ -290,6 +535,10 @@
   "toolboxVhf": "УКВ и COLREG",
   "toolboxMedical": "Медицинский глоссарий",
   "toolboxExpenses": "Судовая касса",
+  "toolboxSectionNavigation": "Навигация",
+  "toolboxSectionSafety": "Безопасность",
+  "toolboxSectionReference": "Справочник",
+  "badgeNew": "НОВ",
   "anchorWatchTitle": "Якорная вахта",
   "anchorWatchHint": "Отметьте точку якоря на GPS, задайте радиус и включите контроль. Тревога при срыве за круг. Решение о якорном оснащении — на капитане.",
   "anchorWatchRadius": "Допустимый радиус",
@@ -301,6 +550,11 @@
   "anchorWatchAlarmBanner": "СУДНО ВЫШЛО ЗА ПРЕДЕЛЫ КРУГА",
   "anchorWatchDismissAlarm": "Подтвердить",
   "anchorWatchGpsLost": "Нет свежей GPS-навигации — проверьте приёмник и небо.",
+  "anchorWatchMapPlaceholder": "Отметьте якорь, чтобы показать зону на карте",
+  "anchorWatchInZone": "В ЗОНЕ",
+  "anchorWatchDrifting": "СНОС",
+  "anchorWatchDisarmed": "Вахта выкл.",
+  "anchorWatchArmedBadge": "ВАХТА",
   "compassTitle": "Компас и солнце",
   "compassDisclaimer": "Компас по датчикам устройства; восход/закат приблизительные.",
   "compassUnavailablePlatform": "Компас недоступен на этой платформе.",
@@ -321,8 +575,26 @@
   "medicalDisclaimer": "Только справочные сведения — при угрозе жизни вызывайте помощь.",
   "medicalLoadError": "Не удалось загрузить глоссарий.",
   "vhfTrainingTitle": "УКВ и COLREG",
+  "vhfTabScenarios": "Сценарии",
   "vhfTabQuiz": "Викторина COLREG",
   "vhfTabSessions": "Записи",
+  "vhfScenariosLoadError": "Не удалось загрузить сценарии УКВ.",
+  "vhfScenariosEmpty": "Нет доступных сценариев УКВ.",
+  "vhfScenarioPickHint": "Выберите сценарий для отработки радиообмена.",
+  "vhfScenarioBack": "Все сценарии",
+  "vhfDifficultyBeginner": "Начальный",
+  "vhfDifficultyIntermediate": "Средний",
+  "vhfDifficultyAdvanced": "Продвинутый",
+  "vhfDialogueShore": "Берег",
+  "vhfDialogueYou": "Вы",
+  "vhfQuizProgress": "Вопрос {current} из {total}",
+  "@vhfQuizProgress": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "vhfQuizPickAnswer": "Сначала выберите ответ.",
   "vhfSessionsHint": "Записи только на устройстве. Расшифровка — через микрофон (пересказ), не из файла.",
   "vhfSessionsLoadError": "Не удалось загрузить записи.",
   "vhfSessionsEmpty": "Записей УКВ пока нет.",
@@ -352,5 +624,27 @@
   "expenseCatMooringFee": "Швартовка",
   "expenseCatGear": "Снаряжение и ремонт",
   "expenseCatProvisions": "Провизия",
-  "expenseCatOther": "Прочее"
+  "expenseCatOther": "Прочее",
+  "onboardingWelcomeTagline": "Captain Wrongel",
+  "onboardingWelcomeTitle": "Ваш помощник в каждом походе",
+  "onboardingWelcomeSubtitle": "Офлайн-карты, погода, стоянки — всё на одной палубе.",
+  "onboardingNext": "Далее",
+  "onboardingBack": "Назад",
+  "onboardingGetStarted": "Начать",
+  "onboardingPermissionsTitle": "Разрешения",
+  "onboardingPermissionsBody": "Геолокация нужна для карт, погоды и якорной вахты. Уведомления предупредят о дрейфе и изменении погоды.",
+  "onboardingLocationTitle": "Геолокация",
+  "onboardingLocationButton": "Разрешить геолокацию",
+  "onboardingNotificationTitle": "Уведомления",
+  "onboardingNotificationButton": "Разрешить уведомления",
+  "onboardingExperienceTitle": "Ваш опыт",
+  "onboardingExperienceBody": "Подстроим подсказки и настройки под ваш стиль плавания.",
+  "onboardingExperienceBeginner": "Новичок",
+  "onboardingExperienceCruiser": "Круизный",
+  "onboardingExperienceRacer": "Гонщик",
+  "onboardingRegionTitle": "Где вы ходите?",
+  "onboardingRegionBody": "Приоритет карт и стоянок для вашего региона.",
+  "onboardingRegionMediterranean": "Средиземноморье",
+  "onboardingRegionCaribbean": "Карибы",
+  "onboardingRegionOther": "Другое"
 }

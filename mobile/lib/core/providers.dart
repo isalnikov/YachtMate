@@ -23,6 +23,8 @@ import 'energy_profile_controller.dart';
 import 'locale_controller.dart';
 import 'logging/app_logger.dart';
 import 'map_layer_preferences_controller.dart';
+import 'theme_mode_controller.dart';
+import 'vessel_prefs.dart';
 
 /// Injected after `SharedPreferences.getInstance()` in [main].
 final sharedPreferencesProvider = Provider<SharedPreferences>(
@@ -110,6 +112,16 @@ final accessibilityPreferencesProvider =
       );
     });
 
+final themeModeProvider = StateNotifierProvider<ThemeModeController, bool>((
+  ref,
+) {
+  return ThemeModeController(
+    ref.watch(sharedPreferencesProvider),
+    ref.watch(auditRepositoryProvider),
+    ref.watch(sessionIdProvider),
+  );
+});
+
 final energyProfileProvider =
     StateNotifierProvider<EnergyProfileController, EnergyProfile>((ref) {
   return EnergyProfileController(
@@ -118,6 +130,15 @@ final energyProfileProvider =
     ref.watch(sessionIdProvider),
   );
 });
+
+final vesselPrefsProvider =
+    StateNotifierProvider<VesselPrefsController, VesselProfile>((ref) {
+      return VesselPrefsController(
+        ref.watch(sharedPreferencesProvider),
+        ref.watch(auditRepositoryProvider),
+        ref.watch(sessionIdProvider),
+      );
+    });
 
 final anchorWatchProvider =
     StateNotifierProvider<AnchorWatchController, AnchorWatchState>((ref) {

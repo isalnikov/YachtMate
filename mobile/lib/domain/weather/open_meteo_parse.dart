@@ -17,6 +17,7 @@ WeatherForecastBundle parseOpenMeteoCombined({
   final pres = _doubles(hourly['pressure_msl']);
   final wsk = _doubles(hourly['wind_speed_10m']);
   final wdir = _doubles(hourly['wind_direction_10m']);
+  final wgust = _doubles(hourly['wind_gusts_10m']);
 
   Map<String, double>? wavesByTime;
   if (marineJson != null) {
@@ -40,6 +41,7 @@ WeatherForecastBundle parseOpenMeteoCombined({
         pressureHpa: _at(pres, i),
         windSpeedKn: _at(wsk, i),
         windDirectionDeg: _at(wdir, i),
+        windGustKn: _optionalAt(wgust, i),
         waveHeightM: wavesByTime?[times[i]],
       ),
     );
@@ -68,3 +70,9 @@ List<double> _doubles(dynamic v) {
 }
 
 double _at(List<double> a, int i) => i < a.length ? a[i] : double.nan;
+
+double? _optionalAt(List<double> a, int i) {
+  if (i >= a.length) return null;
+  final v = a[i];
+  return v.isNaN ? null : v;
+}

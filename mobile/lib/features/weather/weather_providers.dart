@@ -32,3 +32,13 @@ final weatherForecastProvider =
 final tideDemoProvider = FutureProvider<TideDemoStation>((ref) async {
   return ref.read(tidesRepositoryProvider).loadDemoBundled();
 });
+
+/// Index into the 48-hour forecast slice shown on [WeatherScreen].
+final selectedHourIndexProvider = StateProvider<int>((ref) => 0);
+
+/// Active weather overlay layer on [WeatherScreen] (step-15).
+enum WeatherLayer { wind, waves, temperature, pressure }
+
+final weatherLayerProvider = StateProvider<WeatherLayer>((ref) {
+  return WeatherLayer.wind;
+});

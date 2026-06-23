@@ -33,6 +33,18 @@
   "mapLayerDepthContours": "Depth contours (synthetic)",
   "mapLayerNavAids": "Navigation marks (synthetic)",
   "mapLayerMooringPois": "Marinas & anchorages (catalog)",
+  "mapLayerSectionOverlays": "Overlays",
+  "mapLayerSectionChart": "Chart",
+  "mapLayerSectionShallow": "Shallow",
+  "mapLayerOverlayNone": "No Overlay",
+  "mapLayerOverlaySatellite": "Satellite",
+  "mapLayerOverlayRelief": "Relief Shading",
+  "mapLayerOverlaySonar": "Sonar",
+  "mapLayerChartStandard": "Standard",
+  "mapLayerChartPaper": "Paper",
+  "mapLayerChartSimple": "Simple",
+  "mapLayerChartNight": "Night",
+  "mapLayerShallowHighlight": "Shallow highlight",
   "mapDepthLegendTitle": "Legend",
   "mapDepthLegendBody": "Blue lines: EMODnet Bathymetry contours (example region: Fethiye, Turkey). Single display color — depth values drive routing grid only. Not official charts.",
   "mapLongPressTitle": "Position (WGS84)",
@@ -43,7 +55,31 @@
   "mapLongPressNavAid": "Nearest mark",
   "mapLongPressNavUnavailable": "—",
   "mapLongPressAddWaypoint": "Add route waypoint",
+  "mapNavigateHere": "Navigate here",
+  "mapCoordsCopied": "Coordinates copied",
+  "mapPeekCoordsSemantic": "Map center coordinates — tap to copy",
+  "mapPeekDepthMeters": "Depth: {meters} m",
   "mapAisDemoTooltip": "AIS demo stream (recorded NMEA)",
+  "mapZoomInTooltip": "Zoom in",
+  "mapZoomOutTooltip": "Zoom out",
+  "mapCompassNorthUpTooltip": "North up — tap for heading up",
+  "mapCompassHeadingUpTooltip": "Heading up — tap for north up",
+  "mapFollowGpsTooltip": "Follow GPS",
+  "mapFollowGpsActiveTooltip": "Following GPS — tap to stop",
+  "mapGpsStatusSemantic": "GPS status — tap for location settings",
+  "mapGpsAccuracyMeters": "±{meters} m",
+  "@mapGpsAccuracyMeters": {
+    "placeholders": {
+      "meters": {"type": "int"}
+    }
+  },
+  "mapGpsSogKnots": "{knots} kn",
+  "@mapGpsSogKnots": {
+    "placeholders": {
+      "knots": {"type": "String"}
+    }
+  },
+  "mapGpsLocationSettingsHint": "Check location permission and GPS accuracy in system settings.",
   "weatherScreenTitle": "Weather & tides",
   "weatherRefreshTooltip": "Refresh forecast",
   "weatherGpsTooltip": "Use GPS for forecast location",
@@ -68,6 +104,10 @@
     }
   },
   "weatherHourlyHeading": "Hourly (48 h)",
+  "weatherLayerWindTooltip": "Wind layer",
+  "weatherLayerWavesTooltip": "Wave layer",
+  "weatherLayerTempTooltip": "Temperature layer",
+  "weatherLayerPressureTooltip": "Pressure layer",
   "weatherTidesSection": "Tides (demo)",
   "weatherRefreshing": "Refreshing…",
   "weatherGpsDenied": "Location permission denied.",
@@ -131,9 +171,75 @@
       "reason": {"type": "String"}
     }
   },
+  "routePlanRoute": "Plan route",
+  "routeStatsTitle": "Route summary",
+  "routeStatsDistance": "Distance",
+  "routeStatsEta": "ETA",
+  "routeStatsWaypointCount": "WPs",
+  "routeStatsDistanceValue": "{nm} nm",
+  "@routeStatsDistanceValue": {
+    "placeholders": {
+      "nm": {"type": "String"}
+    }
+  },
+  "routeStatsEtaUnknown": "—",
+  "routeStatsEtaMinutes": "{minutes} min",
+  "@routeStatsEtaMinutes": {
+    "placeholders": {
+      "minutes": {"type": "int"}
+    }
+  },
+  "routeStatsEtaHours": "{hours} h",
+  "@routeStatsEtaHours": {
+    "placeholders": {
+      "hours": {"type": "int"}
+    }
+  },
+  "routeStatsEtaHoursMinutes": "{hours} h {minutes} min",
+  "@routeStatsEtaHoursMinutes": {
+    "placeholders": {
+      "hours": {"type": "int"},
+      "minutes": {"type": "int"}
+    }
+  },
+  "routeStatsWaypointCountValue": "{count}",
+  "@routeStatsWaypointCountValue": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "routeWaypointListTitle": "Waypoints",
+  "routeWaypointEmpty": "No waypoints yet. Add points on the map.",
+  "routeWaypointDefaultName": "WP {index}",
+  "@routeWaypointDefaultName": {
+    "placeholders": {
+      "index": {"type": "int"}
+    }
+  },
+  "routeSafetyOk": "Depth check OK along waypoints (demo grid).",
+  "routeSafetyShallow": "Shallow water at WP {index}: draft + clearance exceeds demo depth.",
+  "@routeSafetyShallow": {
+    "placeholders": {
+      "index": {"type": "int"}
+    }
+  },
+  "routeShowCorridor": "Safety corridor",
+  "routeShowCorridorSubtitle": "Green ±50 m buffer around the route on the map",
   "mooringScreenTitle": "Marinas & anchorages",
   "mooringKindMarina": "Marina",
   "mooringKindAnchorage": "Anchorage",
+  "mooringKindBuoy": "Mooring buoy",
+  "mooringViewList": "List",
+  "mooringSortDistance": "Distance",
+  "mooringSortRating": "Rating",
+  "mooringDepthUnknown": "Depth n/a",
+  "mooringDistanceNm": "{distance} nm",
+  "@mooringDistanceNm": {
+    "placeholders": {
+      "distance": {"type": "String"}
+    }
+  },
+  "mooringEmptyFiltered": "Try clearing filters or broadening your search.",
   "mooringVhf": "VHF",
   "mooringPhone": "Phone",
   "mooringServices": "Services / attributes",
@@ -224,6 +330,15 @@
   "sosNoNumber": "Set an SMS number in the field above, or copy the text from the next dialog.",
   "sosCopyMessage": "Copy message",
   "sosMessageCopied": "Message copied.",
+  "sosTypeLabel": "Emergency type",
+  "sosTypeMedical": "Medical",
+  "sosTypeFire": "Fire",
+  "sosTypeSinking": "Sinking",
+  "sosTypeManOverboard": "Man overboard",
+  "sosMessagePreview": "Message preview",
+  "sosCoordsPending": "Acquiring position…",
+  "sosTimerActive": "Distress active",
+  "sosTimerElapsed": "Elapsed",
   "trackTitle": "Trip track",
   "trackRecordingActive": "Recording…",
   "trackIdle": "Not recording",
@@ -263,7 +378,53 @@
   "settingsTextSizeLarge": "Large",
   "settingsTextSizeExtraLarge": "Extra large",
   "settingsHighContrast": "High contrast",
+  "settingsNightWatch": "Night watch (red)",
+  "settingsNightWatchSubtitle": "Red UI to preserve night vision",
+  "settingsNightWatchChartNightHint": "Tip: Map layers → Chart → Night pairs well with this theme.",
+  "settingsNightWatchChartDayHint": "Tip: Map layers → Chart → Standard for a daytime chart palette.",
   "settingsEnergySection": "Battery & GPS",
+  "settingsVesselSection": "Vessel",
+  "settingsDisplaySection": "Display",
+  "settingsAboutSection": "About",
+  "settingsVesselName": "Vessel name",
+  "settingsVesselLoa": "Length overall ({unit})",
+  "@settingsVesselLoa": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsVesselDraft": "Draft ({unit})",
+  "@settingsVesselDraft": {
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsVesselType": "Hull type",
+  "settingsVesselTypeSailing": "Sailing yacht",
+  "settingsVesselTypeMotor": "Motor yacht",
+  "settingsVesselTypeCatamaran": "Catamaran",
+  "settingsVesselTypeOther": "Other",
+  "settingsUnits": "Units",
+  "settingsUnitsMetric": "Metric",
+  "settingsUnitsImperial": "Imperial",
+  "settingsTheme": "Theme",
+  "settingsThemeDeck": "Deck",
+  "settingsThemeNightRed": "Night red",
+  "settingsThemeHighContrast": "High contrast",
+  "settingsAboutAppName": "Captain Wrongel",
+  "settingsAboutVersion": "Version {version}",
+  "@settingsAboutVersion": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsAboutTagline": "Offline-first yacht navigator. Not for primary navigation.",
   "energyProfileEco": "Eco passage",
   "energyProfilePassage": "Balanced",
   "energyProfileSport": "Precision",
@@ -282,6 +443,13 @@
   "knotCategoryHitches": "Hitches",
   "knotCategoryStoppers": "Stoppers",
   "knotCategoryEmergency": "Emergency",
+  "knotCategoryAll": "All",
+  "knotCategoryFavorites": "Favorites",
+  "knotDifficultyEasy": "Easy",
+  "knotDifficultyMedium": "Medium",
+  "knotDifficultyHard": "Hard",
+  "knotAddFavorite": "Add to favorites",
+  "knotRemoveFavorite": "Remove from favorites",
   "moreMenuToolbox": "Maritime toolbox",
   "moreMenuToolboxSubtitle": "Anchor, compass, GRIB, shore, radio, medical, expenses…",
   "toolboxTitle": "Maritime toolbox",
@@ -293,6 +461,10 @@
   "toolboxVhf": "VHF & COLREG trainer",
   "toolboxMedical": "Medical glossary",
   "toolboxExpenses": "Voyager cashbook",
+  "toolboxSectionNavigation": "Navigation",
+  "toolboxSectionSafety": "Safety",
+  "toolboxSectionReference": "Reference",
+  "badgeNew": "NEW",
   "anchorWatchTitle": "Anchor watch",
   "anchorWatchHint": "Drop anchor when moored, set radius, then arm. Alarm if position drifts beyond the circle. For professional ground tackle use your own judgment.",
   "anchorWatchRadius": "Allowed radius",
@@ -304,6 +476,11 @@
   "anchorWatchAlarmBanner": "VESSEL MOVED OUTSIDE ANCHOR CIRCLE",
   "anchorWatchDismissAlarm": "Acknowledge",
   "anchorWatchGpsLost": "No recent GPS fix — verify receiver and sky view.",
+  "anchorWatchMapPlaceholder": "Mark anchor position to show zone map",
+  "anchorWatchInZone": "IN ZONE",
+  "anchorWatchDrifting": "DRIFTING",
+  "anchorWatchDisarmed": "Disarmed",
+  "anchorWatchArmedBadge": "ARMED",
   "compassTitle": "Compass & sun",
   "compassDisclaimer": "Magnetic compass uses device sensors; solar times are approximate.",
   "compassUnavailablePlatform": "Compass stream is unavailable on this platform.",
@@ -324,8 +501,26 @@
   "medicalDisclaimer": "Educational snippets only — call emergency services when needed.",
   "medicalLoadError": "Could not load medical glossary.",
   "vhfTrainingTitle": "VHF & COLREG",
+  "vhfTabScenarios": "Scenarios",
   "vhfTabQuiz": "COLREG quiz",
   "vhfTabSessions": "Recordings",
+  "vhfScenariosLoadError": "Could not load VHF scenarios.",
+  "vhfScenariosEmpty": "No VHF scenarios available.",
+  "vhfScenarioPickHint": "Pick a scenario to practice radio calls.",
+  "vhfScenarioBack": "All scenarios",
+  "vhfDifficultyBeginner": "Beginner",
+  "vhfDifficultyIntermediate": "Intermediate",
+  "vhfDifficultyAdvanced": "Advanced",
+  "vhfDialogueShore": "Shore",
+  "vhfDialogueYou": "You",
+  "vhfQuizProgress": "Question {current} of {total}",
+  "@vhfQuizProgress": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "vhfQuizPickAnswer": "Select an answer first.",
   "vhfSessionsHint": "Recordings stay on this device. Transcription uses the microphone (paraphrase), not offline file decoding.",
   "vhfSessionsLoadError": "Could not load recordings list.",
   "vhfSessionsEmpty": "No VHF recordings yet.",

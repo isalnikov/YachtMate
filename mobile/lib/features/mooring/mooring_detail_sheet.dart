@@ -1,14 +1,18 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/providers.dart';
+import '../../core/theme/cw_theme_extensions.dart';
+import '../../core/theme/cw_tokens.dart';
+import '../../core/theme/cw_typography.dart';
 import '../../data/local/app_database.dart';
 import '../../l10n/app_localizations.dart';
+import '../../widgets/cw_button.dart';
+import '../shell/shell_tab_provider.dart';
+import 'mooring_list_helpers.dart';
+import 'mooring_map_navigation.dart';
 import 'mooring_place_links.dart';
-import 'mooring_providers.dart';
-import 'mooring_service_labels.dart';
+import 'widgets/mooring_review_section.dart';
+import 'widgets/mooring_service_chips.dart';
 
 Future<void> showMooringDetailSheet({
   required BuildContext context,
@@ -18,212 +22,183 @@ Future<void> showMooringDetailSheet({
     context: context,
     isScrollControlled: true,
     showDragHandle: true,
-    builder: (ctx) => _MooringDetailBody(place: place),
+    builder: (ctx) => DraggableScrollableSheet(
+      expand: false,
+      initialChildSize: 0.6,
+      minChildSize: 0.4,
+      maxChildSize: 0.9,
+      builder: (context, scrollController) => _MooringDetailBody(
+        place: place,
+        scrollController: scrollController,
+      ),
+    ),
   );
 }
 
-class _MooringDetailBody extends ConsumerStatefulWidget {
-  const _MooringDetailBody({required this.place});
+class _MooringDetailBody extends ConsumerWidget {
+  const _MooringDetailBody({
+    required this.place,
+    required this.scrollController,
+  });
 
   final MooringPlaceRow place;
+  final ScrollController scrollController;
+
+  void _navigateToMap(WidgetRef ref, BuildContext context) {
+    ref.read(mapCameraTargetProvider.notifier).focusOn(place.lat, place.lon);
+    ref.read(shellTabIndexProvider.notifier).selectTab(0);
+    Navigator.of(context).pop();
+  }
 
   @override
-  ConsumerState<_MooringDetailBody> createState() => _MooringDetailBodyState();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+    final p = place;
+    final theme = Theme.of(context);
+    final colors = context.cwColors;
+    final rating = mooringDemoRatingStars(p.id);
+
+    final kindLabel = p.kind == kMooringKindMarina
+        ? l10n.mooringKindMarina
+        : p.kind == kMooringKindAnchorage
+        ? l10n.mooringKindAnchorage
+        : p.kind;
+
+    return ListView(
+      controller: scrollController,
+      padding: EdgeInsets.only(
+        left: CwSpacing.m,
+        right: CwSpacing.m,
+        bottom: MediaQuery.of(context).viewInsets.bottom + CwSpacing.l,
+      ),
+      children: [
+        _MooringHeroPhoto(kind: p.kind, colors: colors),
+        const SizedBox(height: CwSpacing.m),
+        Text(p.name, style: CwTypography.h2(color: colors.textPrimary)),
+        const SizedBox(height: CwSpacing.xs),
+        Text(
+          '$kindLabel · ${p.lat.toStringAsFixed(4)}°, ${p.lon.toStringAsFixed(4)}°',
+          style: CwTypography.caption(color: colors.textMuted),
+        ),
+        const SizedBox(height: CwSpacing.s),
+        Row(
+          children: [
+            Icon(Icons.star_rounded, size: 18, color: colors.accentOrange),
+            const SizedBox(width: 4),
+            Text(
+              rating.toStringAsFixed(1),
+              style: CwTypography.caption(color: colors.textMuted),
+            ),
+          ],
+        ),
+        const SizedBox(height: CwSpacing.m),
+        Text(l10n.mooringServices, style: theme.textTheme.titleSmall),
+        const SizedBox(height: CwSpacing.xs),
+        MooringServiceChips(place: p),
+        if ((p.vhf ?? '').isNotEmpty) ...[
+          const SizedBox(height: CwSpacing.m),
+          Text('${l10n.mooringVhf}: ${p.vhf}'),
+        ],
+        if ((p.phone ?? '').isNotEmpty)
+          Text('${l10n.mooringPhone}: ${p.phone}'),
+        if ((p.email ?? '').isNotEmpty)
+          Text('${l10n.mooringEmail}: ${p.email}'),
+        if ((p.notes ?? '').isNotEmpty) ...[
+          const SizedBox(height: CwSpacing.s),
+          Text(p.notes!, style: theme.textTheme.bodyMedium),
+        ],
+        const SizedBox(height: CwSpacing.s),
+        Wrap(
+          spacing: CwSpacing.xs,
+          runSpacing: CwSpacing.xs,
+          children: [
+            if ((p.phone ?? '').isNotEmpty)
+              TextButton.icon(
+                icon: const Icon(Icons.call_outlined),
+                label: Text(l10n.mooringCall),
+                onPressed: () => dialPhoneNumber(p.phone!),
+              ),
+            if ((p.email ?? '').isNotEmpty)
+              TextButton.icon(
+                icon: const Icon(Icons.mail_outline),
+                label: Text(l10n.mooringEmail),
+                onPressed: () => openEmail(p.email!),
+              ),
+            if (parseHttpish(p.websiteUrl) != null)
+              TextButton.icon(
+                icon: const Icon(Icons.language),
+                label: Text(l10n.mooringWebsite),
+                onPressed: () =>
+                    openExternalUri(parseHttpish(p.websiteUrl)!),
+              ),
+            if (parseHttpish(p.bookingUrl) != null)
+              TextButton.icon(
+                icon: const Icon(Icons.event_available_outlined),
+                label: Text(l10n.mooringBook),
+                onPressed: () =>
+                    openExternalUri(parseHttpish(p.bookingUrl)!),
+              ),
+          ],
+        ),
+        const SizedBox(height: CwSpacing.m),
+        CwButton(
+          key: const Key('mooring_navigate_map'),
+          label: l10n.mapNavigateHere,
+          icon: Icons.navigation_outlined,
+          onPressed: () => _navigateToMap(ref, context),
+        ),
+        const SizedBox(height: CwSpacing.l),
+        MooringReviewSection(
+          placeId: p.id,
+          onQueued: () => Navigator.of(context).pop(),
+        ),
+      ],
+    );
+  }
 }
 
-class _MooringDetailBodyState extends ConsumerState<_MooringDetailBody> {
-  late final TextEditingController _comment;
-  int _stars = 4;
+class _MooringHeroPhoto extends StatelessWidget {
+  const _MooringHeroPhoto({required this.kind, required this.colors});
 
-  @override
-  void initState() {
-    super.initState();
-    _comment = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _comment.dispose();
-    super.dispose();
-  }
-
-  Future<void> _submit() async {
-    final l10n = AppLocalizations.of(context)!;
-    final messenger = ScaffoldMessenger.maybeOf(context);
-    await ref
-        .read(mooringRepositoryProvider)
-        .queueReviewDraft(
-          placeId: widget.place.id,
-          stars: _stars,
-          comment: _comment.text.trim().isEmpty ? null : _comment.text.trim(),
-        );
-
-    await ref
-        .read(auditRepositoryProvider)
-        .record(
-          sessionId: ref.read(sessionIdProvider),
-          module: 'M6',
-          action: 'mooring_review_queue',
-          contextJson: '{"placeId":"${widget.place.id}","stars":$_stars}',
-        );
-
-    ref.invalidate(mooringPendingReviewsProvider);
-
-    if (!mounted) return;
-    Navigator.of(context).pop();
-    messenger?.showSnackBar(SnackBar(content: Text(l10n.mooringReviewQueued)));
-  }
+  final String kind;
+  final CwColors colors;
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    final p = widget.place;
-    final theme = Theme.of(context);
-    Map<String, dynamic>? svc;
-    if ((p.servicesJson ?? '').isNotEmpty) {
-      try {
-        final m = jsonDecode(p.servicesJson!) as Map<String, dynamic>;
-        svc = m;
-      } catch (_) {}
-    }
+    final gradient = switch (kind) {
+      kMooringKindMarina => [
+          colors.deckBlue,
+          const Color(0xFF1565C0).withValues(alpha: 0.85),
+        ],
+      kMooringKindAnchorage => [
+          colors.deckBlue,
+          const Color(0xFF2E7D32).withValues(alpha: 0.75),
+        ],
+      _ => [colors.deckBlue, colors.panelBlue],
+    };
 
-    final kindLabel = p.kind == 'marina'
-        ? l10n.mooringKindMarina
-        : l10n.mooringKindAnchorage;
-
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 20,
-        right: 20,
-        bottom: MediaQuery.of(context).viewInsets.bottom + 20,
-        top: 8,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(p.name, style: theme.textTheme.headlineSmall),
-            const SizedBox(height: 4),
-            Text(
-              '$kindLabel · ${p.lat.toStringAsFixed(4)}°, ${p.lon.toStringAsFixed(4)}°',
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: theme.colorScheme.outline,
-              ),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(CwRadius.md),
+      child: AspectRatio(
+        aspectRatio: 16 / 9,
+        child: DecoratedBox(
+          key: const Key('mooring_detail_hero'),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: gradient,
             ),
-            if ((p.vhf ?? '').isNotEmpty) ...[
-              const SizedBox(height: 8),
-              Text('${l10n.mooringVhf}: ${p.vhf}'),
-            ],
-            if ((p.phone ?? '').isNotEmpty)
-              Text('${l10n.mooringPhone}: ${p.phone}'),
-            if ((p.email ?? '').isNotEmpty)
-              Text('${l10n.mooringEmail}: ${p.email}'),
-            if ((p.notes ?? '').isNotEmpty) ...[
-              const SizedBox(height: 12),
-              Text(p.notes!, style: theme.textTheme.bodyMedium),
-            ],
-            const SizedBox(height: 8),
-            Wrap(
-              spacing: 8,
-              runSpacing: 4,
-              children: [
-                if ((p.phone ?? '').isNotEmpty)
-                  TextButton.icon(
-                    icon: const Icon(Icons.call_outlined),
-                    label: Text(l10n.mooringCall),
-                    onPressed: () => dialPhoneNumber(p.phone!),
-                  ),
-                if ((p.email ?? '').isNotEmpty)
-                  TextButton.icon(
-                    icon: const Icon(Icons.mail_outline),
-                    label: Text(l10n.mooringEmail),
-                    onPressed: () => openEmail(p.email!),
-                  ),
-                if (parseHttpish(p.websiteUrl) != null)
-                  TextButton.icon(
-                    icon: const Icon(Icons.language),
-                    label: Text(l10n.mooringWebsite),
-                    onPressed: () =>
-                        openExternalUri(parseHttpish(p.websiteUrl)!),
-                  ),
-                if (parseHttpish(p.bookingUrl) != null)
-                  TextButton.icon(
-                    icon: const Icon(Icons.event_available_outlined),
-                    label: Text(l10n.mooringBook),
-                    onPressed: () =>
-                        openExternalUri(parseHttpish(p.bookingUrl)!),
-                  ),
-                TextButton.icon(
-                  icon: const Icon(Icons.map_outlined),
-                  label: Text(l10n.mooringOpenMap),
-                  onPressed: () => openInOpenStreetMap(lat: p.lat, lon: p.lon),
-                ),
-              ],
+          ),
+          child: Center(
+            child: Icon(
+              kind == kMooringKindMarina
+                  ? Icons.sailing_outlined
+                  : Icons.anchor_outlined,
+              size: 56,
+              color: colors.textMuted.withValues(alpha: 0.45),
             ),
-            if (svc != null && svc.isNotEmpty) ...[
-              const SizedBox(height: 12),
-              Text(l10n.mooringServices, style: theme.textTheme.titleSmall),
-              const SizedBox(height: 4),
-              ...svc.entries.map(
-                (e) => Padding(
-                  padding: const EdgeInsets.only(bottom: 4),
-                  child: Text(
-                    mooringServiceLine(l10n, e),
-                    style: theme.textTheme.bodySmall,
-                  ),
-                ),
-              ),
-            ],
-            const SizedBox(height: 16),
-            Text(l10n.mooringReviewTitle, style: theme.textTheme.titleMedium),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Text(l10n.mooringReviewStars),
-                const SizedBox(width: 12),
-                DropdownButton<int>(
-                  value: _stars,
-                  items: [
-                    for (var i = 1; i <= 5; i++)
-                      DropdownMenuItem(value: i, child: Text('$i')),
-                  ],
-                  onChanged: (v) {
-                    if (v != null) setState(() => _stars = v);
-                  },
-                ),
-              ],
-            ),
-            TextField(
-              controller: _comment,
-              decoration: InputDecoration(
-                labelText: l10n.mooringReviewComment,
-                border: const OutlineInputBorder(),
-              ),
-              maxLines: 3,
-            ),
-            const SizedBox(height: 8),
-            Text(
-              l10n.mooringGdprHint,
-              style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.colorScheme.outline,
-              ),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                FilledButton(
-                  onPressed: _submit,
-                  child: Text(l10n.mooringReviewSave),
-                ),
-                const SizedBox(width: 12),
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(l10n.mooringDetailClose),
-                ),
-              ],
-            ),
-          ],
+          ),
         ),
       ),
     );

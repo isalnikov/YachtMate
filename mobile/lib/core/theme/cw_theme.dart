@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'cw_theme_extensions.dart';
+import 'cw_tokens.dart';
+import 'cw_typography.dart';
+
 /// Dark-first palette: deep blue deck, orange/teal accents (Фаза 0 / полировка §8).
 abstract final class CwTheme {
-  static const Color deckBlue = Color(0xFF0D1B2A);
-  static const Color accentOrange = Color(0xFFE67E22);
-  static const Color accentTeal = Color(0xFF1ABC9C);
+  static const Color deckBlue = CwPalette.deckBlue;
+  static const Color accentOrange = CwPalette.accentOrange;
+  static const Color accentTeal = CwPalette.accentTeal;
 
   static ThemeData material() {
     final scheme = ColorScheme.fromSeed(
@@ -18,6 +22,11 @@ abstract final class CwTheme {
       useMaterial3: true,
       colorScheme: scheme,
       scaffoldBackgroundColor: deckBlue,
+      textTheme: CwTypography.textTheme(
+        textPrimary: CwColors.light.textPrimary,
+        textMuted: CwColors.light.textMuted,
+      ),
+      extensions: const [CwColors.light],
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: deckBlue,
         indicatorColor: accentTeal.withValues(alpha: 0.35),
@@ -32,7 +41,7 @@ abstract final class CwTheme {
     const onSurface = Color(0xFFF5F5F5);
     final scheme = ColorScheme(
       brightness: Brightness.dark,
-      primary: const Color(0xFFFFE135),
+      primary: CwPalette.highContrastAccent,
       onPrimary: Colors.black,
       secondary: accentTeal,
       onSecondary: Colors.black,
@@ -48,15 +57,20 @@ abstract final class CwTheme {
       useMaterial3: true,
       colorScheme: scheme,
       scaffoldBackgroundColor: surface,
+      textTheme: CwTypography.textTheme(
+        textPrimary: onSurface,
+        textMuted: const Color(0xFFBDBDBD),
+      ),
+      extensions: const [CwColors.light],
       navigationRailTheme: NavigationRailThemeData(
         backgroundColor: surface,
-        selectedIconTheme: const IconThemeData(color: Color(0xFFFFE135)),
-        selectedLabelTextStyle: const TextStyle(color: Color(0xFFFFE135)),
+        selectedIconTheme: const IconThemeData(color: CwPalette.highContrastAccent),
+        selectedLabelTextStyle: const TextStyle(color: CwPalette.highContrastAccent),
         unselectedIconTheme: const IconThemeData(color: onSurface),
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: surface,
-        indicatorColor: const Color(0xFFFFE135).withValues(alpha: 0.35),
+        indicatorColor: CwPalette.highContrastAccent.withValues(alpha: 0.35),
         labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
       ),
     );

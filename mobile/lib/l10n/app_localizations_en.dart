@@ -104,6 +104,42 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mapLayerMooringPois => 'Marinas & anchorages (catalog)';
 
   @override
+  String get mapLayerSectionOverlays => 'Overlays';
+
+  @override
+  String get mapLayerSectionChart => 'Chart';
+
+  @override
+  String get mapLayerSectionShallow => 'Shallow';
+
+  @override
+  String get mapLayerOverlayNone => 'No Overlay';
+
+  @override
+  String get mapLayerOverlaySatellite => 'Satellite';
+
+  @override
+  String get mapLayerOverlayRelief => 'Relief Shading';
+
+  @override
+  String get mapLayerOverlaySonar => 'Sonar';
+
+  @override
+  String get mapLayerChartStandard => 'Standard';
+
+  @override
+  String get mapLayerChartPaper => 'Paper';
+
+  @override
+  String get mapLayerChartSimple => 'Simple';
+
+  @override
+  String get mapLayerChartNight => 'Night';
+
+  @override
+  String get mapLayerShallowHighlight => 'Shallow highlight';
+
+  @override
   String get mapDepthLegendTitle => 'Legend';
 
   @override
@@ -136,7 +172,123 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mapLongPressAddWaypoint => 'Add route waypoint';
 
   @override
+  String get mapNavigateHere => 'Navigate here';
+
+  @override
+  String get mapCoordsCopied => 'Coordinates copied';
+
+  @override
+  String get mapPeekCoordsSemantic => 'Map center coordinates — tap to copy';
+
+  @override
+  String mapPeekDepthMeters(int meters) {
+    return 'Depth: $meters m';
+  }
+
+  @override
   String get mapAisDemoTooltip => 'AIS demo stream (recorded NMEA)';
+
+  @override
+  String get aisScreenTitle => 'AIS';
+
+  @override
+  String get moreMenuAis => 'AIS traffic';
+
+  @override
+  String get moreMenuAisSubtitle => 'Local NMEA · CPA/TCPA · vessel filters';
+
+  @override
+  String get aisFilterAll => 'All';
+
+  @override
+  String get aisFilterCargo => 'Cargo';
+
+  @override
+  String get aisFilterTanker => 'Tanker';
+
+  @override
+  String get aisFilterPleasure => 'Pleasure';
+
+  @override
+  String get aisLocalStreamTitle => 'Local stream';
+
+  @override
+  String get aisLocalStreamBody => 'NMEA 0183 · Wi‑Fi/BT gateway · CPA/TCPA';
+
+  @override
+  String get aisDemoStart => 'Start demo';
+
+  @override
+  String get aisDemoStop => 'Stop';
+
+  @override
+  String get aisDemoActive => 'Demo NMEA stream active';
+
+  @override
+  String aisTargetsCount(int count) {
+    return '$count targets';
+  }
+
+  @override
+  String get aisTapVessel => 'Tap a vessel for details';
+
+  @override
+  String aisVesselSog(String knots) {
+    return '$knots kn';
+  }
+
+  @override
+  String aisVesselCog(String degrees) {
+    return '$degrees°';
+  }
+
+  @override
+  String aisVesselCpa(String nm) {
+    return '$nm nm';
+  }
+
+  @override
+  String aisVesselTcpa(String minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String get aisCpaWarning => 'CPA < 1 nm';
+
+  @override
+  String get mapZoomInTooltip => 'Zoom in';
+
+  @override
+  String get mapZoomOutTooltip => 'Zoom out';
+
+  @override
+  String get mapCompassNorthUpTooltip => 'North up — tap for heading up';
+
+  @override
+  String get mapCompassHeadingUpTooltip => 'Heading up — tap for north up';
+
+  @override
+  String get mapFollowGpsTooltip => 'Follow GPS';
+
+  @override
+  String get mapFollowGpsActiveTooltip => 'Following GPS — tap to stop';
+
+  @override
+  String get mapGpsStatusSemantic => 'GPS status — tap for location settings';
+
+  @override
+  String mapGpsAccuracyMeters(int meters) {
+    return '±$meters m';
+  }
+
+  @override
+  String mapGpsSogKnots(String knots) {
+    return '$knots kn';
+  }
+
+  @override
+  String get mapGpsLocationSettingsHint =>
+      'Check location permission and GPS accuracy in system settings.';
 
   @override
   String get weatherScreenTitle => 'Weather & tides';
@@ -168,6 +320,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get weatherHourlyHeading => 'Hourly (48 h)';
+
+  @override
+  String get weatherLayerWindTooltip => 'Wind layer';
+
+  @override
+  String get weatherLayerWavesTooltip => 'Wave layer';
+
+  @override
+  String get weatherLayerTempTooltip => 'Temperature layer';
+
+  @override
+  String get weatherLayerPressureTooltip => 'Pressure layer';
 
   @override
   String get weatherTidesSection => 'Tides (demo)';
@@ -213,6 +377,57 @@ class AppLocalizationsEn extends AppLocalizations {
   String weatherTideRow(String time, String height, String kind) {
     return '$time · $height · $kind';
   }
+
+  @override
+  String get weatherSeeAllTides => 'See all tides';
+
+  @override
+  String get tidesScreenTitle => 'Tides';
+
+  @override
+  String get tidesCurveHeading => 'Today\'s curve (demo)';
+
+  @override
+  String get tidesTableHeading => '7-day schedule (demo)';
+
+  @override
+  String get tidesMoonHeading => 'Moon phase';
+
+  @override
+  String get tidesSunHeading => 'Sun times (approx.)';
+
+  @override
+  String get tidesTableDay => 'Day';
+
+  @override
+  String get tidesHighShort => 'HW';
+
+  @override
+  String get tidesLowShort => 'LW';
+
+  @override
+  String get tidesEmpty => 'No tide data available.';
+
+  @override
+  String tidesHeightM(String height) {
+    return '$height m';
+  }
+
+  @override
+  String tidesTableCell(String time, String height, String kind) {
+    return '$time · $height · $kind';
+  }
+
+  @override
+  String tidesSunLine(String sunrise, String sunset) {
+    return 'Sunrise $sunrise · Sunset $sunset';
+  }
+
+  @override
+  String get moreMenuTides => 'Tides';
+
+  @override
+  String get moreMenuTidesSubtitle => 'Demo curve, 7-day table, moon & sun';
 
   @override
   String get routeScreenTitle => 'Route (advisory)';
@@ -272,6 +487,75 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get routePlanRoute => 'Plan route';
+
+  @override
+  String get routeStatsTitle => 'Route summary';
+
+  @override
+  String get routeStatsDistance => 'Distance';
+
+  @override
+  String get routeStatsEta => 'ETA';
+
+  @override
+  String get routeStatsWaypointCount => 'WPs';
+
+  @override
+  String routeStatsDistanceValue(String nm) {
+    return '$nm nm';
+  }
+
+  @override
+  String get routeStatsEtaUnknown => '—';
+
+  @override
+  String routeStatsEtaMinutes(int minutes) {
+    return '$minutes min';
+  }
+
+  @override
+  String routeStatsEtaHours(int hours) {
+    return '$hours h';
+  }
+
+  @override
+  String routeStatsEtaHoursMinutes(int hours, int minutes) {
+    return '$hours h $minutes min';
+  }
+
+  @override
+  String routeStatsWaypointCountValue(int count) {
+    return '$count';
+  }
+
+  @override
+  String get routeWaypointListTitle => 'Waypoints';
+
+  @override
+  String get routeWaypointEmpty => 'No waypoints yet. Add points on the map.';
+
+  @override
+  String routeWaypointDefaultName(int index) {
+    return 'WP $index';
+  }
+
+  @override
+  String get routeSafetyOk => 'Depth check OK along waypoints (demo grid).';
+
+  @override
+  String routeSafetyShallow(int index) {
+    return 'Shallow water at WP $index: draft + clearance exceeds demo depth.';
+  }
+
+  @override
+  String get routeShowCorridor => 'Safety corridor';
+
+  @override
+  String get routeShowCorridorSubtitle =>
+      'Green ±50 m buffer around the route on the map';
+
+  @override
   String get mooringScreenTitle => 'Marinas & anchorages';
 
   @override
@@ -279,6 +563,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mooringKindAnchorage => 'Anchorage';
+
+  @override
+  String get mooringKindBuoy => 'Mooring buoy';
+
+  @override
+  String get mooringViewList => 'List';
+
+  @override
+  String get mooringSortDistance => 'Distance';
+
+  @override
+  String get mooringSortRating => 'Rating';
+
+  @override
+  String get mooringDepthUnknown => 'Depth n/a';
+
+  @override
+  String mooringDistanceNm(String distance) {
+    return '$distance nm';
+  }
+
+  @override
+  String get mooringEmptyFiltered =>
+      'Try clearing filters or broadening your search.';
 
   @override
   String get mooringVhf => 'VHF';
@@ -515,6 +823,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sosMessageCopied => 'Message copied.';
 
   @override
+  String get sosTypeLabel => 'Emergency type';
+
+  @override
+  String get sosTypeMedical => 'Medical';
+
+  @override
+  String get sosTypeFire => 'Fire';
+
+  @override
+  String get sosTypeSinking => 'Sinking';
+
+  @override
+  String get sosTypeManOverboard => 'Man overboard';
+
+  @override
+  String get sosMessagePreview => 'Message preview';
+
+  @override
+  String get sosCoordsPending => 'Acquiring position…';
+
+  @override
+  String get sosTimerActive => 'Distress active';
+
+  @override
+  String get sosTimerElapsed => 'Elapsed';
+
+  @override
   String get trackTitle => 'Trip track';
 
   @override
@@ -633,7 +968,91 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsHighContrast => 'High contrast';
 
   @override
+  String get settingsNightWatch => 'Night watch (red)';
+
+  @override
+  String get settingsNightWatchSubtitle => 'Red UI to preserve night vision';
+
+  @override
+  String get settingsNightWatchChartNightHint =>
+      'Tip: Map layers → Chart → Night pairs well with this theme.';
+
+  @override
+  String get settingsNightWatchChartDayHint =>
+      'Tip: Map layers → Chart → Standard for a daytime chart palette.';
+
+  @override
   String get settingsEnergySection => 'Battery & GPS';
+
+  @override
+  String get settingsVesselSection => 'Vessel';
+
+  @override
+  String get settingsDisplaySection => 'Display';
+
+  @override
+  String get settingsAboutSection => 'About';
+
+  @override
+  String get settingsVesselName => 'Vessel name';
+
+  @override
+  String settingsVesselLoa(String unit) {
+    return 'Length overall ($unit)';
+  }
+
+  @override
+  String settingsVesselDraft(String unit) {
+    return 'Draft ($unit)';
+  }
+
+  @override
+  String get settingsVesselType => 'Hull type';
+
+  @override
+  String get settingsVesselTypeSailing => 'Sailing yacht';
+
+  @override
+  String get settingsVesselTypeMotor => 'Motor yacht';
+
+  @override
+  String get settingsVesselTypeCatamaran => 'Catamaran';
+
+  @override
+  String get settingsVesselTypeOther => 'Other';
+
+  @override
+  String get settingsUnits => 'Units';
+
+  @override
+  String get settingsUnitsMetric => 'Metric';
+
+  @override
+  String get settingsUnitsImperial => 'Imperial';
+
+  @override
+  String get settingsTheme => 'Theme';
+
+  @override
+  String get settingsThemeDeck => 'Deck';
+
+  @override
+  String get settingsThemeNightRed => 'Night red';
+
+  @override
+  String get settingsThemeHighContrast => 'High contrast';
+
+  @override
+  String get settingsAboutAppName => 'Captain Wrongel';
+
+  @override
+  String settingsAboutVersion(String version) {
+    return 'Version $version';
+  }
+
+  @override
+  String get settingsAboutTagline =>
+      'Offline-first yacht navigator. Not for primary navigation.';
 
   @override
   String get energyProfileEco => 'Eco passage';
@@ -693,6 +1112,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get knotCategoryEmergency => 'Emergency';
 
   @override
+  String get knotCategoryAll => 'All';
+
+  @override
+  String get knotCategoryFavorites => 'Favorites';
+
+  @override
+  String get knotDifficultyEasy => 'Easy';
+
+  @override
+  String get knotDifficultyMedium => 'Medium';
+
+  @override
+  String get knotDifficultyHard => 'Hard';
+
+  @override
+  String get knotAddFavorite => 'Add to favorites';
+
+  @override
+  String get knotRemoveFavorite => 'Remove from favorites';
+
+  @override
   String get moreMenuToolbox => 'Maritime toolbox';
 
   @override
@@ -728,6 +1168,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get toolboxExpenses => 'Voyager cashbook';
 
   @override
+  String get toolboxSectionNavigation => 'Navigation';
+
+  @override
+  String get toolboxSectionSafety => 'Safety';
+
+  @override
+  String get toolboxSectionReference => 'Reference';
+
+  @override
+  String get badgeNew => 'NEW';
+
+  @override
   String get anchorWatchTitle => 'Anchor watch';
 
   @override
@@ -761,6 +1213,22 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get anchorWatchGpsLost =>
       'No recent GPS fix — verify receiver and sky view.';
+
+  @override
+  String get anchorWatchMapPlaceholder =>
+      'Mark anchor position to show zone map';
+
+  @override
+  String get anchorWatchInZone => 'IN ZONE';
+
+  @override
+  String get anchorWatchDrifting => 'DRIFTING';
+
+  @override
+  String get anchorWatchDisarmed => 'Disarmed';
+
+  @override
+  String get anchorWatchArmedBadge => 'ARMED';
 
   @override
   String get compassTitle => 'Compass & sun';
@@ -828,10 +1296,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vhfTrainingTitle => 'VHF & COLREG';
 
   @override
+  String get vhfTabScenarios => 'Scenarios';
+
+  @override
   String get vhfTabQuiz => 'COLREG quiz';
 
   @override
   String get vhfTabSessions => 'Recordings';
+
+  @override
+  String get vhfScenariosLoadError => 'Could not load VHF scenarios.';
+
+  @override
+  String get vhfScenariosEmpty => 'No VHF scenarios available.';
+
+  @override
+  String get vhfScenarioPickHint => 'Pick a scenario to practice radio calls.';
+
+  @override
+  String get vhfScenarioBack => 'All scenarios';
+
+  @override
+  String get vhfDifficultyBeginner => 'Beginner';
+
+  @override
+  String get vhfDifficultyIntermediate => 'Intermediate';
+
+  @override
+  String get vhfDifficultyAdvanced => 'Advanced';
+
+  @override
+  String get vhfDialogueShore => 'Shore';
+
+  @override
+  String get vhfDialogueYou => 'You';
+
+  @override
+  String vhfQuizProgress(int current, int total) {
+    return 'Question $current of $total';
+  }
+
+  @override
+  String get vhfQuizPickAnswer => 'Select an answer first.';
 
   @override
   String get vhfSessionsHint =>
@@ -926,4 +1432,74 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get expenseCatOther => 'Other';
+
+  @override
+  String get onboardingWelcomeTagline => 'Captain Wrongel';
+
+  @override
+  String get onboardingWelcomeTitle => 'Your crewmate on every voyage';
+
+  @override
+  String get onboardingWelcomeSubtitle =>
+      'Offline charts, weather, moorings — one deck.';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String get onboardingBack => 'Back';
+
+  @override
+  String get onboardingGetStarted => 'Get started';
+
+  @override
+  String get onboardingPermissionsTitle => 'Enable permissions';
+
+  @override
+  String get onboardingPermissionsBody =>
+      'Location powers charts, weather, and anchor watch. Notifications alert you to drift and weather changes.';
+
+  @override
+  String get onboardingLocationTitle => 'Location';
+
+  @override
+  String get onboardingLocationButton => 'Allow location';
+
+  @override
+  String get onboardingNotificationTitle => 'Notifications';
+
+  @override
+  String get onboardingNotificationButton => 'Allow notifications';
+
+  @override
+  String get onboardingExperienceTitle => 'Your experience';
+
+  @override
+  String get onboardingExperienceBody =>
+      'We\'ll tune tips and defaults to match your sailing style.';
+
+  @override
+  String get onboardingExperienceBeginner => 'Beginner';
+
+  @override
+  String get onboardingExperienceCruiser => 'Cruiser';
+
+  @override
+  String get onboardingExperienceRacer => 'Racer';
+
+  @override
+  String get onboardingRegionTitle => 'Where do you sail?';
+
+  @override
+  String get onboardingRegionBody =>
+      'We prioritize charts and mooring data for your region.';
+
+  @override
+  String get onboardingRegionMediterranean => 'Mediterranean';
+
+  @override
+  String get onboardingRegionCaribbean => 'Caribbean';
+
+  @override
+  String get onboardingRegionOther => 'Other';
 }

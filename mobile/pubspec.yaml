@@ -55,3 +55,4 @@ flutter:
     - assets/coastal/shore_poi_demo.geojson
     - assets/reference/medical_glossary_demo.json
     - assets/training/colreg_quiz_demo.json
+    - assets/training/vhf_scenarios_demo.json
