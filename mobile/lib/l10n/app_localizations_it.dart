@@ -870,6 +870,19 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get trackStatsPoints => 'Points';
+
+  @override
+  String get trackStatsDuration => 'Duration';
+
+  @override
+  String get trackEmptyTrips => 'No saved trips';
+
+  @override
+  String get trackEmptyTripsMessage =>
+      'Stop a recording to save a passage here.';
+
+  @override
   String get checklistsTitle => 'Safety checklists';
 
   @override
@@ -900,6 +913,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get vaultPinHint => '4–12 digits recommended';
 
   @override
+  String get vaultPinConfirmLabel => 'Confirm PIN';
+
+  @override
   String get vaultUnlock => 'Unlock';
 
   @override
@@ -911,6 +927,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vaultPickFile => 'Pick file';
+
+  @override
+  String get vaultEncryptedBadge => 'Encrypted';
 
   @override
   String get vaultDecryptPreview => 'Preview / decrypt check';

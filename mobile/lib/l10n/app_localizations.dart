@@ -1643,6 +1643,30 @@ abstract class AppLocalizations {
   /// **'{count} points'**
   String trackPoints(int count);
 
+  /// No description provided for @trackStatsPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Points'**
+  String get trackStatsPoints;
+
+  /// No description provided for @trackStatsDuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get trackStatsDuration;
+
+  /// No description provided for @trackEmptyTrips.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved trips'**
+  String get trackEmptyTrips;
+
+  /// No description provided for @trackEmptyTripsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop a recording to save a passage here.'**
+  String get trackEmptyTripsMessage;
+
   /// No description provided for @checklistsTitle.
   ///
   /// In en, this message translates to:
@@ -1703,6 +1727,12 @@ abstract class AppLocalizations {
   /// **'4–12 digits recommended'**
   String get vaultPinHint;
 
+  /// No description provided for @vaultPinConfirmLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm PIN'**
+  String get vaultPinConfirmLabel;
+
   /// No description provided for @vaultUnlock.
   ///
   /// In en, this message translates to:
@@ -1726,6 +1756,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pick file'**
   String get vaultPickFile;
+
+  /// No description provided for @vaultEncryptedBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Encrypted'**
+  String get vaultEncryptedBadge;
 
   /// No description provided for @vaultDecryptPreview.
   ///

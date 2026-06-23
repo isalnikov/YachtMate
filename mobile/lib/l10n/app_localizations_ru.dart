@@ -872,6 +872,19 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String get trackStatsPoints => 'Точки';
+
+  @override
+  String get trackStatsDuration => 'Длительность';
+
+  @override
+  String get trackEmptyTrips => 'Нет сохранённых рейсов';
+
+  @override
+  String get trackEmptyTripsMessage =>
+      'После остановки записи рейс появится здесь.';
+
+  @override
   String get checklistsTitle => 'Чек-листы безопасности';
 
   @override
@@ -902,6 +915,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get vaultPinHint => 'Рекомендуется 4–12 цифр';
 
   @override
+  String get vaultPinConfirmLabel => 'Повторите PIN';
+
+  @override
   String get vaultUnlock => 'Разблокировать';
 
   @override
@@ -912,6 +928,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get vaultPickFile => 'Выбрать файл';
+
+  @override
+  String get vaultEncryptedBadge => 'Зашифровано';
 
   @override
   String get vaultDecryptPreview => 'Проверить расшифровку';

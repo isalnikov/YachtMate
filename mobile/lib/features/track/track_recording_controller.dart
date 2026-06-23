@@ -101,3 +101,11 @@ final activeTrackPointsProvider =
       if (id == null) return const [];
       return ref.read(trackRepositoryProvider).pointsForTrip(id);
     });
+
+/// Активный рейс (для длительности сессии на экране трека).
+final activeTrackTripProvider =
+    FutureProvider.autoDispose<TrackTripRow?>((ref) async {
+      final id = ref.watch(trackRecordingProvider.select((s) => s.tripId));
+      if (id == null) return null;
+      return ref.read(trackRepositoryProvider).tripById(id);
+    });
