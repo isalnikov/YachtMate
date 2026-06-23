@@ -38,6 +38,13 @@ enum EnergyProfile {
     EnergyProfile.passage => const Duration(seconds: 2),
     EnergyProfile.sport => const Duration(seconds: 1),
   };
+
+  /// How often the map wind overlay refetches Open-Meteo grid (step 47).
+  Duration get windOverlayRefreshInterval => switch (this) {
+    EnergyProfile.eco => const Duration(minutes: 30),
+    EnergyProfile.passage => const Duration(minutes: 15),
+    EnergyProfile.sport => const Duration(minutes: 5),
+  };
 }
 
 class EnergyProfileController extends StateNotifier<EnergyProfile> {

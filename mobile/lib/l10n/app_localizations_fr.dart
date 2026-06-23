@@ -89,6 +89,41 @@ class AppLocalizationsFr extends AppLocalizations {
       'Could not cache offline tiles (network or engine).';
 
   @override
+  String get offlineChartManagerTitle => 'Offline charts';
+
+  @override
+  String get offlineChartManagerLead =>
+      'Downloaded map tile packs for use without network.';
+
+  @override
+  String get offlineChartManagerEmpty =>
+      'No offline regions yet. Use the download button on the Map tab.';
+
+  @override
+  String get offlineChartManagerDelete => 'Delete';
+
+  @override
+  String get offlineChartManagerDeleted => 'Region removed';
+
+  @override
+  String offlineChartManagerStorage(String size) {
+    return 'Storage: $size';
+  }
+
+  @override
+  String offlineChartManagerInstalled(String date) {
+    return 'Installed $date';
+  }
+
+  @override
+  String offlineChartManagerLicense(String tier) {
+    return 'License: $tier';
+  }
+
+  @override
+  String get settingsOfflineCharts => 'Offline charts';
+
+  @override
   String get mapLayersTooltip => 'Map layers';
 
   @override
@@ -138,6 +173,16 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get mapLayerShallowHighlight => 'Shallow highlight';
+
+  @override
+  String get mapLayerSectionWeather => 'Weather';
+
+  @override
+  String get mapLayerWindOverlay => 'Wind arrows';
+
+  @override
+  String get mapLayerWindOverlaySubtitle =>
+      'Open-Meteo forecast grid around map center';
 
   @override
   String get mapDepthLegendTitle => 'Legend';

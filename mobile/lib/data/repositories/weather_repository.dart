@@ -1,9 +1,11 @@
 import 'package:drift/drift.dart';
 import 'package:http/http.dart' as http;
 
+import '../../core/energy_profile_controller.dart';
 import '../../domain/weather/cache_policy.dart';
 import '../../domain/weather/open_meteo_parse.dart';
 import '../../domain/weather/weather_forecast_view.dart';
+import '../../domain/weather/wind_grid.dart';
 import '../local/app_database.dart';
 
 /// Open-Meteo Forecast + Marine (волна), SQLite-кэш с TTL (Фаза 4).
@@ -109,6 +111,63 @@ class WeatherRepository {
       }
       rethrow;
     }
+  }
+
+  /// 3×3 wind grid around [centerLat]/[centerLon] from cached Open-Meteo points (step 47).
+  Future<WindGridBundle> loadWindGrid(
+    double centerLat,
+    double centerLon, {
+    EnergyProfile profile = EnergyProfile.passage,
+  }) async {
+    const stepDeg = 0.05;
+    final half = switch (profile) {
+      EnergyProfile.eco => 1,
+      EnergyProfile.passage => 1,
+      EnergyProfile.sport => 2,
+    };
+
+    final cells = <WindGridCell>[];
+    var anyStale = false;
+    final now = DateTime.now().toUtc();
+
+    for (var di = -half; di <= half; di++) {
+      for (var dj = -half; dj <= half; dj++) {
+        final lat = centerLat + di * stepDeg;
+        final lon = centerLon + dj * stepDeg;
+        final bundle = await loadForecast(lat, lon);
+        if (bundle.isStale) anyStale = true;
+        final hour = _nearestHour(bundle.hourly, now);
+        if (hour == null) continue;
+        cells.add(
+          WindGridCell(
+            lat: lat,
+            lon: lon,
+            windSpeedKn: hour.windSpeedKn,
+            windDirectionDeg: hour.windDirectionDeg,
+          ),
+        );
+      }
+    }
+
+    return WindGridBundle(
+      fetchedAtUtc: now,
+      cells: cells,
+      isStale: anyStale,
+    );
+  }
+
+  HourlyWeatherPoint? _nearestHour(List<HourlyWeatherPoint> hourly, DateTime now) {
+    if (hourly.isEmpty) return null;
+    HourlyWeatherPoint? best;
+    var bestDelta = 1 << 62;
+    for (final h in hourly) {
+      final d = (h.timeUtc.difference(now)).inMinutes.abs();
+      if (d < bestDelta) {
+        bestDelta = d;
+        best = h;
+      }
+    }
+    return best;
   }
 }
 

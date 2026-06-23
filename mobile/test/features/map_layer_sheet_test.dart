@@ -5,6 +5,7 @@ import 'package:captain_wrongel/data/local/app_database.dart';
 import 'package:captain_wrongel/features/map/map_layer_kinds.dart';
 import 'package:captain_wrongel/features/map/map_layer_sheet.dart';
 import 'package:captain_wrongel/features/map/widgets/layer_thumbnail_grid.dart';
+import 'package:captain_wrongel/features/weather/widgets/wind_legend_bar.dart';
 import 'package:captain_wrongel/l10n/app_localizations.dart';
 import 'package:captain_wrongel/widgets/cw_bottom_sheet.dart';
 import 'package:captain_wrongel/widgets/cw_section_header.dart';
@@ -64,10 +65,11 @@ void main() {
       await tester.tap(find.text('Open layers'));
       await tester.pumpAndSettle();
 
-      expect(find.byType(CwSectionHeader), findsNWidgets(3));
+      expect(find.byType(CwSectionHeader), findsNWidgets(4));
       expect(find.text('OVERLAYS'), findsOneWidget);
       expect(find.text('CHART'), findsOneWidget);
       expect(find.text('SHALLOW'), findsOneWidget);
+      expect(find.text('WEATHER'), findsOneWidget);
     });
 
     testWidgets('renders overlay and chart thumbnail grids', (tester) async {
@@ -214,6 +216,57 @@ void main() {
         true,
       );
       expect(tester.widget<SwitchListTile>(switchFinder).value, true);
+    });
+
+    testWidgets('wind overlay toggle updates provider', (tester) async {
+      tester.view.physicalSize = const Size(800, 1400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+
+      SharedPreferences.setMockInitialValues({});
+      final shared = await SharedPreferences.getInstance();
+      final db = AppDatabase(NativeDatabase.memory());
+      addTearDown(db.close);
+
+      late ProviderContainer container;
+      await tester.pumpWidget(
+        ProviderScope(
+          parent: container = ProviderContainer(
+            overrides: [
+              sharedPreferencesProvider.overrideWith((ref) => shared),
+              databaseProvider.overrideWith((ref) => db),
+              sessionIdProvider.overrideWith((ref) => 'wind-toggle'),
+            ],
+          ),
+          child: MaterialApp(
+            theme: CwTheme.material(),
+            locale: const Locale('en'),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            home: const Scaffold(
+              body: SingleChildScrollView(
+                child: MapLayerSheetContent(),
+              ),
+            ),
+          ),
+        ),
+      );
+      addTearDown(container.dispose);
+      await tester.pumpAndSettle();
+
+      final switchFinder = find.byKey(const Key('map_layer_wind_overlay'));
+      expect(switchFinder, findsOneWidget);
+      expect(tester.widget<SwitchListTile>(switchFinder).value, false);
+
+      await tester.tap(switchFinder);
+      await tester.pumpAndSettle();
+
+      expect(
+        container.read(mapLayerPreferencesProvider).windOverlay,
+        true,
+      );
+      expect(find.byType(WindLegendBar), findsOneWidget);
     });
 
     testWidgets('selected overlay shows teal border', (tester) async {

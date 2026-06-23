@@ -13,6 +13,7 @@ class MapLayerVisibility {
     this.overlay = MapOverlayKind.none,
     this.chartStyle = ChartStyleKind.standard,
     this.shallowHighlight = false,
+    this.windOverlay = false,
   });
 
   final bool depthContours;
@@ -24,6 +25,7 @@ class MapLayerVisibility {
   final MapOverlayKind overlay;
   final ChartStyleKind chartStyle;
   final bool shallowHighlight;
+  final bool windOverlay;
 
   @override
   bool operator ==(Object other) =>
@@ -33,7 +35,8 @@ class MapLayerVisibility {
       other.mooringPois == mooringPois &&
       other.overlay == overlay &&
       other.chartStyle == chartStyle &&
-      other.shallowHighlight == shallowHighlight;
+      other.shallowHighlight == shallowHighlight &&
+      other.windOverlay == windOverlay;
 
   @override
   int get hashCode => Object.hash(
@@ -43,6 +46,7 @@ class MapLayerVisibility {
     overlay,
     chartStyle,
     shallowHighlight,
+    windOverlay,
   );
 }
 
@@ -60,6 +64,7 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
   static const overlayPreferenceKey = 'mapLayerOverlay';
   static const chartStylePreferenceKey = 'mapLayerChartStyle';
   static const shallowHighlightPreferenceKey = 'mapLayerShallowHighlight';
+  static const windOverlayPreferenceKey = 'mapLayerWindOverlay';
 
   static MapLayerVisibility _initial(SharedPreferences prefs) {
     return MapLayerVisibility(
@@ -73,6 +78,7 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
         prefs.getString(chartStylePreferenceKey),
       ),
       shallowHighlight: prefs.getBool(shallowHighlightPreferenceKey) ?? false,
+      windOverlay: prefs.getBool(windOverlayPreferenceKey) ?? false,
     );
   }
 
@@ -86,6 +92,7 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
       overlay: state.overlay,
       chartStyle: state.chartStyle,
       shallowHighlight: state.shallowHighlight,
+      windOverlay: state.windOverlay,
     );
     await _audit.record(
       sessionId: _sessionId,
@@ -105,6 +112,7 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
       overlay: state.overlay,
       chartStyle: state.chartStyle,
       shallowHighlight: state.shallowHighlight,
+      windOverlay: state.windOverlay,
     );
     await _audit.record(
       sessionId: _sessionId,
@@ -124,6 +132,7 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
       overlay: state.overlay,
       chartStyle: state.chartStyle,
       shallowHighlight: state.shallowHighlight,
+      windOverlay: state.windOverlay,
     );
     await _audit.record(
       sessionId: _sessionId,
@@ -143,6 +152,7 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
       overlay: overlay,
       chartStyle: state.chartStyle,
       shallowHighlight: state.shallowHighlight,
+      windOverlay: state.windOverlay,
     );
     await _audit.record(
       sessionId: _sessionId,
@@ -162,6 +172,7 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
       overlay: state.overlay,
       chartStyle: chartStyle,
       shallowHighlight: state.shallowHighlight,
+      windOverlay: state.windOverlay,
     );
     await _audit.record(
       sessionId: _sessionId,
@@ -182,12 +193,33 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
       overlay: state.overlay,
       chartStyle: state.chartStyle,
       shallowHighlight: enabled,
+      windOverlay: state.windOverlay,
     );
     await _audit.record(
       sessionId: _sessionId,
       module: 'M1',
       action: 'layer_toggle',
       contextJson: '{"layerId":"shallow_highlight","visible":$enabled}',
+    );
+  }
+
+  Future<void> setWindOverlay(bool enabled) async {
+    if (enabled == state.windOverlay) return;
+    await _prefs.setBool(windOverlayPreferenceKey, enabled);
+    state = MapLayerVisibility(
+      depthContours: state.depthContours,
+      navigationAids: state.navigationAids,
+      mooringPois: state.mooringPois,
+      overlay: state.overlay,
+      chartStyle: state.chartStyle,
+      shallowHighlight: state.shallowHighlight,
+      windOverlay: enabled,
+    );
+    await _audit.record(
+      sessionId: _sessionId,
+      module: 'M1',
+      action: 'layer_toggle',
+      contextJson: '{"layerId":"wind_overlay","visible":$enabled}',
     );
   }
 }

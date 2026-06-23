@@ -14,6 +14,7 @@ import '../../widgets/cw_button.dart';
 import '../../widgets/cw_button_sizes.dart';
 import '../../widgets/cw_chip.dart';
 import '../../widgets/cw_segmented_control.dart';
+import '../map/offline_chart_manager_screen.dart';
 import 'widgets/anchor_watch_alert_settings_form.dart';
 import 'widgets/settings_section.dart';
 import 'widgets/vessel_profile_form.dart';
@@ -116,6 +117,23 @@ class SettingsScreen extends ConsumerWidget {
                 ],
               ),
             ],
+          ),
+        ),
+        SettingsSection(
+          title: l10n.settingsOfflineCharts,
+          child: ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.cloud_download_outlined),
+            title: Text(l10n.offlineChartManagerTitle),
+            subtitle: Text(l10n.offlineChartManagerLead),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (_) => const OfflineChartManagerScreen(),
+                ),
+              );
+            },
           ),
         ),
         SettingsSection(

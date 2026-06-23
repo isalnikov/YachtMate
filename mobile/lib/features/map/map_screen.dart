@@ -1,4 +1,4 @@
-import 'dart:async' show StreamSubscription, unawaited;
+import 'dart:async' show StreamSubscription, Timer, unawaited;
 import 'dart:math' show Point;
 
 import 'package:flutter/material.dart';
@@ -14,6 +14,7 @@ import '../../core/logging/app_logger.dart';
 import '../../core/map_layer_preferences_controller.dart';
 import '../../core/providers.dart';
 import '../../core/theme/cw_theme_mode.dart';
+import '../../core/theme/cw_tokens.dart';
 import '../../core/ship_routing_preferences.dart';
 import '../../core/vessel_prefs.dart';
 import '../../data/local/app_database.dart';
@@ -38,6 +39,7 @@ import 'map_layer_kinds.dart';
 import 'map_layer_sheet.dart';
 import 'map_tile_overlay_controller.dart';
 import 'map_long_press_sheet.dart';
+import 'map_wind_overlay_layer.dart';
 import 'mooring_layer.dart';
 import 'shallow_highlight_layer.dart';
 import 'widgets/map_controls_overlay.dart';
@@ -76,6 +78,10 @@ class _MapScreenState extends ConsumerState<MapScreen>
   bool _shallowHighlightInstalled = false;
   bool _aisLayerInstalled = false;
   bool _mooringLayerInstalled = false;
+  bool _windLayerInstalled = false;
+
+  Timer? _windRefreshTimer;
+  DateTime? _windLastFetch;
 
   /// Экран ушёл в фон — при eco профиле временно отключаем тяжёлые демо-слои (Фаза 8).
   bool _pausedBackground = false;
@@ -99,6 +105,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _windRefreshTimer?.cancel();
     _stopCompassListen();
     super.dispose();
   }
@@ -298,6 +305,52 @@ class _MapScreenState extends ConsumerState<MapScreen>
     await applyShallowHighlightVisibility(c, vis.shallowHighlight);
   }
 
+  List<Color> _windScaleColors() {
+    final nightRed = ref.read(themeModeProvider);
+    return nightRed ? CwPalette.nightWindScale : CwPalette.windScale;
+  }
+
+  Future<void> _syncWindOverlayLayer({bool force = false}) async {
+    final c = _controller;
+    if (c == null || !_windLayerInstalled) return;
+
+    final vis = ref.read(mapLayerPreferencesProvider);
+    await applyWindOverlayVisibility(c, vis.windOverlay);
+    if (!vis.windOverlay) return;
+
+    final profile = ref.read(energyProfileProvider);
+    final interval = profile.windOverlayRefreshInterval;
+    final now = DateTime.now();
+    if (!force &&
+        _windLastFetch != null &&
+        now.difference(_windLastFetch!) < interval) {
+      return;
+    }
+
+    try {
+      final grid = await ref
+          .read(weatherRepositoryProvider)
+          .loadWindGrid(_mapCenter.latitude, _mapCenter.longitude, profile: profile);
+      _windLastFetch = now;
+      if (!mounted || _controller == null) return;
+      await updateWindOverlayLayer(
+        c,
+        grid: grid,
+        windScale: _windScaleColors(),
+      );
+    } catch (_) {}
+  }
+
+  void _scheduleWindRefreshTimer() {
+    _windRefreshTimer?.cancel();
+    final vis = ref.read(mapLayerPreferencesProvider);
+    if (!vis.windOverlay) return;
+    final interval = ref.read(energyProfileProvider).windOverlayRefreshInterval;
+    _windRefreshTimer = Timer.periodic(interval, (_) {
+      unawaited(_syncWindOverlayLayer(force: true));
+    });
+  }
+
   Future<void> _afterStyleLoaded() async {
     _appliedStyleUrl = _chartStyleUrl();
     setState(() => _styleLoaded = true);
@@ -339,6 +392,12 @@ class _MapScreenState extends ConsumerState<MapScreen>
         c,
         ref.read(mapLayerPreferencesProvider).mooringPois,
       );
+    }
+    if (c != null) {
+      await installWindOverlayLayer(c);
+      _windLayerInstalled = true;
+      await _syncWindOverlayLayer(force: true);
+      _scheduleWindRefreshTimer();
     }
     if (mounted) setState(() {});
     await _applyPendingCameraTarget();
@@ -557,6 +616,12 @@ class _MapScreenState extends ConsumerState<MapScreen>
       if (prev?.chartStyle != next.chartStyle) {
         unawaited(_swapChartStyleIfNeeded(_chartStyleUrl(next), audit: false));
       }
+      if (c != null && _windLayerInstalled) {
+        if (prev?.windOverlay != next.windOverlay) {
+          unawaited(_syncWindOverlayLayer(force: true));
+          _scheduleWindRefreshTimer();
+        }
+      }
     });
 
     ref.listen<bool>(themeModeProvider, (prev, next) {
@@ -577,6 +642,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
       if (c != null && _demoLayersInstalled) {
         final prefs = ref.read(mapLayerPreferencesProvider);
         unawaited(applyCwDemoLayerVisibility(c, _effectiveDemoLayers(prefs)));
+      }
+      if (prev?.windOverlayRefreshInterval != next.windOverlayRefreshInterval) {
+        _scheduleWindRefreshTimer();
       }
     });
 

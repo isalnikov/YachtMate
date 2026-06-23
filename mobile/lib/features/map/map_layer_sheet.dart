@@ -6,6 +6,7 @@ import '../../core/theme/cw_tokens.dart';
 import '../../l10n/app_localizations.dart';
 import '../../widgets/cw_bottom_sheet.dart';
 import '../../widgets/cw_section_header.dart';
+import '../weather/widgets/wind_legend_bar.dart';
 import 'map_layer_kinds.dart';
 import 'widgets/layer_thumbnail_grid.dart';
 
@@ -122,6 +123,19 @@ class MapLayerSheetContent extends ConsumerWidget {
           value: vis.shallowHighlight,
           onChanged: notifier.setShallowHighlight,
         ),
+        CwSectionHeader(label: l10n.mapLayerSectionWeather),
+        SwitchListTile(
+          key: const Key('map_layer_wind_overlay'),
+          contentPadding: EdgeInsets.zero,
+          title: Text(l10n.mapLayerWindOverlay),
+          subtitle: Text(l10n.mapLayerWindOverlaySubtitle),
+          value: vis.windOverlay,
+          onChanged: notifier.setWindOverlay,
+        ),
+        if (vis.windOverlay) ...[
+          const SizedBox(height: CwSpacing.s),
+          const WindLegendBar(),
+        ],
       ],
     );
   }

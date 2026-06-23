@@ -36,18 +36,25 @@ void main() {
 
     expect(find.text('Vessel'), findsOneWidget);
     expect(find.text('Display'), findsOneWidget);
-    expect(find.text('Accessibility'), findsOneWidget);
     expect(find.text('Deck'), findsOneWidget);
     expect(find.text('Night red'), findsOneWidget);
     expect(find.text('High contrast'), findsOneWidget);
     expect(find.text('Metric'), findsOneWidget);
     expect(find.text('Imperial'), findsOneWidget);
 
-    await tester.drag(find.byType(ListView), const Offset(0, -400));
+    await tester.drag(find.byType(ListView), const Offset(0, -280));
+    await tester.pumpAndSettle();
+    expect(find.text('Offline charts'), findsWidgets);
+
+    await tester.drag(find.byType(ListView), const Offset(0, -280));
+    await tester.pumpAndSettle();
+    expect(find.text('Accessibility'), findsOneWidget);
+
+    await tester.drag(find.byType(ListView), const Offset(0, -350));
     await tester.pumpAndSettle();
     expect(find.text('Anchor watch'), findsOneWidget);
 
-    await tester.drag(find.byType(ListView), const Offset(0, -500));
+    await tester.drag(find.byType(ListView), const Offset(0, -450));
     await tester.pumpAndSettle();
 
     expect(find.text('Battery & GPS'), findsOneWidget);

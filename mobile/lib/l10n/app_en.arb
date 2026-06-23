@@ -28,6 +28,30 @@
   "offlineCacheStart": "Downloading tiles for the visible region…",
   "offlineCacheDone": "Offline region saved",
   "offlineCacheFail": "Could not cache offline tiles (network or engine).",
+  "offlineChartManagerTitle": "Offline charts",
+  "offlineChartManagerLead": "Downloaded map tile packs for use without network.",
+  "offlineChartManagerEmpty": "No offline regions yet. Use the download button on the Map tab.",
+  "offlineChartManagerDelete": "Delete",
+  "offlineChartManagerDeleted": "Region removed",
+  "offlineChartManagerStorage": "Storage: {size}",
+  "@offlineChartManagerStorage": {
+    "placeholders": {
+      "size": {"type": "String"}
+    }
+  },
+  "offlineChartManagerInstalled": "Installed {date}",
+  "@offlineChartManagerInstalled": {
+    "placeholders": {
+      "date": {"type": "String"}
+    }
+  },
+  "offlineChartManagerLicense": "License: {tier}",
+  "@offlineChartManagerLicense": {
+    "placeholders": {
+      "tier": {"type": "String"}
+    }
+  },
+  "settingsOfflineCharts": "Offline charts",
   "mapLayersTooltip": "Map layers",
   "mapLayersSheetTitle": "Map layers (demo)",
   "mapLayerDepthContours": "Depth contours (synthetic)",
@@ -45,6 +69,9 @@
   "mapLayerChartSimple": "Simple",
   "mapLayerChartNight": "Night",
   "mapLayerShallowHighlight": "Shallow highlight",
+  "mapLayerSectionWeather": "Weather",
+  "mapLayerWindOverlay": "Wind arrows",
+  "mapLayerWindOverlaySubtitle": "Open-Meteo forecast grid around map center",
   "mapDepthLegendTitle": "Legend",
   "mapDepthLegendBody": "Blue lines: EMODnet Bathymetry contours (example region: Fethiye, Turkey). Single display color — depth values drive routing grid only. Not official charts.",
   "mapLongPressTitle": "Position (WGS84)",

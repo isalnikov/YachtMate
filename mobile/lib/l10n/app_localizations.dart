@@ -256,6 +256,60 @@ abstract class AppLocalizations {
   /// **'Could not cache offline tiles (network or engine).'**
   String get offlineCacheFail;
 
+  /// No description provided for @offlineChartManagerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline charts'**
+  String get offlineChartManagerTitle;
+
+  /// No description provided for @offlineChartManagerLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Downloaded map tile packs for use without network.'**
+  String get offlineChartManagerLead;
+
+  /// No description provided for @offlineChartManagerEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No offline regions yet. Use the download button on the Map tab.'**
+  String get offlineChartManagerEmpty;
+
+  /// No description provided for @offlineChartManagerDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get offlineChartManagerDelete;
+
+  /// No description provided for @offlineChartManagerDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Region removed'**
+  String get offlineChartManagerDeleted;
+
+  /// No description provided for @offlineChartManagerStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'Storage: {size}'**
+  String offlineChartManagerStorage(String size);
+
+  /// No description provided for @offlineChartManagerInstalled.
+  ///
+  /// In en, this message translates to:
+  /// **'Installed {date}'**
+  String offlineChartManagerInstalled(String date);
+
+  /// No description provided for @offlineChartManagerLicense.
+  ///
+  /// In en, this message translates to:
+  /// **'License: {tier}'**
+  String offlineChartManagerLicense(String tier);
+
+  /// No description provided for @settingsOfflineCharts.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline charts'**
+  String get settingsOfflineCharts;
+
   /// No description provided for @mapLayersTooltip.
   ///
   /// In en, this message translates to:
@@ -357,6 +411,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Shallow highlight'**
   String get mapLayerShallowHighlight;
+
+  /// No description provided for @mapLayerSectionWeather.
+  ///
+  /// In en, this message translates to:
+  /// **'Weather'**
+  String get mapLayerSectionWeather;
+
+  /// No description provided for @mapLayerWindOverlay.
+  ///
+  /// In en, this message translates to:
+  /// **'Wind arrows'**
+  String get mapLayerWindOverlay;
+
+  /// No description provided for @mapLayerWindOverlaySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open-Meteo forecast grid around map center'**
+  String get mapLayerWindOverlaySubtitle;
 
   /// No description provided for @mapDepthLegendTitle.
   ///

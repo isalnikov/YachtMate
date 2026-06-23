@@ -88,6 +88,41 @@ class AppLocalizationsRu extends AppLocalizations {
       'Не удалось сохранить тайлы (сеть или движок карты).';
 
   @override
+  String get offlineChartManagerTitle => 'Офлайн-карты';
+
+  @override
+  String get offlineChartManagerLead =>
+      'Загруженные пакеты тайлов для работы без сети.';
+
+  @override
+  String get offlineChartManagerEmpty =>
+      'Нет офлайн-регионов. Используйте кнопку загрузки на вкладке Карта.';
+
+  @override
+  String get offlineChartManagerDelete => 'Удалить';
+
+  @override
+  String get offlineChartManagerDeleted => 'Регион удалён';
+
+  @override
+  String offlineChartManagerStorage(String size) {
+    return 'Хранилище: $size';
+  }
+
+  @override
+  String offlineChartManagerInstalled(String date) {
+    return 'Установлено $date';
+  }
+
+  @override
+  String offlineChartManagerLicense(String tier) {
+    return 'Лицензия: $tier';
+  }
+
+  @override
+  String get settingsOfflineCharts => 'Офлайн-карты';
+
+  @override
   String get mapLayersTooltip => 'Слои карты';
 
   @override
@@ -137,6 +172,16 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get mapLayerShallowHighlight => 'Подсветка мелководья';
+
+  @override
+  String get mapLayerSectionWeather => 'Погода';
+
+  @override
+  String get mapLayerWindOverlay => 'Стрелки ветра';
+
+  @override
+  String get mapLayerWindOverlaySubtitle =>
+      'Сетка Open-Meteo вокруг центра карты';
 
   @override
   String get mapDepthLegendTitle => 'Легенда';
