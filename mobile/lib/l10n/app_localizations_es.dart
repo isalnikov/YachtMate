@@ -1293,6 +1293,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get gribStubSaved => 'Stub path saved locally.';
 
   @override
+  String get gribEmpty => 'No GRIB files imported yet.';
+
+  @override
+  String get gribImport => 'Import GRIB file';
+
+  @override
+  String get gribStatusPending => 'Pending decode';
+
+  @override
   String get coastalGuideTitle => 'Coastal POI';
 
   @override
@@ -1300,6 +1309,38 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get coastalEmpty => 'No coastal POIs.';
+
+  @override
+  String get coastalSearchHint => 'Search shore POIs';
+
+  @override
+  String get coastalNoMatch => 'No POIs match your filters.';
+
+  @override
+  String get coastalCategoryAll => 'All';
+
+  @override
+  String get coastalCategoryBeach => 'Beach';
+
+  @override
+  String get coastalCategoryFuel => 'Fuel';
+
+  @override
+  String get coastalCategoryMarina => 'Marina';
+
+  @override
+  String get coastalCategoryRestaurant => 'Restaurant';
+
+  @override
+  String get coastalCategoryAttraction => 'Attraction';
+
+  @override
+  String get coastalCategoryOther => 'Other';
+
+  @override
+  String coastalCoordinates(String lat, String lon) {
+    return '$lat°, $lon°';
+  }
 
   @override
   String get medicalGlossaryTitle => 'Medical glossary';
@@ -1430,6 +1471,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get expenseEmpty => 'No expenses logged.';
+
+  @override
+  String get expenseSummaryTitle => 'Trip total';
 
   @override
   String get expenseCatFuel => 'Fuel';

@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/providers.dart';
+import '../../core/theme/cw_theme_extensions.dart';
+import '../../core/theme/cw_tokens.dart';
+import '../../core/theme/cw_typography.dart';
 import '../../l10n/app_localizations.dart';
+import '../../widgets/cw_button.dart';
+import '../../widgets/cw_empty_state.dart';
+import 'grib_import_storage.dart';
+import 'widgets/grib_file_list.dart';
 
-/// Заглушка импорта GRIB с сохранением пути (F10 — декодер не входит в MVP).
+/// GRIB import shell: file list UI with path stub until decoder (step-44).
 class GribImportScreen extends ConsumerStatefulWidget {
   const GribImportScreen({super.key});
 
@@ -13,45 +20,96 @@ class GribImportScreen extends ConsumerStatefulWidget {
 }
 
 class _GribImportScreenState extends ConsumerState<GribImportScreen> {
-  static const prefsKey = 'gribImportPathStub';
-
-  String? _path;
+  List<GribImportFile> _files = const [];
+  bool _importing = false;
 
   @override
   void initState() {
     super.initState();
-    _path = ref.read(sharedPreferencesProvider).getString(prefsKey);
+    _reloadFiles();
+  }
+
+  void _reloadFiles() {
+    final prefs = ref.read(sharedPreferencesProvider);
+    setState(() => _files = loadGribImports(prefs));
+  }
+
+  Future<void> _simulateImport(AppLocalizations l10n) async {
+    if (_importing) return;
+
+    setState(() => _importing = true);
+    await Future<void>.delayed(const Duration(milliseconds: 400));
+
+    const demo = '/demo/path/weather.grb';
+    final prefs = ref.read(sharedPreferencesProvider);
+    await addGribImport(prefs, demo);
+
+    if (!mounted) return;
+    setState(() {
+      _importing = false;
+      _files = loadGribImports(prefs);
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(l10n.gribStubSaved)),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final colors = context.cwColors;
 
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(CwSpacing.m),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(l10n.gribStubBody, style: Theme.of(context).textTheme.bodyLarge),
-          const SizedBox(height: 16),
-          if (_path != null)
-            Text('${l10n.gribLastPath}: $_path',
-                style: Theme.of(context).textTheme.bodySmall),
-          const Spacer(),
-          FilledButton(
-            onPressed: () async {
-              // File picker optional: keep stub — user path from share target in later phase
-              final p = ref.read(sharedPreferencesProvider);
-              const demo = '/demo/path/weather.grb';
-              await p.setString(prefsKey, demo);
-              setState(() => _path = demo);
-              if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(l10n.gribStubSaved)),
-                );
-              }
-            },
-            child: Text(l10n.gribSimulatePick),
+          Text(
+            l10n.gribStubBody,
+            style: CwTypography.body(color: colors.textMuted),
+          ),
+          const SizedBox(height: CwSpacing.m),
+          CwButton(
+            key: const Key('grib_import_button'),
+            label: l10n.gribImport,
+            variant: CwButtonVariant.secondary,
+            icon: Icons.upload_file_outlined,
+            loading: _importing,
+            onPressed: _importing ? null : () => _simulateImport(l10n),
+          ),
+          if (_importing) ...[
+            const SizedBox(height: CwSpacing.s),
+            LinearProgressIndicator(
+              minHeight: 3,
+              color: colors.accentTeal,
+              backgroundColor: colors.accentTeal.withValues(alpha: 0.15),
+            ),
+          ],
+          const SizedBox(height: CwSpacing.l),
+          Text(
+            l10n.gribTitle,
+            style: CwTypography.h2(color: colors.textPrimary),
+          ),
+          const SizedBox(height: CwSpacing.s),
+          Expanded(
+            child: _files.isEmpty
+                ? Center(
+                    child: CwEmptyState(
+                      key: const Key('grib_empty_state'),
+                      icon: Icons.cloud_off_outlined,
+                      title: l10n.gribEmpty,
+                      message: l10n.gribStubBody,
+                      ctaLabel: l10n.gribImport,
+                      onCtaPressed: _importing
+                          ? null
+                          : () => _simulateImport(l10n),
+                    ),
+                  )
+                : GribFileList(
+                    key: const Key('grib_file_list'),
+                    files: _files,
+                  ),
           ),
         ],
       ),

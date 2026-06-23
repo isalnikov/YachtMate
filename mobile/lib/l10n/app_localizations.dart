@@ -2441,6 +2441,24 @@ abstract class AppLocalizations {
   /// **'Stub path saved locally.'**
   String get gribStubSaved;
 
+  /// No description provided for @gribEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No GRIB files imported yet.'**
+  String get gribEmpty;
+
+  /// No description provided for @gribImport.
+  ///
+  /// In en, this message translates to:
+  /// **'Import GRIB file'**
+  String get gribImport;
+
+  /// No description provided for @gribStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending decode'**
+  String get gribStatusPending;
+
   /// No description provided for @coastalGuideTitle.
   ///
   /// In en, this message translates to:
@@ -2458,6 +2476,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No coastal POIs.'**
   String get coastalEmpty;
+
+  /// No description provided for @coastalSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search shore POIs'**
+  String get coastalSearchHint;
+
+  /// No description provided for @coastalNoMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No POIs match your filters.'**
+  String get coastalNoMatch;
+
+  /// No description provided for @coastalCategoryAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get coastalCategoryAll;
+
+  /// No description provided for @coastalCategoryBeach.
+  ///
+  /// In en, this message translates to:
+  /// **'Beach'**
+  String get coastalCategoryBeach;
+
+  /// No description provided for @coastalCategoryFuel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fuel'**
+  String get coastalCategoryFuel;
+
+  /// No description provided for @coastalCategoryMarina.
+  ///
+  /// In en, this message translates to:
+  /// **'Marina'**
+  String get coastalCategoryMarina;
+
+  /// No description provided for @coastalCategoryRestaurant.
+  ///
+  /// In en, this message translates to:
+  /// **'Restaurant'**
+  String get coastalCategoryRestaurant;
+
+  /// No description provided for @coastalCategoryAttraction.
+  ///
+  /// In en, this message translates to:
+  /// **'Attraction'**
+  String get coastalCategoryAttraction;
+
+  /// No description provided for @coastalCategoryOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get coastalCategoryOther;
+
+  /// No description provided for @coastalCoordinates.
+  ///
+  /// In en, this message translates to:
+  /// **'{lat}°, {lon}°'**
+  String coastalCoordinates(String lat, String lon);
 
   /// No description provided for @medicalGlossaryTitle.
   ///
@@ -2704,6 +2782,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No expenses logged.'**
   String get expenseEmpty;
+
+  /// No description provided for @expenseSummaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip total'**
+  String get expenseSummaryTitle;
 
   /// No description provided for @expenseCatFuel.
   ///

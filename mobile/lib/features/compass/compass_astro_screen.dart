@@ -5,8 +5,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../../core/providers.dart';
+import '../../core/theme/cw_theme_extensions.dart';
+import '../../core/theme/cw_tokens.dart';
+import '../../core/theme/cw_typography.dart';
 import '../../domain/astro/suncalc_port.dart';
 import '../../l10n/app_localizations.dart';
+import '../../widgets/cw_card.dart';
+import '../../widgets/cw_section_header.dart';
+import 'widgets/compass_dial.dart';
 
 /// Компас + приблизительные восход/закат (F09).
 class CompassAstroScreen extends ConsumerStatefulWidget {
@@ -27,81 +33,191 @@ class _CompassAstroScreenState extends ConsumerState<CompassAstroScreen> {
     }).catchError((_) {});
   }
 
+  bool get _compassSupported =>
+      !kIsWeb &&
+      (defaultTargetPlatform == TargetPlatform.android ||
+          defaultTargetPlatform == TargetPlatform.iOS ||
+          defaultTargetPlatform == TargetPlatform.macOS);
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final lang = ref.watch(localeControllerProvider).languageCode;
+    final colors = context.cwColors;
 
-    final unsupported = kIsWeb ||
-        !(defaultTargetPlatform == TargetPlatform.android ||
-            defaultTargetPlatform == TargetPlatform.iOS ||
-            defaultTargetPlatform == TargetPlatform.macOS);
-
-    SunRiseSetUtc? solar;
-    final p = _pos;
-    if (p != null) {
-      final noonUtc = DateTime.utc(
-        DateTime.now().year,
-        DateTime.now().month,
-        DateTime.now().day,
-        12,
-      );
-      solar = approximateSunriseSunsetUtc(
-        latDeg: p.latitude,
-        lonDeg: p.longitude,
-        whenUtc: noonUtc,
-      );
-    }
+    final solar = _solarForPosition(_pos);
 
     return ListView(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(CwSpacing.m),
       children: [
-        Text(l10n.compassDisclaimer, style: Theme.of(context).textTheme.bodySmall),
-        const SizedBox(height: 24),
-        if (unsupported)
+        Text(
+          l10n.compassDisclaimer,
+          style: CwTypography.caption(color: colors.textMuted),
+        ),
+        const SizedBox(height: CwSpacing.l),
+        if (!_compassSupported)
           Text(l10n.compassUnavailablePlatform)
         else
-          StreamBuilder<CompassEvent>(
-            stream: FlutterCompass.events,
-            builder: (ctx, snap) {
-              final heading = snap.data?.heading;
-              final deg = heading == null ? '—' : '${heading.toStringAsFixed(0)}°';
-              return Column(
-                children: [
-                  Text(
-                    deg,
-                    style: Theme.of(context).textTheme.displayMedium,
-                    textAlign: TextAlign.center,
-                  ),
-                  Text(l10n.compassHeadingLabel),
-                ],
-              );
-            },
-          ),
-        const Divider(height: 40),
-        Text(l10n.astroSectionTitle, style: Theme.of(context).textTheme.titleMedium),
-        const SizedBox(height: 8),
-        if (p == null)
-          Text(l10n.astroNeedGps)
+          _CompassHeadingSection(l10n: l10n),
+        const SizedBox(height: CwSpacing.l),
+        CwSectionHeader(label: l10n.astroSectionTitle),
+        if (_pos == null)
+          Text(
+            l10n.astroNeedGps,
+            style: CwTypography.body(color: colors.textPrimary),
+          )
         else if (solar != null) ...[
-          Text(
-            '${l10n.astroSunrise}: ${_fmtLocal(solar.sunriseUtc)}',
+          _SunTimesRow(
+            sunriseLabel: l10n.astroSunrise,
+            sunsetLabel: l10n.astroSunset,
+            sunriseUtc: solar.sunriseUtc,
+            sunsetUtc: solar.sunsetUtc,
           ),
+          const SizedBox(height: CwSpacing.s),
           Text(
-            '${l10n.astroSunset}: ${_fmtLocal(solar.sunsetUtc)}',
-          ),
-          Text(
-            lang == 'ru'
+            ref.watch(localeControllerProvider).languageCode == 'ru'
                 ? 'Часовой пояс устройства; формулы приблизительные.'
                 : 'Device timezone; approximate formulas.',
-            style: Theme.of(context).textTheme.bodySmall,
+            style: CwTypography.caption(color: colors.textMuted),
           ),
         ],
       ],
     );
   }
 
-  String _fmtLocal(DateTime utc) =>
-      '${utc.toLocal().hour.toString().padLeft(2, '0')}:'
-      '${utc.toLocal().minute.toString().padLeft(2, '0')}';
+  SunRiseSetUtc? _solarForPosition(Position? position) {
+    final p = position;
+    if (p == null) return null;
+    final now = DateTime.now();
+    return approximateSunriseSunsetUtc(
+      latDeg: p.latitude,
+      lonDeg: p.longitude,
+      whenUtc: DateTime.utc(now.year, now.month, now.day, 12),
+    );
+  }
+}
+
+class _CompassHeadingSection extends StatelessWidget {
+  const _CompassHeadingSection({required this.l10n});
+
+  final AppLocalizations l10n;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.cwColors;
+    final stream = FlutterCompass.events;
+
+    if (stream == null) {
+      return Column(
+        children: [
+          const CompassDial(),
+          const SizedBox(height: CwSpacing.s),
+          Text(
+            l10n.compassUnavailablePlatform,
+            textAlign: TextAlign.center,
+            style: CwTypography.body(color: colors.textPrimary),
+          ),
+        ],
+      );
+    }
+
+    return StreamBuilder<CompassEvent>(
+      stream: stream,
+      builder: (context, snap) {
+        final heading = snap.data?.heading;
+        return Column(
+          children: [
+            CompassDial(headingDeg: heading),
+            const SizedBox(height: CwSpacing.s),
+            Text(
+              l10n.compassHeadingLabel,
+              textAlign: TextAlign.center,
+              style: CwTypography.caption(color: colors.textMuted),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _SunTimesRow extends StatelessWidget {
+  const _SunTimesRow({
+    required this.sunriseLabel,
+    required this.sunsetLabel,
+    required this.sunriseUtc,
+    required this.sunsetUtc,
+  });
+
+  final String sunriseLabel;
+  final String sunsetLabel;
+  final DateTime sunriseUtc;
+  final DateTime sunsetUtc;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: _SunTimeCard(
+            key: const Key('compass_sunrise_card'),
+            icon: Icons.wb_sunny_outlined,
+            label: sunriseLabel,
+            timeLocal: _fmtLocal(sunriseUtc),
+          ),
+        ),
+        const SizedBox(width: CwSpacing.s),
+        Expanded(
+          child: _SunTimeCard(
+            key: const Key('compass_sunset_card'),
+            icon: Icons.nights_stay_outlined,
+            label: sunsetLabel,
+            timeLocal: _fmtLocal(sunsetUtc),
+          ),
+        ),
+      ],
+    );
+  }
+
+  static String _fmtLocal(DateTime utc) {
+    final local = utc.toLocal();
+    return '${local.hour.toString().padLeft(2, '0')}:'
+        '${local.minute.toString().padLeft(2, '0')}';
+  }
+}
+
+class _SunTimeCard extends StatelessWidget {
+  const _SunTimeCard({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.timeLocal,
+  });
+
+  final IconData icon;
+  final String label;
+  final String timeLocal;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.cwColors;
+
+    return CwCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: colors.accentOrange, size: 22),
+          const SizedBox(height: CwSpacing.s),
+          Text(
+            label,
+            style: CwTypography.caption(color: colors.textMuted),
+          ),
+          const SizedBox(height: CwSpacing.xs),
+          Text(
+            timeLocal,
+            style: CwTypography.h2(color: colors.accentTeal),
+          ),
+        ],
+      ),
+    );
+  }
 }

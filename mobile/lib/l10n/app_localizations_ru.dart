@@ -1295,6 +1295,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get gribStubSaved => 'Путь сохранён локально.';
 
   @override
+  String get gribEmpty => 'Файлы GRIB ещё не импортированы.';
+
+  @override
+  String get gribImport => 'Импортировать GRIB';
+
+  @override
+  String get gribStatusPending => 'Ожидает декодирования';
+
+  @override
   String get coastalGuideTitle => 'Прибрежные POI';
 
   @override
@@ -1302,6 +1311,38 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get coastalEmpty => 'Нет прибрежных точек.';
+
+  @override
+  String get coastalSearchHint => 'Поиск береговых POI';
+
+  @override
+  String get coastalNoMatch => 'Нет точек по вашим фильтрам.';
+
+  @override
+  String get coastalCategoryAll => 'Все';
+
+  @override
+  String get coastalCategoryBeach => 'Пляж';
+
+  @override
+  String get coastalCategoryFuel => 'Топливо';
+
+  @override
+  String get coastalCategoryMarina => 'Марина';
+
+  @override
+  String get coastalCategoryRestaurant => 'Ресторан';
+
+  @override
+  String get coastalCategoryAttraction => 'Достопримечательность';
+
+  @override
+  String get coastalCategoryOther => 'Другое';
+
+  @override
+  String coastalCoordinates(String lat, String lon) {
+    return '$lat°, $lon°';
+  }
 
   @override
   String get medicalGlossaryTitle => 'Медицинский глоссарий';
@@ -1432,6 +1473,9 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get expenseEmpty => 'Расходов пока нет.';
+
+  @override
+  String get expenseSummaryTitle => 'Итого по рейсу';
 
   @override
   String get expenseCatFuel => 'Топливо';
