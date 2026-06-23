@@ -1,53 +1,109 @@
-# Пошаговый план реализации UI
+# Пошаговый план реализации
 
-**28 шагов** · один шаг = одна кодер-сессия ИИ (~200k токенов)
+**60 шагов** · один шаг = одна кодер-сессия ИИ (~200k токенов)
 
-## Матрица шагов
+> Шаги **01–28** ✅ выполнены. Шаги **29–60** — фазы G–J.
 
-| # | Файл | Фаза | Зависит от | Оценка файлов |
-|---|------|------|------------|---------------|
-| 01 | [step-01-design-tokens.md](step-01-design-tokens.md) | A | — | 3–5 |
-| 02 | [step-02-typography-spacing.md](step-02-typography-spacing.md) | A | 01 | 3–4 |
-| 03 | [step-03-buttons.md](step-03-buttons.md) | A | 01–02 | 4–6 |
-| 04 | [step-04-cards-lists.md](step-04-cards-lists.md) | A | 01–02 | 4–6 |
-| 05 | [step-05-inputs.md](step-05-inputs.md) | A | 01–03 | 4–6 |
-| 06 | [step-06-feedback-sheets.md](step-06-feedback-sheets.md) | A | 01–04 | 5–7 |
-| 07 | [step-07-app-bar-nav.md](step-07-app-bar-nav.md) | A | 01–06 | 4–6 |
-| 08 | [step-08-onboarding.md](step-08-onboarding.md) | B | 01–07 | 6–8 |
-| 09 | [step-09-map-controls.md](step-09-map-controls.md) | C | 01–07 | 5–8 |
-| 10 | [step-10-map-layers-sheet.md](step-10-map-layers-sheet.md) | C | 09 | 4–6 |
-| 11 | [step-11-map-bottom-sheet.md](step-11-map-bottom-sheet.md) | C | 09–10 | 4–6 |
-| 12 | [step-12-route-screen.md](step-12-route-screen.md) | C | 01–07 | 5–7 |
-| 13 | [step-13-route-corridor.md](step-13-route-corridor.md) | C | 12 | 4–6 |
-| 14 | [step-14-weather-timeline.md](step-14-weather-timeline.md) | C | 01–07 | 5–7 |
-| 15 | [step-15-weather-wind-rose.md](step-15-weather-wind-rose.md) | C | 14 | 4–6 |
-| 16 | [step-16-tides-screen.md](step-16-tides-screen.md) | C | 14 | 5–7 |
-| 17 | [step-17-mooring-list.md](step-17-mooring-list.md) | C | 04 | 5–7 |
-| 18 | [step-18-mooring-detail.md](step-18-mooring-detail.md) | C | 17 | 4–6 |
-| 19 | [step-19-anchor-watch.md](step-19-anchor-watch.md) | D | 09 | 5–7 |
-| 20 | [step-20-ais-screen.md](step-20-ais-screen.md) | D | 09–11 | 6–8 |
-| 21 | [step-21-sos-emergency.md](step-21-sos-emergency.md) | D | 03, 06 | 4–5 |
-| 22 | [step-22-status-gps-bar.md](step-22-status-gps-bar.md) | D | 09 | 3–5 |
-| 23 | [step-23-knots-ui.md](step-23-knots-ui.md) | E | 04 | 4–6 |
-| 24 | [step-24-vhf-training-ui.md](step-24-vhf-training-ui.md) | E | 04, 06 | 5–7 |
-| 25 | [step-25-toolbox-hub.md](step-25-toolbox-hub.md) | E | 04, 07 | 4–5 |
-| 26 | [step-26-night-red-mode.md](step-26-night-red-mode.md) | F | 01 | 4–6 |
-| 27 | [step-27-settings-vessel.md](step-27-settings-vessel.md) | F | 01–07 | 5–7 |
-| 28 | [step-28-tablet-split-layout.md](step-28-tablet-split-layout.md) | F | 09–18 | 6–10 |
+См. также: [phases-roadmap.md](../phases-roadmap.md)
+
+---
+
+## Фазы A–F (01–28) ✅ DONE
+
+| # | Файл | Фаза |
+|---|------|------|
+| 01–07 | design tokens → app bar | A |
+| 08 | onboarding | B |
+| 09–18 | map, route, weather, mooring | C |
+| 19–22 | anchor, AIS, SOS, GPS | D |
+| 23–25 | knots, VHF, toolbox | E |
+| 26–28 | night theme, settings, tablet | F |
+
+---
+
+## Фаза G — UI Debt (29–38)
+
+Миграция экранов, не затронутых в 01–28, на `CwCard` / `CwButton` / `CwAppBar`.
+
+| # | Файл | Экран |
+|---|------|-------|
+| 29 | [step-29-logbook-ui.md](step-29-logbook-ui.md) | Logbook |
+| 30 | [step-30-track-ui.md](step-30-track-ui.md) | Track recording |
+| 31 | [step-31-vault-ui.md](step-31-vault-ui.md) | Vault |
+| 32 | [step-32-crew-ui.md](step-32-crew-ui.md) | Crew |
+| 33 | [step-33-checklist-ui.md](step-33-checklist-ui.md) | Checklists |
+| 34 | [step-34-compass-ui.md](step-34-compass-ui.md) | Compass + astro |
+| 35 | [step-35-coastal-ui.md](step-35-coastal-ui.md) | Coastal guide |
+| 36 | [step-36-medical-ui.md](step-36-medical-ui.md) | Medical glossary |
+| 37 | [step-37-expenses-ui.md](step-37-expenses-ui.md) | Voyager cashbook |
+| 38 | [step-38-grib-ui-shell.md](step-38-grib-ui-shell.md) | GRIB import shell |
+
+**requires:** step-01–07 для всех G
+
+---
+
+## Фаза H — Data & Maps (39–48)
+
+Подключение данных к UI, созданному в 01–28.
+
+| # | Файл | Задача |
+|---|------|--------|
+| 39 | [step-39-map-overlay-tiles.md](step-39-map-overlay-tiles.md) | Satellite/relief/sonar tiles |
+| 40 | [step-40-chart-style-tiles.md](step-40-chart-style-tiles.md) | Chart style + night on map |
+| 41 | [step-41-shallow-highlight.md](step-41-shallow-highlight.md) | Shallow depth highlight |
+| 42 | [step-42-live-tides-api.md](step-42-live-tides-api.md) | Live tides API |
+| 43 | [step-43-mooring-photos-ratings.md](step-43-mooring-photos-ratings.md) | Photos + ratings |
+| 44 | [step-44-grib-decoder-mvp.md](step-44-grib-decoder-mvp.md) | GRIB decoder |
+| 45 | [step-45-anchor-real-map-sms.md](step-45-anchor-real-map-sms.md) | Anchor MapLibre + SMS |
+| 46 | [step-46-nmea-ais-bridge.md](step-46-nmea-ais-bridge.md) | Local NMEA AIS |
+| 47 | [step-47-wind-layer-on-map.md](step-47-wind-layer-on-map.md) | Wind overlay on map |
+| 48 | [step-48-offline-chart-manager.md](step-48-offline-chart-manager.md) | Offline regions UI |
+
+**requires:** step-09–10 для 39–41; step-16 для 42; step-17–18 для 43
+
+---
+
+## Фаза I — Product (49–54)
+
+Модули из `docs/ui/` и IDEAS2 без Flutter-реализации.
+
+| # | Файл | Задача |
+|---|------|--------|
+| 49 | [step-49-community-hub.md](step-49-community-hub.md) | Community M10 |
+| 50 | [step-50-voyage-monitoring.md](step-50-voyage-monitoring.md) | SafeTrx-style |
+| 51 | [step-51-push-notifications.md](step-51-push-notifications.md) | Anchor/weather push |
+| 52 | [step-52-feature-flags-freemium.md](step-52-feature-flags-freemium.md) | Feature flags |
+| 53 | [step-53-yacht-hub-screen.md](step-53-yacht-hub-screen.md) | Yacht hub M11 |
+| 54 | [step-54-offline-assistant-stub.md](step-54-offline-assistant-stub.md) | AI assistant stub |
+
+---
+
+## Фаза J — Polish (55–60)
+
+| # | Файл | Задача |
+|---|------|--------|
+| 55 | [step-55-i18n-el-tr-pt.md](step-55-i18n-el-tr-pt.md) | EL, TR, PT |
+| 56 | [step-56-i18n-complete-eu.md](step-56-i18n-complete-eu.md) | DE/FR/ES/IT gaps |
+| 57 | [step-57-wind-particles.md](step-57-wind-particles.md) | Wind animation |
+| 58 | [step-58-error-catalog.md](step-58-error-catalog.md) | Error messages |
+| 59 | [step-59-accessibility-audit.md](step-59-accessibility-audit.md) | WCAG pass |
+| 60 | [step-60-performance-ui.md](step-60-performance-ui.md) | UI perf budget |
+
+---
 
 ## Правила для агента
 
-1. **Читать только** файлы из секции «Контекст» + прямые зависимости
-2. **Не трогать** файлы из «OUT OF SCOPE»
-3. **Запускать** `cd mobile && flutter test` перед завершением
-4. **Коммит** только если пользователь попросил
-5. Сверяться с `img/design/screenshot-findings.md` для визуала
+1. **requires** — все зависимости выполнены
+2. `cd mobile && flutter test` перед завершением
+3. Не расширять scope beyond IN SCOPE
+4. Коммит — только по запросу пользователя
+5. Сверка: `plan/features/F*.md`, `docs/ui/*.html`
 
-## Фазы
+## Порядок (рекомендуемый)
 
-- **A (01–07):** Design System — фундамент для всех экранов
-- **B (08):** Onboarding
-- **C (09–18):** Primary tabs polish
-- **D (19–22):** Safety & AIS
-- **E (23–25):** Toolbox & reference
-- **F (26–28):** Themes & responsive
+```
+G: 29 → 30 → … → 38   (можно 29–32 параллельно разным агентам)
+H: 39 → 40 → 41 → 42 → … → 48
+I: 49–54 (после G, частично параллельно H)
+J: 55–60 (в конце)
+```

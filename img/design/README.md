@@ -11,7 +11,8 @@
 | [information-architecture.md](information-architecture.md) | IA, sitemap, user flows |
 | [design-system-spec.md](design-system-spec.md) | Токены, компоненты, экраны (сводка) |
 | [screenshots-manifest.json](screenshots-manifest.json) | Каталог скачанных скриншотов |
-| [steps/](steps/) | **Пошаговый план** — один шаг = одна кодер-сессия ИИ (~200k токенов) |
+| [steps/](steps/) | **Пошаговый план 01–60** — один шаг = одна кодер-сессия ИИ (~200k токенов) |
+| [phases-roadmap.md](phases-roadmap.md) | Roadmap фаз G–J (шаги 29–60) |
 
 ## Скриншоты
 
@@ -39,23 +40,31 @@ screenshots/
 
 ## Текущее состояние приложения
 
-Уже реализовано (не дублировать в шагах, только **полировать**):
+### ✅ Выполнено (шаги 01–28)
 
-- 5-tab shell: Map | Route | Weather | Mooring | More
-- 25+ экранов, Drift/SQLite, Riverpod, MapLibre
-- Базовая тема `CwTheme` (deck blue + teal/orange)
-- HTML-макеты: `docs/ui/`
-- Фазы 0–8 в `plan/`
+- Design system `Cw*` (токены, 15+ виджетов)
+- Обновлены: Map, Route, Weather, Mooring, AIS, Anchor, SOS, Onboarding, Settings
+- 226 тестов, tablet split, night red theme
+
+### 🔲 Осталось (шаги 29–60)
+
+| Фаза | Шаги | Суть |
+|------|------|------|
+| **G** UI Debt | 29–38 | Logbook, Track, Vault, Crew, Checklists, Compass, Coastal, Medical, Expenses, GRIB shell |
+| **H** Data | 39–48 | Map tiles, live tides, GRIB decode, NMEA AIS, wind on map, offline charts |
+| **I** Product | 49–54 | Community, voyage monitor, push, freemium, yacht hub, AI stub |
+| **J** Polish | 55–60 | i18n EL/TR/PT, wind particles, errors, a11y, perf |
+
+Подробно: [phases-roadmap.md](phases-roadmap.md)
 
 ## Порядок выполнения
 
 ```
-Фаза A (шаги 01–07)  → Design System
-Фаза B (шаги 08–11)  → Shell & Onboarding
-Фаза C (шаги 12–18) → Основные экраны
-Фаза D (шаги 19–22) → Безопасность & AIS
-Фаза E (шаги 23–25) → Справочники & обучение
-Фаза F (шаги 26–28) → A11y, темы, адаптив
+01–28 ✅  Design System + primary tabs (DONE)
+29–38     G — UI debt (вторичные экраны)
+39–48     H — Data & maps wiring
+49–54     I — Product modules
+55–60     J — i18n, polish, perf
 ```
 
 ## Как запускать агента

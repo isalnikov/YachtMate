@@ -1,19 +1,21 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../core/crew/crew_controller.dart';
 import '../../core/providers.dart';
+import '../../core/theme/cw_tokens.dart';
 import '../../data/local/app_database.dart';
 import '../../data/repositories/logbook_repository.dart';
 import '../../l10n/app_localizations.dart';
+import '../../widgets/cw_button.dart';
+import '../../widgets/cw_empty_state.dart';
+import '../../widgets/cw_section_header.dart';
 import 'logbook_providers.dart';
+import 'widgets/logbook_entry_card.dart';
 
 /// Судовой журнал — Фаза 7.1; вкладка «Ещё» или экран из меню.
-class LogbookScreen extends ConsumerWidget {
+class LogbookScreen extends ConsumerStatefulWidget {
   const LogbookScreen({super.key, this.compact = false});
 
   /// Без второго заголовка (родитель уже дал [AppBar]).
@@ -31,7 +33,29 @@ class LogbookScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<LogbookScreen> createState() => _LogbookScreenState();
+}
+
+class _LogbookScreenState extends ConsumerState<LogbookScreen> {
+  String? _categoryFilter;
+
+  List<LogbookEntryRow> _visibleEntries(List<LogbookEntryRow> entries) {
+    if (_categoryFilter == null) return entries;
+    return entries.where((e) => e.category == _categoryFilter).toList();
+  }
+
+  Map<String, List<LogbookEntryRow>> _groupByCategory(
+    List<LogbookEntryRow> entries,
+  ) {
+    final grouped = <String, List<LogbookEntryRow>>{};
+    for (final entry in entries) {
+      grouped.putIfAbsent(entry.category, () => []).add(entry);
+    }
+    return grouped;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final async = ref.watch(logbookEntriesProvider);
@@ -41,12 +65,15 @@ class LogbookScreen extends ConsumerWidget {
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, _) => Center(child: Text('$e')),
       data: (entries) {
+        final visible = _visibleEntries(entries);
+        final grouped = _groupByCategory(visible);
+
         return Stack(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                if (!compact)
+                if (!widget.compact)
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
                     child: Row(
@@ -57,9 +84,9 @@ class LogbookScreen extends ConsumerWidget {
                             style: theme.textTheme.headlineSmall,
                           ),
                         ),
-                        IconButton(
-                          tooltip: l10n.logbookExportCsv,
-                          icon: const Icon(Icons.file_download_outlined),
+                        CwIconButton(
+                          icon: Icons.file_download_outlined,
+                          semanticLabel: l10n.logbookExportCsv,
                           onPressed: entries.isEmpty
                               ? null
                               : () => _exportCsv(context, ref, entries),
@@ -73,9 +100,9 @@ class LogbookScreen extends ConsumerWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        IconButton(
-                          tooltip: l10n.logbookExportCsv,
-                          icon: const Icon(Icons.file_download_outlined),
+                        CwIconButton(
+                          icon: Icons.file_download_outlined,
+                          semanticLabel: l10n.logbookExportCsv,
                           onPressed: entries.isEmpty
                               ? null
                               : () => _exportCsv(context, ref, entries),
@@ -83,33 +110,42 @@ class LogbookScreen extends ConsumerWidget {
                       ],
                     ),
                   ),
+                if (entries.isNotEmpty) _CategoryFilterBar(
+                  l10n: l10n,
+                  selected: _categoryFilter,
+                  onSelected: (value) =>
+                      setState(() => _categoryFilter = value),
+                ),
                 Expanded(
                   child: entries.isEmpty
                       ? Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(24),
-                            child: Text(
-                              l10n.logbookEmpty,
-                              textAlign: TextAlign.center,
-                              style: theme.textTheme.bodyLarge,
-                            ),
+                          child: CwEmptyState(
+                            icon: Icons.menu_book_outlined,
+                            title: l10n.logbookEmpty,
+                            ctaLabel: l10n.logbookAddEntry,
+                            onCtaPressed: () => _openAddDialog(context, ref),
                           ),
                         )
-                      : ListView.separated(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          itemCount: entries.length,
-                          separatorBuilder: (_, index) =>
-                              const Divider(height: 1),
-                          itemBuilder: (ctx, i) {
-                            final e = entries[i];
-                            return _LogbookTile(
-                              entry: e,
-                              categoryLabel: categoryTitle(l10n, e.category),
-                              showDelete: canDelete,
-                              onDelete: () =>
-                                  _confirmDelete(context, ref, e, canDelete),
-                            );
-                          },
+                      : visible.isEmpty
+                      ? Center(
+                          child: CwEmptyState(
+                            icon: Icons.filter_list_off_outlined,
+                            title: l10n.logbookEmpty,
+                          ),
+                        )
+                      : ListView(
+                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 88),
+                          children: _categoryFilter == null
+                              ? _buildSectionedList(
+                                  l10n: l10n,
+                                  grouped: grouped,
+                                  canDelete: canDelete,
+                                )
+                              : _buildFlatList(
+                                  l10n: l10n,
+                                  entries: visible,
+                                  canDelete: canDelete,
+                                ),
                         ),
                 ),
               ],
@@ -117,10 +153,10 @@ class LogbookScreen extends ConsumerWidget {
             Positioned(
               right: 16,
               bottom: 16,
-              child: FloatingActionButton.extended(
+              child: CwFab(
+                icon: Icons.add,
+                semanticLabel: l10n.logbookAddEntry,
                 onPressed: () => _openAddDialog(context, ref),
-                icon: const Icon(Icons.add),
-                label: Text(l10n.logbookAddEntry),
               ),
             ),
           ],
@@ -129,102 +165,56 @@ class LogbookScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _openAddDialog(BuildContext context, WidgetRef ref) async {
-    final l10n = AppLocalizations.of(context)!;
-    final titleCtrl = TextEditingController();
-    final bodyCtrl = TextEditingController();
-    var category = LogbookEntryCategories.note;
+  List<Widget> _buildFlatList({
+    required AppLocalizations l10n,
+    required List<LogbookEntryRow> entries,
+    required bool canDelete,
+  }) {
+    return [
+      for (final entry in entries)
+        LogbookEntryCard(
+          entry: entry,
+          categoryLabel: LogbookScreen.categoryTitle(l10n, entry.category),
+          showDelete: canDelete,
+          onDelete: () => _confirmDelete(context, ref, entry, canDelete),
+        ),
+    ];
+  }
 
-    try {
-      await showDialog<void>(
-        context: context,
-        builder: (ctx) {
-          return StatefulBuilder(
-            builder: (ctx, setLocal) {
-              return AlertDialog(
-                title: Text(l10n.logbookAddEntry),
-                content: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      InputDecorator(
-                        decoration: InputDecoration(
-                          labelText: l10n.logbookCategory,
-                          border: const OutlineInputBorder(),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            isExpanded: true,
-                            value: category,
-                            items: [
-                              for (final c in LogbookEntryCategories.all)
-                                DropdownMenuItem(
-                                  value: c,
-                                  child: Text(categoryTitle(l10n, c)),
-                                ),
-                            ],
-                            onChanged: (v) =>
-                                setLocal(() => category = v ?? category),
-                          ),
-                        ),
-                      ),
-                      TextField(
-                        controller: titleCtrl,
-                        decoration: InputDecoration(
-                          labelText: l10n.logbookEntryTitle,
-                        ),
-                      ),
-                      TextField(
-                        controller: bodyCtrl,
-                        decoration: InputDecoration(
-                          labelText: l10n.logbookEntryBody,
-                        ),
-                        maxLines: 4,
-                      ),
-                    ],
-                  ),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(ctx),
-                    child: Text(l10n.logbookCancel),
-                  ),
-                  FilledButton(
-                    onPressed: () async {
-                      await ref
-                          .read(logbookRepositoryProvider)
-                          .insertEntry(
-                            category: category,
-                            payload: {
-                              if (titleCtrl.text.trim().isNotEmpty)
-                                'title': titleCtrl.text.trim(),
-                              if (bodyCtrl.text.trim().isNotEmpty)
-                                'body': bodyCtrl.text.trim(),
-                            },
-                          );
-                      await ref
-                          .read(auditRepositoryProvider)
-                          .record(
-                            sessionId: ref.read(sessionIdProvider),
-                            module: 'M10',
-                            action: 'logbook_entry_create',
-                            contextJson: '{"category":"$category"}',
-                          );
-                      ref.invalidate(logbookEntriesProvider);
-                      if (ctx.mounted) Navigator.pop(ctx);
-                    },
-                    child: Text(l10n.logbookSave),
-                  ),
-                ],
-              );
-            },
-          );
-        },
+  List<Widget> _buildSectionedList({
+    required AppLocalizations l10n,
+    required Map<String, List<LogbookEntryRow>> grouped,
+    required bool canDelete,
+  }) {
+    final widgets = <Widget>[];
+    for (final category in LogbookEntryCategories.all) {
+      final sectionEntries = grouped[category];
+      if (sectionEntries == null || sectionEntries.isEmpty) continue;
+
+      widgets.add(
+        CwSectionHeader(
+          label: LogbookScreen.categoryTitle(l10n, category),
+        ),
       );
-    } finally {
-      titleCtrl.dispose();
-      bodyCtrl.dispose();
+      widgets.addAll(
+        sectionEntries.map(
+          (entry) => LogbookEntryCard(
+            entry: entry,
+            categoryLabel: LogbookScreen.categoryTitle(l10n, entry.category),
+            showDelete: canDelete,
+            onDelete: () => _confirmDelete(context, ref, entry, canDelete),
+          ),
+        ),
+      );
     }
+    return widgets;
+  }
+
+  Future<void> _openAddDialog(BuildContext context, WidgetRef ref) async {
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) => const _AddLogbookEntryDialog(),
+    );
   }
 
   Future<void> _exportCsv(
@@ -310,77 +300,148 @@ class LogbookScreen extends ConsumerWidget {
   }
 }
 
-class _LogbookTile extends StatelessWidget {
-  const _LogbookTile({
-    required this.entry,
-    required this.categoryLabel,
-    required this.showDelete,
-    required this.onDelete,
-  });
+class _AddLogbookEntryDialog extends ConsumerStatefulWidget {
+  const _AddLogbookEntryDialog();
 
-  final LogbookEntryRow entry;
-  final String categoryLabel;
-  final bool showDelete;
-  final VoidCallback onDelete;
+  @override
+  ConsumerState<_AddLogbookEntryDialog> createState() =>
+      _AddLogbookEntryDialogState();
+}
+
+class _AddLogbookEntryDialogState extends ConsumerState<_AddLogbookEntryDialog> {
+  final _titleCtrl = TextEditingController();
+  final _bodyCtrl = TextEditingController();
+  var _category = LogbookEntryCategories.note;
+
+  @override
+  void dispose() {
+    _titleCtrl.dispose();
+    _bodyCtrl.dispose();
+    super.dispose();
+  }
+
+  Future<void> _save() async {
+    await ref.read(logbookRepositoryProvider).insertEntry(
+          category: _category,
+          payload: {
+            if (_titleCtrl.text.trim().isNotEmpty)
+              'title': _titleCtrl.text.trim(),
+            if (_bodyCtrl.text.trim().isNotEmpty) 'body': _bodyCtrl.text.trim(),
+          },
+        );
+    await ref.read(auditRepositoryProvider).record(
+          sessionId: ref.read(sessionIdProvider),
+          module: 'M10',
+          action: 'logbook_entry_create',
+          contextJson: '{"category":"$_category"}',
+        );
+    ref.invalidate(logbookEntriesProvider);
+    if (mounted) Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final payload = LogbookPayload.parse(entry.payloadJson);
-    final titleText = (payload.title ?? '').trim();
-    final when = DateFormat.yMMMd().add_Hm().format(
-      DateTime.fromMillisecondsSinceEpoch(entry.t),
-    );
+    final l10n = AppLocalizations.of(context)!;
 
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(vertical: 4),
-      title: Text(titleText.isNotEmpty ? titleText : categoryLabel),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '$categoryLabel · $when',
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: theme.colorScheme.outline,
-            ),
-          ),
-          if ((payload.body ?? '').trim().isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.only(top: 4),
-              child: Text(
-                payload.body!,
-                maxLines: 4,
-                overflow: TextOverflow.ellipsis,
+    return AlertDialog(
+      title: Text(l10n.logbookAddEntry),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            InputDecorator(
+              decoration: InputDecoration(
+                labelText: l10n.logbookCategory,
+                border: const OutlineInputBorder(),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  isExpanded: true,
+                  value: _category,
+                  items: [
+                    for (final c in LogbookEntryCategories.all)
+                      DropdownMenuItem(
+                        value: c,
+                        child: Text(LogbookScreen.categoryTitle(l10n, c)),
+                      ),
+                  ],
+                  onChanged: (v) => setState(() => _category = v ?? _category),
+                ),
               ),
             ),
-        ],
+            TextField(
+              controller: _titleCtrl,
+              decoration: InputDecoration(labelText: l10n.logbookEntryTitle),
+            ),
+            TextField(
+              controller: _bodyCtrl,
+              decoration: InputDecoration(labelText: l10n.logbookEntryBody),
+              maxLines: 4,
+            ),
+          ],
+        ),
       ),
-      trailing: showDelete
-          ? IconButton(
-              icon: const Icon(Icons.delete_outline),
-              onPressed: onDelete,
-            )
-          : null,
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text(l10n.logbookCancel),
+        ),
+        FilledButton(
+          onPressed: _save,
+          child: Text(l10n.logbookSave),
+        ),
+      ],
     );
   }
 }
 
-class LogbookPayload {
-  LogbookPayload({this.title, this.body});
+class _CategoryFilterBar extends StatelessWidget {
+  const _CategoryFilterBar({
+    required this.l10n,
+    required this.selected,
+    required this.onSelected,
+  });
 
-  final String? title;
-  final String? body;
+  final AppLocalizations l10n;
+  final String? selected;
+  final ValueChanged<String?> onSelected;
 
-  static LogbookPayload parse(String raw) {
-    try {
-      final decoded = jsonDecode(raw);
-      if (decoded is Map<String, dynamic>) {
-        return LogbookPayload(
-          title: decoded['title']?.toString(),
-          body: decoded['body']?.toString(),
-        );
-      }
-    } catch (_) {}
-    return LogbookPayload();
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final options = <(String?, String)>[
+      (null, l10n.aisFilterAll),
+      for (final c in LogbookEntryCategories.all)
+        (c, LogbookScreen.categoryTitle(l10n, c)),
+    ];
+
+    return Material(
+      color: theme.colorScheme.surface.withValues(alpha: 0.92),
+      elevation: 2,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: CwSpacing.s,
+          vertical: CwSpacing.s,
+        ),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              for (final (value, label) in options) ...[
+                Padding(
+                  padding: const EdgeInsets.only(right: CwSpacing.s),
+                  child: FilterChip(
+                    label: Text(label),
+                    selected: selected == value,
+                    onSelected: (_) => onSelected(value),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
