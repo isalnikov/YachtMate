@@ -712,7 +712,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
                   ? Theme.of(context).colorScheme.primaryContainer
                   : null,
               onPressed: () =>
-                  unawaited(ref.read(aisDemoProvider.notifier).toggle()),
+                  unawaited(ref.read(aisDemoToggleProvider)()),
               child: Icon(
                 ref.watch(aisDemoProvider)
                     ? Icons.stop_circle_outlined

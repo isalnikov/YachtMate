@@ -7,6 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/repositories/audit_repository.dart';
 import '../domain/anchor/geo.dart';
+import '../features/anchor/anchor_watch_sms.dart';
+import 'anchor_watch_alert_settings_controller.dart';
 
 /// GPS fix recorded while anchor watch is armed (drift trail).
 @immutable
@@ -85,8 +87,13 @@ class AnchorWatchState {
 }
 
 class AnchorWatchController extends StateNotifier<AnchorWatchState> {
-  AnchorWatchController(this._prefs, this._audit, this._sessionId)
-    : super(_loadInitial(_prefs)) {
+  AnchorWatchController(
+    this._prefs,
+    this._audit,
+    this._sessionId, {
+    AnchorWatchSmsLauncher? smsLauncher,
+  })  : _smsLauncher = smsLauncher,
+        super(_loadInitial(_prefs)) {
     if (state.armed && state.hasAnchor) {
       _startTimer();
     }
@@ -95,6 +102,7 @@ class AnchorWatchController extends StateNotifier<AnchorWatchState> {
   final SharedPreferences _prefs;
   final AuditRepository _audit;
   final String _sessionId;
+  final AnchorWatchSmsLauncher? _smsLauncher;
 
   static const latKey = 'anchorWatchLat';
   static const lonKey = 'anchorWatchLon';
@@ -257,8 +265,31 @@ class AnchorWatchController extends StateNotifier<AnchorWatchState> {
         contextJson:
             '{"distanceM":${d.toStringAsFixed(1)},"radiusM":${state.radiusM.toStringAsFixed(0)}}',
       );
+      await _maybeSendDriftSms(lat: lat, lon: lon, distanceM: d);
     }
     state = next;
+  }
+
+  Future<void> _maybeSendDriftSms({
+    required double lat,
+    required double lon,
+    required double distanceM,
+  }) async {
+    final alert = AnchorWatchAlertSettings.read(_prefs);
+    if (!alert.smsOnDrift || alert.smsNumber.isEmpty) return;
+    if (AnchorWatchAlertSettings.smsSuppressed(_prefs)) return;
+
+    final msg = buildAnchorDriftSmsMessage(
+      lat: lat,
+      lon: lon,
+      distanceM: distanceM,
+      radiusM: state.radiusM,
+    );
+    await sendAnchorDriftSms(
+      number: alert.smsNumber,
+      message: msg,
+      launcher: _smsLauncher,
+    );
   }
 
   @override

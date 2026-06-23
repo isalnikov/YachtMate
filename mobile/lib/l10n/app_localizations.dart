@@ -520,6 +520,60 @@ abstract class AppLocalizations {
   /// **'Demo NMEA stream active'**
   String get aisDemoActive;
 
+  /// No description provided for @aisLiveActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Live NMEA stream connected'**
+  String get aisLiveActive;
+
+  /// No description provided for @aisLiveConnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting to NMEA gateway…'**
+  String get aisLiveConnecting;
+
+  /// No description provided for @aisSourceOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get aisSourceOff;
+
+  /// No description provided for @aisSourceDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo'**
+  String get aisSourceDemo;
+
+  /// No description provided for @aisSourceLive.
+  ///
+  /// In en, this message translates to:
+  /// **'Live'**
+  String get aisSourceLive;
+
+  /// No description provided for @aisNmeaHost.
+  ///
+  /// In en, this message translates to:
+  /// **'Gateway host'**
+  String get aisNmeaHost;
+
+  /// No description provided for @aisNmeaPort.
+  ///
+  /// In en, this message translates to:
+  /// **'Port'**
+  String get aisNmeaPort;
+
+  /// No description provided for @aisNmeaHostHint.
+  ///
+  /// In en, this message translates to:
+  /// **'192.168.4.1'**
+  String get aisNmeaHostHint;
+
+  /// No description provided for @aisNmeaPortHint.
+  ///
+  /// In en, this message translates to:
+  /// **'10110'**
+  String get aisNmeaPortHint;
+
   /// No description provided for @aisTargetsCount.
   ///
   /// In en, this message translates to:
@@ -2375,6 +2429,42 @@ abstract class AppLocalizations {
   /// **'ARMED'**
   String get anchorWatchArmedBadge;
 
+  /// No description provided for @settingsAnchorWatchSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Anchor watch'**
+  String get settingsAnchorWatchSection;
+
+  /// No description provided for @settingsAnchorWatchSmsOnDrift.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS alert on drift'**
+  String get settingsAnchorWatchSmsOnDrift;
+
+  /// No description provided for @settingsAnchorWatchSmsOnDriftSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Open SMS to a trusted contact when the vessel leaves the anchor circle.'**
+  String get settingsAnchorWatchSmsOnDriftSubtitle;
+
+  /// No description provided for @settingsAnchorWatchSmsNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS contact number'**
+  String get settingsAnchorWatchSmsNumber;
+
+  /// No description provided for @settingsAnchorWatchSmsNumberHint.
+  ///
+  /// In en, this message translates to:
+  /// **'+1 555 0100'**
+  String get settingsAnchorWatchSmsNumberHint;
+
+  /// No description provided for @settingsAnchorWatchSmsTestModeNote.
+  ///
+  /// In en, this message translates to:
+  /// **'SMS is not sent while SOS test mode is on (Distress screen).'**
+  String get settingsAnchorWatchSmsTestModeNote;
+
   /// No description provided for @compassTitle.
   ///
   /// In en, this message translates to:
@@ -2429,10 +2519,16 @@ abstract class AppLocalizations {
   /// **'GRIB import'**
   String get gribTitle;
 
+  /// No description provided for @gribImportBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Import a GRIB2 file for offline wind preview. Parsed grid metadata and a sample U/V wind value are shown per file.'**
+  String get gribImportBody;
+
   /// No description provided for @gribStubBody.
   ///
   /// In en, this message translates to:
-  /// **'Decoder for GRIB (wgrib/ecCodes style) is not bundled yet. You can park a file path for future offline viewers.'**
+  /// **'Import a GRIB2 file for offline wind preview. Parsed grid metadata and a sample U/V wind value are shown per file.'**
   String get gribStubBody;
 
   /// No description provided for @gribLastPath.
@@ -2447,10 +2543,16 @@ abstract class AppLocalizations {
   /// **'Simulate picking a GRIB file'**
   String get gribSimulatePick;
 
+  /// No description provided for @gribImportParsed.
+  ///
+  /// In en, this message translates to:
+  /// **'GRIB imported and parsed.'**
+  String get gribImportParsed;
+
   /// No description provided for @gribStubSaved.
   ///
   /// In en, this message translates to:
-  /// **'Stub path saved locally.'**
+  /// **'GRIB imported and parsed.'**
   String get gribStubSaved;
 
   /// No description provided for @gribEmpty.
@@ -2470,6 +2572,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pending decode'**
   String get gribStatusPending;
+
+  /// No description provided for @gribStatusDecoded.
+  ///
+  /// In en, this message translates to:
+  /// **'Decoded'**
+  String get gribStatusDecoded;
+
+  /// No description provided for @gribStatusError.
+  ///
+  /// In en, this message translates to:
+  /// **'Decode error'**
+  String get gribStatusError;
 
   /// No description provided for @coastalGuideTitle.
   ///

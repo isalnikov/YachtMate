@@ -14,6 +14,7 @@ import '../../widgets/cw_button.dart';
 import '../../widgets/cw_button_sizes.dart';
 import '../../widgets/cw_chip.dart';
 import '../../widgets/cw_segmented_control.dart';
+import 'widgets/anchor_watch_alert_settings_form.dart';
 import 'widgets/settings_section.dart';
 import 'widgets/vessel_profile_form.dart';
 
@@ -164,6 +165,10 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ],
           ),
+        ),
+        SettingsSection(
+          title: l10n.settingsAnchorWatchSection,
+          child: const AnchorWatchAlertSettingsForm(),
         ),
         SettingsSection(
           title: l10n.settingsEnergySection,

@@ -47,6 +47,23 @@ class GribFileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final colors = context.cwColors;
+    final decoded = file.isDecoded;
+    final failed = file.decodeError != null;
+
+    final badgeLabel = failed
+        ? l10n.gribStatusError
+        : decoded
+        ? l10n.gribStatusDecoded
+        : l10n.gribStatusPending;
+    final badgeVariant = failed
+        ? CwBadgeVariant.danger
+        : decoded
+        ? CwBadgeVariant.safe
+        : CwBadgeVariant.info;
+
+    final detail = failed
+        ? file.decodeError!
+        : file.decodeSummary ?? l10n.gribStatusPending;
 
     return CwCard(
       key: Key('grib_file_${file.path}'),
@@ -59,18 +76,27 @@ class GribFileCard extends StatelessWidget {
             title: file.fileName,
             subtitle: file.path,
             trailing: CwBadge(
-              label: l10n.gribStatusPending,
-              variant: CwBadgeVariant.info,
+              label: badgeLabel,
+              variant: badgeVariant,
             ),
             onTap: onTap,
           ),
           const SizedBox(height: CwSpacing.xs),
           Text(
-            l10n.gribStubBody,
+            detail,
             style: CwTypography.caption(color: colors.textMuted),
-            maxLines: 2,
+            maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ),
+          if (file.windSampleLabel != null) ...[
+            const SizedBox(height: CwSpacing.xs),
+            Text(
+              file.windSampleLabel!,
+              style: CwTypography.caption(color: colors.accentTeal),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
         ],
       ),
     );

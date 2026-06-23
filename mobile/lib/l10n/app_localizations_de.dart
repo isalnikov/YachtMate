@@ -225,6 +225,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get aisDemoActive => 'Demo NMEA stream active';
 
   @override
+  String get aisLiveActive => 'Live NMEA stream connected';
+
+  @override
+  String get aisLiveConnecting => 'Connecting to NMEA gateway…';
+
+  @override
+  String get aisSourceOff => 'Off';
+
+  @override
+  String get aisSourceDemo => 'Demo';
+
+  @override
+  String get aisSourceLive => 'Live';
+
+  @override
+  String get aisNmeaHost => 'Gateway host';
+
+  @override
+  String get aisNmeaPort => 'Port';
+
+  @override
+  String get aisNmeaHostHint => '192.168.4.1';
+
+  @override
+  String get aisNmeaPortHint => '10110';
+
+  @override
   String aisTargetsCount(int count) {
     return '$count targets';
   }
@@ -1258,6 +1285,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String get anchorWatchArmedBadge => 'ARMED';
 
   @override
+  String get settingsAnchorWatchSection => 'Anchor watch';
+
+  @override
+  String get settingsAnchorWatchSmsOnDrift => 'SMS alert on drift';
+
+  @override
+  String get settingsAnchorWatchSmsOnDriftSubtitle =>
+      'Open SMS to a trusted contact when the vessel leaves the anchor circle.';
+
+  @override
+  String get settingsAnchorWatchSmsNumber => 'SMS contact number';
+
+  @override
+  String get settingsAnchorWatchSmsNumberHint => '+1 555 0100';
+
+  @override
+  String get settingsAnchorWatchSmsTestModeNote =>
+      'SMS is not sent while SOS test mode is on (Distress screen).';
+
+  @override
   String get compassTitle => 'Compass & sun';
 
   @override
@@ -1288,8 +1335,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get gribTitle => 'GRIB import';
 
   @override
+  String get gribImportBody =>
+      'Import a GRIB2 file for offline wind preview. Parsed grid metadata and a sample U/V wind value are shown per file.';
+
+  @override
   String get gribStubBody =>
-      'Decoder for GRIB (wgrib/ecCodes style) is not bundled yet. You can park a file path for future offline viewers.';
+      'Import a GRIB2 file for offline wind preview. Parsed grid metadata and a sample U/V wind value are shown per file.';
 
   @override
   String get gribLastPath => 'Last stub path';
@@ -1298,7 +1349,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get gribSimulatePick => 'Simulate picking a GRIB file';
 
   @override
-  String get gribStubSaved => 'Stub path saved locally.';
+  String get gribImportParsed => 'GRIB imported and parsed.';
+
+  @override
+  String get gribStubSaved => 'GRIB imported and parsed.';
 
   @override
   String get gribEmpty => 'No GRIB files imported yet.';
@@ -1308,6 +1362,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get gribStatusPending => 'Pending decode';
+
+  @override
+  String get gribStatusDecoded => 'Decoded';
+
+  @override
+  String get gribStatusError => 'Decode error';
 
   @override
   String get coastalGuideTitle => 'Coastal POI';

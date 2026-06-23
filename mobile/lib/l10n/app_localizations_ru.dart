@@ -225,6 +225,33 @@ class AppLocalizationsRu extends AppLocalizations {
   String get aisDemoActive => 'Демо NMEA активно';
 
   @override
+  String get aisLiveActive => 'Живой поток NMEA подключён';
+
+  @override
+  String get aisLiveConnecting => 'Подключение к шлюзу NMEA…';
+
+  @override
+  String get aisSourceOff => 'Выкл';
+
+  @override
+  String get aisSourceDemo => 'Демо';
+
+  @override
+  String get aisSourceLive => 'Живой';
+
+  @override
+  String get aisNmeaHost => 'Хост шлюза';
+
+  @override
+  String get aisNmeaPort => 'Порт';
+
+  @override
+  String get aisNmeaHostHint => '192.168.4.1';
+
+  @override
+  String get aisNmeaPortHint => '10110';
+
+  @override
   String aisTargetsCount(int count) {
     return 'Целей: $count';
   }
@@ -1260,6 +1287,26 @@ class AppLocalizationsRu extends AppLocalizations {
   String get anchorWatchArmedBadge => 'ВАХТА';
 
   @override
+  String get settingsAnchorWatchSection => 'Якорная вахта';
+
+  @override
+  String get settingsAnchorWatchSmsOnDrift => 'SMS при сносе';
+
+  @override
+  String get settingsAnchorWatchSmsOnDriftSubtitle =>
+      'Открыть SMS доверенному контакту, если судно вышло за круг якоря.';
+
+  @override
+  String get settingsAnchorWatchSmsNumber => 'Номер для SMS';
+
+  @override
+  String get settingsAnchorWatchSmsNumberHint => '+7 900 000 00 00';
+
+  @override
+  String get settingsAnchorWatchSmsTestModeNote =>
+      'SMS не отправляется при включённом тестовом режиме SOS (экран Distress).';
+
+  @override
   String get compassTitle => 'Компас и солнце';
 
   @override
@@ -1290,8 +1337,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get gribTitle => 'Импорт GRIB';
 
   @override
+  String get gribImportBody =>
+      'Импортируйте GRIB2 для офлайн-просмотра ветра. Для каждого файла показываются метаданные сетки и образец U/V.';
+
+  @override
   String get gribStubBody =>
-      'Декодер GRIB в приложении пока не встроен. Можно сохранить путь к файлу для будущего просмотра офлайн.';
+      'Импортируйте GRIB2 для офлайн-просмотра ветра. Для каждого файла показываются метаданные сетки и образец U/V.';
 
   @override
   String get gribLastPath => 'Последний путь (заглушка)';
@@ -1300,7 +1351,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get gribSimulatePick => 'Симулировать выбор GRIB';
 
   @override
-  String get gribStubSaved => 'Путь сохранён локально.';
+  String get gribImportParsed => 'GRIB импортирован и разобран.';
+
+  @override
+  String get gribStubSaved => 'GRIB импортирован и разобран.';
 
   @override
   String get gribEmpty => 'Файлы GRIB ещё не импортированы.';
@@ -1310,6 +1364,12 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get gribStatusPending => 'Ожидает декодирования';
+
+  @override
+  String get gribStatusDecoded => 'Разобран';
+
+  @override
+  String get gribStatusError => 'Ошибка декодирования';
 
   @override
   String get coastalGuideTitle => 'Прибрежные POI';

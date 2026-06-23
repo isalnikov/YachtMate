@@ -1,8 +1,11 @@
+import 'package:captain_wrongel/core/anchor_watch_alert_settings_controller.dart';
 import 'package:captain_wrongel/core/anchor_watch_controller.dart';
+import 'package:captain_wrongel/core/sos_settings_controller.dart';
 import 'package:captain_wrongel/core/theme/cw_theme.dart';
 import 'package:captain_wrongel/data/local/app_database.dart';
 import 'package:captain_wrongel/data/repositories/audit_repository.dart';
 import 'package:captain_wrongel/domain/anchor/geo.dart';
+import 'package:captain_wrongel/features/anchor/anchor_watch_sms.dart';
 import 'package:captain_wrongel/features/anchor/anchor_watch_screen.dart';
 import 'package:captain_wrongel/features/anchor/widgets/anchor_status_panel.dart';
 import 'package:captain_wrongel/features/anchor/widgets/anchor_zone_map.dart';
@@ -23,18 +26,25 @@ void main() {
 
   Future<AnchorWatchController> buildController({
     Map<String, Object> prefs = const {},
+    AnchorWatchSmsLauncher? smsLauncher,
   }) async {
     SharedPreferences.setMockInitialValues({
       AnchorWatchController.latKey: anchorLat,
       AnchorWatchController.lonKey: anchorLon,
       AnchorWatchController.radiusKey: 40.0,
+      SosSettings.testModeKey: true,
       ...prefs,
     });
     final shared = await SharedPreferences.getInstance();
     final db = AppDatabase(NativeDatabase.memory());
     addTearDown(db.close);
     final audit = AuditRepository(db);
-    return AnchorWatchController(shared, audit, sessionId);
+    return AnchorWatchController(
+      shared,
+      audit,
+      sessionId,
+      smsLauncher: smsLauncher,
+    );
   }
 
   test('haversineMeters is zero for identical points', () {
@@ -68,6 +78,54 @@ void main() {
     expect(c.state.isDrifting, isTrue);
     expect(c.state.lastDistanceM, greaterThan(40));
     expect(c.state.driftHistory, hasLength(1));
+  });
+
+  test('drift SMS skipped when SOS test mode is on', () async {
+    Uri? launched;
+    final c = await buildController(
+      prefs: {
+        AnchorWatchAlertSettings.smsOnDriftKey: true,
+        AnchorWatchAlertSettings.smsNumberKey: '+15550100',
+        SosSettings.testModeKey: true,
+      },
+      smsLauncher: (uri) async => launched = uri,
+    );
+    await c.arm();
+    await c.ingestPositionForTest(anchorLat + 0.001, anchorLon);
+
+    expect(c.state.alarmLatched, isTrue);
+    expect(launched, isNull);
+  });
+
+  test('drift SMS launches when enabled and test mode off', () async {
+    Uri? launched;
+    final c = await buildController(
+      prefs: {
+        AnchorWatchAlertSettings.smsOnDriftKey: true,
+        AnchorWatchAlertSettings.smsNumberKey: '+15550100',
+        SosSettings.testModeKey: false,
+      },
+      smsLauncher: (uri) async => launched = uri,
+    );
+    await c.arm();
+    await c.ingestPositionForTest(anchorLat + 0.001, anchorLon);
+
+    expect(c.state.alarmLatched, isTrue);
+    expect(launched, isNotNull);
+    expect(launched!.scheme, 'sms');
+    expect(launched!.path, '+15550100');
+    expect(launched!.queryParameters['body'], contains('Anchor drift alert'));
+  });
+
+  test('anchorCircleRing closes polygon ring', () {
+    final ring = anchorCircleRing(
+      anchorLat: anchorLat,
+      anchorLon: anchorLon,
+      radiusM: 40,
+      segments: 8,
+    );
+    expect(ring.first, ring.last);
+    expect(ring.length, greaterThan(3));
   });
 
   test('ingest inside zone does not latch alarm', () async {

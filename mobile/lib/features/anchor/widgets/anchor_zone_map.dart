@@ -1,12 +1,16 @@
+import 'dart:async' show unawaited;
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:maplibre_gl/maplibre_gl.dart';
 
 import '../../../core/anchor_watch_controller.dart';
 import '../../../core/theme/cw_theme_extensions.dart';
 import '../../../core/theme/cw_tokens.dart';
 import '../../../domain/anchor/geo.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../map/chart_engine_platform.dart';
+import '../anchor_zone_layer.dart';
 
 /// Mini map preview: anchor circle, vessel dot, grey drift trail.
 class AnchorZoneMap extends StatelessWidget {
@@ -30,22 +34,9 @@ class AnchorZoneMap extends StatelessWidget {
         height: height,
         width: double.infinity,
         child: state.hasAnchor
-            ? CustomPaint(
-                painter: _AnchorZonePainter(
-                  anchorLat: state.anchorLat!,
-                  anchorLon: state.anchorLon!,
-                  radiusM: state.radiusM,
-                  currentLat: state.currentLat,
-                  currentLon: state.currentLon,
-                  driftHistory: state.driftHistory,
-                  zoneColor: colors.accentTeal,
-                  trailColor: colors.textMuted.withValues(alpha: 0.55),
-                  vesselColor: colors.accentOrange,
-                  anchorColor: colors.textPrimary,
-                  fillColor: colors.accentTeal.withValues(alpha: 0.08),
-                  backgroundColor: colors.panelBlue,
-                ),
-              )
+            ? chartEngineSupported()
+                ? _AnchorMapLibreMap(state: state)
+                : _AnchorZonePaintFallback(state: state, colors: colors)
             : ColoredBox(
                 color: colors.panelBlue,
                 child: Center(
@@ -62,6 +53,111 @@ class AnchorZoneMap extends StatelessWidget {
                   ),
                 ),
               ),
+      ),
+    );
+  }
+}
+
+class _AnchorMapLibreMap extends StatefulWidget {
+  const _AnchorMapLibreMap({required this.state});
+
+  final AnchorWatchState state;
+
+  @override
+  State<_AnchorMapLibreMap> createState() => _AnchorMapLibreMapState();
+}
+
+class _AnchorMapLibreMapState extends State<_AnchorMapLibreMap> {
+  MapLibreMapController? _controller;
+  bool _styleLoaded = false;
+
+  CameraPosition get _initial {
+    final lat = widget.state.anchorLat!;
+    final lon = widget.state.anchorLon!;
+    return CameraPosition(
+      target: LatLng(lat, lon),
+      zoom: anchorZoneMapZoom(widget.state.radiusM, lat),
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant _AnchorMapLibreMap oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (_styleLoaded && _controller != null) {
+      unawaited(_syncLayers());
+    }
+  }
+
+  Future<void> _onStyleLoaded() async {
+    final c = _controller;
+    if (c == null) return;
+    await installAnchorZoneLayers(c);
+    await _syncLayers();
+    if (mounted) setState(() => _styleLoaded = true);
+  }
+
+  Future<void> _syncLayers() async {
+    final c = _controller;
+    final s = widget.state;
+    if (c == null || !s.hasAnchor) return;
+
+    final lat = s.anchorLat!;
+    final lon = s.anchorLon!;
+    await updateAnchorZoneLayers(
+      c,
+      anchorLat: lat,
+      anchorLon: lon,
+      radiusM: s.radiusM,
+      currentLat: s.currentLat,
+      currentLon: s.currentLon,
+      driftHistory: s.driftHistory,
+    );
+    await c.animateCamera(
+      CameraUpdate.newLatLngZoom(
+        LatLng(lat, lon),
+        anchorZoneMapZoom(s.radiusM, lat),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MapLibreMap(
+      initialCameraPosition: _initial,
+      compassEnabled: false,
+      myLocationEnabled: false,
+      onMapCreated: (c) => _controller = c,
+      onStyleLoadedCallback: () => unawaited(_onStyleLoaded()),
+    );
+  }
+}
+
+/// CustomPaint fallback when MapLibre is unavailable (e.g. Linux desktop tests).
+class _AnchorZonePaintFallback extends StatelessWidget {
+  const _AnchorZonePaintFallback({
+    required this.state,
+    required this.colors,
+  });
+
+  final AnchorWatchState state;
+  final CwColors colors;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      painter: _AnchorZonePainter(
+        anchorLat: state.anchorLat!,
+        anchorLon: state.anchorLon!,
+        radiusM: state.radiusM,
+        currentLat: state.currentLat,
+        currentLon: state.currentLon,
+        driftHistory: state.driftHistory,
+        zoneColor: colors.accentTeal,
+        trailColor: colors.textMuted.withValues(alpha: 0.55),
+        vesselColor: colors.accentOrange,
+        anchorColor: colors.textPrimary,
+        fillColor: colors.accentTeal.withValues(alpha: 0.08),
+        backgroundColor: colors.panelBlue,
       ),
     );
   }
@@ -152,11 +248,7 @@ class _AnchorZonePainter extends CustomPainter {
 
     if (currentLat != null && currentLon != null) {
       final vessel = toCanvas(currentLat!, currentLon!);
-      canvas.drawCircle(
-        vessel,
-        6,
-        Paint()..color = vesselColor,
-      );
+      canvas.drawCircle(vessel, 6, Paint()..color = vesselColor);
       canvas.drawCircle(
         vessel,
         6,

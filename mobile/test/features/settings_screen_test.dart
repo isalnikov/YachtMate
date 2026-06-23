@@ -25,6 +25,7 @@ void main() {
         ],
         child: MaterialApp(
           theme: CwTheme.material(),
+          locale: const Locale('en'),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           home: const SettingsScreen(),
@@ -42,7 +43,11 @@ void main() {
     expect(find.text('Metric'), findsOneWidget);
     expect(find.text('Imperial'), findsOneWidget);
 
-    await tester.drag(find.byType(ListView), const Offset(0, -600));
+    await tester.drag(find.byType(ListView), const Offset(0, -400));
+    await tester.pumpAndSettle();
+    expect(find.text('Anchor watch'), findsOneWidget);
+
+    await tester.drag(find.byType(ListView), const Offset(0, -500));
     await tester.pumpAndSettle();
 
     expect(find.text('Battery & GPS'), findsOneWidget);

@@ -23,6 +23,34 @@ bool shouldLatchAnchorAlarm({
 }) =>
     !alarmLatched && distanceM > radiusM;
 
+/// Closed GeoJSON ring `[lon, lat]` for a circle of [radiusM] around anchor.
+List<List<double>> anchorCircleRing({
+  required double anchorLat,
+  required double anchorLon,
+  required double radiusM,
+  int segments = 64,
+}) {
+  const r = 6371000.0;
+  final ring = <List<double>>[];
+  final lat1 = anchorLat * math.pi / 180;
+  final lon1 = anchorLon * math.pi / 180;
+  final angDist = radiusM / r;
+  for (var i = 0; i <= segments; i++) {
+    final bearing = 2 * math.pi * i / segments;
+    final lat2 = math.asin(
+      math.sin(lat1) * math.cos(angDist) +
+          math.cos(lat1) * math.sin(angDist) * math.cos(bearing),
+    );
+    final lon2 = lon1 +
+        math.atan2(
+          math.sin(bearing) * math.sin(angDist) * math.cos(lat1),
+          math.cos(angDist) - math.sin(lat1) * math.sin(lat2),
+        );
+    ring.add([lon2 * 180 / math.pi, lat2 * 180 / math.pi]);
+  }
+  return ring;
+}
+
 /// Расстояние по поверхности сферы (м). Точность достаточна для якорной вахты.
 double haversineMeters(double lat1, double lon1, double lat2, double lon2) {
   const r = 6371000.0;

@@ -11,6 +11,7 @@ import '../../widgets/cw_card.dart';
 import '../map/chart_engine_platform.dart';
 import 'ais_demo_provider.dart';
 import 'ais_filter_provider.dart';
+import 'ais_nmea_preferences.dart';
 import 'ais_targets_provider.dart';
 import 'widgets/ais_filter_bar.dart';
 import 'widgets/ais_vessel_marker.dart';
@@ -32,11 +33,34 @@ class _AisScreenState extends ConsumerState<AisScreen> {
 
   MapLibreMapController? _controller;
   bool _layersReady = false;
+  late final TextEditingController _hostController;
+  late final TextEditingController _portController;
+
+  @override
+  void initState() {
+    super.initState();
+    _hostController = TextEditingController();
+    _portController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _hostController.dispose();
+    _portController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final demoOn = ref.watch(aisDemoProvider);
+    final bridge = ref.watch(aisNmeaBridgeProvider);
+    final endpoint = ref.watch(aisNmeaPreferencesProvider);
+    if (_hostController.text != endpoint.host) {
+      _hostController.text = endpoint.host;
+    }
+    if (_portController.text != '${endpoint.port}') {
+      _portController.text = '${endpoint.port}';
+    }
     final filter = ref.watch(aisFilterProvider);
     final targets = ref.watch(aisTargetsProvider);
     final visible = filterAisTargets(targets, filter).toList()
@@ -65,23 +89,91 @@ class _AisScreenState extends ConsumerState<AisScreen> {
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
           child: CwCard(
-            child: ListTile(
-              dense: true,
-              leading: Icon(
-                demoOn ? Icons.sensors : Icons.sensors_off_outlined,
-                color: demoOn
-                    ? Theme.of(context).colorScheme.primary
-                    : null,
-              ),
-              title: Text(l10n.aisLocalStreamTitle),
-              subtitle: Text(
-                demoOn ? l10n.aisDemoActive : l10n.aisLocalStreamBody,
-              ),
-              trailing: FilledButton.tonal(
-                onPressed: () =>
-                    unawaited(ref.read(aisDemoProvider.notifier).toggle()),
-                child: Text(demoOn ? l10n.aisDemoStop : l10n.aisDemoStart),
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ListTile(
+                  dense: true,
+                  leading: Icon(
+                    bridge.isActive ? Icons.sensors : Icons.sensors_off_outlined,
+                    color: bridge.isActive
+                        ? Theme.of(context).colorScheme.primary
+                        : null,
+                  ),
+                  title: Text(l10n.aisLocalStreamTitle),
+                  subtitle: Text(_streamSubtitle(l10n, bridge)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                  child: SegmentedButton<AisNmeaSourceMode>(
+                    segments: [
+                      ButtonSegment(
+                        value: AisNmeaSourceMode.off,
+                        label: Text(l10n.aisSourceOff),
+                      ),
+                      ButtonSegment(
+                        value: AisNmeaSourceMode.demo,
+                        label: Text(l10n.aisSourceDemo),
+                      ),
+                      ButtonSegment(
+                        value: AisNmeaSourceMode.live,
+                        label: Text(l10n.aisSourceLive),
+                      ),
+                    ],
+                    selected: {bridge.mode},
+                    onSelectionChanged: (set) => unawaited(
+                      ref
+                          .read(aisNmeaBridgeProvider.notifier)
+                          .setMode(set.single),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            labelText: l10n.aisNmeaHost,
+                            hintText: l10n.aisNmeaHostHint,
+                            isDense: true,
+                          ),
+                          controller: _hostController,
+                          onSubmitted: (v) => unawaited(
+                            ref
+                                .read(aisNmeaPreferencesProvider.notifier)
+                                .setHost(v),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            labelText: l10n.aisNmeaPort,
+                            hintText: l10n.aisNmeaPortHint,
+                            isDense: true,
+                          ),
+                          keyboardType: TextInputType.number,
+                          controller: _portController,
+                          onSubmitted: (v) {
+                            final port = int.tryParse(v.trim());
+                            if (port != null) {
+                              unawaited(
+                                ref
+                                    .read(aisNmeaPreferencesProvider.notifier)
+                                    .setPort(port),
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -117,6 +209,15 @@ class _AisScreenState extends ConsumerState<AisScreen> {
   Future<void> _openVessel(BuildContext context, AisTarget? target) async {
     if (target == null || !context.mounted) return;
     await showAisVesselSheet(context: context, target: target);
+  }
+
+  String _streamSubtitle(AppLocalizations l10n, AisNmeaBridgeState bridge) {
+    return switch (bridge.mode) {
+      AisNmeaSourceMode.demo => l10n.aisDemoActive,
+      AisNmeaSourceMode.live when bridge.liveConnected => l10n.aisLiveActive,
+      AisNmeaSourceMode.live => l10n.aisLiveConnecting,
+      AisNmeaSourceMode.off => l10n.aisLocalStreamBody,
+    };
   }
 }
 

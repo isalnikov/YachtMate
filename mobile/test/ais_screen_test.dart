@@ -1,3 +1,4 @@
+import 'package:captain_wrongel/core/providers.dart';
 import 'package:captain_wrongel/core/theme/cw_theme.dart';
 import 'package:captain_wrongel/domain/ais/ais_target.dart';
 import 'package:captain_wrongel/domain/ais/ais_vessel_category.dart';
@@ -15,6 +16,7 @@ import 'package:captain_wrongel/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 AisTarget _sampleTarget({int mmsi = 123456789}) {
   return AisTarget(
@@ -71,8 +73,14 @@ void main() {
   });
 
   testWidgets('AisScreen renders filter bar and local stream card', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          sharedPreferencesProvider.overrideWith((ref) => prefs),
+        ],
         child: MaterialApp(
           theme: CwTheme.material(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -87,14 +95,20 @@ void main() {
     expect(find.text('All'), findsOneWidget);
     expect(find.text('Cargo'), findsOneWidget);
     expect(find.text('Local stream'), findsOneWidget);
-    expect(find.text('Start demo'), findsOneWidget);
+    expect(find.text('Off'), findsOneWidget);
+    expect(find.text('Demo'), findsOneWidget);
+    expect(find.text('Live'), findsOneWidget);
     expect(find.text('0 targets'), findsOneWidget);
   });
 
   testWidgets('AisScreen vessel sheet shows MMSI and CPA rows', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
+          sharedPreferencesProvider.overrideWith((ref) => prefs),
           aisTargetsProvider.overrideWith(
             (ref) => _StubAisTargetsController({_sampleTarget().mmsi: _sampleTarget()}),
           ),
@@ -120,8 +134,14 @@ void main() {
   });
 
   testWidgets('More menu includes AIS entry', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+
     await tester.pumpWidget(
       ProviderScope(
+        overrides: [
+          sharedPreferencesProvider.overrideWith((ref) => prefs),
+        ],
         child: MaterialApp(
           theme: CwTheme.material(),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
