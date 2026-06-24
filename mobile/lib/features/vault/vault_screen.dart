@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/crew/crew_controller.dart';
+import '../../core/errors/cw_error_catalog.dart';
 import '../../core/providers.dart';
 import '../../core/theme/cw_theme_extensions.dart';
 import '../../core/theme/cw_tokens.dart';
@@ -70,7 +71,10 @@ class _VaultScreenState extends ConsumerState<VaultScreen> {
 
   Future<void> _unlock(AppLocalizations l10n) async {
     final ok = ref.read(vaultPrefsProvider.notifier).verifyPin(_pinUnlock.text);
-    if (!ok) return;
+    if (!ok) {
+      if (mounted) showCwErrorSnackBar(context, CwErrorKind.vaultDecrypt);
+      return;
+    }
     ref.read(vaultSessionUnlockedProvider.notifier).state = true;
     ref.read(vaultSessionPinProvider.notifier).state = _pinUnlock.text.trim();
     setState(() {

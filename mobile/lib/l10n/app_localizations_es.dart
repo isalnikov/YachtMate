@@ -12,22 +12,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get appTitle => 'Captain Wrongel';
 
   @override
-  String get tabMap => 'Map';
+  String get tabMap => 'Mapa';
 
   @override
-  String get tabRoute => 'Route';
+  String get tabRoute => 'Ruta';
 
   @override
-  String get tabWeather => 'Weather';
+  String get tabWeather => 'Tiempo';
 
   @override
-  String get tabMooring => 'Mooring';
+  String get tabMooring => 'Fondeo';
 
   @override
-  String get tabMore => 'More';
+  String get tabMore => 'Más';
 
   @override
-  String get settingsTitle => 'Settings';
+  String get settingsTitle => 'Ajustes';
 
   @override
   String get languageLabel => 'Language';
@@ -52,6 +52,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get localeItalian => 'Italian';
+
+  @override
+  String get localeGreek => 'Greek';
+
+  @override
+  String get localeTurkish => 'Turkish';
+
+  @override
+  String get localePortuguese => 'Portuguese';
 
   @override
   String get bootstrapNote =>
@@ -89,7 +98,7 @@ class AppLocalizationsEs extends AppLocalizations {
       'Could not cache offline tiles (network or engine).';
 
   @override
-  String get offlineChartManagerTitle => 'Offline charts';
+  String get offlineChartManagerTitle => 'Cartas offline';
 
   @override
   String get offlineChartManagerLead =>
@@ -178,11 +187,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mapLayerSectionWeather => 'Weather';
 
   @override
-  String get mapLayerWindOverlay => 'Wind arrows';
+  String get mapLayerWindOverlay => 'Flechas de viento';
 
   @override
   String get mapLayerWindOverlaySubtitle =>
       'Open-Meteo forecast grid around map center';
+
+  @override
+  String get mapLayerWindParticles => 'Partículas de viento';
+
+  @override
+  String get mapLayerWindParticlesSubtitle =>
+      'Campo de flujo animado (pausa en modo eco / reducir movimiento)';
 
   @override
   String get mapDepthLegendTitle => 'Legend';
@@ -1680,33 +1696,33 @@ class AppLocalizationsEs extends AppLocalizations {
   String get onboardingRegionOther => 'Other';
 
   @override
-  String get moreMenuCommunity => 'Community';
+  String get moreMenuCommunity => 'Comunidad';
 
   @override
   String get moreMenuCommunitySubtitle =>
       'Reviews, events, local tips (demo feed)';
 
   @override
-  String get moreMenuVoyageMonitor => 'Voyage monitor';
+  String get moreMenuVoyageMonitor => 'Monitor de viaje';
 
   @override
   String get moreMenuVoyageMonitorSubtitle =>
       'Shore contact & periodic check-in';
 
   @override
-  String get moreMenuYachtHub => 'Yacht hub';
+  String get moreMenuYachtHub => 'Hub del yate';
 
   @override
   String get moreMenuYachtHubSubtitle => 'Logbook, expenses, track, vault';
 
   @override
-  String get moreMenuAssistant => 'Deck assistant';
+  String get moreMenuAssistant => 'Asistente de cubierta';
 
   @override
   String get moreMenuAssistantSubtitle => 'Offline FAQ — weather, SOS, COLREG';
 
   @override
-  String get communityHubTitle => 'Community';
+  String get communityHubTitle => 'Comunidad';
 
   @override
   String get communityHubLead =>
@@ -1728,7 +1744,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get communityBadgeDemo => 'Demo';
 
   @override
-  String get voyageMonitorTitle => 'Voyage monitor';
+  String get voyageMonitorTitle => 'Monitor de viaje';
 
   @override
   String get voyageMonitorLead =>
@@ -1780,7 +1796,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get voyageMonitorInactive => 'Not monitoring';
 
   @override
-  String get settingsNotificationsSection => 'Notifications';
+  String get settingsNotificationsSection => 'Notificaciones';
 
   @override
   String get settingsNotifyAnchorDrift => 'Anchor drift alerts';
@@ -1897,4 +1913,26 @@ class AppLocalizationsEs extends AppLocalizations {
   String notificationWindAlertBody(String kn, String threshold) {
     return 'Forecast wind $kn kn exceeds your $threshold kn threshold.';
   }
+
+  @override
+  String get errorNetwork =>
+      'Red no disponible — comprueba la conexión e inténtalo de nuevo.';
+
+  @override
+  String get errorGpsDenied =>
+      'Permiso de ubicación denegado — actívalo en ajustes.';
+
+  @override
+  String get errorGpsUnavailable => 'GPS no disponible — inténtalo más tarde.';
+
+  @override
+  String get errorVaultDecrypt =>
+      'No se pudo descifrar el documento de la caja fuerte — PIN incorrecto o archivo dañado.';
+
+  @override
+  String get errorRoutingFailed =>
+      'No se pudo calcular la ruta — revisa los waypoints.';
+
+  @override
+  String get errorGeneric => 'Algo salió mal — inténtalo de nuevo.';
 }

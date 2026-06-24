@@ -1,23 +1,23 @@
 {
-  "@@locale": "fr",
+  "@@locale": "el",
   "appTitle": "Captain Wrongel",
   "@appTitle": {
     "description": "Application name shown in UI and task switcher."
   },
-  "tabMap": "Carte",
-  "tabRoute": "Route",
-  "tabWeather": "Météo",
-  "tabMooring": "Mouillage",
-  "tabMore": "Plus",
-  "settingsTitle": "Réglages",
-  "languageLabel": "Language",
+  "tabMap": "Χάρτης",
+  "tabRoute": "Διαδρομή",
+  "tabWeather": "Καιρός",
+  "tabMooring": "Αγκυροβόλιο",
+  "tabMore": "Περισσότερα",
+  "settingsTitle": "Ρυθμίσεις",
+  "languageLabel": "Γλώσσα",
   "languageSwitchTooltip": "Choose interface language",
-  "localeEnglish": "English",
-  "localeRussian": "Russian",
-  "localeGerman": "German",
-  "localeFrench": "French",
-  "localeSpanish": "Spanish",
-  "localeItalian": "Italian",
+  "localeEnglish": "Αγγλικά",
+  "localeRussian": "Ρωσικά",
+  "localeGerman": "Γερμανικά",
+  "localeFrench": "Γαλλικά",
+  "localeSpanish": "Ισπανικά",
+  "localeItalian": "Ιταλικά",
   "bootstrapNote": "Phase 0 shell — navigation and charts follow in Phase 1.",
   "mapUnavailableOnPlatform": "Raster/vector charts run on Android, iOS, or web. Linux desktop shows this placeholder.",
   "mapLoadingStyle": "Loading chart style…",
@@ -28,8 +28,38 @@
   "offlineCacheStart": "Downloading tiles for the visible region…",
   "offlineCacheDone": "Offline region saved",
   "offlineCacheFail": "Could not cache offline tiles (network or engine).",
+  "offlineChartManagerTitle": "Offline charts",
+  "offlineChartManagerLead": "Downloaded map tile packs for use without network.",
+  "offlineChartManagerEmpty": "No offline regions yet. Use the download button on the Map tab.",
+  "offlineChartManagerDelete": "Delete",
+  "offlineChartManagerDeleted": "Region removed",
+  "offlineChartManagerStorage": "Storage: {size}",
+  "@offlineChartManagerStorage": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "offlineChartManagerInstalled": "Installed {date}",
+  "@offlineChartManagerInstalled": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "offlineChartManagerLicense": "License: {tier}",
+  "@offlineChartManagerLicense": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsOfflineCharts": "Offline charts",
   "mapLayersTooltip": "Map layers",
-  "mapLayersSheetTitle": "Map layers (demo)",
+  "mapLayersSheetTitle": "Επίπεδα χάρτη",
   "mapLayerDepthContours": "Depth contours (synthetic)",
   "mapLayerNavAids": "Navigation marks (synthetic)",
   "mapLayerMooringPois": "Marinas & anchorages (catalog)",
@@ -45,6 +75,9 @@
   "mapLayerChartSimple": "Simple",
   "mapLayerChartNight": "Night",
   "mapLayerShallowHighlight": "Shallow highlight",
+  "mapLayerSectionWeather": "Weather",
+  "mapLayerWindOverlay": "Wind arrows",
+  "mapLayerWindOverlaySubtitle": "Open-Meteo forecast grid around map center",
   "mapDepthLegendTitle": "Legend",
   "mapDepthLegendBody": "Blue lines: EMODnet Bathymetry contours (example region: Fethiye, Turkey). Single display color — depth values drive routing grid only. Not official charts.",
   "mapLongPressTitle": "Position (WGS84)",
@@ -59,7 +92,77 @@
   "mapCoordsCopied": "Coordinates copied",
   "mapPeekCoordsSemantic": "Map center coordinates — tap to copy",
   "mapPeekDepthMeters": "Depth: {meters} m",
+  "@mapPeekDepthMeters": {
+    "placeholders": {
+      "meters": {
+        "type": "int"
+      }
+    }
+  },
   "mapAisDemoTooltip": "AIS demo stream (recorded NMEA)",
+  "aisScreenTitle": "AIS",
+  "moreMenuAis": "AIS traffic",
+  "moreMenuAisSubtitle": "Local NMEA · CPA/TCPA · vessel filters",
+  "aisFilterAll": "All",
+  "aisFilterCargo": "Cargo",
+  "aisFilterTanker": "Tanker",
+  "aisFilterPleasure": "Pleasure",
+  "aisLocalStreamTitle": "Local stream",
+  "aisLocalStreamBody": "NMEA 0183 · Wi‑Fi/BT gateway · CPA/TCPA",
+  "aisDemoStart": "Start demo",
+  "aisDemoStop": "Stop",
+  "aisDemoActive": "Demo NMEA stream active",
+  "aisLiveActive": "Live NMEA stream connected",
+  "aisLiveConnecting": "Connecting to NMEA gateway…",
+  "aisSourceOff": "Off",
+  "aisSourceDemo": "Demo",
+  "aisSourceLive": "Live",
+  "aisNmeaHost": "Gateway host",
+  "aisNmeaPort": "Port",
+  "aisNmeaHostHint": "192.168.4.1",
+  "aisNmeaPortHint": "10110",
+  "aisTargetsCount": "{count} targets",
+  "@aisTargetsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aisTapVessel": "Tap a vessel for details",
+  "aisVesselSog": "{knots} kn",
+  "@aisVesselSog": {
+    "placeholders": {
+      "knots": {
+        "type": "String"
+      }
+    }
+  },
+  "aisVesselCog": "{degrees}°",
+  "@aisVesselCog": {
+    "placeholders": {
+      "degrees": {
+        "type": "String"
+      }
+    }
+  },
+  "aisVesselCpa": "{nm} nm",
+  "@aisVesselCpa": {
+    "placeholders": {
+      "nm": {
+        "type": "String"
+      }
+    }
+  },
+  "aisVesselTcpa": "{minutes} min",
+  "@aisVesselTcpa": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "aisCpaWarning": "CPA < 1 nm",
   "mapZoomInTooltip": "Zoom in",
   "mapZoomOutTooltip": "Zoom out",
   "mapCompassNorthUpTooltip": "North up — tap for heading up",
@@ -84,7 +187,7 @@
     }
   },
   "mapGpsLocationSettingsHint": "Check location permission and GPS accuracy in system settings.",
-  "weatherScreenTitle": "Weather & tides",
+  "weatherScreenTitle": "Καιρός",
   "weatherRefreshTooltip": "Refresh forecast",
   "weatherGpsTooltip": "Use GPS for forecast location",
   "weatherStaleBanner": "Showing cached forecast — network or API unavailable.",
@@ -179,6 +282,53 @@
       }
     }
   },
+  "weatherSeeAllTides": "See all tides",
+  "tidesScreenTitle": "Tides",
+  "tidesCurveHeading": "Today's curve (demo)",
+  "tidesTableHeading": "7-day schedule (demo)",
+  "tidesMoonHeading": "Moon phase",
+  "tidesSunHeading": "Sun times (approx.)",
+  "tidesTableDay": "Day",
+  "tidesHighShort": "HW",
+  "tidesLowShort": "LW",
+  "tidesEmpty": "No tide data available.",
+  "tidesStaleBanner": "Showing cached tides — network or API unavailable.",
+  "tidesDemoBanner": "Illustrative demo data — no live station for this location.",
+  "tidesHeightM": "{height} m",
+  "@tidesHeightM": {
+    "placeholders": {
+      "height": {
+        "type": "String"
+      }
+    }
+  },
+  "tidesTableCell": "{time} · {height} · {kind}",
+  "@tidesTableCell": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "height": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "tidesSunLine": "Sunrise {sunrise} · Sunset {sunset}",
+  "@tidesSunLine": {
+    "placeholders": {
+      "sunrise": {
+        "type": "String"
+      },
+      "sunset": {
+        "type": "String"
+      }
+    }
+  },
+  "moreMenuTides": "Tides",
+  "moreMenuTidesSubtitle": "Demo curve, 7-day table, moon & sun",
   "routeScreenTitle": "Route (advisory)",
   "routeAdvisoryDisclaimerTitle": "Advisory routing (synthetic)",
   "routeAdvisoryDisclaimerBody": "The path is computed on a demo depth grid, not an official chart. It is for orientation only; you are responsible for safe navigation and depth under keel.",
@@ -374,7 +524,7 @@
   "logbookDelete": "Delete",
   "logbookEntryDeleted": "Entry deleted.",
   "logbookCrewNoDelete": "Only the captain can delete log entries on this device.",
-  "moreMenuHeadline": "Safety, log & crew",
+  "moreMenuHeadline": "Ασφάλεια, ημερολόγιο & πλήρωμα",
   "moreMenuLogbook": "Ship's log",
   "moreMenuSos": "SOS / distress",
   "moreMenuTrack": "Track recording",
@@ -432,10 +582,12 @@
   "vaultPinSetupTitle": "Create vault PIN",
   "vaultPinUnlockTitle": "Unlock vault",
   "vaultPinHint": "4–12 digits recommended",
+  "vaultPinConfirmLabel": "Confirm PIN",
   "vaultUnlock": "Unlock",
   "vaultLockedHint": "Documents are encrypted at rest with your PIN.",
   "vaultEmpty": "No encrypted files stored yet.",
   "vaultPickFile": "Pick file",
+  "vaultEncryptedBadge": "Encrypted",
   "vaultDecryptPreview": "Preview / decrypt check",
   "vaultDeleteForbidden": "Only the captain can delete vault files.",
   "crewTitle": "Crew & ship",
@@ -665,158 +817,6 @@
   "expenseCatGear": "Gear & repairs",
   "expenseCatProvisions": "Provisions",
   "expenseCatOther": "Other",
-  "offlineChartManagerTitle": "Cartes hors ligne",
-  "offlineChartManagerLead": "Downloaded map tile packs for use without network.",
-  "offlineChartManagerEmpty": "No offline regions yet. Use the download button on the Map tab.",
-  "offlineChartManagerDelete": "Delete",
-  "offlineChartManagerDeleted": "Region removed",
-  "offlineChartManagerStorage": "Storage: {size}",
-  "@offlineChartManagerStorage": {
-    "placeholders": {
-      "size": {
-        "type": "String"
-      }
-    }
-  },
-  "offlineChartManagerInstalled": "Installed {date}",
-  "@offlineChartManagerInstalled": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
-  "offlineChartManagerLicense": "License: {tier}",
-  "@offlineChartManagerLicense": {
-    "placeholders": {
-      "tier": {
-        "type": "String"
-      }
-    }
-  },
-  "settingsOfflineCharts": "Offline charts",
-  "mapLayerSectionWeather": "Weather",
-  "mapLayerWindOverlay": "Flèches de vent",
-  "mapLayerWindOverlaySubtitle": "Open-Meteo forecast grid around map center",
-  "@mapPeekDepthMeters": {
-    "placeholders": {
-      "meters": {
-        "type": "int"
-      }
-    }
-  },
-  "aisScreenTitle": "AIS",
-  "moreMenuAis": "AIS traffic",
-  "moreMenuAisSubtitle": "Local NMEA · CPA/TCPA · vessel filters",
-  "aisFilterAll": "All",
-  "aisFilterCargo": "Cargo",
-  "aisFilterTanker": "Tanker",
-  "aisFilterPleasure": "Pleasure",
-  "aisLocalStreamTitle": "Local stream",
-  "aisLocalStreamBody": "NMEA 0183 · Wi‑Fi/BT gateway · CPA/TCPA",
-  "aisDemoStart": "Start demo",
-  "aisDemoStop": "Stop",
-  "aisDemoActive": "Demo NMEA stream active",
-  "aisLiveActive": "Live NMEA stream connected",
-  "aisLiveConnecting": "Connecting to NMEA gateway…",
-  "aisSourceOff": "Off",
-  "aisSourceDemo": "Demo",
-  "aisSourceLive": "Live",
-  "aisNmeaHost": "Gateway host",
-  "aisNmeaPort": "Port",
-  "aisNmeaHostHint": "192.168.4.1",
-  "aisNmeaPortHint": "10110",
-  "aisTargetsCount": "{count} targets",
-  "@aisTargetsCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "aisTapVessel": "Tap a vessel for details",
-  "aisVesselSog": "{knots} kn",
-  "@aisVesselSog": {
-    "placeholders": {
-      "knots": {
-        "type": "String"
-      }
-    }
-  },
-  "aisVesselCog": "{degrees}°",
-  "@aisVesselCog": {
-    "placeholders": {
-      "degrees": {
-        "type": "String"
-      }
-    }
-  },
-  "aisVesselCpa": "{nm} nm",
-  "@aisVesselCpa": {
-    "placeholders": {
-      "nm": {
-        "type": "String"
-      }
-    }
-  },
-  "aisVesselTcpa": "{minutes} min",
-  "@aisVesselTcpa": {
-    "placeholders": {
-      "minutes": {
-        "type": "String"
-      }
-    }
-  },
-  "aisCpaWarning": "CPA < 1 nm",
-  "weatherSeeAllTides": "See all tides",
-  "tidesScreenTitle": "Tides",
-  "tidesCurveHeading": "Today's curve (demo)",
-  "tidesTableHeading": "7-day schedule (demo)",
-  "tidesMoonHeading": "Moon phase",
-  "tidesSunHeading": "Sun times (approx.)",
-  "tidesTableDay": "Day",
-  "tidesHighShort": "HW",
-  "tidesLowShort": "LW",
-  "tidesEmpty": "No tide data available.",
-  "tidesStaleBanner": "Showing cached tides — network or API unavailable.",
-  "tidesDemoBanner": "Illustrative demo data — no live station for this location.",
-  "tidesHeightM": "{height} m",
-  "@tidesHeightM": {
-    "placeholders": {
-      "height": {
-        "type": "String"
-      }
-    }
-  },
-  "tidesTableCell": "{time} · {height} · {kind}",
-  "@tidesTableCell": {
-    "placeholders": {
-      "time": {
-        "type": "String"
-      },
-      "height": {
-        "type": "String"
-      },
-      "kind": {
-        "type": "String"
-      }
-    }
-  },
-  "tidesSunLine": "Sunrise {sunrise} · Sunset {sunset}",
-  "@tidesSunLine": {
-    "placeholders": {
-      "sunrise": {
-        "type": "String"
-      },
-      "sunset": {
-        "type": "String"
-      }
-    }
-  },
-  "moreMenuTides": "Tides",
-  "moreMenuTidesSubtitle": "Demo curve, 7-day table, moon & sun",
-  "vaultPinConfirmLabel": "Confirm PIN",
-  "vaultEncryptedBadge": "Encrypted",
   "onboardingWelcomeTagline": "Captain Wrongel",
   "onboardingWelcomeTitle": "Your crewmate on every voyage",
   "onboardingWelcomeSubtitle": "Offline charts, weather, moorings — one deck.",
@@ -839,22 +839,22 @@
   "onboardingRegionMediterranean": "Mediterranean",
   "onboardingRegionCaribbean": "Caribbean",
   "onboardingRegionOther": "Other",
-  "moreMenuCommunity": "Communauté",
+  "moreMenuCommunity": "Κοινότητα",
   "moreMenuCommunitySubtitle": "Reviews, events, local tips (demo feed)",
-  "moreMenuVoyageMonitor": "Suivi de voyage",
+  "moreMenuVoyageMonitor": "Voyage monitor",
   "moreMenuVoyageMonitorSubtitle": "Shore contact & periodic check-in",
-  "moreMenuYachtHub": "Hub yacht",
+  "moreMenuYachtHub": "Yacht hub",
   "moreMenuYachtHubSubtitle": "Logbook, expenses, track, vault",
-  "moreMenuAssistant": "Assistant pont",
+  "moreMenuAssistant": "Deck assistant",
   "moreMenuAssistantSubtitle": "Offline FAQ — weather, SOS, COLREG",
-  "communityHubTitle": "Communauté",
+  "communityHubTitle": "Κοινότητα",
   "communityHubLead": "Local reviews and events — demo feed until shore sync ships.",
   "communitySectionReviews": "Reviews",
   "communitySectionEvents": "Events",
   "communityEmptyReviews": "No reviews in this region yet.",
   "communityEmptyEvents": "No upcoming events listed.",
   "communityBadgeDemo": "Demo",
-  "voyageMonitorTitle": "Suivi de voyage",
+  "voyageMonitorTitle": "Παρακολούθηση ταξιδιού",
   "voyageMonitorLead": "SafeTrx-style shore contact and periodic OK check-in. Not linked to official SAR.",
   "voyageMonitorContactName": "Shore contact name",
   "voyageMonitorContactPhone": "Shore contact phone",
@@ -890,13 +890,13 @@
   "paywallBody": "Unlock live AIS bridge, offline chart packs, and GRIB import. Billing integration ships in a future release.",
   "paywallCta": "Notify me at launch",
   "paywallDismiss": "Not now",
-  "yachtHubTitle": "Yacht hub",
+  "yachtHubTitle": "Κέντρο σκάφους",
   "yachtHubLead": "Ship papers, spending, and passage record in one place.",
   "yachtHubStatLogbook": "Log entries",
   "yachtHubStatExpenses": "Trip spend",
   "yachtHubStatTrack": "Track points",
   "yachtHubStatVault": "Vault docs",
-  "assistantTitle": "Deck assistant",
+  "assistantTitle": "Βοηθός καταστρώματος",
   "assistantLead": "Offline FAQ — canned answers only, not an AI captain.",
   "assistantHint": "Ask about weather, SOS, or COLREG…",
   "assistantIntentWeather": "Weather",
@@ -925,12 +925,12 @@
   "localeGreek": "Greek",
   "localeTurkish": "Turkish",
   "localePortuguese": "Portuguese",
-  "mapLayerWindParticles": "Particules de vent",
-  "mapLayerWindParticlesSubtitle": "Champ de flux animé (pause en mode éco / réduction des animations)",
-  "errorNetwork": "Réseau indisponible — vérifiez la connexion et réessayez.",
-  "errorGpsDenied": "Autorisation de localisation refusée — activez-la dans les réglages.",
-  "errorGpsUnavailable": "GPS indisponible — réessayez plus tard.",
-  "errorVaultDecrypt": "Impossible de déchiffrer le document du coffre — mauvais code ou fichier corrompu.",
-  "errorRoutingFailed": "Impossible de calculer l'itinéraire — vérifiez les points.",
-  "errorGeneric": "Une erreur s'est produite — veuillez réessayer."
+  "mapLayerWindParticles": "Σωματίδια ανέμου",
+  "mapLayerWindParticlesSubtitle": "Κινούμενο πεδίο ροής (παύση σε eco / μείωση κίνησης)",
+  "errorNetwork": "Το δίκτυο δεν είναι διαθέσιμο — ελέγξτε τη σύνδεση και δοκιμάστε ξανά.",
+  "errorGpsDenied": "Location permission denied — enable GPS in system settings.",
+  "errorGpsUnavailable": "Could not get a GPS fix — check sky view and receiver.",
+  "errorVaultDecrypt": "Could not decrypt vault document — wrong passphrase or corrupt file.",
+  "errorRoutingFailed": "Route could not be computed — try fewer waypoints or check network.",
+  "errorGeneric": "Something went wrong — try again."
 }

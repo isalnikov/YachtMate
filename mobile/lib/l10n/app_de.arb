@@ -4,12 +4,12 @@
   "@appTitle": {
     "description": "Application name shown in UI and task switcher."
   },
-  "tabMap": "Map",
+  "tabMap": "Karte",
   "tabRoute": "Route",
-  "tabWeather": "Weather",
-  "tabMooring": "Mooring",
-  "tabMore": "More",
-  "settingsTitle": "Settings",
+  "tabWeather": "Wetter",
+  "tabMooring": "Anlegen",
+  "tabMore": "Mehr",
+  "settingsTitle": "Einstellungen",
   "languageLabel": "Language",
   "languageSwitchTooltip": "Choose interface language",
   "localeEnglish": "English",
@@ -70,13 +70,17 @@
   "mapGpsAccuracyMeters": "±{meters} m",
   "@mapGpsAccuracyMeters": {
     "placeholders": {
-      "meters": {"type": "int"}
+      "meters": {
+        "type": "int"
+      }
     }
   },
   "mapGpsSogKnots": "{knots} kn",
   "@mapGpsSogKnots": {
     "placeholders": {
-      "knots": {"type": "String"}
+      "knots": {
+        "type": "String"
+      }
     }
   },
   "mapGpsLocationSettingsHint": "Check location permission and GPS accuracy in system settings.",
@@ -87,20 +91,28 @@
   "weatherCoordinates": "Forecast pin: {lat}°, {lon}°",
   "@weatherCoordinates": {
     "placeholders": {
-      "lat": {"type": "String"},
-      "lon": {"type": "String"}
+      "lat": {
+        "type": "String"
+      },
+      "lon": {
+        "type": "String"
+      }
     }
   },
   "weatherLastUpdated": "Model run reference: {time}",
   "@weatherLastUpdated": {
     "placeholders": {
-      "time": {"type": "String"}
+      "time": {
+        "type": "String"
+      }
     }
   },
   "weatherLoadError": "Could not load forecast: {detail}",
   "@weatherLoadError": {
     "placeholders": {
-      "detail": {"type": "String"}
+      "detail": {
+        "type": "String"
+      }
     }
   },
   "weatherHourlyHeading": "Hourly (48 h)",
@@ -115,7 +127,9 @@
   "weatherGpsError": "GPS error: {detail}",
   "@weatherGpsError": {
     "placeholders": {
-      "detail": {"type": "String"}
+      "detail": {
+        "type": "String"
+      }
     }
   },
   "tidesHigh": "High water",
@@ -123,26 +137,46 @@
   "weatherWaveSuffix": " · wave {m} m",
   "@weatherWaveSuffix": {
     "placeholders": {
-      "m": {"type": "String"}
+      "m": {
+        "type": "String"
+      }
     }
   },
   "weatherHourLine": "{tempC} °C · wind {windKn} kn / {windDir}° · rain {rainMm} mm · {pressHpa} hPa{wavePart}",
   "@weatherHourLine": {
     "placeholders": {
-      "tempC": {"type": "String"},
-      "windKn": {"type": "String"},
-      "windDir": {"type": "String"},
-      "rainMm": {"type": "String"},
-      "pressHpa": {"type": "String"},
-      "wavePart": {"type": "String"}
+      "tempC": {
+        "type": "String"
+      },
+      "windKn": {
+        "type": "String"
+      },
+      "windDir": {
+        "type": "String"
+      },
+      "rainMm": {
+        "type": "String"
+      },
+      "pressHpa": {
+        "type": "String"
+      },
+      "wavePart": {
+        "type": "String"
+      }
     }
   },
   "weatherTideRow": "{time} · {height} · {kind}",
   "@weatherTideRow": {
     "placeholders": {
-      "time": {"type": "String"},
-      "height": {"type": "String"},
-      "kind": {"type": "String"}
+      "time": {
+        "type": "String"
+      },
+      "height": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      }
     }
   },
   "routeScreenTitle": "Route (advisory)",
@@ -152,7 +186,9 @@
   "routeActiveRouteLabel": "Current draft: {id}",
   "@routeActiveRouteLabel": {
     "placeholders": {
-      "id": {"type": "String"}
+      "id": {
+        "type": "String"
+      }
     }
   },
   "routeActiveRouteUnknown": "none",
@@ -168,7 +204,9 @@
   "routeAdvisoryFailed": "Could not compute path: {reason}",
   "@routeAdvisoryFailed": {
     "placeholders": {
-      "reason": {"type": "String"}
+      "reason": {
+        "type": "String"
+      }
     }
   },
   "routePlanRoute": "Plan route",
@@ -179,33 +217,45 @@
   "routeStatsDistanceValue": "{nm} nm",
   "@routeStatsDistanceValue": {
     "placeholders": {
-      "nm": {"type": "String"}
+      "nm": {
+        "type": "String"
+      }
     }
   },
   "routeStatsEtaUnknown": "—",
   "routeStatsEtaMinutes": "{minutes} min",
   "@routeStatsEtaMinutes": {
     "placeholders": {
-      "minutes": {"type": "int"}
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "routeStatsEtaHours": "{hours} h",
   "@routeStatsEtaHours": {
     "placeholders": {
-      "hours": {"type": "int"}
+      "hours": {
+        "type": "int"
+      }
     }
   },
   "routeStatsEtaHoursMinutes": "{hours} h {minutes} min",
   "@routeStatsEtaHoursMinutes": {
     "placeholders": {
-      "hours": {"type": "int"},
-      "minutes": {"type": "int"}
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "routeStatsWaypointCountValue": "{count}",
   "@routeStatsWaypointCountValue": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "routeWaypointListTitle": "Waypoints",
@@ -213,14 +263,18 @@
   "routeWaypointDefaultName": "WP {index}",
   "@routeWaypointDefaultName": {
     "placeholders": {
-      "index": {"type": "int"}
+      "index": {
+        "type": "int"
+      }
     }
   },
   "routeSafetyOk": "Depth check OK along waypoints (demo grid).",
   "routeSafetyShallow": "Shallow water at WP {index}: draft + clearance exceeds demo depth.",
   "@routeSafetyShallow": {
     "placeholders": {
-      "index": {"type": "int"}
+      "index": {
+        "type": "int"
+      }
     }
   },
   "routeShowCorridor": "Safety corridor",
@@ -236,7 +290,9 @@
   "mooringDistanceNm": "{distance} nm",
   "@mooringDistanceNm": {
     "placeholders": {
-      "distance": {"type": "String"}
+      "distance": {
+        "type": "String"
+      }
     }
   },
   "mooringEmptyFiltered": "Try clearing filters or broadening your search.",
@@ -257,9 +313,15 @@
   "mooringPendingReviewLine": "{placeId} · {stars} ★ · {time}",
   "@mooringPendingReviewLine": {
     "placeholders": {
-      "placeId": {"type": "String"},
-      "stars": {"type": "int"},
-      "time": {"type": "String"}
+      "placeId": {
+        "type": "String"
+      },
+      "stars": {
+        "type": "int"
+      },
+      "time": {
+        "type": "String"
+      }
     }
   },
   "mooringEmail": "Email",
@@ -271,13 +333,17 @@
   "mooringSyncDone": "Submitted {count} review(s).",
   "@mooringSyncDone": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "mooringSyncFailed": "Could not submit some drafts ({count}).",
   "@mooringSyncFailed": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "mooringSearchHint": "Search by name",
@@ -345,7 +411,13 @@
   "trackStart": "Start recording",
   "trackStop": "Stop & save",
   "trackPoints": "{count} points",
-  "@trackPoints": {"placeholders": {"count": {"type": "int"}}},
+  "@trackPoints": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "trackStatsPoints": "Points",
   "trackStatsDuration": "Duration",
   "trackEmptyTrips": "No saved trips",
@@ -526,8 +598,12 @@
   "coastalCoordinates": "{lat}°, {lon}°",
   "@coastalCoordinates": {
     "placeholders": {
-      "lat": { "type": "String" },
-      "lon": { "type": "String" }
+      "lat": {
+        "type": "String"
+      },
+      "lon": {
+        "type": "String"
+      }
     }
   },
   "medicalGlossaryTitle": "Medical glossary",
@@ -549,8 +625,12 @@
   "vhfQuizProgress": "Question {current} of {total}",
   "@vhfQuizProgress": {
     "placeholders": {
-      "current": { "type": "int" },
-      "total": { "type": "int" }
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "vhfQuizPickAnswer": "Select an answer first.",
@@ -584,5 +664,273 @@
   "expenseCatMooringFee": "Mooring",
   "expenseCatGear": "Gear & repairs",
   "expenseCatProvisions": "Provisions",
-  "expenseCatOther": "Other"
+  "expenseCatOther": "Other",
+  "offlineChartManagerTitle": "Offline-Karten",
+  "offlineChartManagerLead": "Downloaded map tile packs for use without network.",
+  "offlineChartManagerEmpty": "No offline regions yet. Use the download button on the Map tab.",
+  "offlineChartManagerDelete": "Delete",
+  "offlineChartManagerDeleted": "Region removed",
+  "offlineChartManagerStorage": "Storage: {size}",
+  "@offlineChartManagerStorage": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "offlineChartManagerInstalled": "Installed {date}",
+  "@offlineChartManagerInstalled": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "offlineChartManagerLicense": "License: {tier}",
+  "@offlineChartManagerLicense": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "settingsOfflineCharts": "Offline charts",
+  "mapLayerSectionWeather": "Weather",
+  "mapLayerWindOverlay": "Windpfeile",
+  "mapLayerWindOverlaySubtitle": "Open-Meteo forecast grid around map center",
+  "@mapPeekDepthMeters": {
+    "placeholders": {
+      "meters": {
+        "type": "int"
+      }
+    }
+  },
+  "aisScreenTitle": "AIS",
+  "moreMenuAis": "AIS traffic",
+  "moreMenuAisSubtitle": "Local NMEA · CPA/TCPA · vessel filters",
+  "aisFilterAll": "All",
+  "aisFilterCargo": "Cargo",
+  "aisFilterTanker": "Tanker",
+  "aisFilterPleasure": "Pleasure",
+  "aisLocalStreamTitle": "Local stream",
+  "aisLocalStreamBody": "NMEA 0183 · Wi‑Fi/BT gateway · CPA/TCPA",
+  "aisDemoStart": "Start demo",
+  "aisDemoStop": "Stop",
+  "aisDemoActive": "Demo NMEA stream active",
+  "aisLiveActive": "Live NMEA stream connected",
+  "aisLiveConnecting": "Connecting to NMEA gateway…",
+  "aisSourceOff": "Off",
+  "aisSourceDemo": "Demo",
+  "aisSourceLive": "Live",
+  "aisNmeaHost": "Gateway host",
+  "aisNmeaPort": "Port",
+  "aisNmeaHostHint": "192.168.4.1",
+  "aisNmeaPortHint": "10110",
+  "aisTargetsCount": "{count} targets",
+  "@aisTargetsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "aisTapVessel": "Tap a vessel for details",
+  "aisVesselSog": "{knots} kn",
+  "@aisVesselSog": {
+    "placeholders": {
+      "knots": {
+        "type": "String"
+      }
+    }
+  },
+  "aisVesselCog": "{degrees}°",
+  "@aisVesselCog": {
+    "placeholders": {
+      "degrees": {
+        "type": "String"
+      }
+    }
+  },
+  "aisVesselCpa": "{nm} nm",
+  "@aisVesselCpa": {
+    "placeholders": {
+      "nm": {
+        "type": "String"
+      }
+    }
+  },
+  "aisVesselTcpa": "{minutes} min",
+  "@aisVesselTcpa": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "aisCpaWarning": "CPA < 1 nm",
+  "weatherSeeAllTides": "See all tides",
+  "tidesScreenTitle": "Tides",
+  "tidesCurveHeading": "Today's curve (demo)",
+  "tidesTableHeading": "7-day schedule (demo)",
+  "tidesMoonHeading": "Moon phase",
+  "tidesSunHeading": "Sun times (approx.)",
+  "tidesTableDay": "Day",
+  "tidesHighShort": "HW",
+  "tidesLowShort": "LW",
+  "tidesEmpty": "No tide data available.",
+  "tidesStaleBanner": "Showing cached tides — network or API unavailable.",
+  "tidesDemoBanner": "Illustrative demo data — no live station for this location.",
+  "tidesHeightM": "{height} m",
+  "@tidesHeightM": {
+    "placeholders": {
+      "height": {
+        "type": "String"
+      }
+    }
+  },
+  "tidesTableCell": "{time} · {height} · {kind}",
+  "@tidesTableCell": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      },
+      "height": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "tidesSunLine": "Sunrise {sunrise} · Sunset {sunset}",
+  "@tidesSunLine": {
+    "placeholders": {
+      "sunrise": {
+        "type": "String"
+      },
+      "sunset": {
+        "type": "String"
+      }
+    }
+  },
+  "moreMenuTides": "Tides",
+  "moreMenuTidesSubtitle": "Demo curve, 7-day table, moon & sun",
+  "vaultPinConfirmLabel": "Confirm PIN",
+  "vaultEncryptedBadge": "Encrypted",
+  "onboardingWelcomeTagline": "Captain Wrongel",
+  "onboardingWelcomeTitle": "Your crewmate on every voyage",
+  "onboardingWelcomeSubtitle": "Offline charts, weather, moorings — one deck.",
+  "onboardingNext": "Next",
+  "onboardingBack": "Back",
+  "onboardingGetStarted": "Get started",
+  "onboardingPermissionsTitle": "Enable permissions",
+  "onboardingPermissionsBody": "Location powers charts, weather, and anchor watch. Notifications alert you to drift and weather changes.",
+  "onboardingLocationTitle": "Location",
+  "onboardingLocationButton": "Allow location",
+  "onboardingNotificationTitle": "Notifications",
+  "onboardingNotificationButton": "Allow notifications",
+  "onboardingExperienceTitle": "Your experience",
+  "onboardingExperienceBody": "We'll tune tips and defaults to match your sailing style.",
+  "onboardingExperienceBeginner": "Beginner",
+  "onboardingExperienceCruiser": "Cruiser",
+  "onboardingExperienceRacer": "Racer",
+  "onboardingRegionTitle": "Where do you sail?",
+  "onboardingRegionBody": "We prioritize charts and mooring data for your region.",
+  "onboardingRegionMediterranean": "Mediterranean",
+  "onboardingRegionCaribbean": "Caribbean",
+  "onboardingRegionOther": "Other",
+  "moreMenuCommunity": "Gemeinschaft",
+  "moreMenuCommunitySubtitle": "Reviews, events, local tips (demo feed)",
+  "moreMenuVoyageMonitor": "Reiseüberwachung",
+  "moreMenuVoyageMonitorSubtitle": "Shore contact & periodic check-in",
+  "moreMenuYachtHub": "Yacht-Hub",
+  "moreMenuYachtHubSubtitle": "Logbook, expenses, track, vault",
+  "moreMenuAssistant": "Deck-Assistent",
+  "moreMenuAssistantSubtitle": "Offline FAQ — weather, SOS, COLREG",
+  "communityHubTitle": "Gemeinschaft",
+  "communityHubLead": "Local reviews and events — demo feed until shore sync ships.",
+  "communitySectionReviews": "Reviews",
+  "communitySectionEvents": "Events",
+  "communityEmptyReviews": "No reviews in this region yet.",
+  "communityEmptyEvents": "No upcoming events listed.",
+  "communityBadgeDemo": "Demo",
+  "voyageMonitorTitle": "Reiseüberwachung",
+  "voyageMonitorLead": "SafeTrx-style shore contact and periodic OK check-in. Not linked to official SAR.",
+  "voyageMonitorContactName": "Shore contact name",
+  "voyageMonitorContactPhone": "Shore contact phone",
+  "voyageMonitorInterval": "Check-in interval",
+  "voyageMonitorInterval30": "30 min",
+  "voyageMonitorInterval60": "1 hour",
+  "voyageMonitorInterval120": "2 hours",
+  "voyageMonitorStart": "Start monitoring",
+  "voyageMonitorStop": "Stop monitoring",
+  "voyageMonitorOk": "I'm OK",
+  "voyageMonitorNextDue": "Next check-in due in {time}",
+  "@voyageMonitorNextDue": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "voyageMonitorOverdue": "Check-in overdue — tap I'm OK or open SOS",
+  "voyageMonitorOpenSos": "Open SOS",
+  "voyageMonitorActive": "Monitoring active",
+  "voyageMonitorInactive": "Not monitoring",
+  "settingsNotificationsSection": "Benachrichtigungen",
+  "settingsNotifyAnchorDrift": "Anchor drift alerts",
+  "settingsNotifyAnchorDriftSubtitle": "Local notification when anchor watch alarms",
+  "settingsNotifyWeatherWind": "High wind alerts",
+  "settingsNotifyWeatherWindSubtitle": "Notify when forecast wind exceeds threshold",
+  "settingsNotifyWindThreshold": "Wind alert threshold (kn)",
+  "settingsPremiumSection": "Subscription",
+  "settingsPremiumUnlocked": "Premium unlocked (demo)",
+  "settingsPremiumUnlockedSubtitle": "Enables live AIS, offline charts, GRIB import",
+  "paywallTitle": "Captain Wrongel Premium",
+  "paywallBody": "Unlock live AIS bridge, offline chart packs, and GRIB import. Billing integration ships in a future release.",
+  "paywallCta": "Notify me at launch",
+  "paywallDismiss": "Not now",
+  "yachtHubTitle": "Yacht hub",
+  "yachtHubLead": "Ship papers, spending, and passage record in one place.",
+  "yachtHubStatLogbook": "Log entries",
+  "yachtHubStatExpenses": "Trip spend",
+  "yachtHubStatTrack": "Track points",
+  "yachtHubStatVault": "Vault docs",
+  "assistantTitle": "Deck assistant",
+  "assistantLead": "Offline FAQ — canned answers only, not an AI captain.",
+  "assistantHint": "Ask about weather, SOS, or COLREG…",
+  "assistantIntentWeather": "Weather",
+  "assistantIntentSos": "SOS",
+  "assistantIntentColreg": "COLREG",
+  "assistantWelcome": "I'm the offline deck assistant. Pick a topic below or type a question.",
+  "assistantReplyWeather": "Open the Weather tab for Open-Meteo forecast, wind rose, and tides link. Enable wind arrows on the Map layers sheet.",
+  "assistantReplySos": "SOS is under More → SOS / distress. Use test mode in settings until you confirm rescue numbers.",
+  "assistantReplyColreg": "COLREG practice lives in Maritime toolbox → VHF & COLREG trainer.",
+  "assistantReplyFallback": "I only know weather, SOS, and COLREG shortcuts offline. Try a suggested topic.",
+  "assistantHelpLink": "Open maritime toolbox",
+  "notificationAnchorDriftTitle": "Anchor drift",
+  "notificationAnchorDriftBody": "Vessel moved outside anchor circle — check anchor watch.",
+  "notificationWindAlertTitle": "High wind forecast",
+  "notificationWindAlertBody": "Forecast wind {kn} kn exceeds your {threshold} kn threshold.",
+  "@notificationWindAlertBody": {
+    "placeholders": {
+      "kn": {
+        "type": "String"
+      },
+      "threshold": {
+        "type": "String"
+      }
+    }
+  },
+  "localeGreek": "Greek",
+  "localeTurkish": "Turkish",
+  "localePortuguese": "Portuguese",
+  "mapLayerWindParticles": "Windpartikel",
+  "mapLayerWindParticlesSubtitle": "Animiertes Strömungsfeld (pausiert im Eco-Modus / bei weniger Bewegung)",
+  "errorNetwork": "Netzwerk nicht verfügbar — Verbindung prüfen und erneut versuchen.",
+  "errorGpsDenied": "Standortberechtigung verweigert — in den Einstellungen aktivieren.",
+  "errorGpsUnavailable": "GPS nicht verfügbar — später erneut versuchen.",
+  "errorVaultDecrypt": "Tresordokument konnte nicht entschlüsselt werden — falsche PIN oder beschädigte Datei.",
+  "errorRoutingFailed": "Route konnte nicht berechnet werden — Wegpunkte prüfen.",
+  "errorGeneric": "Etwas ist schiefgelaufen — bitte erneut versuchen."
 }

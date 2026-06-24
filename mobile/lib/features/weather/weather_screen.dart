@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 
+import '../../core/errors/cw_error_catalog.dart';
 import '../../core/notifications/weather_wind_alert.dart';
 import '../../core/providers.dart';
 import '../../core/theme/cw_tokens.dart';
@@ -94,9 +95,7 @@ class WeatherScreen extends ConsumerWidget {
       if (p != LocationPermission.always &&
           p != LocationPermission.whileInUse) {
         if (context.mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(l10n.weatherGpsDenied)));
+          showCwErrorSnackBar(context, CwErrorKind.gpsDenied);
         }
         return;
       }
@@ -110,9 +109,7 @@ class WeatherScreen extends ConsumerWidget {
       }
     } catch (e) {
       if (context.mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(l10n.weatherGpsError('$e'))));
+        showCwErrorSnackBar(context, CwErrorKind.gpsUnavailable);
       }
     }
   }

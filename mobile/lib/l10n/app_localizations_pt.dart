@@ -4,54 +4,54 @@ import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
 
-/// The translations for German (`de`).
-class AppLocalizationsDe extends AppLocalizations {
-  AppLocalizationsDe([String locale = 'de']) : super(locale);
+/// The translations for Portuguese (`pt`).
+class AppLocalizationsPt extends AppLocalizations {
+  AppLocalizationsPt([String locale = 'pt']) : super(locale);
 
   @override
   String get appTitle => 'Captain Wrongel';
 
   @override
-  String get tabMap => 'Karte';
+  String get tabMap => 'Mapa';
 
   @override
-  String get tabRoute => 'Route';
+  String get tabRoute => 'Rota';
 
   @override
-  String get tabWeather => 'Wetter';
+  String get tabWeather => 'Meteorologia';
 
   @override
-  String get tabMooring => 'Anlegen';
+  String get tabMooring => 'Ancoragem';
 
   @override
-  String get tabMore => 'Mehr';
+  String get tabMore => 'Mais';
 
   @override
-  String get settingsTitle => 'Einstellungen';
+  String get settingsTitle => 'Definições';
 
   @override
-  String get languageLabel => 'Language';
+  String get languageLabel => 'Idioma';
 
   @override
   String get languageSwitchTooltip => 'Choose interface language';
 
   @override
-  String get localeEnglish => 'English';
+  String get localeEnglish => 'Inglês';
 
   @override
-  String get localeRussian => 'Russian';
+  String get localeRussian => 'Russo';
 
   @override
-  String get localeGerman => 'German';
+  String get localeGerman => 'Alemão';
 
   @override
-  String get localeFrench => 'French';
+  String get localeFrench => 'Francês';
 
   @override
-  String get localeSpanish => 'Spanish';
+  String get localeSpanish => 'Espanhol';
 
   @override
-  String get localeItalian => 'Italian';
+  String get localeItalian => 'Italiano';
 
   @override
   String get localeGreek => 'Greek';
@@ -98,7 +98,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Could not cache offline tiles (network or engine).';
 
   @override
-  String get offlineChartManagerTitle => 'Offline-Karten';
+  String get offlineChartManagerTitle => 'Offline charts';
 
   @override
   String get offlineChartManagerLead =>
@@ -136,7 +136,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mapLayersTooltip => 'Map layers';
 
   @override
-  String get mapLayersSheetTitle => 'Map layers (demo)';
+  String get mapLayersSheetTitle => 'Camadas do mapa';
 
   @override
   String get mapLayerDepthContours => 'Depth contours (synthetic)';
@@ -187,18 +187,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get mapLayerSectionWeather => 'Weather';
 
   @override
-  String get mapLayerWindOverlay => 'Windpfeile';
+  String get mapLayerWindOverlay => 'Wind arrows';
 
   @override
   String get mapLayerWindOverlaySubtitle =>
       'Open-Meteo forecast grid around map center';
 
   @override
-  String get mapLayerWindParticles => 'Windpartikel';
+  String get mapLayerWindParticles => 'Partículas de vento';
 
   @override
   String get mapLayerWindParticlesSubtitle =>
-      'Animiertes Strömungsfeld (pausiert im Eco-Modus / bei weniger Bewegung)';
+      'Campo de fluxo animado (pausa em eco / reduzir movimento)';
 
   @override
   String get mapDepthLegendTitle => 'Legend';
@@ -379,7 +379,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Check location permission and GPS accuracy in system settings.';
 
   @override
-  String get weatherScreenTitle => 'Weather & tides';
+  String get weatherScreenTitle => 'Meteorologia';
 
   @override
   String get weatherRefreshTooltip => 'Refresh forecast';
@@ -849,7 +849,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Only the captain can delete log entries on this device.';
 
   @override
-  String get moreMenuHeadline => 'Safety, log & crew';
+  String get moreMenuHeadline => 'Segurança, diário e tripulação';
 
   @override
   String get moreMenuLogbook => 'Ship\'s log';
@@ -1696,33 +1696,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get onboardingRegionOther => 'Other';
 
   @override
-  String get moreMenuCommunity => 'Gemeinschaft';
+  String get moreMenuCommunity => 'Comunidade';
 
   @override
   String get moreMenuCommunitySubtitle =>
       'Reviews, events, local tips (demo feed)';
 
   @override
-  String get moreMenuVoyageMonitor => 'Reiseüberwachung';
+  String get moreMenuVoyageMonitor => 'Voyage monitor';
 
   @override
   String get moreMenuVoyageMonitorSubtitle =>
       'Shore contact & periodic check-in';
 
   @override
-  String get moreMenuYachtHub => 'Yacht-Hub';
+  String get moreMenuYachtHub => 'Yacht hub';
 
   @override
   String get moreMenuYachtHubSubtitle => 'Logbook, expenses, track, vault';
 
   @override
-  String get moreMenuAssistant => 'Deck-Assistent';
+  String get moreMenuAssistant => 'Deck assistant';
 
   @override
   String get moreMenuAssistantSubtitle => 'Offline FAQ — weather, SOS, COLREG';
 
   @override
-  String get communityHubTitle => 'Gemeinschaft';
+  String get communityHubTitle => 'Comunidade';
 
   @override
   String get communityHubLead =>
@@ -1744,7 +1744,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get communityBadgeDemo => 'Demo';
 
   @override
-  String get voyageMonitorTitle => 'Reiseüberwachung';
+  String get voyageMonitorTitle => 'Monitor de viagem';
 
   @override
   String get voyageMonitorLead =>
@@ -1796,7 +1796,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get voyageMonitorInactive => 'Not monitoring';
 
   @override
-  String get settingsNotificationsSection => 'Benachrichtigungen';
+  String get settingsNotificationsSection => 'Notifications';
 
   @override
   String get settingsNotifyAnchorDrift => 'Anchor drift alerts';
@@ -1839,7 +1839,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get paywallDismiss => 'Not now';
 
   @override
-  String get yachtHubTitle => 'Yacht hub';
+  String get yachtHubTitle => 'Hub do iate';
 
   @override
   String get yachtHubLead =>
@@ -1858,7 +1858,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get yachtHubStatVault => 'Vault docs';
 
   @override
-  String get assistantTitle => 'Deck assistant';
+  String get assistantTitle => 'Assistente de convés';
 
   @override
   String get assistantLead =>
@@ -1916,25 +1916,24 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get errorNetwork =>
-      'Netzwerk nicht verfügbar — Verbindung prüfen und erneut versuchen.';
+      'Rede indisponível — verifique a ligação e tente novamente.';
 
   @override
   String get errorGpsDenied =>
-      'Standortberechtigung verweigert — in den Einstellungen aktivieren.';
+      'Location permission denied — enable GPS in system settings.';
 
   @override
   String get errorGpsUnavailable =>
-      'GPS nicht verfügbar — später erneut versuchen.';
+      'Could not get a GPS fix — check sky view and receiver.';
 
   @override
   String get errorVaultDecrypt =>
-      'Tresordokument konnte nicht entschlüsselt werden — falsche PIN oder beschädigte Datei.';
+      'Could not decrypt vault document — wrong passphrase or corrupt file.';
 
   @override
   String get errorRoutingFailed =>
-      'Route konnte nicht berechnet werden — Wegpunkte prüfen.';
+      'Route could not be computed — try fewer waypoints or check network.';
 
   @override
-  String get errorGeneric =>
-      'Etwas ist schiefgelaufen — bitte erneut versuchen.';
+  String get errorGeneric => 'Something went wrong — try again.';
 }

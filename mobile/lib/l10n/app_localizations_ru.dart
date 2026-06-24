@@ -54,6 +54,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String get localeItalian => 'Итальянский';
 
   @override
+  String get localeGreek => 'Greek';
+
+  @override
+  String get localeTurkish => 'Turkish';
+
+  @override
+  String get localePortuguese => 'Portuguese';
+
+  @override
   String get bootstrapNote => 'Оболочка фазы 0 — карта и навигация в фазе 1.';
 
   @override
@@ -182,6 +191,13 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get mapLayerWindOverlaySubtitle =>
       'Сетка Open-Meteo вокруг центра карты';
+
+  @override
+  String get mapLayerWindParticles => 'Wind particles';
+
+  @override
+  String get mapLayerWindParticlesSubtitle =>
+      'Animated flow field (pauses in eco / reduce motion)';
 
   @override
   String get mapDepthLegendTitle => 'Легенда';
@@ -1898,4 +1914,27 @@ class AppLocalizationsRu extends AppLocalizations {
   String notificationWindAlertBody(String kn, String threshold) {
     return 'Прогноз $kn уз превышает порог $threshold уз.';
   }
+
+  @override
+  String get errorNetwork =>
+      'Network unavailable — check connection and try again.';
+
+  @override
+  String get errorGpsDenied =>
+      'Location permission denied — enable GPS in system settings.';
+
+  @override
+  String get errorGpsUnavailable =>
+      'Could not get a GPS fix — check sky view and receiver.';
+
+  @override
+  String get errorVaultDecrypt =>
+      'Could not decrypt vault document — wrong passphrase or corrupt file.';
+
+  @override
+  String get errorRoutingFailed =>
+      'Route could not be computed — try fewer waypoints or check network.';
+
+  @override
+  String get errorGeneric => 'Something went wrong — try again.';
 }

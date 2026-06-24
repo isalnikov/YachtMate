@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/active_route_id.dart';
 import '../../core/advisory_disclaimer_gate.dart';
+import '../../core/errors/cw_error_catalog.dart';
 import '../../core/providers.dart';
 import '../../core/ship_routing_preferences.dart';
 import '../../core/vessel_prefs.dart';
@@ -184,9 +185,9 @@ class _RouteScreenState extends ConsumerState<RouteScreen> {
     } else {
       ref.read(advisoryPolylineProvider.notifier).setPolyline(null);
       setState(
-        () =>
-            _lastMessage = l10n.routeAdvisoryFailed(result.failureReason ?? ''),
+        () => _lastMessage = l10n.errorRoutingFailed,
       );
+      if (mounted) showCwErrorSnackBar(context, CwErrorKind.routingFailed);
     }
   }
 

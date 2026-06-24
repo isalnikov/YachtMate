@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/repositories/audit_repository.dart';
 
-/// Управляет локалью приложения (**en**, **ru**, **de**, **fr**, **es**, **it**).
+/// Управляет локалью приложения (**en**, **ru**, **de**, **fr**, **es**, **it**, **el**, **tr**, **pt**).
 ///
 /// При первом запуске (ключа нет) для языка системы используется поддерживаемая локаль или `en`.
 class LocaleController extends StateNotifier<Locale> {
@@ -26,6 +26,9 @@ class LocaleController extends StateNotifier<Locale> {
     'fr',
     'es',
     'it',
+    'el',
+    'tr',
+    'pt',
   };
 
   static Locale _initialLocale(SharedPreferences prefs) {

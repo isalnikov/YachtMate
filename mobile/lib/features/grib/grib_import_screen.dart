@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
+import '../../core/errors/cw_error_catalog.dart';
 import '../../core/providers.dart';
 import '../../core/feature_flags.dart';
 import '../paywall/paywall_placeholder_sheet.dart';
@@ -101,13 +102,13 @@ class _GribImportScreenState extends ConsumerState<GribImportScreen> {
         orElse: () => GribImportFile(path: path),
       );
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            imported.decodeError ?? l10n.gribImportParsed,
-          ),
-        ),
-      );
+      if (imported.decodeError != null) {
+        showCwErrorSnackBar(context, CwErrorKind.generic);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(l10n.gribImportParsed)),
+        );
+      }
     } finally {
       if (mounted) setState(() => _importing = false);
     }

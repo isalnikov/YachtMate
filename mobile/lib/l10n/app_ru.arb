@@ -93,32 +93,42 @@
   "aisTargetsCount": "Целей: {count}",
   "@aisTargetsCount": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "aisTapVessel": "Нажмите на судно для деталей",
   "aisVesselSog": "{knots} уз",
   "@aisVesselSog": {
     "placeholders": {
-      "knots": {"type": "String"}
+      "knots": {
+        "type": "String"
+      }
     }
   },
   "aisVesselCog": "{degrees}°",
   "@aisVesselCog": {
     "placeholders": {
-      "degrees": {"type": "String"}
+      "degrees": {
+        "type": "String"
+      }
     }
   },
   "aisVesselCpa": "{nm} м.м.",
   "@aisVesselCpa": {
     "placeholders": {
-      "nm": {"type": "String"}
+      "nm": {
+        "type": "String"
+      }
     }
   },
   "aisVesselTcpa": "{minutes} мин",
   "@aisVesselTcpa": {
     "placeholders": {
-      "minutes": {"type": "String"}
+      "minutes": {
+        "type": "String"
+      }
     }
   },
   "aisCpaWarning": "CPA < 1 м.м.",
@@ -132,13 +142,17 @@
   "mapGpsAccuracyMeters": "±{meters} м",
   "@mapGpsAccuracyMeters": {
     "placeholders": {
-      "meters": {"type": "int"}
+      "meters": {
+        "type": "int"
+      }
     }
   },
   "mapGpsSogKnots": "{knots} уз",
   "@mapGpsSogKnots": {
     "placeholders": {
-      "knots": {"type": "String"}
+      "knots": {
+        "type": "String"
+      }
     }
   },
   "mapGpsLocationSettingsHint": "Проверьте разрешение геолокации и точность GPS в настройках системы.",
@@ -149,20 +163,28 @@
   "weatherCoordinates": "Точка прогноза: {lat}°, {lon}°",
   "@weatherCoordinates": {
     "placeholders": {
-      "lat": {"type": "String"},
-      "lon": {"type": "String"}
+      "lat": {
+        "type": "String"
+      },
+      "lon": {
+        "type": "String"
+      }
     }
   },
   "weatherLastUpdated": "Опорное время данных: {time}",
   "@weatherLastUpdated": {
     "placeholders": {
-      "time": {"type": "String"}
+      "time": {
+        "type": "String"
+      }
     }
   },
   "weatherLoadError": "Не удалось загрузить прогноз: {detail}",
   "@weatherLoadError": {
     "placeholders": {
-      "detail": {"type": "String"}
+      "detail": {
+        "type": "String"
+      }
     }
   },
   "weatherHourlyHeading": "Почасовой (48 ч)",
@@ -177,7 +199,9 @@
   "weatherGpsError": "Ошибка GPS: {detail}",
   "@weatherGpsError": {
     "placeholders": {
-      "detail": {"type": "String"}
+      "detail": {
+        "type": "String"
+      }
     }
   },
   "tidesHigh": "Вода растёт",
@@ -185,26 +209,46 @@
   "weatherWaveSuffix": " · волна {m} м",
   "@weatherWaveSuffix": {
     "placeholders": {
-      "m": {"type": "String"}
+      "m": {
+        "type": "String"
+      }
     }
   },
   "weatherHourLine": "{tempC} °C · ветер {windKn} уз / {windDir}° · осадки {rainMm} мм · {pressHpa} гПа{wavePart}",
   "@weatherHourLine": {
     "placeholders": {
-      "tempC": {"type": "String"},
-      "windKn": {"type": "String"},
-      "windDir": {"type": "String"},
-      "rainMm": {"type": "String"},
-      "pressHpa": {"type": "String"},
-      "wavePart": {"type": "String"}
+      "tempC": {
+        "type": "String"
+      },
+      "windKn": {
+        "type": "String"
+      },
+      "windDir": {
+        "type": "String"
+      },
+      "rainMm": {
+        "type": "String"
+      },
+      "pressHpa": {
+        "type": "String"
+      },
+      "wavePart": {
+        "type": "String"
+      }
     }
   },
   "weatherTideRow": "{time} · {height} · {kind}",
   "@weatherTideRow": {
     "placeholders": {
-      "time": {"type": "String"},
-      "height": {"type": "String"},
-      "kind": {"type": "String"}
+      "time": {
+        "type": "String"
+      },
+      "height": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      }
     }
   },
   "weatherSeeAllTides": "Все приливы",
@@ -222,22 +266,34 @@
   "tidesHeightM": "{height} м",
   "@tidesHeightM": {
     "placeholders": {
-      "height": {"type": "String"}
+      "height": {
+        "type": "String"
+      }
     }
   },
   "tidesTableCell": "{time} · {height} · {kind}",
   "@tidesTableCell": {
     "placeholders": {
-      "time": {"type": "String"},
-      "height": {"type": "String"},
-      "kind": {"type": "String"}
+      "time": {
+        "type": "String"
+      },
+      "height": {
+        "type": "String"
+      },
+      "kind": {
+        "type": "String"
+      }
     }
   },
   "tidesSunLine": "Восход {sunrise} · Закат {sunset}",
   "@tidesSunLine": {
     "placeholders": {
-      "sunrise": {"type": "String"},
-      "sunset": {"type": "String"}
+      "sunrise": {
+        "type": "String"
+      },
+      "sunset": {
+        "type": "String"
+      }
     }
   },
   "moreMenuTides": "Приливы",
@@ -249,7 +305,9 @@
   "routeActiveRouteLabel": "Текущий черновик: {id}",
   "@routeActiveRouteLabel": {
     "placeholders": {
-      "id": {"type": "String"}
+      "id": {
+        "type": "String"
+      }
     }
   },
   "routeActiveRouteUnknown": "нет",
@@ -265,7 +323,9 @@
   "routeAdvisoryFailed": "Не удалось построить путь: {reason}",
   "@routeAdvisoryFailed": {
     "placeholders": {
-      "reason": {"type": "String"}
+      "reason": {
+        "type": "String"
+      }
     }
   },
   "routePlanRoute": "Построить маршрут",
@@ -276,33 +336,45 @@
   "routeStatsDistanceValue": "{nm} м.м.",
   "@routeStatsDistanceValue": {
     "placeholders": {
-      "nm": {"type": "String"}
+      "nm": {
+        "type": "String"
+      }
     }
   },
   "routeStatsEtaUnknown": "—",
   "routeStatsEtaMinutes": "{minutes} мин",
   "@routeStatsEtaMinutes": {
     "placeholders": {
-      "minutes": {"type": "int"}
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "routeStatsEtaHours": "{hours} ч",
   "@routeStatsEtaHours": {
     "placeholders": {
-      "hours": {"type": "int"}
+      "hours": {
+        "type": "int"
+      }
     }
   },
   "routeStatsEtaHoursMinutes": "{hours} ч {minutes} мин",
   "@routeStatsEtaHoursMinutes": {
     "placeholders": {
-      "hours": {"type": "int"},
-      "minutes": {"type": "int"}
+      "hours": {
+        "type": "int"
+      },
+      "minutes": {
+        "type": "int"
+      }
     }
   },
   "routeStatsWaypointCountValue": "{count}",
   "@routeStatsWaypointCountValue": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "routeWaypointListTitle": "Точки маршрута",
@@ -310,14 +382,18 @@
   "routeWaypointDefaultName": "Т{index}",
   "@routeWaypointDefaultName": {
     "placeholders": {
-      "index": {"type": "int"}
+      "index": {
+        "type": "int"
+      }
     }
   },
   "routeSafetyOk": "Проверка глубины по точкам пройдена (демо-сетка).",
   "routeSafetyShallow": "Мелководье у Т{index}: осадка + запас превышают глубину по демо-сетке.",
   "@routeSafetyShallow": {
     "placeholders": {
-      "index": {"type": "int"}
+      "index": {
+        "type": "int"
+      }
     }
   },
   "routeShowCorridor": "Коридор безопасности",
@@ -333,7 +409,9 @@
   "mooringDistanceNm": "{distance} м.миль",
   "@mooringDistanceNm": {
     "placeholders": {
-      "distance": {"type": "String"}
+      "distance": {
+        "type": "String"
+      }
     }
   },
   "mooringEmptyFiltered": "Снимите фильтры или измените поиск.",
@@ -354,9 +432,15 @@
   "mooringPendingReviewLine": "{placeId} · {stars} ★ · {time}",
   "@mooringPendingReviewLine": {
     "placeholders": {
-      "placeId": {"type": "String"},
-      "stars": {"type": "int"},
-      "time": {"type": "String"}
+      "placeId": {
+        "type": "String"
+      },
+      "stars": {
+        "type": "int"
+      },
+      "time": {
+        "type": "String"
+      }
     }
   },
   "mooringEmail": "Эл. почта",
@@ -368,13 +452,17 @@
   "mooringSyncDone": "Отправлено черновиков: {count}.",
   "@mooringSyncDone": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "mooringSyncFailed": "Не удалось отправить часть черновиков ({count}).",
   "@mooringSyncFailed": {
     "placeholders": {
-      "count": {"type": "int"}
+      "count": {
+        "type": "int"
+      }
     }
   },
   "mooringSearchHint": "Поиск по названию",
@@ -442,7 +530,13 @@
   "trackStart": "Начать запись",
   "trackStop": "Стоп и сохранить",
   "trackPoints": "{count} точек",
-  "@trackPoints": {"placeholders": {"count": {"type": "int"}}},
+  "@trackPoints": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "trackStatsPoints": "Точки",
   "trackStatsDuration": "Длительность",
   "trackEmptyTrips": "Нет сохранённых рейсов",
@@ -488,7 +582,6 @@
   "settingsEnergySection": "Батарея и GPS",
   "settingsVesselSection": "Судно",
   "settingsDisplaySection": "Интерфейс",
-  "settingsOfflineCharts": "Офлайн-карты",
   "settingsAboutSection": "О приложении",
   "settingsVesselName": "Название судна",
   "settingsVesselLoa": "Длина ({unit})",
@@ -626,8 +719,12 @@
   "coastalCoordinates": "{lat}°, {lon}°",
   "@coastalCoordinates": {
     "placeholders": {
-      "lat": { "type": "String" },
-      "lon": { "type": "String" }
+      "lat": {
+        "type": "String"
+      },
+      "lon": {
+        "type": "String"
+      }
     }
   },
   "medicalGlossaryTitle": "Медицинский глоссарий",
@@ -649,8 +746,12 @@
   "vhfQuizProgress": "Вопрос {current} из {total}",
   "@vhfQuizProgress": {
     "placeholders": {
-      "current": { "type": "int" },
-      "total": { "type": "int" }
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
     }
   },
   "vhfQuizPickAnswer": "Сначала выберите ответ.",
@@ -772,5 +873,64 @@
   "notificationAnchorDriftTitle": "Снос якоря",
   "notificationAnchorDriftBody": "Судно вышло за круг якорной вахты — проверьте якорь.",
   "notificationWindAlertTitle": "Сильный ветер в прогнозе",
-  "notificationWindAlertBody": "Прогноз {kn} уз превышает порог {threshold} уз."
+  "notificationWindAlertBody": "Прогноз {kn} уз превышает порог {threshold} уз.",
+  "@appTitle": {
+    "description": "Application name shown in UI and task switcher."
+  },
+  "@offlineChartManagerStorage": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "@offlineChartManagerInstalled": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "@offlineChartManagerLicense": {
+    "placeholders": {
+      "tier": {
+        "type": "String"
+      }
+    }
+  },
+  "@mapPeekDepthMeters": {
+    "placeholders": {
+      "meters": {
+        "type": "int"
+      }
+    }
+  },
+  "@voyageMonitorNextDue": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "@notificationWindAlertBody": {
+    "placeholders": {
+      "kn": {
+        "type": "String"
+      },
+      "threshold": {
+        "type": "String"
+      }
+    }
+  },
+  "localeGreek": "Greek",
+  "localeTurkish": "Turkish",
+  "localePortuguese": "Portuguese",
+  "mapLayerWindParticles": "Wind particles",
+  "mapLayerWindParticlesSubtitle": "Animated flow field (pauses in eco / reduce motion)",
+  "errorNetwork": "Network unavailable — check connection and try again.",
+  "errorGpsDenied": "Location permission denied — enable GPS in system settings.",
+  "errorGpsUnavailable": "Could not get a GPS fix — check sky view and receiver.",
+  "errorVaultDecrypt": "Could not decrypt vault document — wrong passphrase or corrupt file.",
+  "errorRoutingFailed": "Route could not be computed — try fewer waypoints or check network.",
+  "errorGeneric": "Something went wrong — try again."
 }

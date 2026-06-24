@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/providers.dart';
 import '../../l10n/app_localizations.dart';
 
-/// Нижняя панель: выбор языка интерфейса (Фаза 8 — EN/RU/DE/FR/ES/IT).
+/// Нижняя панель: выбор языка интерфейса (Фаза 8 + J: EL/TR/PT).
 Future<void> showAppLanguageSheet(BuildContext context, WidgetRef ref) async {
   final l10n = AppLocalizations.of(context);
   if (l10n == null) return;
@@ -54,6 +54,9 @@ Future<void> showAppLanguageSheet(BuildContext context, WidgetRef ref) async {
               row('FR', l10n.localeFrench, const Locale('fr')),
               row('ES', l10n.localeSpanish, const Locale('es')),
               row('IT', l10n.localeItalian, const Locale('it')),
+              row('EL', l10n.localeGreek, const Locale('el')),
+              row('TR', l10n.localeTurkish, const Locale('tr')),
+              row('PT', l10n.localePortuguese, const Locale('pt')),
             ],
           ),
         ),

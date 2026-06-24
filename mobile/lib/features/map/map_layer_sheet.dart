@@ -136,6 +136,14 @@ class MapLayerSheetContent extends ConsumerWidget {
           const SizedBox(height: CwSpacing.s),
           const WindLegendBar(),
         ],
+        SwitchListTile(
+          key: const Key('map_layer_wind_particles'),
+          contentPadding: EdgeInsets.zero,
+          title: Text(l10n.mapLayerWindParticles),
+          subtitle: Text(l10n.mapLayerWindParticlesSubtitle),
+          value: vis.windParticles,
+          onChanged: vis.windOverlay ? notifier.setWindParticles : null,
+        ),
       ],
     );
   }

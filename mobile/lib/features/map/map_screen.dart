@@ -10,6 +10,7 @@ import 'package:maplibre_gl/maplibre_gl.dart';
 import '../../core/active_route_id.dart';
 import '../../core/accessibility_preferences_controller.dart';
 import '../../core/energy_profile_controller.dart';
+import '../../core/errors/cw_error_catalog.dart';
 import '../../core/feature_flags.dart';
 import '../../core/logging/app_logger.dart';
 import '../../core/map_layer_preferences_controller.dart';
@@ -41,7 +42,9 @@ import 'map_layer_kinds.dart';
 import 'map_layer_sheet.dart';
 import 'map_tile_overlay_controller.dart';
 import 'map_long_press_sheet.dart';
+import '../../domain/weather/wind_grid.dart';
 import 'map_wind_overlay_layer.dart';
+import 'map_wind_particles_layer.dart';
 import 'mooring_layer.dart';
 import 'shallow_highlight_layer.dart';
 import 'widgets/map_controls_overlay.dart';
@@ -84,6 +87,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
 
   Timer? _windRefreshTimer;
   DateTime? _windLastFetch;
+  WindGridBundle? _lastWindGrid;
 
   /// Экран ушёл в фон — при eco профиле временно отключаем тяжёлые демо-слои (Фаза 8).
   bool _pausedBackground = false;
@@ -334,12 +338,14 @@ class _MapScreenState extends ConsumerState<MapScreen>
           .read(weatherRepositoryProvider)
           .loadWindGrid(_mapCenter.latitude, _mapCenter.longitude, profile: profile);
       _windLastFetch = now;
+      _lastWindGrid = grid;
       if (!mounted || _controller == null) return;
       await updateWindOverlayLayer(
         c,
         grid: grid,
         windScale: _windScaleColors(),
       );
+      if (mounted) setState(() {});
     } catch (_) {}
   }
 
@@ -722,6 +728,10 @@ class _MapScreenState extends ConsumerState<MapScreen>
     final routePoints = _wps
         .map((w) => (lat: w.lat, lon: w.lon))
         .toList(growable: false);
+    final mapVis = ref.watch(mapLayerPreferencesProvider);
+    final windParticlesAnimate =
+        !MediaQuery.of(context).disableAnimations &&
+        ref.watch(energyProfileProvider) != EnergyProfile.eco;
 
     return Stack(
       children: [
@@ -760,8 +770,22 @@ class _MapScreenState extends ConsumerState<MapScreen>
             ),
           ),
         if (_styleLoaded) ...[
+          if (mapVis.windOverlay &&
+              mapVis.windParticles &&
+              _lastWindGrid != null &&
+              _lastWindGrid!.cells.isNotEmpty)
+            Positioned.fill(
+              child: IgnorePointer(
+                child: MapWindParticlesLayer(
+                  grid: _lastWindGrid!,
+                  color: Theme.of(context).colorScheme.primary,
+                  animate: windParticlesAnimate,
+                ),
+              ),
+            ),
           const MapStatusPill(),
-          MapControlsOverlay(
+          RepaintBoundary(
+            child: MapControlsOverlay(
             enabled: true,
             headingUp: _headingUp,
             mapBearing: _mapBearing,
@@ -771,6 +795,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
             onCompassToggle: _toggleCompass,
             onLayers: () => unawaited(showMapLayerSheet(context)),
             onFollowGpsToggle: showLoc ? _toggleFollowGps : null,
+            ),
           ),
           Positioned(
             right: 12,
@@ -868,6 +893,9 @@ class _MapScreenState extends ConsumerState<MapScreen>
       log.warning('offline_download_failed', {'error': e.toString()});
       messenger?.hideCurrentSnackBar();
       messenger?.showSnackBar(SnackBar(content: Text(l10n.offlineCacheFail)));
+      if (context.mounted) {
+        showCwErrorSnackBar(context, CwErrorKind.network);
+      }
     }
   }
 }

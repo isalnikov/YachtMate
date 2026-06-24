@@ -18,6 +18,9 @@
   "localeFrench": "French",
   "localeSpanish": "Spanish",
   "localeItalian": "Italian",
+  "localeGreek": "Greek",
+  "localeTurkish": "Turkish",
+  "localePortuguese": "Portuguese",
   "bootstrapNote": "Phase 0 shell — navigation and charts follow in Phase 1.",
   "mapUnavailableOnPlatform": "Raster/vector charts run on Android, iOS, or web. Linux desktop shows this placeholder.",
   "mapLoadingStyle": "Loading chart style…",
@@ -72,6 +75,8 @@
   "mapLayerSectionWeather": "Weather",
   "mapLayerWindOverlay": "Wind arrows",
   "mapLayerWindOverlaySubtitle": "Open-Meteo forecast grid around map center",
+  "mapLayerWindParticles": "Wind particles",
+  "mapLayerWindParticlesSubtitle": "Animated flow field (pauses in eco / reduce motion)",
   "mapDepthLegendTitle": "Legend",
   "mapDepthLegendBody": "Blue lines: EMODnet Bathymetry contours (example region: Fethiye, Turkey). Single display color — depth values drive routing grid only. Not official charts.",
   "mapLongPressTitle": "Position (WGS84)",
@@ -796,5 +801,11 @@
   "notificationAnchorDriftBody": "Vessel moved outside anchor circle — check anchor watch.",
   "notificationWindAlertTitle": "High wind forecast",
   "notificationWindAlertBody": "Forecast wind {kn} kn exceeds your {threshold} kn threshold.",
-  "@notificationWindAlertBody": {"placeholders": {"kn": {"type": "String"}, "threshold": {"type": "String"}}}
+  "@notificationWindAlertBody": {"placeholders": {"kn": {"type": "String"}, "threshold": {"type": "String"}}},
+  "errorNetwork": "Network unavailable — check connection and try again.",
+  "errorGpsDenied": "Location permission denied — enable GPS in system settings.",
+  "errorGpsUnavailable": "Could not get a GPS fix — check sky view and receiver.",
+  "errorVaultDecrypt": "Could not decrypt vault document — wrong passphrase or corrupt file.",
+  "errorRoutingFailed": "Route could not be computed — try fewer waypoints or check network.",
+  "errorGeneric": "Something went wrong — try again."
 }

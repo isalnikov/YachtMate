@@ -14,6 +14,7 @@ class MapLayerVisibility {
     this.chartStyle = ChartStyleKind.standard,
     this.shallowHighlight = false,
     this.windOverlay = false,
+    this.windParticles = false,
   });
 
   final bool depthContours;
@@ -26,6 +27,7 @@ class MapLayerVisibility {
   final ChartStyleKind chartStyle;
   final bool shallowHighlight;
   final bool windOverlay;
+  final bool windParticles;
 
   @override
   bool operator ==(Object other) =>
@@ -36,7 +38,8 @@ class MapLayerVisibility {
       other.overlay == overlay &&
       other.chartStyle == chartStyle &&
       other.shallowHighlight == shallowHighlight &&
-      other.windOverlay == windOverlay;
+      other.windOverlay == windOverlay &&
+      other.windParticles == windParticles;
 
   @override
   int get hashCode => Object.hash(
@@ -47,6 +50,7 @@ class MapLayerVisibility {
     chartStyle,
     shallowHighlight,
     windOverlay,
+    windParticles,
   );
 }
 
@@ -65,6 +69,7 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
   static const chartStylePreferenceKey = 'mapLayerChartStyle';
   static const shallowHighlightPreferenceKey = 'mapLayerShallowHighlight';
   static const windOverlayPreferenceKey = 'mapLayerWindOverlay';
+  static const windParticlesPreferenceKey = 'mapLayerWindParticles';
 
   static MapLayerVisibility _initial(SharedPreferences prefs) {
     return MapLayerVisibility(
@@ -79,6 +84,7 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
       ),
       shallowHighlight: prefs.getBool(shallowHighlightPreferenceKey) ?? false,
       windOverlay: prefs.getBool(windOverlayPreferenceKey) ?? false,
+      windParticles: prefs.getBool(windParticlesPreferenceKey) ?? false,
     );
   }
 
@@ -93,6 +99,7 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
       chartStyle: state.chartStyle,
       shallowHighlight: state.shallowHighlight,
       windOverlay: state.windOverlay,
+      windParticles: state.windParticles,
     );
     await _audit.record(
       sessionId: _sessionId,
@@ -113,6 +120,7 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
       chartStyle: state.chartStyle,
       shallowHighlight: state.shallowHighlight,
       windOverlay: state.windOverlay,
+      windParticles: state.windParticles,
     );
     await _audit.record(
       sessionId: _sessionId,
@@ -133,6 +141,7 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
       chartStyle: state.chartStyle,
       shallowHighlight: state.shallowHighlight,
       windOverlay: state.windOverlay,
+      windParticles: state.windParticles,
     );
     await _audit.record(
       sessionId: _sessionId,
@@ -153,6 +162,7 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
       chartStyle: state.chartStyle,
       shallowHighlight: state.shallowHighlight,
       windOverlay: state.windOverlay,
+      windParticles: state.windParticles,
     );
     await _audit.record(
       sessionId: _sessionId,
@@ -173,6 +183,7 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
       chartStyle: chartStyle,
       shallowHighlight: state.shallowHighlight,
       windOverlay: state.windOverlay,
+      windParticles: state.windParticles,
     );
     await _audit.record(
       sessionId: _sessionId,
@@ -194,6 +205,7 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
       chartStyle: state.chartStyle,
       shallowHighlight: enabled,
       windOverlay: state.windOverlay,
+      windParticles: state.windParticles,
     );
     await _audit.record(
       sessionId: _sessionId,
@@ -214,12 +226,34 @@ class MapLayerPreferencesController extends StateNotifier<MapLayerVisibility> {
       chartStyle: state.chartStyle,
       shallowHighlight: state.shallowHighlight,
       windOverlay: enabled,
+      windParticles: state.windParticles,
     );
     await _audit.record(
       sessionId: _sessionId,
       module: 'M1',
       action: 'layer_toggle',
       contextJson: '{"layerId":"wind_overlay","visible":$enabled}',
+    );
+  }
+
+  Future<void> setWindParticles(bool enabled) async {
+    if (enabled == state.windParticles) return;
+    await _prefs.setBool(windParticlesPreferenceKey, enabled);
+    state = MapLayerVisibility(
+      depthContours: state.depthContours,
+      navigationAids: state.navigationAids,
+      mooringPois: state.mooringPois,
+      overlay: state.overlay,
+      chartStyle: state.chartStyle,
+      shallowHighlight: state.shallowHighlight,
+      windOverlay: state.windOverlay,
+      windParticles: enabled,
+    );
+    await _audit.record(
+      sessionId: _sessionId,
+      module: 'M1',
+      action: 'layer_toggle',
+      contextJson: '{"layerId":"wind_particles","visible":$enabled}',
     );
   }
 }

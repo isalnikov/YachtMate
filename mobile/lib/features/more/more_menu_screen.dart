@@ -43,6 +43,7 @@ class MoreMenuScreen extends StatelessWidget {
     }
 
     return ListView(
+      cacheExtent: 480,
       padding: const EdgeInsets.all(CwSpacing.m),
       children: [
         Text(l10n.moreMenuHeadline, style: theme.textTheme.headlineSmall),

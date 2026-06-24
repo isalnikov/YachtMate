@@ -84,6 +84,33 @@ void main() {
     expect(audits.where((a) => a.action == 'locale_change'), isEmpty);
   });
 
+  test('setLocale persists el tr pt codes', () async {
+    for (final code in ['el', 'tr', 'pt']) {
+      SharedPreferences.setMockInitialValues({
+        LocaleController.localePreferenceKey: 'en',
+      });
+      final prefs = await SharedPreferences.getInstance();
+      final db = AppDatabase(NativeDatabase.memory());
+      addTearDown(db.close);
+
+      final container = ProviderContainer(
+        overrides: [
+          sharedPreferencesProvider.overrideWith((ref) => prefs),
+          databaseProvider.overrideWith((ref) => db),
+          sessionIdProvider.overrideWith((ref) => 'sess-locale-$code'),
+        ],
+      );
+      addTearDown(container.dispose);
+
+      await container
+          .read(localeControllerProvider.notifier)
+          .setLocale(Locale(code));
+
+      expect(prefs.getString(LocaleController.localePreferenceKey), code);
+      expect(container.read(localeControllerProvider).languageCode, code);
+    }
+  });
+
   test('setLocale persists German code', () async {
     SharedPreferences.setMockInitialValues({
       LocaleController.localePreferenceKey: 'en',

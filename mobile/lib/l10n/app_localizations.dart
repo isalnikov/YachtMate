@@ -6,11 +6,14 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_de.dart';
+import 'app_localizations_el.dart';
 import 'app_localizations_en.dart';
 import 'app_localizations_es.dart';
 import 'app_localizations_fr.dart';
 import 'app_localizations_it.dart';
+import 'app_localizations_pt.dart';
 import 'app_localizations_ru.dart';
+import 'app_localizations_tr.dart';
 
 // ignore_for_file: type=lint
 
@@ -99,11 +102,14 @@ abstract class AppLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
     Locale('de'),
+    Locale('el'),
     Locale('en'),
     Locale('es'),
     Locale('fr'),
     Locale('it'),
+    Locale('pt'),
     Locale('ru'),
+    Locale('tr'),
   ];
 
   /// Application name shown in UI and task switcher.
@@ -195,6 +201,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Italian'**
   String get localeItalian;
+
+  /// No description provided for @localeGreek.
+  ///
+  /// In en, this message translates to:
+  /// **'Greek'**
+  String get localeGreek;
+
+  /// No description provided for @localeTurkish.
+  ///
+  /// In en, this message translates to:
+  /// **'Turkish'**
+  String get localeTurkish;
+
+  /// No description provided for @localePortuguese.
+  ///
+  /// In en, this message translates to:
+  /// **'Portuguese'**
+  String get localePortuguese;
 
   /// No description provided for @bootstrapNote.
   ///
@@ -429,6 +453,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open-Meteo forecast grid around map center'**
   String get mapLayerWindOverlaySubtitle;
+
+  /// No description provided for @mapLayerWindParticles.
+  ///
+  /// In en, this message translates to:
+  /// **'Wind particles'**
+  String get mapLayerWindParticles;
+
+  /// No description provided for @mapLayerWindParticlesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Animated flow field (pauses in eco / reduce motion)'**
+  String get mapLayerWindParticlesSubtitle;
 
   /// No description provided for @mapDepthLegendTitle.
   ///
@@ -3556,6 +3592,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Forecast wind {kn} kn exceeds your {threshold} kn threshold.'**
   String notificationWindAlertBody(String kn, String threshold);
+
+  /// No description provided for @errorNetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Network unavailable — check connection and try again.'**
+  String get errorNetwork;
+
+  /// No description provided for @errorGpsDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Location permission denied — enable GPS in system settings.'**
+  String get errorGpsDenied;
+
+  /// No description provided for @errorGpsUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not get a GPS fix — check sky view and receiver.'**
+  String get errorGpsUnavailable;
+
+  /// No description provided for @errorVaultDecrypt.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not decrypt vault document — wrong passphrase or corrupt file.'**
+  String get errorVaultDecrypt;
+
+  /// No description provided for @errorRoutingFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Route could not be computed — try fewer waypoints or check network.'**
+  String get errorRoutingFailed;
+
+  /// No description provided for @errorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong — try again.'**
+  String get errorGeneric;
 }
 
 class _AppLocalizationsDelegate
@@ -3570,11 +3642,14 @@ class _AppLocalizationsDelegate
   @override
   bool isSupported(Locale locale) => <String>[
     'de',
+    'el',
     'en',
     'es',
     'fr',
     'it',
+    'pt',
     'ru',
+    'tr',
   ].contains(locale.languageCode);
 
   @override
@@ -3586,6 +3661,8 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   switch (locale.languageCode) {
     case 'de':
       return AppLocalizationsDe();
+    case 'el':
+      return AppLocalizationsEl();
     case 'en':
       return AppLocalizationsEn();
     case 'es':
@@ -3594,8 +3671,12 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
       return AppLocalizationsFr();
     case 'it':
       return AppLocalizationsIt();
+    case 'pt':
+      return AppLocalizationsPt();
     case 'ru':
       return AppLocalizationsRu();
+    case 'tr':
+      return AppLocalizationsTr();
   }
 
   throw FlutterError(

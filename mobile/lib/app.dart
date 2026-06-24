@@ -101,6 +101,9 @@ class _CaptainWrongelAppState extends ConsumerState<CaptainWrongelApp> {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       theme: tunedTheme,
+      showPerformanceOverlay:
+          ref.watch(sharedPreferencesProvider).getBool('devPerformanceOverlay') ??
+          false,
       builder: (context, child) {
         if (child == null) return const SizedBox.shrink();
         final mq = MediaQuery.of(context);
