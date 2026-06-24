@@ -8,6 +8,7 @@ import '../data/repositories/audit_repository.dart';
 import '../data/repositories/chart_region_repository.dart';
 import '../data/repositories/checklist_repository.dart';
 import '../data/repositories/expense_repository.dart';
+import '../data/repositories/grib_import_repository.dart';
 import '../data/repositories/knot_reference_repository.dart';
 import '../data/repositories/logbook_repository.dart';
 import '../data/repositories/route_repository.dart';
@@ -50,6 +51,10 @@ final routeRepositoryProvider = Provider<RouteRepository>(
 
 final chartRegionRepositoryProvider = Provider<ChartRegionRepository>(
   (ref) => ChartRegionRepository(ref.watch(databaseProvider)),
+);
+
+final gribImportRepositoryProvider = Provider<GribImportRepository>(
+  (ref) => GribImportRepository(ref.watch(databaseProvider)),
 );
 
 final checklistRepositoryProvider = Provider<ChecklistRepository>(

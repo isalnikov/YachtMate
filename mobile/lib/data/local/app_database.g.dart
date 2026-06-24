@@ -5958,6 +5958,405 @@ class VhfRecordingsCompanion extends UpdateCompanion<VhfRecordingRow> {
   }
 }
 
+class $GribImportCacheTable extends GribImportCache
+    with TableInfo<$GribImportCacheTable, GribImportCacheRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $GribImportCacheTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _pathMeta = const VerificationMeta('path');
+  @override
+  late final GeneratedColumn<String> path = GeneratedColumn<String>(
+    'path',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _importedAtMsMeta = const VerificationMeta(
+    'importedAtMs',
+  );
+  @override
+  late final GeneratedColumn<int> importedAtMs = GeneratedColumn<int>(
+    'imported_at_ms',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _decodeSummaryMeta = const VerificationMeta(
+    'decodeSummary',
+  );
+  @override
+  late final GeneratedColumn<String> decodeSummary = GeneratedColumn<String>(
+    'decode_summary',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _decodeErrorMeta = const VerificationMeta(
+    'decodeError',
+  );
+  @override
+  late final GeneratedColumn<String> decodeError = GeneratedColumn<String>(
+    'decode_error',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _windSampleLabelMeta = const VerificationMeta(
+    'windSampleLabel',
+  );
+  @override
+  late final GeneratedColumn<String> windSampleLabel = GeneratedColumn<String>(
+    'wind_sample_label',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    path,
+    importedAtMs,
+    decodeSummary,
+    decodeError,
+    windSampleLabel,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'grib_import_cache';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<GribImportCacheRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('path')) {
+      context.handle(
+        _pathMeta,
+        path.isAcceptableOrUnknown(data['path']!, _pathMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_pathMeta);
+    }
+    if (data.containsKey('imported_at_ms')) {
+      context.handle(
+        _importedAtMsMeta,
+        importedAtMs.isAcceptableOrUnknown(
+          data['imported_at_ms']!,
+          _importedAtMsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_importedAtMsMeta);
+    }
+    if (data.containsKey('decode_summary')) {
+      context.handle(
+        _decodeSummaryMeta,
+        decodeSummary.isAcceptableOrUnknown(
+          data['decode_summary']!,
+          _decodeSummaryMeta,
+        ),
+      );
+    }
+    if (data.containsKey('decode_error')) {
+      context.handle(
+        _decodeErrorMeta,
+        decodeError.isAcceptableOrUnknown(
+          data['decode_error']!,
+          _decodeErrorMeta,
+        ),
+      );
+    }
+    if (data.containsKey('wind_sample_label')) {
+      context.handle(
+        _windSampleLabelMeta,
+        windSampleLabel.isAcceptableOrUnknown(
+          data['wind_sample_label']!,
+          _windSampleLabelMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {path};
+  @override
+  GribImportCacheRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return GribImportCacheRow(
+      path: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}path'],
+      )!,
+      importedAtMs: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}imported_at_ms'],
+      )!,
+      decodeSummary: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}decode_summary'],
+      ),
+      decodeError: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}decode_error'],
+      ),
+      windSampleLabel: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}wind_sample_label'],
+      ),
+    );
+  }
+
+  @override
+  $GribImportCacheTable createAlias(String alias) {
+    return $GribImportCacheTable(attachedDatabase, alias);
+  }
+}
+
+class GribImportCacheRow extends DataClass
+    implements Insertable<GribImportCacheRow> {
+  final String path;
+  final int importedAtMs;
+  final String? decodeSummary;
+  final String? decodeError;
+  final String? windSampleLabel;
+  const GribImportCacheRow({
+    required this.path,
+    required this.importedAtMs,
+    this.decodeSummary,
+    this.decodeError,
+    this.windSampleLabel,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['path'] = Variable<String>(path);
+    map['imported_at_ms'] = Variable<int>(importedAtMs);
+    if (!nullToAbsent || decodeSummary != null) {
+      map['decode_summary'] = Variable<String>(decodeSummary);
+    }
+    if (!nullToAbsent || decodeError != null) {
+      map['decode_error'] = Variable<String>(decodeError);
+    }
+    if (!nullToAbsent || windSampleLabel != null) {
+      map['wind_sample_label'] = Variable<String>(windSampleLabel);
+    }
+    return map;
+  }
+
+  GribImportCacheCompanion toCompanion(bool nullToAbsent) {
+    return GribImportCacheCompanion(
+      path: Value(path),
+      importedAtMs: Value(importedAtMs),
+      decodeSummary: decodeSummary == null && nullToAbsent
+          ? const Value.absent()
+          : Value(decodeSummary),
+      decodeError: decodeError == null && nullToAbsent
+          ? const Value.absent()
+          : Value(decodeError),
+      windSampleLabel: windSampleLabel == null && nullToAbsent
+          ? const Value.absent()
+          : Value(windSampleLabel),
+    );
+  }
+
+  factory GribImportCacheRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return GribImportCacheRow(
+      path: serializer.fromJson<String>(json['path']),
+      importedAtMs: serializer.fromJson<int>(json['importedAtMs']),
+      decodeSummary: serializer.fromJson<String?>(json['decodeSummary']),
+      decodeError: serializer.fromJson<String?>(json['decodeError']),
+      windSampleLabel: serializer.fromJson<String?>(json['windSampleLabel']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'path': serializer.toJson<String>(path),
+      'importedAtMs': serializer.toJson<int>(importedAtMs),
+      'decodeSummary': serializer.toJson<String?>(decodeSummary),
+      'decodeError': serializer.toJson<String?>(decodeError),
+      'windSampleLabel': serializer.toJson<String?>(windSampleLabel),
+    };
+  }
+
+  GribImportCacheRow copyWith({
+    String? path,
+    int? importedAtMs,
+    Value<String?> decodeSummary = const Value.absent(),
+    Value<String?> decodeError = const Value.absent(),
+    Value<String?> windSampleLabel = const Value.absent(),
+  }) => GribImportCacheRow(
+    path: path ?? this.path,
+    importedAtMs: importedAtMs ?? this.importedAtMs,
+    decodeSummary: decodeSummary.present
+        ? decodeSummary.value
+        : this.decodeSummary,
+    decodeError: decodeError.present ? decodeError.value : this.decodeError,
+    windSampleLabel: windSampleLabel.present
+        ? windSampleLabel.value
+        : this.windSampleLabel,
+  );
+  GribImportCacheRow copyWithCompanion(GribImportCacheCompanion data) {
+    return GribImportCacheRow(
+      path: data.path.present ? data.path.value : this.path,
+      importedAtMs: data.importedAtMs.present
+          ? data.importedAtMs.value
+          : this.importedAtMs,
+      decodeSummary: data.decodeSummary.present
+          ? data.decodeSummary.value
+          : this.decodeSummary,
+      decodeError: data.decodeError.present
+          ? data.decodeError.value
+          : this.decodeError,
+      windSampleLabel: data.windSampleLabel.present
+          ? data.windSampleLabel.value
+          : this.windSampleLabel,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GribImportCacheRow(')
+          ..write('path: $path, ')
+          ..write('importedAtMs: $importedAtMs, ')
+          ..write('decodeSummary: $decodeSummary, ')
+          ..write('decodeError: $decodeError, ')
+          ..write('windSampleLabel: $windSampleLabel')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    path,
+    importedAtMs,
+    decodeSummary,
+    decodeError,
+    windSampleLabel,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is GribImportCacheRow &&
+          other.path == this.path &&
+          other.importedAtMs == this.importedAtMs &&
+          other.decodeSummary == this.decodeSummary &&
+          other.decodeError == this.decodeError &&
+          other.windSampleLabel == this.windSampleLabel);
+}
+
+class GribImportCacheCompanion extends UpdateCompanion<GribImportCacheRow> {
+  final Value<String> path;
+  final Value<int> importedAtMs;
+  final Value<String?> decodeSummary;
+  final Value<String?> decodeError;
+  final Value<String?> windSampleLabel;
+  final Value<int> rowid;
+  const GribImportCacheCompanion({
+    this.path = const Value.absent(),
+    this.importedAtMs = const Value.absent(),
+    this.decodeSummary = const Value.absent(),
+    this.decodeError = const Value.absent(),
+    this.windSampleLabel = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  GribImportCacheCompanion.insert({
+    required String path,
+    required int importedAtMs,
+    this.decodeSummary = const Value.absent(),
+    this.decodeError = const Value.absent(),
+    this.windSampleLabel = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : path = Value(path),
+       importedAtMs = Value(importedAtMs);
+  static Insertable<GribImportCacheRow> custom({
+    Expression<String>? path,
+    Expression<int>? importedAtMs,
+    Expression<String>? decodeSummary,
+    Expression<String>? decodeError,
+    Expression<String>? windSampleLabel,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (path != null) 'path': path,
+      if (importedAtMs != null) 'imported_at_ms': importedAtMs,
+      if (decodeSummary != null) 'decode_summary': decodeSummary,
+      if (decodeError != null) 'decode_error': decodeError,
+      if (windSampleLabel != null) 'wind_sample_label': windSampleLabel,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  GribImportCacheCompanion copyWith({
+    Value<String>? path,
+    Value<int>? importedAtMs,
+    Value<String?>? decodeSummary,
+    Value<String?>? decodeError,
+    Value<String?>? windSampleLabel,
+    Value<int>? rowid,
+  }) {
+    return GribImportCacheCompanion(
+      path: path ?? this.path,
+      importedAtMs: importedAtMs ?? this.importedAtMs,
+      decodeSummary: decodeSummary ?? this.decodeSummary,
+      decodeError: decodeError ?? this.decodeError,
+      windSampleLabel: windSampleLabel ?? this.windSampleLabel,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (path.present) {
+      map['path'] = Variable<String>(path.value);
+    }
+    if (importedAtMs.present) {
+      map['imported_at_ms'] = Variable<int>(importedAtMs.value);
+    }
+    if (decodeSummary.present) {
+      map['decode_summary'] = Variable<String>(decodeSummary.value);
+    }
+    if (decodeError.present) {
+      map['decode_error'] = Variable<String>(decodeError.value);
+    }
+    if (windSampleLabel.present) {
+      map['wind_sample_label'] = Variable<String>(windSampleLabel.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('GribImportCacheCompanion(')
+          ..write('path: $path, ')
+          ..write('importedAtMs: $importedAtMs, ')
+          ..write('decodeSummary: $decodeSummary, ')
+          ..write('decodeError: $decodeError, ')
+          ..write('windSampleLabel: $windSampleLabel, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -5982,6 +6381,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $VaultFilesTable vaultFiles = $VaultFilesTable(this);
   late final $ExpenseEntriesTable expenseEntries = $ExpenseEntriesTable(this);
   late final $VhfRecordingsTable vhfRecordings = $VhfRecordingsTable(this);
+  late final $GribImportCacheTable gribImportCache = $GribImportCacheTable(
+    this,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -6002,6 +6404,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     vaultFiles,
     expenseEntries,
     vhfRecordings,
+    gribImportCache,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -9522,6 +9925,224 @@ typedef $$VhfRecordingsTableProcessedTableManager =
       VhfRecordingRow,
       PrefetchHooks Function()
     >;
+typedef $$GribImportCacheTableCreateCompanionBuilder =
+    GribImportCacheCompanion Function({
+      required String path,
+      required int importedAtMs,
+      Value<String?> decodeSummary,
+      Value<String?> decodeError,
+      Value<String?> windSampleLabel,
+      Value<int> rowid,
+    });
+typedef $$GribImportCacheTableUpdateCompanionBuilder =
+    GribImportCacheCompanion Function({
+      Value<String> path,
+      Value<int> importedAtMs,
+      Value<String?> decodeSummary,
+      Value<String?> decodeError,
+      Value<String?> windSampleLabel,
+      Value<int> rowid,
+    });
+
+class $$GribImportCacheTableFilterComposer
+    extends Composer<_$AppDatabase, $GribImportCacheTable> {
+  $$GribImportCacheTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get path => $composableBuilder(
+    column: $table.path,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get importedAtMs => $composableBuilder(
+    column: $table.importedAtMs,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get decodeSummary => $composableBuilder(
+    column: $table.decodeSummary,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get decodeError => $composableBuilder(
+    column: $table.decodeError,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get windSampleLabel => $composableBuilder(
+    column: $table.windSampleLabel,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$GribImportCacheTableOrderingComposer
+    extends Composer<_$AppDatabase, $GribImportCacheTable> {
+  $$GribImportCacheTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get path => $composableBuilder(
+    column: $table.path,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get importedAtMs => $composableBuilder(
+    column: $table.importedAtMs,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get decodeSummary => $composableBuilder(
+    column: $table.decodeSummary,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get decodeError => $composableBuilder(
+    column: $table.decodeError,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get windSampleLabel => $composableBuilder(
+    column: $table.windSampleLabel,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$GribImportCacheTableAnnotationComposer
+    extends Composer<_$AppDatabase, $GribImportCacheTable> {
+  $$GribImportCacheTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get path =>
+      $composableBuilder(column: $table.path, builder: (column) => column);
+
+  GeneratedColumn<int> get importedAtMs => $composableBuilder(
+    column: $table.importedAtMs,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get decodeSummary => $composableBuilder(
+    column: $table.decodeSummary,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get decodeError => $composableBuilder(
+    column: $table.decodeError,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get windSampleLabel => $composableBuilder(
+    column: $table.windSampleLabel,
+    builder: (column) => column,
+  );
+}
+
+class $$GribImportCacheTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $GribImportCacheTable,
+          GribImportCacheRow,
+          $$GribImportCacheTableFilterComposer,
+          $$GribImportCacheTableOrderingComposer,
+          $$GribImportCacheTableAnnotationComposer,
+          $$GribImportCacheTableCreateCompanionBuilder,
+          $$GribImportCacheTableUpdateCompanionBuilder,
+          (
+            GribImportCacheRow,
+            BaseReferences<
+              _$AppDatabase,
+              $GribImportCacheTable,
+              GribImportCacheRow
+            >,
+          ),
+          GribImportCacheRow,
+          PrefetchHooks Function()
+        > {
+  $$GribImportCacheTableTableManager(
+    _$AppDatabase db,
+    $GribImportCacheTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$GribImportCacheTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$GribImportCacheTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$GribImportCacheTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> path = const Value.absent(),
+                Value<int> importedAtMs = const Value.absent(),
+                Value<String?> decodeSummary = const Value.absent(),
+                Value<String?> decodeError = const Value.absent(),
+                Value<String?> windSampleLabel = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => GribImportCacheCompanion(
+                path: path,
+                importedAtMs: importedAtMs,
+                decodeSummary: decodeSummary,
+                decodeError: decodeError,
+                windSampleLabel: windSampleLabel,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String path,
+                required int importedAtMs,
+                Value<String?> decodeSummary = const Value.absent(),
+                Value<String?> decodeError = const Value.absent(),
+                Value<String?> windSampleLabel = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => GribImportCacheCompanion.insert(
+                path: path,
+                importedAtMs: importedAtMs,
+                decodeSummary: decodeSummary,
+                decodeError: decodeError,
+                windSampleLabel: windSampleLabel,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$GribImportCacheTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $GribImportCacheTable,
+      GribImportCacheRow,
+      $$GribImportCacheTableFilterComposer,
+      $$GribImportCacheTableOrderingComposer,
+      $$GribImportCacheTableAnnotationComposer,
+      $$GribImportCacheTableCreateCompanionBuilder,
+      $$GribImportCacheTableUpdateCompanionBuilder,
+      (
+        GribImportCacheRow,
+        BaseReferences<
+          _$AppDatabase,
+          $GribImportCacheTable,
+          GribImportCacheRow
+        >,
+      ),
+      GribImportCacheRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -9556,4 +10177,6 @@ class $AppDatabaseManager {
       $$ExpenseEntriesTableTableManager(_db, _db.expenseEntries);
   $$VhfRecordingsTableTableManager get vhfRecordings =>
       $$VhfRecordingsTableTableManager(_db, _db.vhfRecordings);
+  $$GribImportCacheTableTableManager get gribImportCache =>
+      $$GribImportCacheTableTableManager(_db, _db.gribImportCache);
 }

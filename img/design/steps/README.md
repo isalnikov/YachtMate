@@ -110,7 +110,8 @@
 | 64 | [step-64-ais-nmea-ux.md](step-64-ais-nmea-ux.md) | AIS endpoint persist + reconnect test |
 | 65 | [step-65-wind-grid-efficiency.md](step-65-wind-grid-efficiency.md) | Eco grid, parallel fetch, weather toggle |
 | 66 | [step-66-offline-manager-polish.md](step-66-offline-manager-polish.md) | Delete confirm + storage label |
-| 67+ | backlog | GRIB Drift cache, UDP NMEA, download queue… |
+| 67 | [step-67-grib-drift-cache.md](step-67-grib-drift-cache.md) | GRIB decode cache in Drift |
+| 68+ | backlog | GRIB map overlay, UDP NMEA, download queue… |
 
 ---
 

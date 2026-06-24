@@ -44,14 +44,12 @@ class _GribImportScreenState extends ConsumerState<GribImportScreen> {
   }
 
   Future<void> _reloadFiles() async {
+    final repo = ref.read(gribImportRepositoryProvider);
     final prefs = ref.read(sharedPreferencesProvider);
-    final stored = loadGribImports(prefs);
-    final decoded = <GribImportFile>[];
-    for (final file in stored) {
-      decoded.add(await decodeGribImportFile(file));
-    }
+    await repo.migrateLegacyPrefs(prefs);
+    final files = await repo.listAll();
     if (!mounted) return;
-    setState(() => _files = decoded);
+    setState(() => _files = files);
   }
 
   Future<String?> _pickImportPath() async {
@@ -92,15 +90,11 @@ class _GribImportScreenState extends ConsumerState<GribImportScreen> {
       final path = await _pickImportPath();
       if (path == null) return;
 
-      final prefs = ref.read(sharedPreferencesProvider);
-      await addGribImport(prefs, path);
+      final imported =
+          await ref.read(gribImportRepositoryProvider).importAndDecode(path);
       await _reloadFiles();
 
       if (!mounted) return;
-      final imported = _files.firstWhere(
-        (f) => f.path == path,
-        orElse: () => GribImportFile(path: path),
-      );
 
       if (imported.decodeError != null) {
         showCwErrorSnackBar(context, CwErrorKind.generic);
