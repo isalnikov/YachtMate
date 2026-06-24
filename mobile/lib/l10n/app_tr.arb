@@ -932,5 +932,6 @@
   "errorGpsUnavailable": "Could not get a GPS fix — check sky view and receiver.",
   "errorVaultDecrypt": "Could not decrypt vault document — wrong passphrase or corrupt file.",
   "errorRoutingFailed": "Route could not be computed — try fewer waypoints or check network.",
-  "errorGeneric": "Something went wrong — try again."
+  "errorGeneric": "Something went wrong — try again.",
+  "offlineChartManagerDeleteConfirm": "Remove this offline chart region from the device? Downloaded tiles will be deleted."
 }

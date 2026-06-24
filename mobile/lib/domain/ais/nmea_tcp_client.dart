@@ -52,10 +52,7 @@ class NmeaTcpClient {
     _running = false;
     _reconnectTimer?.cancel();
     _reconnectTimer = null;
-    await _socketSub?.cancel();
-    _socketSub = null;
-    _socket?.destroy();
-    _socket = null;
+    await _tearDownSocket();
     _buffer = '';
   }
 

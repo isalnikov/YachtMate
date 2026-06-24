@@ -304,6 +304,12 @@ abstract class AppLocalizations {
   /// **'Delete'**
   String get offlineChartManagerDelete;
 
+  /// No description provided for @offlineChartManagerDeleteConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove this offline chart region from the device? Downloaded tiles will be deleted.'**
+  String get offlineChartManagerDeleteConfirm;
+
   /// No description provided for @offlineChartManagerDeleted.
   ///
   /// In en, this message translates to:

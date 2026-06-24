@@ -932,5 +932,6 @@
   "errorGpsUnavailable": "GPS no disponible — inténtalo más tarde.",
   "errorVaultDecrypt": "No se pudo descifrar el documento de la caja fuerte — PIN incorrecto o archivo dañado.",
   "errorRoutingFailed": "No se pudo calcular la ruta — revisa los waypoints.",
-  "errorGeneric": "Algo salió mal — inténtalo de nuevo."
+  "errorGeneric": "Algo salió mal — inténtalo de nuevo.",
+  "offlineChartManagerDeleteConfirm": "Remove this offline chart region from the device? Downloaded tiles will be deleted."
 }

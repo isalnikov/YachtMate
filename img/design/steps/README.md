@@ -103,6 +103,17 @@
 
 ---
 
+## Фаза L — Backlog + авторский контроль (64+)
+
+| # | Файл | Задача |
+|---|------|--------|
+| 64 | [step-64-ais-nmea-ux.md](step-64-ais-nmea-ux.md) | AIS endpoint persist + reconnect test |
+| 65 | [step-65-wind-grid-efficiency.md](step-65-wind-grid-efficiency.md) | Eco grid, parallel fetch, weather toggle |
+| 66 | [step-66-offline-manager-polish.md](step-66-offline-manager-polish.md) | Delete confirm + storage label |
+| 67+ | backlog | GRIB Drift cache, UDP NMEA, download queue… |
+
+---
+
 ## Правила для агента
 
 1. **requires** — все зависимости выполнены

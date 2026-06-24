@@ -1,3 +1,4 @@
+import 'package:captain_wrongel/core/energy_profile_controller.dart';
 import 'package:captain_wrongel/data/local/app_database.dart';
 import 'package:captain_wrongel/data/repositories/weather_repository.dart';
 import 'package:captain_wrongel/domain/weather/cache_policy.dart';
@@ -78,5 +79,32 @@ void main() {
     final r = await repo.loadForecast(1.0, 2.0);
     expect(r.isStale, isTrue);
     expect(r.hourly, isNotEmpty);
+  });
+
+  test('loadWindGrid eco uses single center cell', () async {
+    var calls = 0;
+    final client = MockClient((request) async {
+      calls++;
+      if (request.url.host.contains('marine-api')) {
+        return http.Response(
+          '{"hourly":{"time":["2026-04-22T12:00"],"wave_height":[0.5]}}',
+          200,
+        );
+      }
+      return http.Response(_fcJson, 200);
+    });
+
+    final db = AppDatabase(NativeDatabase.memory());
+    addTearDown(db.close);
+    final repo = WeatherRepository(db, httpClient: client);
+
+    final grid = await repo.loadWindGrid(
+      59.94,
+      30.32,
+      profile: EnergyProfile.eco,
+    );
+
+    expect(grid.cells, hasLength(1));
+    expect(calls, 2);
   });
 }

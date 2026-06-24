@@ -111,6 +111,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get offlineChartManagerDelete => 'Удалить';
 
   @override
+  String get offlineChartManagerDeleteConfirm =>
+      'Remove this offline chart region from the device? Downloaded tiles will be deleted.';
+
+  @override
   String get offlineChartManagerDeleted => 'Регион удалён';
 
   @override

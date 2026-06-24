@@ -932,5 +932,6 @@
   "errorGpsUnavailable": "GPS non disponibile — riprova più tardi.",
   "errorVaultDecrypt": "Impossibile decifrare il documento del caveau — PIN errato o file corrotto.",
   "errorRoutingFailed": "Impossibile calcolare la rotta — controlla i waypoint.",
-  "errorGeneric": "Qualcosa è andato storto — riprova."
+  "errorGeneric": "Qualcosa è andato storto — riprova.",
+  "offlineChartManagerDeleteConfirm": "Remove this offline chart region from the device? Downloaded tiles will be deleted."
 }

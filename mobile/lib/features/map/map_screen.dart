@@ -42,6 +42,7 @@ import 'map_layer_kinds.dart';
 import 'map_layer_sheet.dart';
 import 'map_tile_overlay_controller.dart';
 import 'map_long_press_sheet.dart';
+import 'offline_chart_storage.dart';
 import '../../domain/weather/wind_grid.dart';
 import '../../domain/weather/wind_grid_refresh.dart';
 import 'map_wind_overlay_layer.dart';
@@ -895,12 +896,19 @@ class _MapScreenState extends ConsumerState<MapScreen>
         ),
       );
 
+      final estimatedBytes = estimateOfflinePackBytes(
+        bounds,
+        minZoom: 0,
+        maxZoom: 12,
+      );
+
       await ref
           .read(chartRegionRepositoryProvider)
           .upsert(
             regionId: 'offline_${pack.id}',
             path: 'sqlite:${pack.id}',
             licenseTier: 'demo',
+            checksum: offlineBytesChecksum(estimatedBytes),
           );
 
       await ref

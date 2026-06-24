@@ -932,5 +932,6 @@
   "errorGpsUnavailable": "GPS nicht verfügbar — später erneut versuchen.",
   "errorVaultDecrypt": "Tresordokument konnte nicht entschlüsselt werden — falsche PIN oder beschädigte Datei.",
   "errorRoutingFailed": "Route konnte nicht berechnet werden — Wegpunkte prüfen.",
-  "errorGeneric": "Etwas ist schiefgelaufen — bitte erneut versuchen."
+  "errorGeneric": "Etwas ist schiefgelaufen — bitte erneut versuchen.",
+  "offlineChartManagerDeleteConfirm": "Remove this offline chart region from the device? Downloaded tiles will be deleted."
 }

@@ -132,6 +132,12 @@ class _AisScreenState extends ConsumerState<AisScreen> {
                           PremiumFeature.aisLive,
                         );
                         if (!ok) return;
+                        await ref
+                            .read(aisNmeaPreferencesProvider.notifier)
+                            .applyFromFields(
+                              _hostController.text,
+                              _portController.text,
+                            );
                       }
                       await ref
                           .read(aisNmeaBridgeProvider.notifier)
@@ -157,6 +163,14 @@ class _AisScreenState extends ConsumerState<AisScreen> {
                                 .read(aisNmeaPreferencesProvider.notifier)
                                 .setHost(v),
                           ),
+                          onEditingComplete: () => unawaited(
+                            ref
+                                .read(aisNmeaPreferencesProvider.notifier)
+                                .applyFromFields(
+                                  _hostController.text,
+                                  _portController.text,
+                                ),
+                          ),
                         ),
                       ),
                       const SizedBox(width: 12),
@@ -179,6 +193,14 @@ class _AisScreenState extends ConsumerState<AisScreen> {
                               );
                             }
                           },
+                          onEditingComplete: () => unawaited(
+                            ref
+                                .read(aisNmeaPreferencesProvider.notifier)
+                                .applyFromFields(
+                                  _hostController.text,
+                                  _portController.text,
+                                ),
+                          ),
                         ),
                       ),
                     ],

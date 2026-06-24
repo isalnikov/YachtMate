@@ -121,32 +121,45 @@ class WeatherRepository {
   }) async {
     const stepDeg = 0.05;
     final half = switch (profile) {
-      EnergyProfile.eco => 1,
+      EnergyProfile.eco => 0,
       EnergyProfile.passage => 1,
       EnergyProfile.sport => 2,
     };
 
-    final cells = <WindGridCell>[];
-    var anyStale = false;
     final now = DateTime.now().toUtc();
-
+    final coords = <({double lat, double lon})>[];
     for (var di = -half; di <= half; di++) {
       for (var dj = -half; dj <= half; dj++) {
-        final lat = centerLat + di * stepDeg;
-        final lon = centerLon + dj * stepDeg;
-        final bundle = await loadForecast(lat, lon);
-        if (bundle.isStale) anyStale = true;
-        final hour = _nearestHour(bundle.hourly, now);
-        if (hour == null) continue;
-        cells.add(
-          WindGridCell(
-            lat: lat,
-            lon: lon,
-            windSpeedKn: hour.windSpeedKn,
-            windDirectionDeg: hour.windDirectionDeg,
-          ),
-        );
+        coords.add((
+          lat: centerLat + di * stepDeg,
+          lon: centerLon + dj * stepDeg,
+        ));
       }
+    }
+
+    final results = await Future.wait(
+      coords.map((c) async {
+        final bundle = await loadForecast(c.lat, c.lon);
+        final hour = _nearestHour(bundle.hourly, now);
+        return (
+          stale: bundle.isStale,
+          cell: hour == null
+              ? null
+              : WindGridCell(
+                  lat: c.lat,
+                  lon: c.lon,
+                  windSpeedKn: hour.windSpeedKn,
+                  windDirectionDeg: hour.windDirectionDeg,
+                ),
+        );
+      }),
+    );
+
+    final cells = <WindGridCell>[];
+    var anyStale = false;
+    for (final r in results) {
+      if (r.stale) anyStale = true;
+      if (r.cell != null) cells.add(r.cell!);
     }
 
     return WindGridBundle(

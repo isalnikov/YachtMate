@@ -35,6 +35,7 @@
   "offlineChartManagerLead": "Downloaded map tile packs for use without network.",
   "offlineChartManagerEmpty": "No offline regions yet. Use the download button on the Map tab.",
   "offlineChartManagerDelete": "Delete",
+  "offlineChartManagerDeleteConfirm": "Remove this offline chart region from the device? Downloaded tiles will be deleted.",
   "offlineChartManagerDeleted": "Region removed",
   "offlineChartManagerStorage": "Storage: {size}",
   "@offlineChartManagerStorage": {

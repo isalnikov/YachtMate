@@ -1,6 +1,5 @@
 import 'package:captain_wrongel/core/anchor_watch_alert_settings_controller.dart';
 import 'package:captain_wrongel/core/anchor_watch_controller.dart';
-import 'package:captain_wrongel/core/sos_settings_controller.dart';
 import 'package:captain_wrongel/core/theme/cw_theme.dart';
 import 'package:captain_wrongel/data/local/app_database.dart';
 import 'package:captain_wrongel/data/repositories/audit_repository.dart';
@@ -32,7 +31,7 @@ void main() {
       AnchorWatchController.latKey: anchorLat,
       AnchorWatchController.lonKey: anchorLon,
       AnchorWatchController.radiusKey: 40.0,
-      SosSettings.testModeKey: true,
+      AnchorWatchAlertSettings.smsTestModeKey: true,
       ...prefs,
     });
     final shared = await SharedPreferences.getInstance();
@@ -80,13 +79,13 @@ void main() {
     expect(c.state.driftHistory, hasLength(1));
   });
 
-  test('drift SMS skipped when SOS test mode is on', () async {
+  test('drift SMS skipped when anchor SMS test mode is on', () async {
     Uri? launched;
     final c = await buildController(
       prefs: {
         AnchorWatchAlertSettings.smsOnDriftKey: true,
         AnchorWatchAlertSettings.smsNumberKey: '+15550100',
-        SosSettings.testModeKey: true,
+        AnchorWatchAlertSettings.smsTestModeKey: true,
       },
       smsLauncher: (uri) async => launched = uri,
     );
@@ -103,7 +102,7 @@ void main() {
       prefs: {
         AnchorWatchAlertSettings.smsOnDriftKey: true,
         AnchorWatchAlertSettings.smsNumberKey: '+15550100',
-        SosSettings.testModeKey: false,
+        AnchorWatchAlertSettings.smsTestModeKey: false,
       },
       smsLauncher: (uri) async => launched = uri,
     );

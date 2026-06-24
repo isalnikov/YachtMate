@@ -57,6 +57,18 @@ class AisNmeaPreferencesNotifier extends StateNotifier<AisNmeaEndpoint> {
     await _ref.read(sharedPreferencesProvider).setInt(_portKey, port);
     state = state.copyWith(port: port);
   }
+
+  /// Persists host/port from text fields (step 64 — before Live connect).
+  Future<void> applyFromFields(String host, String portText) async {
+    final trimmedHost = host.trim();
+    if (trimmedHost.isNotEmpty) {
+      await setHost(trimmedHost);
+    }
+    final port = int.tryParse(portText.trim());
+    if (port != null) {
+      await setPort(port);
+    }
+  }
 }
 
 final aisNmeaPreferencesProvider =

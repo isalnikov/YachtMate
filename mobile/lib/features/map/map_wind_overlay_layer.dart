@@ -3,11 +3,14 @@ import 'dart:math' show cos, pi, sin;
 import 'package:flutter/material.dart' show Color;
 import 'package:maplibre_gl/maplibre_gl.dart';
 
+import '../../core/logging/app_logger.dart';
 import '../../domain/weather/wind_grid.dart';
 import '../weather/widgets/wind_legend_bar.dart';
 
 const cwWindOverlaySourceId = 'cw_wind_overlay';
 const cwWindOverlayLayerId = 'cw_wind_overlay_lines';
+
+final _windOverlayLog = AppLogger('wind_overlay');
 
 String _hexRgb(Color color) {
   final rgb = color.toARGB32() & 0xFFFFFF;
@@ -89,7 +92,9 @@ Future<void> updateWindOverlayLayer(
       cwWindOverlaySourceId,
       windGridToGeoJson(grid, windScale),
     );
-  } catch (_) {}
+  } catch (e) {
+    _windOverlayLog.warning('wind_overlay_update_failed', {'error': e.toString()});
+  }
 }
 
 Future<void> applyWindOverlayVisibility(
@@ -101,5 +106,9 @@ Future<void> applyWindOverlayVisibility(
       cwWindOverlayLayerId,
       LineLayerProperties(visibility: visible ? 'visible' : 'none'),
     );
-  } catch (_) {}
+  } catch (e) {
+    _windOverlayLog.warning('wind_overlay_visibility_failed', {
+      'error': e.toString(),
+    });
+  }
 }

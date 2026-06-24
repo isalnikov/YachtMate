@@ -932,5 +932,6 @@
   "errorGpsUnavailable": "GPS indisponible — réessayez plus tard.",
   "errorVaultDecrypt": "Impossible de déchiffrer le document du coffre — mauvais code ou fichier corrompu.",
   "errorRoutingFailed": "Impossible de calculer l'itinéraire — vérifiez les points.",
-  "errorGeneric": "Une erreur s'est produite — veuillez réessayer."
+  "errorGeneric": "Une erreur s'est produite — veuillez réessayer.",
+  "offlineChartManagerDeleteConfirm": "Remove this offline chart region from the device? Downloaded tiles will be deleted."
 }

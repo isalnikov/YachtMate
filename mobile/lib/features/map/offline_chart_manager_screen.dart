@@ -11,15 +11,16 @@ import '../../l10n/app_localizations.dart';
 import '../../widgets/cw_button.dart';
 import '../../widgets/cw_button_sizes.dart';
 import '../../widgets/cw_card.dart';
+import '../../widgets/cw_dialog.dart';
 import 'offline_chart_providers.dart';
+import 'offline_chart_storage.dart';
 
 /// Lists downloaded offline chart regions with delete (step 48).
 class OfflineChartManagerScreen extends ConsumerWidget {
   const OfflineChartManagerScreen({super.key});
 
-  static String formatStorageLabel(String path) {
-    if (path.startsWith('sqlite:')) return '~12 MB';
-    return '—';
+  static String formatStorageLabel(String path, {String? checksum}) {
+    return formatOfflineChartStorageLabel(path: path, checksum: checksum);
   }
 
   static String formatInstalledDate(int installedAtMs, Locale locale) {
@@ -88,7 +89,10 @@ class _RegionCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final locale = Localizations.localeOf(context);
-    final storage = OfflineChartManagerScreen.formatStorageLabel(row.path);
+    final storage = OfflineChartManagerScreen.formatStorageLabel(
+      row.path,
+      checksum: row.checksum,
+    );
     final installed = OfflineChartManagerScreen.formatInstalledDate(
       row.installedAt,
       locale,
@@ -129,6 +133,16 @@ class _RegionCard extends ConsumerWidget {
 
   Future<void> _delete(BuildContext context, WidgetRef ref) async {
     final l10n = AppLocalizations.of(context)!;
+    final confirmed = await showCwDialog(
+      context: context,
+      title: l10n.offlineChartManagerDelete,
+      message: l10n.offlineChartManagerDeleteConfirm,
+      confirmLabel: l10n.offlineChartManagerDelete,
+      cancelLabel: l10n.logbookCancel,
+      variant: CwDialogVariant.danger,
+    );
+    if (confirmed != true) return;
+
     await ref.read(chartRegionRepositoryProvider).delete(row.regionId);
     ref.invalidate(chartRegionsProvider);
     if (!context.mounted) return;

@@ -161,4 +161,28 @@ void main() {
     expect(container.read(aisTargetsProvider), isEmpty);
     expect(container.read(aisNmeaBridgeProvider).mode, AisNmeaSourceMode.off);
   });
+
+  test('NmeaTcpClient notifies connected on open and false on stop', () async {
+    final server = await ServerSocket.bind(InternetAddress.loopbackIPv4, 0);
+    addTearDown(server.close);
+
+    final serverSub = server.listen((_) {});
+    addTearDown(serverSub.cancel);
+
+    final events = <bool>[];
+    final client = NmeaTcpClient(
+      host: InternetAddress.loopbackIPv4.address,
+      port: server.port,
+      reconnectDelay: const Duration(milliseconds: 50),
+    );
+    client.onConnectionChanged = events.add;
+    addTearDown(client.dispose);
+
+    await client.start();
+    await Future<void>.delayed(const Duration(milliseconds: 150));
+    expect(events, contains(true));
+
+    await client.stop();
+    expect(events.last, isFalse);
+  });
 }

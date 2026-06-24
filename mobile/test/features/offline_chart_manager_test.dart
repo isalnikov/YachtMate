@@ -26,6 +26,7 @@ void main() {
       regionId: 'offline_demo_1',
       path: 'sqlite:42',
       licenseTier: 'demo',
+      checksum: 'bytes:12582912',
     );
 
     await tester.pumpWidget(
@@ -53,8 +54,11 @@ void main() {
 
     expect(find.text('offline_demo_1'), findsOneWidget);
     expect(find.text('Delete'), findsOneWidget);
+    expect(find.textContaining('12.0 MB'), findsOneWidget);
 
     await tester.tap(find.text('Delete'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Delete').last);
     await tester.pumpAndSettle();
 
     expect(find.text('offline_demo_1'), findsNothing);

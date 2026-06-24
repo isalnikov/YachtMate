@@ -18,6 +18,7 @@ import '../tides/tides_screen.dart';
 import 'weather_providers.dart';
 import 'widgets/weather_hour_card.dart';
 import 'widgets/weather_layer_toolbar.dart';
+import 'widgets/weather_map_wind_overlay_toggle.dart';
 import 'widgets/weather_timeline_bar.dart';
 import 'widgets/wind_legend_bar.dart';
 import 'widgets/wind_rose.dart';
@@ -237,6 +238,8 @@ class _ForecastBodyState extends ConsumerState<_ForecastBody> {
       ),
       const SizedBox(height: CwSpacing.m),
       const WindLegendBar(),
+      const SizedBox(height: CwSpacing.s),
+      const WeatherMapWindOverlayToggle(),
       const SizedBox(height: CwSpacing.m),
       WeatherTimelineBar(hours: hours, locale: loc),
       const SizedBox(height: CwSpacing.m),

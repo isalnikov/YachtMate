@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'providers.dart';
-import 'sos_settings_controller.dart';
 
 /// Optional SMS alert when anchor watch latches a drift alarm (step 45).
 class AnchorWatchAlertSettings {
@@ -16,6 +15,7 @@ class AnchorWatchAlertSettings {
 
   static const smsOnDriftKey = 'anchorWatchSmsOnDrift';
   static const smsNumberKey = 'anchorWatchSmsNumber';
+  static const smsTestModeKey = 'anchorWatchSmsTestMode';
 
   static AnchorWatchAlertSettings read(SharedPreferences p) {
     return AnchorWatchAlertSettings(
@@ -24,9 +24,9 @@ class AnchorWatchAlertSettings {
     );
   }
 
-  /// True when SMS should be suppressed (SOS test mode defaults on).
+  /// True when anchor SMS should be suppressed (test mode defaults on).
   static bool smsSuppressed(SharedPreferences p) =>
-      p.getBool(SosSettings.testModeKey) ?? true;
+      p.getBool(smsTestModeKey) ?? true;
 }
 
 class AnchorWatchAlertSettingsNotifier
