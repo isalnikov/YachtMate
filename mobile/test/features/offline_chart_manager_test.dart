@@ -3,6 +3,7 @@ import 'package:captain_wrongel/core/theme/cw_theme.dart';
 import 'package:captain_wrongel/data/local/app_database.dart';
 import 'package:captain_wrongel/data/repositories/chart_region_repository.dart';
 import 'package:captain_wrongel/features/map/offline_chart_manager_screen.dart';
+import 'package:captain_wrongel/features/map/offline_chart_pack_deleter.dart';
 import 'package:captain_wrongel/l10n/app_localizations.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
@@ -32,6 +33,12 @@ void main() {
         overrides: [
           sharedPreferencesProvider.overrideWith((ref) => prefs),
           databaseProvider.overrideWith((ref) => db),
+          chartRegionRepositoryProvider.overrideWith(
+            (ref) => ChartRegionRepository(
+              ref.watch(databaseProvider),
+              packDeleter: const NoOpOfflineChartPackDeleter(),
+            ),
+          ),
         ],
         child: MaterialApp(
           theme: CwTheme.material(),

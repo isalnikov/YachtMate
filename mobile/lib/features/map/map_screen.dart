@@ -43,6 +43,7 @@ import 'map_layer_sheet.dart';
 import 'map_tile_overlay_controller.dart';
 import 'map_long_press_sheet.dart';
 import '../../domain/weather/wind_grid.dart';
+import '../../domain/weather/wind_grid_refresh.dart';
 import 'map_wind_overlay_layer.dart';
 import 'map_wind_particles_layer.dart';
 import 'mooring_layer.dart';
@@ -88,6 +89,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
   Timer? _windRefreshTimer;
   DateTime? _windLastFetch;
   WindGridBundle? _lastWindGrid;
+  double? _windFetchLat;
+  double? _windFetchLon;
 
   /// Экран ушёл в фон — при eco профиле временно отключаем тяжёлые демо-слои (Фаза 8).
   bool _pausedBackground = false;
@@ -339,6 +342,8 @@ class _MapScreenState extends ConsumerState<MapScreen>
           .loadWindGrid(_mapCenter.latitude, _mapCenter.longitude, profile: profile);
       _windLastFetch = now;
       _lastWindGrid = grid;
+      _windFetchLat = _mapCenter.latitude;
+      _windFetchLon = _mapCenter.longitude;
       if (!mounted || _controller == null) return;
       await updateWindOverlayLayer(
         c,
@@ -357,6 +362,25 @@ class _MapScreenState extends ConsumerState<MapScreen>
     _windRefreshTimer = Timer.periodic(interval, (_) {
       unawaited(_syncWindOverlayLayer(force: true));
     });
+  }
+
+  void _onCameraIdle() {
+    final vis = ref.read(mapLayerPreferencesProvider);
+    if (!vis.windOverlay || !_windLayerInstalled) return;
+
+    if (_windFetchLat == null || _windFetchLon == null) {
+      unawaited(_syncWindOverlayLayer(force: true));
+      return;
+    }
+
+    if (shouldRefreshWindGrid(
+      fromLat: _windFetchLat!,
+      fromLon: _windFetchLon!,
+      toLat: _mapCenter.latitude,
+      toLon: _mapCenter.longitude,
+    )) {
+      unawaited(_syncWindOverlayLayer(force: true));
+    }
   }
 
   Future<void> _afterStyleLoaded() async {
@@ -760,6 +784,7 @@ class _MapScreenState extends ConsumerState<MapScreen>
               _cameraTick++;
             });
           },
+          onCameraIdle: _onCameraIdle,
           onCameraTrackingDismissed: _onCameraTrackingDismissed,
         ),
         if (!_styleLoaded)

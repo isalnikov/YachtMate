@@ -89,6 +89,46 @@ void main() {
     expect(targets, isNotEmpty);
     expect(targets.containsKey(227006760), isTrue);
     expect(targets[227006760]!.latitudeDeg, closeTo(34.02, 1e-5));
+    expect(container.read(aisNmeaBridgeProvider).liveConnected, isTrue);
+
+    await container
+        .read(aisNmeaBridgeProvider.notifier)
+        .setMode(AisNmeaSourceMode.off);
+  });
+
+  test('liveConnected stays false when TCP connect fails', () async {
+    SharedPreferences.setMockInitialValues({});
+    final prefs = await SharedPreferences.getInstance();
+    final db = AppDatabase(NativeDatabase.memory());
+
+    final container = ProviderContainer(
+      overrides: [
+        sharedPreferencesProvider.overrideWithValue(prefs),
+        databaseProvider.overrideWithValue(db),
+        sessionIdProvider.overrideWithValue('test-session'),
+        nmeaSocketConnectProvider.overrideWithValue(
+          (host, port, {timeout}) async {
+            throw const SocketException('connection refused');
+          },
+        ),
+      ],
+    );
+    addTearDown(container.dispose);
+
+    await container
+        .read(aisNmeaPreferencesProvider.notifier)
+        .setHost('127.0.0.1');
+    await container.read(aisNmeaPreferencesProvider.notifier).setPort(1);
+
+    await container
+        .read(aisNmeaBridgeProvider.notifier)
+        .setMode(AisNmeaSourceMode.live);
+
+    await Future<void>.delayed(const Duration(milliseconds: 100));
+
+    expect(container.read(aisNmeaBridgeProvider).mode, AisNmeaSourceMode.live);
+    expect(container.read(aisNmeaBridgeProvider).liveConnected, isFalse);
+    expect(container.read(aisTargetsProvider), isEmpty);
 
     await container
         .read(aisNmeaBridgeProvider.notifier)

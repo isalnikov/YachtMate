@@ -91,6 +91,18 @@
 
 ---
 
+## Фаза K — Production Hardening (61–63)
+
+Закрывает P0 из авторского ревью фазы H.
+
+| # | Файл | Задача |
+|---|------|--------|
+| 61 | [step-61-ais-live-connection.md](step-61-ais-live-connection.md) | AIS `liveConnected` = реальный TCP |
+| 62 | [step-62-wind-overlay-pan.md](step-62-wind-overlay-pan.md) | Wind overlay при панорамировании |
+| 63 | [step-63-offline-pack-delete.md](step-63-offline-pack-delete.md) | Удаление MapLibre tile pack |
+
+---
+
 ## Правила для агента
 
 1. **requires** — все зависимости выполнены

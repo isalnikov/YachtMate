@@ -29,6 +29,9 @@ class NmeaTcpClient {
 
   Stream<String> get lines => _linesController.stream;
 
+  /// Fires when the TCP socket opens (`true`) or closes (`false`).
+  void Function(bool connected)? onConnectionChanged;
+
   StreamSubscription<List<int>>? _socketSub;
   Socket? _socket;
   Timer? _reconnectTimer;
@@ -36,6 +39,8 @@ class NmeaTcpClient {
   var _buffer = '';
 
   bool get isRunning => _running;
+
+  bool get isConnected => _socket != null;
 
   Future<void> start() async {
     if (_running) return;
@@ -78,6 +83,7 @@ class NmeaTcpClient {
         onDone: _scheduleReconnect,
         cancelOnError: true,
       );
+      _notifyConnected(true);
     } catch (_) {
       _scheduleReconnect();
     }
@@ -105,9 +111,15 @@ class NmeaTcpClient {
   }
 
   Future<void> _tearDownSocket() async {
+    final hadSocket = _socket != null;
     await _socketSub?.cancel();
     _socketSub = null;
     _socket?.destroy();
     _socket = null;
+    if (hadSocket) _notifyConnected(false);
+  }
+
+  void _notifyConnected(bool connected) {
+    onConnectionChanged?.call(connected);
   }
 }

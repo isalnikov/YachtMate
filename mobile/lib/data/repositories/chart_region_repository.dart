@@ -1,12 +1,18 @@
 import 'package:drift/drift.dart';
 
+import '../../features/map/offline_chart_pack_deleter.dart';
 import '../local/app_database.dart';
 
 /// Tracks downloaded chart / offline regions on disk (Фаза 1.3).
 class ChartRegionRepository {
-  ChartRegionRepository(this._db);
+  ChartRegionRepository(
+    this._db, {
+    OfflineChartPackDeleter packDeleter =
+        const MapLibreOfflineChartPackDeleter(),
+  }) : _packDeleter = packDeleter;
 
   final AppDatabase _db;
+  final OfflineChartPackDeleter _packDeleter;
 
   Future<void> upsert({
     required String regionId,
@@ -31,6 +37,12 @@ class ChartRegionRepository {
   Future<List<ChartRegionRow>> all() => _db.select(_db.chartRegions).get();
 
   Future<void> delete(String regionId) async {
+    final row = await (_db.select(_db.chartRegions)
+          ..where((c) => c.regionId.equals(regionId)))
+        .getSingleOrNull();
+    if (row != null) {
+      await _packDeleter.deletePackAtPath(row.path);
+    }
     await (_db.delete(
       _db.chartRegions,
     )..where((c) => c.regionId.equals(regionId))).go();

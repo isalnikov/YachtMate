@@ -188,9 +188,12 @@ class AisNmeaBridgeController extends StateNotifier<AisNmeaBridgeState> {
       connect: _ref.read(nmeaSocketConnectProvider),
     );
     _tcpClient = client;
+    client.onConnectionChanged = (connected) {
+      if (state.mode != AisNmeaSourceMode.live) return;
+      state = state.copyWith(liveConnected: connected);
+    };
     _lineSub = client.lines.listen(_ingestLine);
     await client.start();
-    state = state.copyWith(liveConnected: true);
   }
 
   Future<void> _ensureDemoLines() async {
