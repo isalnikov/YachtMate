@@ -9,6 +9,7 @@ import 'app.dart';
 import 'bootstrap/sqlite_mobile.dart';
 import 'core/logging/app_logger.dart';
 import 'core/logging/global_error_logging.dart' show RiverpodErrorObserver, installGlobalErrorLogging;
+import 'core/notifications/local_notifications_service.dart';
 import 'core/providers.dart';
 import 'data/local/open_database.dart';
 
@@ -23,6 +24,8 @@ void main() {
     final prefs = await SharedPreferences.getInstance();
     final db = await openAppDatabase();
     final sessionId = const Uuid().v4();
+    final notificationsPort = FlutterLocalNotificationsPort();
+    await notificationsPort.initialize();
 
     runApp(
       ProviderScope(
@@ -34,6 +37,7 @@ void main() {
             return db;
           }),
           sessionIdProvider.overrideWith((ref) => sessionId),
+          localNotificationsPortProvider.overrideWith((ref) => notificationsPort),
         ],
         child: const CaptainWrongelApp(),
       ),

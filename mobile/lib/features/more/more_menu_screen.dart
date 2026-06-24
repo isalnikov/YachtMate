@@ -8,6 +8,8 @@ import '../../widgets/cw_list_tile.dart';
 import '../ais/ais_screen.dart';
 import '../checklist/checklist_hub_screen.dart';
 import '../crew/crew_screen.dart';
+import '../assistant/assistant_screen.dart';
+import '../community/community_hub_screen.dart';
 import '../distress/sos_screen.dart';
 import '../logbook/logbook_screen.dart';
 import '../settings/settings_screen.dart';
@@ -15,6 +17,8 @@ import '../tides/tides_screen.dart';
 import '../toolbox/maritime_toolbox_screen.dart';
 import '../track/track_screen.dart';
 import '../vault/vault_screen.dart';
+import '../voyage/voyage_monitor_screen.dart';
+import '../yacht/yacht_hub_screen.dart';
 
 /// Вкладка «Ещё»: вход в модули Фазы 7.
 class MoreMenuScreen extends StatelessWidget {
@@ -43,6 +47,58 @@ class MoreMenuScreen extends StatelessWidget {
       children: [
         Text(l10n.moreMenuHeadline, style: theme.textTheme.headlineSmall),
         const SizedBox(height: CwSpacing.m),
+        CwCard(
+          margin: _cardMargin,
+          onTap: () => push(
+            const CommunityHubScreen(),
+            l10n.communityHubTitle,
+            cwAppBar: true,
+          ),
+          child: CwListTile(
+            leading: const Icon(Icons.people_outline),
+            title: l10n.moreMenuCommunity,
+            subtitle: l10n.moreMenuCommunitySubtitle,
+          ),
+        ),
+        CwCard(
+          margin: _cardMargin,
+          onTap: () => push(
+            const YachtHubScreen(),
+            l10n.yachtHubTitle,
+            cwAppBar: true,
+          ),
+          child: CwListTile(
+            leading: const Icon(Icons.sailing_outlined),
+            title: l10n.moreMenuYachtHub,
+            subtitle: l10n.moreMenuYachtHubSubtitle,
+          ),
+        ),
+        CwCard(
+          margin: _cardMargin,
+          onTap: () => push(
+            const VoyageMonitorScreen(),
+            l10n.voyageMonitorTitle,
+            cwAppBar: true,
+          ),
+          child: CwListTile(
+            leading: const Icon(Icons.share_location_outlined),
+            title: l10n.moreMenuVoyageMonitor,
+            subtitle: l10n.moreMenuVoyageMonitorSubtitle,
+          ),
+        ),
+        CwCard(
+          margin: _cardMargin,
+          onTap: () => push(
+            const AssistantScreen(),
+            l10n.assistantTitle,
+            cwAppBar: true,
+          ),
+          child: CwListTile(
+            leading: const Icon(Icons.chat_bubble_outline),
+            title: l10n.moreMenuAssistant,
+            subtitle: l10n.moreMenuAssistantSubtitle,
+          ),
+        ),
         CwCard(
           margin: _cardMargin,
           onTap: () => push(

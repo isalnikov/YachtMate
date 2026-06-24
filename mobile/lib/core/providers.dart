@@ -20,11 +20,16 @@ import '../domain/reference/knot_entry.dart';
 import 'accessibility_preferences_controller.dart';
 import 'anchor_watch_controller.dart';
 import 'energy_profile_controller.dart';
+import 'feature_flags.dart';
+import 'feature_flags_controller.dart';
 import 'locale_controller.dart';
 import 'logging/app_logger.dart';
 import 'map_layer_preferences_controller.dart';
+import 'notifications/local_notifications_service.dart';
+import 'notifications/notification_preferences_controller.dart';
 import 'theme_mode_controller.dart';
 import 'vessel_prefs.dart';
+import 'voyage_monitor_controller.dart';
 
 /// Injected after `SharedPreferences.getInstance()` in [main].
 final sharedPreferencesProvider = Provider<SharedPreferences>(
@@ -145,6 +150,39 @@ final vesselPrefsProvider =
 final anchorWatchProvider =
     StateNotifierProvider<AnchorWatchController, AnchorWatchState>((ref) {
   return AnchorWatchController(
+    ref.watch(sharedPreferencesProvider),
+    ref.watch(auditRepositoryProvider),
+    ref.watch(sessionIdProvider),
+    notifications: ref.watch(localNotificationsPortProvider),
+    notificationPrefs: () => ref.read(notificationPreferencesProvider),
+  );
+});
+
+final localNotificationsPortProvider = Provider<LocalNotificationsPort>(
+  (ref) => FlutterLocalNotificationsPort(),
+);
+
+final notificationPreferencesProvider = StateNotifierProvider<
+    NotificationPreferencesController, NotificationPreferences>((ref) {
+  return NotificationPreferencesController(
+    ref.watch(sharedPreferencesProvider),
+    ref.watch(auditRepositoryProvider),
+    ref.watch(sessionIdProvider),
+  );
+});
+
+final featureFlagsProvider =
+    StateNotifierProvider<FeatureFlagsController, FeatureFlags>((ref) {
+  return FeatureFlagsController(
+    ref.watch(sharedPreferencesProvider),
+    ref.watch(auditRepositoryProvider),
+    ref.watch(sessionIdProvider),
+  );
+});
+
+final voyageMonitorProvider =
+    StateNotifierProvider<VoyageMonitorController, VoyageMonitorState>((ref) {
+  return VoyageMonitorController(
     ref.watch(sharedPreferencesProvider),
     ref.watch(auditRepositoryProvider),
     ref.watch(sessionIdProvider),

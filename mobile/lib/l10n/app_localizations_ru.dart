@@ -1680,4 +1680,222 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get onboardingRegionOther => 'Другое';
+
+  @override
+  String get moreMenuCommunity => 'Сообщество';
+
+  @override
+  String get moreMenuCommunitySubtitle =>
+      'Отзывы, события, советы (демо-лента)';
+
+  @override
+  String get moreMenuVoyageMonitor => 'Контроль рейса';
+
+  @override
+  String get moreMenuVoyageMonitorSubtitle =>
+      'Береговой контакт и периодический OK';
+
+  @override
+  String get moreMenuYachtHub => 'Яхтенный хаб';
+
+  @override
+  String get moreMenuYachtHubSubtitle => 'Журнал, расходы, трек, сейф';
+
+  @override
+  String get moreMenuAssistant => 'Помощник на палубе';
+
+  @override
+  String get moreMenuAssistantSubtitle => 'Офлайн FAQ — погода, SOS, COLREG';
+
+  @override
+  String get communityHubTitle => 'Сообщество';
+
+  @override
+  String get communityHubLead =>
+      'Местные отзывы и события — демо-лента до синхронизации с берегом.';
+
+  @override
+  String get communitySectionReviews => 'Отзывы';
+
+  @override
+  String get communitySectionEvents => 'События';
+
+  @override
+  String get communityEmptyReviews => 'В этом регионе пока нет отзывов.';
+
+  @override
+  String get communityEmptyEvents => 'Нет предстоящих событий.';
+
+  @override
+  String get communityBadgeDemo => 'Демо';
+
+  @override
+  String get voyageMonitorTitle => 'Контроль рейса';
+
+  @override
+  String get voyageMonitorLead =>
+      'Береговой контакт и периодический OK. Не связано с официальным SAR.';
+
+  @override
+  String get voyageMonitorContactName => 'Имя берегового контакта';
+
+  @override
+  String get voyageMonitorContactPhone => 'Телефон берегового контакта';
+
+  @override
+  String get voyageMonitorInterval => 'Интервал check-in';
+
+  @override
+  String get voyageMonitorInterval30 => '30 мин';
+
+  @override
+  String get voyageMonitorInterval60 => '1 час';
+
+  @override
+  String get voyageMonitorInterval120 => '2 часа';
+
+  @override
+  String get voyageMonitorStart => 'Начать мониторинг';
+
+  @override
+  String get voyageMonitorStop => 'Остановить';
+
+  @override
+  String get voyageMonitorOk => 'Всё в порядке';
+
+  @override
+  String voyageMonitorNextDue(String time) {
+    return 'Следующий check-in через $time';
+  }
+
+  @override
+  String get voyageMonitorOverdue =>
+      'Check-in просрочен — нажмите OK или откройте SOS';
+
+  @override
+  String get voyageMonitorOpenSos => 'Открыть SOS';
+
+  @override
+  String get voyageMonitorActive => 'Мониторинг активен';
+
+  @override
+  String get voyageMonitorInactive => 'Мониторинг выкл.';
+
+  @override
+  String get settingsNotificationsSection => 'Уведомления';
+
+  @override
+  String get settingsNotifyAnchorDrift => 'Снос якоря';
+
+  @override
+  String get settingsNotifyAnchorDriftSubtitle =>
+      'Локальное уведомление при тревоге якорной вахты';
+
+  @override
+  String get settingsNotifyWeatherWind => 'Сильный ветер';
+
+  @override
+  String get settingsNotifyWeatherWindSubtitle =>
+      'Уведомление при превышении порога в прогнозе';
+
+  @override
+  String get settingsNotifyWindThreshold => 'Порог ветра (уз)';
+
+  @override
+  String get settingsPremiumSection => 'Подписка';
+
+  @override
+  String get settingsPremiumUnlocked => 'Premium разблокирован (демо)';
+
+  @override
+  String get settingsPremiumUnlockedSubtitle =>
+      'Live AIS, офлайн-карты, импорт GRIB';
+
+  @override
+  String get paywallTitle => 'Captain Wrongel Premium';
+
+  @override
+  String get paywallBody =>
+      'Live AIS, офлайн-пакеты карт и импорт GRIB. Оплата — в следующем релизе.';
+
+  @override
+  String get paywallCta => 'Уведомить о запуске';
+
+  @override
+  String get paywallDismiss => 'Не сейчас';
+
+  @override
+  String get yachtHubTitle => 'Яхтенный хаб';
+
+  @override
+  String get yachtHubLead => 'Документы, расходы и запись рейса в одном месте.';
+
+  @override
+  String get yachtHubStatLogbook => 'Записей журнала';
+
+  @override
+  String get yachtHubStatExpenses => 'Расходы рейса';
+
+  @override
+  String get yachtHubStatTrack => 'Точек трека';
+
+  @override
+  String get yachtHubStatVault => 'Документов';
+
+  @override
+  String get assistantTitle => 'Помощник на палубе';
+
+  @override
+  String get assistantLead =>
+      'Офлайн FAQ — только готовые ответы, не ИИ-капитан.';
+
+  @override
+  String get assistantHint => 'Спросите о погоде, SOS или COLREG…';
+
+  @override
+  String get assistantIntentWeather => 'Погода';
+
+  @override
+  String get assistantIntentSos => 'SOS';
+
+  @override
+  String get assistantIntentColreg => 'COLREG';
+
+  @override
+  String get assistantWelcome =>
+      'Я офлайн-помощник. Выберите тему ниже или введите вопрос.';
+
+  @override
+  String get assistantReplyWeather =>
+      'Вкладка Погода — прогноз Open-Meteo, роза ветра и приливы. Стрелки ветра — в слоях карты.';
+
+  @override
+  String get assistantReplySos =>
+      'SOS: Ещё → SOS. Включите тестовый режим в настройках, пока не проверите номера спасения.';
+
+  @override
+  String get assistantReplyColreg =>
+      'COLREG — в Морской мастерской → УКВ и COLREG.';
+
+  @override
+  String get assistantReplyFallback =>
+      'Офлайн я знаю только погоду, SOS и COLREG. Попробуйте подсказку ниже.';
+
+  @override
+  String get assistantHelpLink => 'Открыть мастерскую';
+
+  @override
+  String get notificationAnchorDriftTitle => 'Снос якоря';
+
+  @override
+  String get notificationAnchorDriftBody =>
+      'Судно вышло за круг якорной вахты — проверьте якорь.';
+
+  @override
+  String get notificationWindAlertTitle => 'Сильный ветер в прогнозе';
+
+  @override
+  String notificationWindAlertBody(String kn, String threshold) {
+    return 'Прогноз $kn уз превышает порог $threshold уз.';
+  }
 }

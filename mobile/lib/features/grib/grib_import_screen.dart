@@ -7,6 +7,8 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import '../../core/providers.dart';
+import '../../core/feature_flags.dart';
+import '../paywall/paywall_placeholder_sheet.dart';
 import '../../core/theme/cw_theme_extensions.dart';
 import '../../core/theme/cw_tokens.dart';
 import '../../core/theme/cw_typography.dart';
@@ -77,6 +79,12 @@ class _GribImportScreenState extends ConsumerState<GribImportScreen> {
 
   Future<void> _importGrib(AppLocalizations l10n) async {
     if (_importing) return;
+    final allowed = await requirePremiumFeature(
+      context,
+      ref,
+      PremiumFeature.gribImport,
+    );
+    if (!allowed) return;
 
     setState(() => _importing = true);
     try {

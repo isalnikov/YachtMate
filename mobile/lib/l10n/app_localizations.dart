@@ -3160,6 +3160,402 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Other'**
   String get onboardingRegionOther;
+
+  /// No description provided for @moreMenuCommunity.
+  ///
+  /// In en, this message translates to:
+  /// **'Community'**
+  String get moreMenuCommunity;
+
+  /// No description provided for @moreMenuCommunitySubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews, events, local tips (demo feed)'**
+  String get moreMenuCommunitySubtitle;
+
+  /// No description provided for @moreMenuVoyageMonitor.
+  ///
+  /// In en, this message translates to:
+  /// **'Voyage monitor'**
+  String get moreMenuVoyageMonitor;
+
+  /// No description provided for @moreMenuVoyageMonitorSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Shore contact & periodic check-in'**
+  String get moreMenuVoyageMonitorSubtitle;
+
+  /// No description provided for @moreMenuYachtHub.
+  ///
+  /// In en, this message translates to:
+  /// **'Yacht hub'**
+  String get moreMenuYachtHub;
+
+  /// No description provided for @moreMenuYachtHubSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Logbook, expenses, track, vault'**
+  String get moreMenuYachtHubSubtitle;
+
+  /// No description provided for @moreMenuAssistant.
+  ///
+  /// In en, this message translates to:
+  /// **'Deck assistant'**
+  String get moreMenuAssistant;
+
+  /// No description provided for @moreMenuAssistantSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline FAQ — weather, SOS, COLREG'**
+  String get moreMenuAssistantSubtitle;
+
+  /// No description provided for @communityHubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Community'**
+  String get communityHubTitle;
+
+  /// No description provided for @communityHubLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Local reviews and events — demo feed until shore sync ships.'**
+  String get communityHubLead;
+
+  /// No description provided for @communitySectionReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviews'**
+  String get communitySectionReviews;
+
+  /// No description provided for @communitySectionEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'Events'**
+  String get communitySectionEvents;
+
+  /// No description provided for @communityEmptyReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'No reviews in this region yet.'**
+  String get communityEmptyReviews;
+
+  /// No description provided for @communityEmptyEvents.
+  ///
+  /// In en, this message translates to:
+  /// **'No upcoming events listed.'**
+  String get communityEmptyEvents;
+
+  /// No description provided for @communityBadgeDemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo'**
+  String get communityBadgeDemo;
+
+  /// No description provided for @voyageMonitorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Voyage monitor'**
+  String get voyageMonitorTitle;
+
+  /// No description provided for @voyageMonitorLead.
+  ///
+  /// In en, this message translates to:
+  /// **'SafeTrx-style shore contact and periodic OK check-in. Not linked to official SAR.'**
+  String get voyageMonitorLead;
+
+  /// No description provided for @voyageMonitorContactName.
+  ///
+  /// In en, this message translates to:
+  /// **'Shore contact name'**
+  String get voyageMonitorContactName;
+
+  /// No description provided for @voyageMonitorContactPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Shore contact phone'**
+  String get voyageMonitorContactPhone;
+
+  /// No description provided for @voyageMonitorInterval.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in interval'**
+  String get voyageMonitorInterval;
+
+  /// No description provided for @voyageMonitorInterval30.
+  ///
+  /// In en, this message translates to:
+  /// **'30 min'**
+  String get voyageMonitorInterval30;
+
+  /// No description provided for @voyageMonitorInterval60.
+  ///
+  /// In en, this message translates to:
+  /// **'1 hour'**
+  String get voyageMonitorInterval60;
+
+  /// No description provided for @voyageMonitorInterval120.
+  ///
+  /// In en, this message translates to:
+  /// **'2 hours'**
+  String get voyageMonitorInterval120;
+
+  /// No description provided for @voyageMonitorStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start monitoring'**
+  String get voyageMonitorStart;
+
+  /// No description provided for @voyageMonitorStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop monitoring'**
+  String get voyageMonitorStop;
+
+  /// No description provided for @voyageMonitorOk.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m OK'**
+  String get voyageMonitorOk;
+
+  /// No description provided for @voyageMonitorNextDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Next check-in due in {time}'**
+  String voyageMonitorNextDue(String time);
+
+  /// No description provided for @voyageMonitorOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in overdue — tap I\'m OK or open SOS'**
+  String get voyageMonitorOverdue;
+
+  /// No description provided for @voyageMonitorOpenSos.
+  ///
+  /// In en, this message translates to:
+  /// **'Open SOS'**
+  String get voyageMonitorOpenSos;
+
+  /// No description provided for @voyageMonitorActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Monitoring active'**
+  String get voyageMonitorActive;
+
+  /// No description provided for @voyageMonitorInactive.
+  ///
+  /// In en, this message translates to:
+  /// **'Not monitoring'**
+  String get voyageMonitorInactive;
+
+  /// No description provided for @settingsNotificationsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get settingsNotificationsSection;
+
+  /// No description provided for @settingsNotifyAnchorDrift.
+  ///
+  /// In en, this message translates to:
+  /// **'Anchor drift alerts'**
+  String get settingsNotifyAnchorDrift;
+
+  /// No description provided for @settingsNotifyAnchorDriftSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Local notification when anchor watch alarms'**
+  String get settingsNotifyAnchorDriftSubtitle;
+
+  /// No description provided for @settingsNotifyWeatherWind.
+  ///
+  /// In en, this message translates to:
+  /// **'High wind alerts'**
+  String get settingsNotifyWeatherWind;
+
+  /// No description provided for @settingsNotifyWeatherWindSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify when forecast wind exceeds threshold'**
+  String get settingsNotifyWeatherWindSubtitle;
+
+  /// No description provided for @settingsNotifyWindThreshold.
+  ///
+  /// In en, this message translates to:
+  /// **'Wind alert threshold (kn)'**
+  String get settingsNotifyWindThreshold;
+
+  /// No description provided for @settingsPremiumSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription'**
+  String get settingsPremiumSection;
+
+  /// No description provided for @settingsPremiumUnlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium unlocked (demo)'**
+  String get settingsPremiumUnlocked;
+
+  /// No description provided for @settingsPremiumUnlockedSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enables live AIS, offline charts, GRIB import'**
+  String get settingsPremiumUnlockedSubtitle;
+
+  /// No description provided for @paywallTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Captain Wrongel Premium'**
+  String get paywallTitle;
+
+  /// No description provided for @paywallBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock live AIS bridge, offline chart packs, and GRIB import. Billing integration ships in a future release.'**
+  String get paywallBody;
+
+  /// No description provided for @paywallCta.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify me at launch'**
+  String get paywallCta;
+
+  /// No description provided for @paywallDismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get paywallDismiss;
+
+  /// No description provided for @yachtHubTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Yacht hub'**
+  String get yachtHubTitle;
+
+  /// No description provided for @yachtHubLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Ship papers, spending, and passage record in one place.'**
+  String get yachtHubLead;
+
+  /// No description provided for @yachtHubStatLogbook.
+  ///
+  /// In en, this message translates to:
+  /// **'Log entries'**
+  String get yachtHubStatLogbook;
+
+  /// No description provided for @yachtHubStatExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Trip spend'**
+  String get yachtHubStatExpenses;
+
+  /// No description provided for @yachtHubStatTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'Track points'**
+  String get yachtHubStatTrack;
+
+  /// No description provided for @yachtHubStatVault.
+  ///
+  /// In en, this message translates to:
+  /// **'Vault docs'**
+  String get yachtHubStatVault;
+
+  /// No description provided for @assistantTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Deck assistant'**
+  String get assistantTitle;
+
+  /// No description provided for @assistantLead.
+  ///
+  /// In en, this message translates to:
+  /// **'Offline FAQ — canned answers only, not an AI captain.'**
+  String get assistantLead;
+
+  /// No description provided for @assistantHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask about weather, SOS, or COLREG…'**
+  String get assistantHint;
+
+  /// No description provided for @assistantIntentWeather.
+  ///
+  /// In en, this message translates to:
+  /// **'Weather'**
+  String get assistantIntentWeather;
+
+  /// No description provided for @assistantIntentSos.
+  ///
+  /// In en, this message translates to:
+  /// **'SOS'**
+  String get assistantIntentSos;
+
+  /// No description provided for @assistantIntentColreg.
+  ///
+  /// In en, this message translates to:
+  /// **'COLREG'**
+  String get assistantIntentColreg;
+
+  /// No description provided for @assistantWelcome.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m the offline deck assistant. Pick a topic below or type a question.'**
+  String get assistantWelcome;
+
+  /// No description provided for @assistantReplyWeather.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the Weather tab for Open-Meteo forecast, wind rose, and tides link. Enable wind arrows on the Map layers sheet.'**
+  String get assistantReplyWeather;
+
+  /// No description provided for @assistantReplySos.
+  ///
+  /// In en, this message translates to:
+  /// **'SOS is under More → SOS / distress. Use test mode in settings until you confirm rescue numbers.'**
+  String get assistantReplySos;
+
+  /// No description provided for @assistantReplyColreg.
+  ///
+  /// In en, this message translates to:
+  /// **'COLREG practice lives in Maritime toolbox → VHF & COLREG trainer.'**
+  String get assistantReplyColreg;
+
+  /// No description provided for @assistantReplyFallback.
+  ///
+  /// In en, this message translates to:
+  /// **'I only know weather, SOS, and COLREG shortcuts offline. Try a suggested topic.'**
+  String get assistantReplyFallback;
+
+  /// No description provided for @assistantHelpLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Open maritime toolbox'**
+  String get assistantHelpLink;
+
+  /// No description provided for @notificationAnchorDriftTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Anchor drift'**
+  String get notificationAnchorDriftTitle;
+
+  /// No description provided for @notificationAnchorDriftBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Vessel moved outside anchor circle — check anchor watch.'**
+  String get notificationAnchorDriftBody;
+
+  /// No description provided for @notificationWindAlertTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'High wind forecast'**
+  String get notificationWindAlertTitle;
+
+  /// No description provided for @notificationWindAlertBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Forecast wind {kn} kn exceeds your {threshold} kn threshold.'**
+  String notificationWindAlertBody(String kn, String threshold);
 }
 
 class _AppLocalizationsDelegate

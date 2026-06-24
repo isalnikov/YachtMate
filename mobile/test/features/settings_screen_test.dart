@@ -48,6 +48,14 @@ void main() {
 
     await tester.drag(find.byType(ListView), const Offset(0, -280));
     await tester.pumpAndSettle();
+    expect(find.text('Notifications'), findsOneWidget);
+
+    await tester.drag(find.byType(ListView), const Offset(0, -200));
+    await tester.pumpAndSettle();
+    expect(find.text('Subscription'), findsOneWidget);
+
+    await tester.drag(find.byType(ListView), const Offset(0, -280));
+    await tester.pumpAndSettle();
     expect(find.text('Accessibility'), findsOneWidget);
 
     await tester.drag(find.byType(ListView), const Offset(0, -350));

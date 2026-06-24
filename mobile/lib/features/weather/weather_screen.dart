@@ -1,8 +1,11 @@
+import 'dart:async' show unawaited;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 
+import '../../core/notifications/weather_wind_alert.dart';
 import '../../core/providers.dart';
 import '../../core/theme/cw_tokens.dart';
 import '../../domain/tides/tide_station_bundle.dart';
@@ -129,7 +132,10 @@ class _ForecastBodyState extends ConsumerState<_ForecastBody> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _clampSelection());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _clampSelection();
+      _maybeWindAlert();
+    });
   }
 
   @override
@@ -137,7 +143,21 @@ class _ForecastBodyState extends ConsumerState<_ForecastBody> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.bundle != widget.bundle) {
       _clampSelection();
+      _maybeWindAlert();
     }
+  }
+
+  void _maybeWindAlert() {
+    final l10n = AppLocalizations.of(context)!;
+    unawaited(
+      maybeNotifyHighWind(
+        bundle: widget.bundle,
+        prefs: ref.read(notificationPreferencesProvider),
+        port: ref.read(localNotificationsPortProvider),
+        title: l10n.notificationWindAlertTitle,
+        bodyForKn: (kn, th) => l10n.notificationWindAlertBody(kn, th),
+      ),
+    );
   }
 
   void _clampSelection() {

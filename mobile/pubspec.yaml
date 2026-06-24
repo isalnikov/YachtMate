@@ -33,6 +33,7 @@ dependencies:
   record: ^6.2.0
   just_audio: ^0.10.5
   speech_to_text: ^7.3.0
+  flutter_local_notifications: ^19.0.0
 
 dev_dependencies:
   flutter_test:

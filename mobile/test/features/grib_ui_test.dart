@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:captain_wrongel/core/feature_flags.dart';
 import 'package:captain_wrongel/core/providers.dart';
 import 'package:captain_wrongel/core/theme/cw_theme.dart';
+import 'package:captain_wrongel/data/local/app_database.dart';
 import 'package:captain_wrongel/features/grib/grib_import_screen.dart';
 import 'package:captain_wrongel/features/grib/grib_import_storage.dart';
 import 'package:captain_wrongel/features/grib/widgets/grib_file_list.dart';
@@ -9,6 +11,7 @@ import 'package:captain_wrongel/l10n/app_localizations.dart';
 import 'package:captain_wrongel/widgets/cw_button.dart';
 import 'package:captain_wrongel/widgets/cw_card.dart';
 import 'package:captain_wrongel/widgets/cw_empty_state.dart';
+import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -50,10 +53,14 @@ void main() {
   }) async {
     SharedPreferences.setMockInitialValues(prefs);
     final shared = await SharedPreferences.getInstance();
+    final db = AppDatabase(NativeDatabase.memory());
+    addTearDown(db.close);
 
     return ProviderScope(
       overrides: [
         sharedPreferencesProvider.overrideWith((ref) => shared),
+        databaseProvider.overrideWith((ref) => db),
+        sessionIdProvider.overrideWith((ref) => 'grib-ui-test'),
       ],
       child: MaterialApp(
         theme: CwTheme.material(),
@@ -105,6 +112,7 @@ void main() {
     ) async {
       await tester.pumpWidget(
         await host(
+          prefs: {FeatureFlags.premiumKey: true},
           demoFixtureBuilder: () async => demoFixturePath,
         ),
       );
@@ -126,6 +134,7 @@ void main() {
     testWidgets('empty state CTA triggers import', (tester) async {
       await tester.pumpWidget(
         await host(
+          prefs: {FeatureFlags.premiumKey: true},
           demoFixtureBuilder: () async => demoFixturePath,
         ),
       );

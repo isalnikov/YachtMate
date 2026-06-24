@@ -1678,4 +1678,223 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get onboardingRegionOther => 'Other';
+
+  @override
+  String get moreMenuCommunity => 'Community';
+
+  @override
+  String get moreMenuCommunitySubtitle =>
+      'Reviews, events, local tips (demo feed)';
+
+  @override
+  String get moreMenuVoyageMonitor => 'Voyage monitor';
+
+  @override
+  String get moreMenuVoyageMonitorSubtitle =>
+      'Shore contact & periodic check-in';
+
+  @override
+  String get moreMenuYachtHub => 'Yacht hub';
+
+  @override
+  String get moreMenuYachtHubSubtitle => 'Logbook, expenses, track, vault';
+
+  @override
+  String get moreMenuAssistant => 'Deck assistant';
+
+  @override
+  String get moreMenuAssistantSubtitle => 'Offline FAQ — weather, SOS, COLREG';
+
+  @override
+  String get communityHubTitle => 'Community';
+
+  @override
+  String get communityHubLead =>
+      'Local reviews and events — demo feed until shore sync ships.';
+
+  @override
+  String get communitySectionReviews => 'Reviews';
+
+  @override
+  String get communitySectionEvents => 'Events';
+
+  @override
+  String get communityEmptyReviews => 'No reviews in this region yet.';
+
+  @override
+  String get communityEmptyEvents => 'No upcoming events listed.';
+
+  @override
+  String get communityBadgeDemo => 'Demo';
+
+  @override
+  String get voyageMonitorTitle => 'Voyage monitor';
+
+  @override
+  String get voyageMonitorLead =>
+      'SafeTrx-style shore contact and periodic OK check-in. Not linked to official SAR.';
+
+  @override
+  String get voyageMonitorContactName => 'Shore contact name';
+
+  @override
+  String get voyageMonitorContactPhone => 'Shore contact phone';
+
+  @override
+  String get voyageMonitorInterval => 'Check-in interval';
+
+  @override
+  String get voyageMonitorInterval30 => '30 min';
+
+  @override
+  String get voyageMonitorInterval60 => '1 hour';
+
+  @override
+  String get voyageMonitorInterval120 => '2 hours';
+
+  @override
+  String get voyageMonitorStart => 'Start monitoring';
+
+  @override
+  String get voyageMonitorStop => 'Stop monitoring';
+
+  @override
+  String get voyageMonitorOk => 'I\'m OK';
+
+  @override
+  String voyageMonitorNextDue(String time) {
+    return 'Next check-in due in $time';
+  }
+
+  @override
+  String get voyageMonitorOverdue =>
+      'Check-in overdue — tap I\'m OK or open SOS';
+
+  @override
+  String get voyageMonitorOpenSos => 'Open SOS';
+
+  @override
+  String get voyageMonitorActive => 'Monitoring active';
+
+  @override
+  String get voyageMonitorInactive => 'Not monitoring';
+
+  @override
+  String get settingsNotificationsSection => 'Notifications';
+
+  @override
+  String get settingsNotifyAnchorDrift => 'Anchor drift alerts';
+
+  @override
+  String get settingsNotifyAnchorDriftSubtitle =>
+      'Local notification when anchor watch alarms';
+
+  @override
+  String get settingsNotifyWeatherWind => 'High wind alerts';
+
+  @override
+  String get settingsNotifyWeatherWindSubtitle =>
+      'Notify when forecast wind exceeds threshold';
+
+  @override
+  String get settingsNotifyWindThreshold => 'Wind alert threshold (kn)';
+
+  @override
+  String get settingsPremiumSection => 'Subscription';
+
+  @override
+  String get settingsPremiumUnlocked => 'Premium unlocked (demo)';
+
+  @override
+  String get settingsPremiumUnlockedSubtitle =>
+      'Enables live AIS, offline charts, GRIB import';
+
+  @override
+  String get paywallTitle => 'Captain Wrongel Premium';
+
+  @override
+  String get paywallBody =>
+      'Unlock live AIS bridge, offline chart packs, and GRIB import. Billing integration ships in a future release.';
+
+  @override
+  String get paywallCta => 'Notify me at launch';
+
+  @override
+  String get paywallDismiss => 'Not now';
+
+  @override
+  String get yachtHubTitle => 'Yacht hub';
+
+  @override
+  String get yachtHubLead =>
+      'Ship papers, spending, and passage record in one place.';
+
+  @override
+  String get yachtHubStatLogbook => 'Log entries';
+
+  @override
+  String get yachtHubStatExpenses => 'Trip spend';
+
+  @override
+  String get yachtHubStatTrack => 'Track points';
+
+  @override
+  String get yachtHubStatVault => 'Vault docs';
+
+  @override
+  String get assistantTitle => 'Deck assistant';
+
+  @override
+  String get assistantLead =>
+      'Offline FAQ — canned answers only, not an AI captain.';
+
+  @override
+  String get assistantHint => 'Ask about weather, SOS, or COLREG…';
+
+  @override
+  String get assistantIntentWeather => 'Weather';
+
+  @override
+  String get assistantIntentSos => 'SOS';
+
+  @override
+  String get assistantIntentColreg => 'COLREG';
+
+  @override
+  String get assistantWelcome =>
+      'I\'m the offline deck assistant. Pick a topic below or type a question.';
+
+  @override
+  String get assistantReplyWeather =>
+      'Open the Weather tab for Open-Meteo forecast, wind rose, and tides link. Enable wind arrows on the Map layers sheet.';
+
+  @override
+  String get assistantReplySos =>
+      'SOS is under More → SOS / distress. Use test mode in settings until you confirm rescue numbers.';
+
+  @override
+  String get assistantReplyColreg =>
+      'COLREG practice lives in Maritime toolbox → VHF & COLREG trainer.';
+
+  @override
+  String get assistantReplyFallback =>
+      'I only know weather, SOS, and COLREG shortcuts offline. Try a suggested topic.';
+
+  @override
+  String get assistantHelpLink => 'Open maritime toolbox';
+
+  @override
+  String get notificationAnchorDriftTitle => 'Anchor drift';
+
+  @override
+  String get notificationAnchorDriftBody =>
+      'Vessel moved outside anchor circle — check anchor watch.';
+
+  @override
+  String get notificationWindAlertTitle => 'High wind forecast';
+
+  @override
+  String notificationWindAlertBody(String kn, String threshold) {
+    return 'Forecast wind $kn kn exceeds your $threshold kn threshold.';
+  }
 }

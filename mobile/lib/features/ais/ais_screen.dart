@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:maplibre_gl/maplibre_gl.dart';
 
+import '../../core/feature_flags.dart';
+import '../paywall/paywall_placeholder_sheet.dart';
 import '../../domain/ais/ais_target.dart';
 import '../../l10n/app_localizations.dart';
 import '../../widgets/cw_card.dart';
@@ -121,11 +123,20 @@ class _AisScreenState extends ConsumerState<AisScreen> {
                       ),
                     ],
                     selected: {bridge.mode},
-                    onSelectionChanged: (set) => unawaited(
-                      ref
+                    onSelectionChanged: (set) async {
+                      final mode = set.single;
+                      if (mode == AisNmeaSourceMode.live) {
+                        final ok = await requirePremiumFeature(
+                          context,
+                          ref,
+                          PremiumFeature.aisLive,
+                        );
+                        if (!ok) return;
+                      }
+                      await ref
                           .read(aisNmeaBridgeProvider.notifier)
-                          .setMode(set.single),
-                    ),
+                          .setMode(mode);
+                    },
                   ),
                 ),
                 Padding(

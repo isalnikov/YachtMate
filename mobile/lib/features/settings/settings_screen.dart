@@ -16,6 +16,8 @@ import '../../widgets/cw_chip.dart';
 import '../../widgets/cw_segmented_control.dart';
 import '../map/offline_chart_manager_screen.dart';
 import 'widgets/anchor_watch_alert_settings_form.dart';
+import 'widgets/notification_settings_form.dart';
+import 'widgets/premium_settings_form.dart';
 import 'widgets/settings_section.dart';
 import 'widgets/vessel_profile_form.dart';
 
@@ -135,6 +137,14 @@ class SettingsScreen extends ConsumerWidget {
               );
             },
           ),
+        ),
+        SettingsSection(
+          title: l10n.settingsNotificationsSection,
+          child: const NotificationSettingsForm(),
+        ),
+        SettingsSection(
+          title: l10n.settingsPremiumSection,
+          child: const PremiumSettingsForm(),
         ),
         SettingsSection(
           title: l10n.settingsAccessibilitySection,

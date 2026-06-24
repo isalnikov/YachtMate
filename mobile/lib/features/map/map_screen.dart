@@ -10,6 +10,7 @@ import 'package:maplibre_gl/maplibre_gl.dart';
 import '../../core/active_route_id.dart';
 import '../../core/accessibility_preferences_controller.dart';
 import '../../core/energy_profile_controller.dart';
+import '../../core/feature_flags.dart';
 import '../../core/logging/app_logger.dart';
 import '../../core/map_layer_preferences_controller.dart';
 import '../../core/providers.dart';
@@ -28,6 +29,7 @@ import '../../l10n/app_localizations.dart';
 import '../mooring/mooring_detail_sheet.dart';
 import '../mooring/mooring_map_navigation.dart';
 import '../mooring/mooring_providers.dart';
+import '../paywall/paywall_placeholder_sheet.dart';
 import '../route/advisory_polyline_notifier.dart';
 import '../route/route_corridor_preferences.dart';
 import '../track/track_recording_controller.dart';
@@ -816,6 +818,13 @@ class _MapScreenState extends ConsumerState<MapScreen>
   }
 
   Future<void> _cacheVisibleRegion(BuildContext context) async {
+    final allowed = await requirePremiumFeature(
+      context,
+      ref,
+      PremiumFeature.offlineCharts,
+    );
+    if (!allowed) return;
+
     final c = _controller;
     final messenger = ScaffoldMessenger.maybeOf(context);
     final l10n = AppLocalizations.of(context)!;

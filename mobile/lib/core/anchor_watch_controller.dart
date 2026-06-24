@@ -9,6 +9,8 @@ import '../data/repositories/audit_repository.dart';
 import '../domain/anchor/geo.dart';
 import '../features/anchor/anchor_watch_sms.dart';
 import 'anchor_watch_alert_settings_controller.dart';
+import 'notifications/local_notifications_service.dart';
+import 'notifications/notification_preferences_controller.dart';
 
 /// GPS fix recorded while anchor watch is armed (drift trail).
 @immutable
@@ -92,7 +94,11 @@ class AnchorWatchController extends StateNotifier<AnchorWatchState> {
     this._audit,
     this._sessionId, {
     AnchorWatchSmsLauncher? smsLauncher,
+    LocalNotificationsPort? notifications,
+    NotificationPreferences Function()? notificationPrefs,
   })  : _smsLauncher = smsLauncher,
+        _notifications = notifications,
+        _notificationPrefs = notificationPrefs,
         super(_loadInitial(_prefs)) {
     if (state.armed && state.hasAnchor) {
       _startTimer();
@@ -103,6 +109,8 @@ class AnchorWatchController extends StateNotifier<AnchorWatchState> {
   final AuditRepository _audit;
   final String _sessionId;
   final AnchorWatchSmsLauncher? _smsLauncher;
+  final LocalNotificationsPort? _notifications;
+  final NotificationPreferences Function()? _notificationPrefs;
 
   static const latKey = 'anchorWatchLat';
   static const lonKey = 'anchorWatchLon';
@@ -266,8 +274,21 @@ class AnchorWatchController extends StateNotifier<AnchorWatchState> {
             '{"distanceM":${d.toStringAsFixed(1)},"radiusM":${state.radiusM.toStringAsFixed(0)}}',
       );
       await _maybeSendDriftSms(lat: lat, lon: lon, distanceM: d);
+      await _maybeNotifyDrift();
     }
     state = next;
+  }
+
+  Future<void> _maybeNotifyDrift() async {
+    final port = _notifications;
+    final prefsFn = _notificationPrefs;
+    if (port == null || prefsFn == null) return;
+    final prefs = prefsFn();
+    if (!prefs.anchorDriftEnabled) return;
+    await port.showAnchorDriftAlert(
+      title: 'Anchor drift',
+      body: 'Vessel moved outside anchor circle — check anchor watch.',
+    );
   }
 
   Future<void> _maybeSendDriftSms({
